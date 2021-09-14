@@ -19,9 +19,6 @@ import lombok.extern.log4j.Log4j;
 @Log4j
 public class OracleConnectionTest {
 	
-	// Connection = OJDBC 담당
-	// DataSource = HikariCP 담당
-	// SqlSessionFactory = Mybatis 담당
 	@Autowired
 	private SqlSessionFactory sqlSessionFactory;
 	
