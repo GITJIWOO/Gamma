@@ -1,3 +1,7 @@
+/*  게임 테이블
+    gnum = 게임 식별 번호
+    
+*/
 CREATE TABLE game (
     
 );
