@@ -62,9 +62,30 @@ CREATE TABLE gametag (
     tag VARCHAR2(100) NOT NULL
 );
 
+/*  게임 리뷰 테이블
+    리뷰 식별 번호
+    게임 식별 번호
+    닉네임(외래키)
+    좋아요, 싫어요
+    제목
+    본문
+    작성일
+*/
 CREATE TABLE gamereview (
-
+    
 );
+
+/*  리뷰 댓글 테이블
+    댓글 식별 번호
+    리뷰 식별 번호(외래키)
+    닉네임(외래키)
+    댓글 본문
+    작성일
+*/
+CREATE TABLE reviewcomment (
+    
+);
+
 /*  친구 테이블
     친구 식별 번호
     이메일
