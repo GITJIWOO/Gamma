@@ -11,8 +11,19 @@
     게임 사이트
     동영상 주소
 */
+CREATE SEQUENCE game_num;
 CREATE TABLE game (
-    
+    gNum NUMBER PRIMARY KEY,
+    gName VARCHAR2(100) NOT NULL,
+    gReleaseDate DATE NOT NULL,
+    gDeveloper VARCHAR2(20) NOT NULL,
+    gFublisher VARCHAR2(20) NOT NULL,
+    gTag VARCHAR2(20) NOT NULL,
+    gPrice VARCHAR2(20) NOT NULL,
+    gContent VARCHAR2(1000) NOT NULL,
+    gGrade NUMBER(4) NOT NULL,
+    gSite VARCHAR2(100) NOT NULL,
+    gAddress VARCHAR2(1000) NOT NULL
 );
 
 /*  사용자 테이블
@@ -57,9 +68,12 @@ CREATE TABLE gamepicture (
     gnum = 게임 식별 번호(외래키)
     tag = 태그
 */
+CREATE SEQUENCE gametag_num;
 CREATE TABLE gametag (
-    gnum NUMBER
-    tag VARCHAR2(100) NOT NULL
+    gnum NUMBER PRIMARY KEY,
+    tag VARCHAR2(100) NOT NULL,
+    CONSTRAINTS fk_gametag FOREIGN KEY(gNum) 
+    REFERENCES game(gNum)
 );
 
 /*  게임 리뷰 테이블
@@ -153,14 +167,21 @@ CREATE TABLE userlibrary (
     사용자 이메일
     게임 식별 번호
 */
+CREATE SEQUENCE gamewishlist_num;
 CREATE TABLE gamewishlist (
-
+    wishNum NUMBER PRIMARY KEY,
+    CONSTRAINTS fk_gamewishlist FOREIGN KEY(email)REFERENCES join_user(email),
+    CONSTRAINTS fk_gamewhishlist FOREIGN KEY(gNum)REFERENCES game(gNum)
 );
 /*  장바구니
     장바구니 번호
     사용자 이메일
     게임 식별 번호
 */
+CREATE SEQUENCE shoppingbasket_num;
 CREATE TABLE shoppingbasket (
+    sbNum NUMBER PRIMARY KEY,
+    CONSTRAINTS fk_shoppingbasket FOREIGN KEY(email)REFERENCES join_user(email),
+    CONSTRAINTS fk_shoppingbasket FOREIGN KEY(gNum)REFERENCES game(gNum)
 
 );
