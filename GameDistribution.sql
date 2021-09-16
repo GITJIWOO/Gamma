@@ -63,27 +63,39 @@ CREATE TABLE gametag (
 );
 
 /*  게임 리뷰 테이블
-    리뷰 식별 번호
-    게임 식별 번호
-    닉네임(외래키)
-    좋아요, 싫어요
-    제목
-    본문
-    작성일
+    grnum = 리뷰 식별 번호
+    gnum = 게임 식별 번호
+    grlike = 좋아요, 싫어요
+    grtitle = 제목
+    grcontent = 본문
+    grdate = 작성일
 */
+CREATE SEQUENCE gamereview_num;
 CREATE TABLE gamereview (
-    
+    grnum NUMBER PRIMARY KEY,
+    gnum NUMBER NOT NULL,
+    grlike NUMBER(3) NOT NULL,
+    grtitle VARCHAR2(100) NOT NULL,
+    grcontent VARCHAR2(2000) NOT NULL,
+    grdate DATE DEFAULT sysdate,
+    CONSTRAINTS fk_gamereview FOREIGN KEY(gnum) 
+    REFERENCES game(gnum)
 );
 
 /*  리뷰 댓글 테이블
-    댓글 식별 번호
-    리뷰 식별 번호(외래키)
-    닉네임(외래키)
-    댓글 본문
-    작성일
+    rcnum = 댓글 식별 번호
+    grnum = 리뷰 식별 번호(외래키)
+    rccontent = 댓글 본문
+    rcdate = 작성일
 */
+CREATE SEQUENCE reviewcomment_num;
 CREATE TABLE reviewcomment (
-    
+    rcnum NUMBER PRIMARY KEY,
+    grnum NUMBER PRIMARY KEY,
+    rccontent VARCHAR2(1000) NOT NULL,
+    rcdate DATE DEFAULT sysdate,
+    CONSTRAINTS fk_reviewcomment FOREIGN KEY(grnum) 
+    REFERENCES gamereview(grnum)
 );
 
 /*  친구 테이블
@@ -113,7 +125,7 @@ CREATE TABLE answer (
 
 );
 
-/*  사용자 결제 정보
+/*  사용자 결제 내역
     결제 번호
     사용자 이메일(외래키)
     결제 날짜
@@ -122,7 +134,12 @@ CREATE TABLE answer (
     결제 상태
 */
 CREATE TABLE userpayment (
-
+    upnum NUMBER PRIMARY KEY,
+    email VARCHAR2(100) PRIMARY KEY,
+    update DATE DEFAULT sysdate,
+    upprice NUMBER(100) NOT NULL,
+    upmethod ,
+    
 );
 /*  사용자 라이브러리
     사용자 이메일
