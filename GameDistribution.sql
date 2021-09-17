@@ -29,27 +29,17 @@ CREATE TABLE game (
 /*  사용자 테이블
     email = 이메일
     password = 비밀번호
+    google_login_yn	= 구글 로그인
+
 */
-CREATE TABLE user (
+CREATE TABLE join_user (
     email VARCHAR2(100) PRIMARY KEY,
-    password VARCHAR2(20) NOT NULL
-);
-/*  프로필
-    이메일
-    닉네임
-    소개
-*/
-CREATE TABLE profile (
-    
+    password VARCHAR2(20) NOT NULL,
+    google_login_yn CHAR(1),
+    nick_name VARCHAR(20) NOT NULL,
+    introduce VARCHAR(100)
 );
 
-/*  구글 로그인
-    아이디
-    인증 이메일
-*/
-CREATE TABLE socialuser(
-    
-);
 
 /*  사진 테이블
     시간
@@ -57,12 +47,40 @@ CREATE TABLE socialuser(
     UUID
 */
 CREATE TABLE userpicture (
+  uuid VARCHAR2(40) PRIMARY KEY,
+  email VARCHAR2(100),
+  pic_num VARCHAR2(20),
+  pic_time VARCHAR2(20)
+);
+ALTER TABLE join_user ADD CONSTRAINT fk_email FOREIGN KEY (email) REFERENCES join_user(email);
+
+/*  사용자 라이브러리
+    사용자 이메일
+    게임 식별 번호 = fk 걸어야 하니 ㅌㅔ이블 완성되면 달라고 말하기.
+*/
+CREATE TABLE userlibrary (
+    userlibrary_num number PRIMARY KEY,
+    email VARCHAR2(100),
+    gnum NUMBER 
+);
+
+
+-- alter table JOIN_USER add constraint fk_email foreign key(email) references join_user(email)
+
+
+/*  구글 로그인
+    아이디
+    인증 이메일
+    
+    >> user table과 구글 로그인 테이블 컬림이 중복되어 분리 할 이유가 없으며 (구글 id = 이메일, 인증 이메일 = 이메일)
+    , 분리시 개발에 혼동이 올 수 있음
+    
+    단, 유저테이블에 구글 로그인 col 을 추가하여, 구글 로그인 인지, 홈페이지 회원가입 자 인지 구분은 필요 하기에 user 테이블에 google_login 컬럼을 추가 함.
+    
+CREATE TABLE socialuser(
     
 );
-
-CREATE TABLE gamepicture (
-
-);
+*/
 /*  게임 태그 테이블
     태그 식별 번호
     gnum = 게임 식별 번호(외래키)
@@ -114,30 +132,62 @@ CREATE TABLE reviewcomment (
 );
 
 /*  친구 테이블
-    친구 식별 번호
-    이메일
+    친구 식별 번호(기본키)
     친구 이메일
+    본인 이메일(외래키)
+    팔로잉(본인이 다른사람을)
+    팔로워(다른사람이 본인을)
 */
+CREATE SEQUENCE friends_num;
 CREATE TABLE friends (
-
+    fnum NUMBER PRIMARY KEY,
+    femail VARCHAR2(30) NOT NULL,
+    memail VARCHAR2(30) NOT NULL,
+    CONSTRAINT fk_friends FOREIGN KEY(memail) REFERENCES join_user(email),
+    following NUMBER DEFAULT 1,
+    follower NUMBER DEFAULT 1
 );
-/*  Q&A 테이블
-    글 식별 번호
+/*  상태글 테이블
+    상태글 식별 번호(기본키)
+    이메일(외래키)
+    상태글 작성일
+*/
+CREATE SEQUENCE statuscomment_num;
+CREATE TABLE statuscomment(
+    snum NUMBER PRIMARY KEY,
+    semail VARCHAR2(30) NOT NULL,
+    CONSTRAINT fk_statuscomment FOREIGN KEY(semail) REFERENCES join_user(email),
+    sdate DATE DEFAULT SYSDATE
+);
+/*  Question 테이블
+    글 식별 번호(기본키)
     제목
     본문
-    글쓴이
+    글쓴이(외래키)
     질문 날짜
 */
+CREATE SEQUENCE question_num;
 CREATE TABLE question (
-
+    qnum NUMBER PRIMARY KEY,
+    qtitle VARCHAR2(50) NOT NULL,
+    qcontent VARCHAR2(1000) NOT NULL,
+    qwriter VARCHAR2(30) NOT NULL,
+    CONSTRAINT fk_question FOREIGN KEY(qwriter) REFERENCES join_user(email),
+    qdate DATE DEFAULT SYSDATE
 );
-/*  답변 테이블
-    글 식별 번호
+/*  Answer 테이블
+    글 식별 번호(기본키)
+    질문글 식별 번호(외래키)
     본문
     답변 날짜
 */
+CREATE SEQUENCE answer_num;
 CREATE TABLE answer (
-
+    anum NUMBER PRIMARY KEY,
+    qnanum NUMBER NOT NULL,
+    CONSTRAINT fk_answer FOREIGN KEY(qnanum) REFERENCES question(qnum),
+    acontent VARCHAR2(1000) NOT NULL,
+    adate DATE DEFAULT SYSDATE
 );
 
 /*  사용자 결제 내역
