@@ -14,16 +14,16 @@
 
 CREATE SEQUENCE game_num;
 CREATE TABLE game (
-    gNum NUMBER PRIMARY KEY,
-    gName VARCHAR2(100) NOT NULL,
-    gReleaseDate DATE NOT NULL,
-    gDeveloper VARCHAR2(20) NOT NULL,
-    gFublisher VARCHAR2(20) NOT NULL,
-    gPrice VARCHAR2(20) NOT NULL,
-    gContent VARCHAR2(1000) NOT NULL,
-    gGrade NUMBER(4) NOT NULL,
-    gSite VARCHAR2(100) NOT NULL,
-    gAddress VARCHAR2(1000) NOT NULL
+    gnum NUMBER PRIMARY KEY,
+    gname VARCHAR2(100) NOT NULL,
+    greleaseDate DATE NOT NULL,
+    gdeveloper VARCHAR2(20) NOT NULL,
+    gfublisher VARCHAR2(20) NOT NULL,
+    gprice VARCHAR2(20) NOT NULL,
+    gcontent VARCHAR2(1000) NOT NULL,
+    ggrade NUMBER(4) NOT NULL,
+    gsite VARCHAR2(100) NOT NULL,
+    gaddress VARCHAR2(1000) NOT NULL
 );
 
 /*  사용자 테이블
@@ -88,11 +88,11 @@ CREATE TABLE socialuser(
 */
 
 CREATE TABLE gametag (
-    gNum NUMBER,
-    tagName VARCHAR2(100),
-    CONSTRAINTS fk_gametag FOREIGN KEY(gNum) 
-    REFERENCES game(gNum),
-    CONSTRAINT pk_gametag PRIMARY KEY(gNum, tagName)
+    gnum NUMBER,
+    tagname VARCHAR2(100),
+    CONSTRAINTS fk_gametag FOREIGN KEY(gnum) 
+    REFERENCES game(gnum),
+    CONSTRAINT pk_gametag PRIMARY KEY(gnum, tagname)
 );
 
 /*  게임 리뷰 테이블
@@ -220,9 +220,9 @@ CREATE TABLE userlibrary (
 */
 CREATE SEQUENCE gamewishlist_num;
 CREATE TABLE gamewishlist (
-    wishNum NUMBER PRIMARY KEY,
+    wishnum NUMBER PRIMARY KEY,
     CONSTRAINTS fk_gamewishlist FOREIGN KEY(email)REFERENCES join_user(email),
-    CONSTRAINTS fk_gamewhishlist FOREIGN KEY(gNum)REFERENCES game(gNum)
+    CONSTRAINTS fk_gamewhishlist FOREIGN KEY(gnum)REFERENCES game(gnum)
 );
 /*  장바구니
     장바구니 번호
@@ -231,8 +231,8 @@ CREATE TABLE gamewishlist (
 */
 CREATE SEQUENCE shoppingbasket_num;
 CREATE TABLE shoppingbasket (
-    sbNum NUMBER PRIMARY KEY,
+    sbnum NUMBER PRIMARY KEY,
     CONSTRAINTS fk_shoppingbasket FOREIGN KEY(email)REFERENCES join_user(email),
-    CONSTRAINTS fk_shoppingbasket FOREIGN KEY(gNum)REFERENCES game(gNum)
+    CONSTRAINTS fk_shoppingbasket FOREIGN KEY(gnum)REFERENCES game(gnum)
 
 );
