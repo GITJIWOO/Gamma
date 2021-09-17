@@ -11,6 +11,7 @@
     게임 사이트
     동영상 주소
 */
+
 CREATE SEQUENCE game_num;
 CREATE TABLE game (
     gNum NUMBER PRIMARY KEY,
@@ -18,7 +19,6 @@ CREATE TABLE game (
     gReleaseDate DATE NOT NULL,
     gDeveloper VARCHAR2(20) NOT NULL,
     gFublisher VARCHAR2(20) NOT NULL,
-    gTag VARCHAR2(20) NOT NULL,
     gPrice VARCHAR2(20) NOT NULL,
     gContent VARCHAR2(1000) NOT NULL,
     gGrade NUMBER(4) NOT NULL,
@@ -68,12 +68,13 @@ CREATE TABLE gamepicture (
     gnum = 게임 식별 번호(외래키)
     tag = 태그
 */
-CREATE SEQUENCE gametag_num;
+
 CREATE TABLE gametag (
-    gnum NUMBER PRIMARY KEY,
-    tag VARCHAR2(100) NOT NULL,
+    gNum NUMBER,
+    tagName VARCHAR2(100),
     CONSTRAINTS fk_gametag FOREIGN KEY(gNum) 
-    REFERENCES game(gNum)
+    REFERENCES game(gNum),
+    CONSTRAINT pk_gametag PRIMARY KEY(gNum, tagName)
 );
 
 /*  게임 리뷰 테이블
