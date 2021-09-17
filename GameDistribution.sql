@@ -29,27 +29,17 @@ CREATE TABLE game (
 /*  사용자 테이블
     email = 이메일
     password = 비밀번호
+    google_login_yn	= 구글 로그인
+
 */
-CREATE TABLE user (
+CREATE TABLE join_user (
     email VARCHAR2(100) PRIMARY KEY,
-    password VARCHAR2(20) NOT NULL
-);
-/*  프로필
-    이메일
-    닉네임
-    소개
-*/
-CREATE TABLE profile (
-    
+    password VARCHAR2(20) NOT NULL,
+    google_login_yn CHAR(1),
+    nick_name VARCHAR(20) NOT NULL,
+    introduce VARCHAR(100)
 );
 
-/*  구글 로그인
-    아이디
-    인증 이메일
-*/
-CREATE TABLE socialuser(
-    
-);
 
 /*  사진 테이블
     시간
@@ -57,12 +47,40 @@ CREATE TABLE socialuser(
     UUID
 */
 CREATE TABLE userpicture (
+  uuid VARCHAR2(40) PRIMARY KEY,
+  email VARCHAR2(100),
+  pic_num VARCHAR2(20),
+  pic_time VARCHAR2(20)
+);
+ALTER TABLE join_user ADD CONSTRAINT fk_email FOREIGN KEY (email) REFERENCES join_user(email);
+
+/*  사용자 라이브러리
+    사용자 이메일
+    게임 식별 번호 = fk 걸어야 하니 ㅌㅔ이블 완성되면 달라고 말하기.
+*/
+CREATE TABLE userlibrary (
+    userlibrary_num number PRIMARY KEY,
+    email VARCHAR2(100),
+    gnum NUMBER 
+);
+
+
+-- alter table JOIN_USER add constraint fk_email foreign key(email) references join_user(email)
+
+
+/*  구글 로그인
+    아이디
+    인증 이메일
+    
+    >> user table과 구글 로그인 테이블 컬림이 중복되어 분리 할 이유가 없으며 (구글 id = 이메일, 인증 이메일 = 이메일)
+    , 분리시 개발에 혼동이 올 수 있음
+    
+    단, 유저테이블에 구글 로그인 col 을 추가하여, 구글 로그인 인지, 홈페이지 회원가입 자 인지 구분은 필요 하기에 user 테이블에 google_login 컬럼을 추가 함.
+    
+CREATE TABLE socialuser(
     
 );
-
-CREATE TABLE gamepicture (
-
-);
+*/
 /*  게임 태그 테이블
     태그 식별 번호
     gnum = 게임 식별 번호(외래키)
