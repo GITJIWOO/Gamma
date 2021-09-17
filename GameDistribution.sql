@@ -25,6 +25,8 @@ CREATE TABLE game (
     gsite VARCHAR2(100) NOT NULL,
     gaddress VARCHAR2(1000) NOT NULL
 );
+SELECT * FROM game;
+DROP TABLE game;
 
 /*  사용자 테이블
     email = 이메일
@@ -88,6 +90,7 @@ CREATE TABLE socialuser(
 */
 
 CREATE TABLE gametag (
+    gtnum NUMBER,
     gnum NUMBER,
     tagname VARCHAR2(100),
     CONSTRAINTS fk_gametag FOREIGN KEY(gnum) 
@@ -124,7 +127,7 @@ CREATE TABLE gamereview (
 CREATE SEQUENCE reviewcomment_num;
 CREATE TABLE reviewcomment (
     rcnum NUMBER PRIMARY KEY,
-    grnum NUMBER PRIMARY KEY,
+    grnum NUMBER,
     rccontent VARCHAR2(1000) NOT NULL,
     rcdate DATE DEFAULT sysdate,
     CONSTRAINTS fk_reviewcomment FOREIGN KEY(grnum) 
@@ -221,6 +224,8 @@ CREATE TABLE userlibrary (
 CREATE SEQUENCE gamewishlist_num;
 CREATE TABLE gamewishlist (
     wishnum NUMBER PRIMARY KEY,
+    email VARCHAR2(100) NOT NULL,
+    gnum NUMBER NOT NULL,
     CONSTRAINTS fk_gamewishlist FOREIGN KEY(email)REFERENCES join_user(email),
     CONSTRAINTS fk_gamewhishlist FOREIGN KEY(gnum)REFERENCES game(gnum)
 );
@@ -232,6 +237,8 @@ CREATE TABLE gamewishlist (
 CREATE SEQUENCE shoppingbasket_num;
 CREATE TABLE shoppingbasket (
     sbnum NUMBER PRIMARY KEY,
+    email VARCHAR2(100) NOT NULL,
+    gnum NUMBER NOT NULL,
     CONSTRAINTS fk_shoppingbasket FOREIGN KEY(email)REFERENCES join_user(email),
     CONSTRAINTS fk_shoppingbasket FOREIGN KEY(gnum)REFERENCES game(gnum)
 
