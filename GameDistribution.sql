@@ -113,30 +113,62 @@ CREATE TABLE reviewcomment (
 );
 
 /*  친구 테이블
-    친구 식별 번호
-    이메일
+    친구 식별 번호(기본키)
     친구 이메일
+    본인 이메일(외래키)
+    팔로잉(본인이 다른사람을)
+    팔로워(다른사람이 본인을)
 */
+CREATE SEQUENCE friends_num;
 CREATE TABLE friends (
-
+    fnum NUMBER PRIMARY KEY,
+    femail VARCHAR2(30) NOT NULL,
+    memail VARCHAR2(30) NOT NULL,
+    CONSTRAINT fk_friends FOREIGN KEY(memail) REFERENCES join_user(email),
+    following NUMBER DEFAULT 1,
+    follower NUMBER DEFAULT 1
 );
-/*  Q&A 테이블
-    글 식별 번호
+/*  상태글 테이블
+    상태글 식별 번호(기본키)
+    이메일(외래키)
+    상태글 작성일
+*/
+CREATE SEQUENCE statuscomment_num;
+CREATE TABLE statuscomment(
+    snum NUMBER PRIMARY KEY,
+    semail VARCHAR2(30) NOT NULL,
+    CONSTRAINT fk_statuscomment FOREIGN KEY(semail) REFERENCES join_user(email),
+    sdate DATE DEFAULT SYSDATE
+);
+/*  Question 테이블
+    글 식별 번호(기본키)
     제목
     본문
-    글쓴이
+    글쓴이(외래키)
     질문 날짜
 */
+CREATE SEQUENCE question_num;
 CREATE TABLE question (
-
+    qnum NUMBER PRIMARY KEY,
+    qtitle VARCHAR2(50) NOT NULL,
+    qcontent VARCHAR2(1000) NOT NULL,
+    qwriter VARCHAR2(30) NOT NULL,
+    CONSTRAINT fk_question FOREIGN KEY(qwriter) REFERENCES join_user(email),
+    qdate DATE DEFAULT SYSDATE
 );
-/*  답변 테이블
-    글 식별 번호
+/*  Answer 테이블
+    글 식별 번호(기본키)
+    질문글 식별 번호(외래키)
     본문
     답변 날짜
 */
+CREATE SEQUENCE answer_num;
 CREATE TABLE answer (
-
+    anum NUMBER PRIMARY KEY,
+    qnanum NUMBER NOT NULL,
+    CONSTRAINT fk_answer FOREIGN KEY(qnanum) REFERENCES question(qnum),
+    acontent VARCHAR2(1000) NOT NULL,
+    adate DATE DEFAULT SYSDATE
 );
 
 /*  사용자 결제 내역
