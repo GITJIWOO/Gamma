@@ -16,7 +16,7 @@ CREATE SEQUENCE game_num;
 CREATE TABLE game (
     gnum NUMBER PRIMARY KEY,
     gname VARCHAR2(100) NOT NULL,
-    greleaseDate DATE NOT NULL,
+    glaunch DATE NOT NULL,
     gdeveloper VARCHAR2(20) NOT NULL,
     gfublisher VARCHAR2(20) NOT NULL,
     gprice VARCHAR2(20) NOT NULL,
@@ -26,7 +26,6 @@ CREATE TABLE game (
     gaddress VARCHAR2(1000) NOT NULL
 );
 SELECT * FROM game;
-DROP TABLE game;
 
 /*  사용자 테이블
     email = 이메일
@@ -37,9 +36,7 @@ DROP TABLE game;
 CREATE TABLE join_user (
     email VARCHAR2(100) PRIMARY KEY,
     password VARCHAR2(20) NOT NULL,
-    google_login_yn CHAR(1),
-    nick_name VARCHAR(20) NOT NULL,
-    introduce VARCHAR(100)
+    nick_name VARCHAR(20) NOT NULL
 );
 
 
@@ -58,16 +55,14 @@ ALTER TABLE join_user ADD CONSTRAINT fk_email FOREIGN KEY (email) REFERENCES joi
 
 /*  사용자 라이브러리
     사용자 이메일
-    게임 식별 번호 = fk 걸어야 하니 ㅌㅔ이블 완성되면 달라고 말하기.
+    게임 식별 번호
 */
 CREATE TABLE userlibrary (
     userlibrary_num number PRIMARY KEY,
     email VARCHAR2(100),
-    gnum NUMBER 
+    gnum NUMBER
 );
-
-
--- alter table JOIN_USER add constraint fk_email foreign key(email) references join_user(email)
+alter table JOIN_USER add constraint fk_email foreign key(email) references join_user(email)
 
 
 /*  구글 로그인
