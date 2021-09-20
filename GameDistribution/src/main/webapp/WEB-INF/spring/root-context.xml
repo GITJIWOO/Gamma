@@ -27,9 +27,11 @@
 	<mybatis-spring:scan base-package="org.game.user.mapper"/>
 	<mybatis-spring:scan base-package="org.game.friends.mapper"/>
 	<mybatis-spring:scan base-package="org.game.review.mapper"/>
+	<mybatis-spring:scan base-package="org.game.gamepurchase.mapper"/>
 	
 	<context:component-scan base-package="org.game.gameinfo.service"/>
 	<context:component-scan base-package="org.game.user.service"/>
 	<context:component-scan base-package="org.game.friends.service"/>
 	<context:component-scan base-package="org.game.review.service"/>
+	<context:component-scan base-package="org.game.gamepurchase.service"/>
 </beans>
