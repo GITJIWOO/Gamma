@@ -33,7 +33,7 @@ SELECT * FROM game;
     google_login_yn	= 구글 로그인
 
 */
-CREATE TABLE join_user (
+CREATE TABLE user (
     email VARCHAR2(100) PRIMARY KEY,
     password VARCHAR2(20) NOT NULL,
     nick_name VARCHAR(20) NOT NULL
@@ -45,25 +45,33 @@ CREATE TABLE join_user (
     번호
     UUID
 */
-CREATE TABLE userpicture (
-  uuid VARCHAR2(40) PRIMARY KEY,
-  email VARCHAR2(100),
-  pic_num VARCHAR2(20),
-  pic_time VARCHAR2(20)
+CREATE TABLE userPicture (
+    uuid VARCHAR2(100) PRIMARY KEY,
+    email VARCHAR2(100),
+    upic_num VARCHAR2(20),
+    upic_time VARCHAR2(20),
+    CONSTRAINT fk_userPicture FOREIGN KEY (email)
+    REFERENCES user(email)
 );
-ALTER TABLE join_user ADD CONSTRAINT fk_email FOREIGN KEY (email) REFERENCES join_user(email);
+
+CREATE TABLE gamePicture (
+    uuid VARCHAR2(100) PRIMARY KEY,
+    gnum NUMBER NOT NULL,
+    gpic_num VARCHAR2(20) NOT NULL,
+    gpic_time VARCHAR2(20) NOT NULL
+);
 
 /*  사용자 라이브러리
     사용자 이메일
     게임 식별 번호
 */
-CREATE TABLE userlibrary (
-    userlibrary_num number PRIMARY KEY,
+CREATE TABLE userLibrary (
+    ubnum number PRIMARY KEY,
     email VARCHAR2(100),
-    gnum NUMBER
+    gnum NUMBER,
+    CONSTRAINT fk_userlibrary FOREIGN KEY (email)
+    REFERENCES user(email)
 );
-alter table JOIN_USER add constraint fk_email foreign key(email) references join_user(email)
-
 
 /*  구글 로그인
     아이디
@@ -83,19 +91,19 @@ CREATE TABLE socialuser(
     gnum = 게임 식별 번호(외래키)
     tag = 태그
 */
-
-CREATE TABLE gametag (
+CREATE SEQUENCE gametag_num;
+CREATE TABLE gameTag (
     gtnum NUMBER,
     gnum NUMBER,
     tagname VARCHAR2(100),
-    CONSTRAINTS fk_gametag FOREIGN KEY(gnum) 
+    CONSTRAINT fk_gametag FOREIGN KEY(gnum) 
     REFERENCES game(gnum),
     CONSTRAINT pk_gametag PRIMARY KEY(gnum, tagname)
 );
 
 /*  게임 리뷰 테이블
     grnum = 리뷰 식별 번호
-    gnum = 게임 식별 번호
+    gnum = 게임 식별 번호(외래키)
     grlike = 좋아요, 싫어요
     grtitle = 제목
     grcontent = 본문
@@ -103,7 +111,7 @@ CREATE TABLE gametag (
     grdate = 작성일
 */
 CREATE SEQUENCE gamereview_num;
-CREATE TABLE gamereview (
+CREATE TABLE gameReview (
     grnum NUMBER PRIMARY KEY,
     gnum NUMBER NOT NULL,
     grlike NUMBER(3) NOT NULL,
@@ -111,7 +119,7 @@ CREATE TABLE gamereview (
     grcontent VARCHAR2(2000) NOT NULL,
     grrecommend NUMBER,
     grdate DATE DEFAULT sysdate,
-    CONSTRAINTS fk_gamereview FOREIGN KEY(gnum) 
+    CONSTRAINT fk_gamereview FOREIGN KEY(gnum) 
     REFERENCES game(gnum)
 );
 
@@ -122,12 +130,12 @@ CREATE TABLE gamereview (
     rcdate = 작성일
 */
 CREATE SEQUENCE reviewcomment_num;
-CREATE TABLE reviewcomment (
+CREATE TABLE reviewComment (
     rcnum NUMBER PRIMARY KEY,
     grnum NUMBER,
     rccontent VARCHAR2(1000) NOT NULL,
     rcdate DATE DEFAULT sysdate,
-    CONSTRAINTS fk_reviewcomment FOREIGN KEY(grnum) 
+    CONSTRAINT fk_reviewcomment FOREIGN KEY(grnum) 
     REFERENCES gamereview(grnum)
 );
 
@@ -147,6 +155,7 @@ CREATE TABLE friends (
     following NUMBER DEFAULT 1,
     follower NUMBER DEFAULT 1
 );
+
 /*  상태글 테이블
     상태글 식별 번호(기본키)
     이메일(외래키)
@@ -159,6 +168,7 @@ CREATE TABLE statuscomment(
     CONSTRAINT fk_statuscomment FOREIGN KEY(semail) REFERENCES join_user(email),
     sdate DATE DEFAULT SYSDATE
 );
+
 /*  Question 테이블
     글 식별 번호(기본키)
     제목
@@ -175,6 +185,7 @@ CREATE TABLE question (
     CONSTRAINT fk_question FOREIGN KEY(qwriter) REFERENCES join_user(email),
     qdate DATE DEFAULT SYSDATE
 );
+
 /*  Answer 테이블
     글 식별 번호(기본키)
     질문글 식별 번호(외래키)
@@ -198,28 +209,22 @@ CREATE TABLE answer (
     결제 방법
     결제 상태
 */
-CREATE TABLE userpayment (
+CREATE TABLE userPayment (
     upnum NUMBER PRIMARY KEY,
     email VARCHAR2(100) PRIMARY KEY,
-    update DATE DEFAULT sysdate,
+    upday DATE DEFAULT sysdate,
     upprice NUMBER(100) NOT NULL,
     upmethod ,
     
 );
-/*  사용자 라이브러리
-    사용자 이메일
-    게임 식별 번호
-*/
-CREATE TABLE userlibrary (
 
-);
 /*  사용자 찜 목록
     찜 식별 번호
     사용자 이메일
     게임 식별 번호
 */
 CREATE SEQUENCE gamewishlist_num;
-CREATE TABLE gamewishlist (
+CREATE TABLE gameWishlist (
     wishnum NUMBER PRIMARY KEY,
     email VARCHAR2(100) NOT NULL,
     gnum NUMBER NOT NULL,
@@ -232,7 +237,7 @@ CREATE TABLE gamewishlist (
     게임 식별 번호
 */
 CREATE SEQUENCE shoppingbasket_num;
-CREATE TABLE shoppingbasket (
+CREATE TABLE shoppingBasket (
     sbnum NUMBER PRIMARY KEY,
     email VARCHAR2(100) NOT NULL,
     gnum NUMBER NOT NULL,
