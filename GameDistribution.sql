@@ -27,6 +27,20 @@ CREATE TABLE game (
 );
 SELECT * FROM game;
 
+/*  게임 시스템 요구 사항
+    gnum = 게임 식별 번호(외래키)
+    운영체제
+    프로세서
+    메모리
+    그래픽
+    DirectX
+    저장공간
+*/
+CREATE TABLE gameRequirement (
+
+
+);
+
 /*  사용자 테이블
     email = 이메일
     password = 비밀번호
