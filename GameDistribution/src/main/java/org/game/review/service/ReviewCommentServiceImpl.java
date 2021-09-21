@@ -8,6 +8,6 @@ import lombok.extern.log4j.Log4j;
 @Log4j
 @Service
 @AllArgsConstructor
-public class CommentServiceImpl implements CommentService {
+public class ReviewCommentServiceImpl implements ReviewCommentService {
 
 }

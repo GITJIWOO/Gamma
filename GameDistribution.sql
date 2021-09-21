@@ -114,6 +114,7 @@ CREATE SEQUENCE gamereview_num;
 CREATE TABLE gameReview (
     grnum NUMBER PRIMARY KEY,
     gnum NUMBER NOT NULL,
+    email VARCHAR2(100) NOT NULL,
     grlike NUMBER(3) NOT NULL,
     grtitle VARCHAR2(100) NOT NULL,
     grcontent VARCHAR2(2000) NOT NULL,
@@ -133,6 +134,7 @@ CREATE SEQUENCE reviewcomment_num;
 CREATE TABLE reviewComment (
     rcnum NUMBER PRIMARY KEY,
     grnum NUMBER,
+    email VARCHAR2(100) NOT NULL,
     rccontent VARCHAR2(1000) NOT NULL,
     rcdate DATE DEFAULT sysdate,
     CONSTRAINT fk_reviewcomment FOREIGN KEY(grnum) 

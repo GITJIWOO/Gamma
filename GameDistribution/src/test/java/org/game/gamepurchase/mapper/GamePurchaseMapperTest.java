@@ -1,6 +1,6 @@
 package org.game.gamepurchase.mapper;
 
-import org.game.review.mapper.CommentMapperTest;
+import org.game.review.mapper.ReviewCommentMapperTest;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
