@@ -37,7 +37,15 @@ SELECT * FROM game;
     저장공간
 */
 CREATE TABLE gameRequirement (
-
+    gnum NUMBER NOT NULL,
+    gos VARCHAR2(100) NOT NULL,
+    gprocessor VARCHAR2(100) NOT NULL,
+    gmemory VARCHAR2(100) NOT NULL,
+    ggraphic VARCHAR2(100) NOT NULL,
+    gdirectx VARCHAR2(100) NOT NULL,
+    gstore VARCHAR2(100) NOT NULL,
+    CONSTRAINTS fk_gameRequirement FOREIGN KEY(gnum) 
+    REFERENCES game(gnum)
 
 );
 
