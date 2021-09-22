@@ -258,8 +258,8 @@ CREATE TABLE gameWishlist (
     wishnum NUMBER PRIMARY KEY,
     cid VARCHAR2(20) NOT NULL,
     gnum NUMBER NOT NULL,
-    CONSTRAINTS fk_gamewishlist FOREIGN KEY(cid)REFERENCES consumer(cid),
-    CONSTRAINTS fk_gamewhishlist FOREIGN KEY(gnum)REFERENCES game(gnum)
+    CONSTRAINT fk_gamewishlist FOREIGN KEY(cid)REFERENCES consumer(cid),
+    CONSTRAINT fk_gamewhishlist FOREIGN KEY(gnum)REFERENCES game(gnum)
 );
 
 /*  ��ٱ���
@@ -272,7 +272,7 @@ CREATE TABLE shoppingBasket (
     sbnum NUMBER PRIMARY KEY,
     cid VARCHAR2(20) NOT NULL,
     gnum NUMBER NOT NULL,
-    CONSTRAINTS fk_shoppingbasket FOREIGN KEY(cid)REFERENCES consumer(cid),
-    CONSTRAINTS fk_shoppingbasket FOREIGN KEY(gnum)REFERENCES game(gnum)
+    CONSTRAINT fk_shoppingbasket FOREIGN KEY(cid)REFERENCES consumer(cid),
+    CONSTRAINT fk_shoppingbasket FOREIGN KEY(gnum)REFERENCES game(gnum)
 
 );
