@@ -1,15 +1,15 @@
-/*  ���� ���̺�
-    gnum = ���� �ĺ� ��ȣ
-    ���� ����
-    ���� �����
-    ���߻�
-    ��޻�
-    �±�
-    ����
-    ����
-    ���
-    ���� ����Ʈ
-    ������ �ּ�
+/*  게임 테이블
+    gnum = 게임 식별 번호
+    게임 제목
+    게임 출시일
+    개발사
+    배급사
+    태그
+    가격
+    설명
+    등급
+    게임 사이트
+    동영상 주소
 */
 
 CREATE SEQUENCE game_num;
@@ -27,14 +27,14 @@ CREATE TABLE game (
 );
 SELECT * FROM game;
 
-/*  ���� �ý��� �䱸 ����
-    gnum = ���� �ĺ� ��ȣ(�ܷ�Ű)
-    �ü��
-    ���μ���
-    �޸�
-    �׷���
+/*  게임 시스템 요구 사항
+    gnum = 게임 식별 번호(외래키)
+    운영체제
+    프로세서
+    메모리
+    그래픽
     DirectX
-    �������
+    저장공간
 */
 CREATE TABLE gameRequirement (
     gnum NUMBER NOT NULL,
@@ -49,11 +49,11 @@ CREATE TABLE gameRequirement (
 
 );
 
-/*  ����� ���̺�
-    email = �̸���
-    password = ��й�ȣ
-    google_login_yn	= ���� �α���
-
+/*  사용자 테이블
+    email = 이메일
+    password = 비밀번호
+    google_login_yn	= 구글 로그인
+    
 */
 CREATE TABLE user (
     email VARCHAR2(100) PRIMARY KEY,
@@ -62,9 +62,9 @@ CREATE TABLE user (
 );
 
 
-/*  ���� ���̺�
-    �ð�
-    ��ȣ
+/*  사진 테이블
+    시간
+    번호
     UUID
 */
 CREATE TABLE userPicture (
@@ -83,9 +83,9 @@ CREATE TABLE gamePicture (
     gpic_time VARCHAR2(20) NOT NULL
 );
 
-/*  ����� ���̺귯��
-    ����� �̸���
-    ���� �ĺ� ��ȣ
+/*  사용자 라이브러리
+    사용자 이메일
+    게임 식별 번호
 */
 CREATE TABLE userLibrary (
     ubnum number PRIMARY KEY,
@@ -95,23 +95,23 @@ CREATE TABLE userLibrary (
     REFERENCES user(email)
 );
 
-/*  ���� �α���
-    ���̵�
-    ���� �̸���
+/*  구글 로그인
+    아이디
+    인증 이메일
     
-    >> user table�� ���� �α��� ���̺� �ø��� �ߺ��Ǿ� �и� �� ������ ������ (���� id = �̸���, ���� �̸��� = �̸���)
-    , �и��� ���߿� ȥ���� �� �� ����
+    >> user table과 구글 로그인 테이블 컬림이 중복되어 분리 할 이유가 없으며 (구글 id = 이메일, 인증 이메일 = 이메일)
+    , 분리시 개발에 혼동이 올 수 있음
     
-    ��, �������̺� ���� �α��� col �� �߰��Ͽ�, ���� �α��� ����, Ȩ������ ȸ������ �� ���� ������ �ʿ� �ϱ⿡ user ���̺� google_login �÷��� �߰� ��.
+    단, 유저테이블에 구글 로그인 col 을 추가하여, 구글 로그인 인지, 홈페이지 회원가입 자 인지 구분은 필요 하기에 user 테이블에 google_login 컬럼을 추가 함.
     
 CREATE TABLE socialuser(
     
 );
 */
-/*  ���� �±� ���̺�
-    �±� �ĺ� ��ȣ
-    gnum = ���� �ĺ� ��ȣ(�ܷ�Ű)
-    tag = �±�
+/*  게임 태그 테이블
+    태그 식별 번호
+    gnum = 게임 식별 번호(외래키)
+    tag = 태그
 */
 CREATE SEQUENCE gametag_num;
 CREATE TABLE gameTag (
@@ -123,14 +123,14 @@ CREATE TABLE gameTag (
     CONSTRAINT pk_gametag PRIMARY KEY(gnum, tagname)
 );
 
-/*  ���� ���� ���̺�
-    grnum = ���� �ĺ� ��ȣ
-    gnum = ���� �ĺ� ��ȣ(�ܷ�Ű)
-    grlike = ���ƿ�, �Ⱦ��
-    grtitle = ����
-    grcontent = ����
-    grrecomment = �� ��õ ��
-    grdate = �ۼ���
+/*  게임 리뷰 테이블
+    grnum = 리뷰 식별 번호
+    gnum = 게임 식별 번호(외래키)
+    grlike = 좋아요, 싫어요
+    grtitle = 제목
+    grcontent = 본문
+    grrecomment = 평가 추천 수
+    grdate = 작성일
 */
 CREATE SEQUENCE gamereview_num;
 CREATE TABLE gameReview (
@@ -146,11 +146,11 @@ CREATE TABLE gameReview (
     REFERENCES game(gnum)
 );
 
-/*  ���� ��� ���̺�
-    rcnum = ��� �ĺ� ��ȣ
-    grnum = ���� �ĺ� ��ȣ(�ܷ�Ű)
-    rccontent = ��� ����
-    rcdate = �ۼ���
+/*  리뷰 댓글 테이블
+    rcnum = 댓글 식별 번호
+    grnum = 리뷰 식별 번호(외래키)
+    rccontent = 댓글 본문
+    rcdate = 작성일
 */
 CREATE SEQUENCE reviewcomment_num;
 CREATE TABLE reviewComment (
@@ -163,12 +163,12 @@ CREATE TABLE reviewComment (
     REFERENCES gamereview(grnum)
 );
 
-/*  ģ�� ���̺�
-    ģ�� �ĺ� ��ȣ(�⺻Ű)
-    ģ�� �̸���
-    ���� �̸���(�ܷ�Ű)
-    �ȷ���(������ �ٸ������)
-    �ȷο�(�ٸ������ ������)
+/*  친구 테이블
+    친구 식별 번호(기본키)
+    친구 이메일
+    본인 이메일(외래키)
+    팔로잉(본인이 다른사람을)
+    팔로워(다른사람이 본인을)
 */
 CREATE SEQUENCE friends_num;
 CREATE TABLE friends (
@@ -178,10 +178,10 @@ CREATE TABLE friends (
     CONSTRAINT fk_friends FOREIGN KEY(following) REFERENCES join_user(email)
 );
 
-/*  ���±� ���̺�
-    ���±� �ĺ� ��ȣ(�⺻Ű)
-    �̸���(�ܷ�Ű)
-    ���±� �ۼ���
+/*  상태글 테이블
+    상태글 식별 번호(기본키)
+    이메일(외래키)
+    상태글 작성일
 */
 CREATE SEQUENCE statuscomment_num;
 CREATE TABLE statuscomment(
@@ -191,12 +191,12 @@ CREATE TABLE statuscomment(
     sdate DATE DEFAULT SYSDATE
 );
 
-/*  Question ���̺�
-    �� �ĺ� ��ȣ(�⺻Ű)
-    ����
-    ����
-    �۾���(�ܷ�Ű)
-    ���� ��¥
+/*  Question 테이블
+    글 식별 번호(기본키)
+    제목
+    본문
+    글쓴이(외래키)
+    질문 날짜
 */
 CREATE SEQUENCE question_num;
 CREATE TABLE question (
@@ -208,11 +208,11 @@ CREATE TABLE question (
     qdate DATE DEFAULT SYSDATE
 );
 
-/*  Answer ���̺�
-    �� �ĺ� ��ȣ(�⺻Ű)
-    ������ �ĺ� ��ȣ(�ܷ�Ű)
-    ����
-    �亯 ��¥
+/*  Answer 테이블
+    글 식별 번호(기본키)
+    질문글 식별 번호(외래키)
+    본문
+    답변 날짜
 */
 CREATE SEQUENCE answer_num;
 CREATE TABLE answer (
@@ -223,13 +223,13 @@ CREATE TABLE answer (
     adate DATE DEFAULT SYSDATE
 );
 
-/*  ����� ���� ����
-    ���� ��ȣ
-    ����� �̸���(�ܷ�Ű)
-    ���� ��¥
-    ���� �ݾ�
-    ���� ���
-    ���� ����
+/*  사용자 결제 내역
+    결제 번호
+    사용자 이메일(외래키)
+    결제 날짜
+    결제 금액
+    결제 방법
+    결제 상태
 */
 CREATE TABLE userPayment (
     upnum NUMBER PRIMARY KEY,
@@ -240,10 +240,10 @@ CREATE TABLE userPayment (
     
 );
 
-/*  ����� �� ���
-    �� �ĺ� ��ȣ
-    ����� �̸���
-    ���� �ĺ� ��ȣ
+/*  사용자 찜 목록
+    찜 식별 번호
+    사용자 이메일
+    게임 식별 번호
 */
 CREATE SEQUENCE gamewishlist_num;
 CREATE TABLE gameWishlist (
@@ -253,10 +253,10 @@ CREATE TABLE gameWishlist (
     CONSTRAINTS fk_gamewishlist FOREIGN KEY(email)REFERENCES join_user(email),
     CONSTRAINTS fk_gamewhishlist FOREIGN KEY(gnum)REFERENCES game(gnum)
 );
-/*  ��ٱ���
-    ��ٱ��� ��ȣ
-    ����� �̸���
-    ���� �ĺ� ��ȣ
+/*  장바구니
+    장바구니 번호
+    사용자 이메일
+    게임 식별 번호
 */
 CREATE SEQUENCE shoppingbasket_num;
 CREATE TABLE shoppingBasket (
