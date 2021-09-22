@@ -1,15 +1,15 @@
-/*  게임 ?��?���?
-    gnum = 게임 ?���? 번호
-    게임 ?���?
-    게임 출시?��
-    개발?��
-    배급?��
-    ?���?
-    �?�?
-    ?���?
-    ?���?
-    게임 ?��?��?��
-    ?��?��?�� 주소
+/*  게임 테이블
+    gnum = 게임 식별 번호
+    게임 제목
+    게임 출시일
+    개발사
+    배급사
+    태그
+    가격
+    설명
+    등급
+    게임 사이트
+    동영상 주소
 */
 
 CREATE SEQUENCE game_num;
@@ -27,14 +27,14 @@ CREATE TABLE game (
 );
 SELECT * FROM game;
 
-/*  게임 ?��?��?�� ?���? ?��?��
-    gnum = 게임 ?���? 번호(?��?��?��)
-    ?��?��체제
-    ?��로세?��
-    메모�?
-    그래?��
+/*  게임 시스템 요구 사항
+    gnum = 게임 식별 번호(외래키)
+    운영체제
+    프로세서
+    메모리
+    그래픽
     DirectX
-    ???��공간
+    저장공간
 */
 CREATE TABLE gameRequirement (
     gnum NUMBER NOT NULL,
@@ -49,10 +49,10 @@ CREATE TABLE gameRequirement (
 
 );
 
-/*  ?��?��?�� ?��?���?
-    email = ?��메일
-    password = 비�?번호
-    google_login_yn	= 구�? 로그?��
+/*  사용자 테이블
+    email = 이메일
+    password = 비밀번호
+    google_login_yn	= 구글 로그인
     
 */
 CREATE SEQUENCE consumer_num;
@@ -61,12 +61,13 @@ CREATE TABLE consumer (
     cid VARCHAR2(20) PRIMARY KEY,
     email VARCHAR2(100) NOT NULL,
     password VARCHAR2(20) NOT NULL,
-    nick_name VARCHAR(20) NOT NULL
+    nickname VARCHAR(20) NOT NULL UNIQUE,
+    cadmin NUMBER(3) DEFAULT 0
 );
 
 
-/*  ?���? ?��?���?
-    ?���?
+/*  사진 테이블
+    시간
     번호
     UUID
 */
@@ -86,9 +87,9 @@ CREATE TABLE gamePicture (
     gpic_time VARCHAR2(20) NOT NULL
 );
 
-/*  ?��?��?�� ?��?��브러�?
-    ?��?��?�� ?��메일
-    게임 ?���? 번호
+/*  사용자 라이브러리
+    사용자 이메일
+    게임 식별 번호
 */
 CREATE TABLE consumerLibrary (
     ubnum number PRIMARY KEY,
@@ -98,23 +99,23 @@ CREATE TABLE consumerLibrary (
     REFERENCES consumer(cid)
 );
 
-/*  구�? 로그?��
-    ?��?��?��
-    ?���? ?��메일
+/*  구글 로그인
+    아이디
+    인증 이메일
     
-    >> user table�? 구�? 로그?�� ?��?���? 컬림?�� 중복?��?�� 분리 ?�� ?��?���? ?��?���? (구�? id = ?��메일, ?���? ?��메일 = ?��메일)
-    , 분리?�� 개발?�� ?��?��?�� ?�� ?�� ?��?��
+    >> user table과 구글 로그인 테이블 컬림이 중복되어 분리 할 이유가 없으며 (구글 id = 이메일, 인증 이메일 = 이메일)
+    , 분리시 개발에 혼동이 올 수 있음
     
-    ?��, ?��???��?��블에 구�? 로그?�� col ?�� 추�??��?��, 구�? 로그?�� ?���?, ?��?��?���? ?��?���??�� ?�� ?���? 구분?? ?��?�� ?��기에 user ?��?��블에 google_login 컬럼?�� 추�? ?��.
+    단, 유저테이블에 구글 로그인 col 을 추가하여, 구글 로그인 인지, 홈페이지 회원가입 자 인지 구분은 필요 하기에 user 테이블에 google_login 컬럼을 추가 함.
     
 CREATE TABLE socialuser(
     
 );
 */
-/*  게임 ?���? ?��?���?
-    ?���? ?���? 번호
-    gnum = 게임 ?���? 번호(?��?��?��)
-    tag = ?���?
+/*  게임 태그 테이블
+    태그 식별 번호
+    gnum = 게임 식별 번호(외래키)
+    tag = 태그
 */
 CREATE SEQUENCE gametag_num;
 CREATE TABLE gameTag (
@@ -125,34 +126,36 @@ CREATE TABLE gameTag (
     REFERENCES game(gnum)
 );
 
-/*  게임 리뷰 ?��?���?
-    grnum = 리뷰 ?���? 번호
-    gnum = 게임 ?���? 번호(?��?��?��)
-    grlike = 좋아?��, ?��?��?��
-    grtitle = ?���?
+/*  게임 리뷰 테이블
+    grnum = 리뷰 식별 번호
+    gnum = 게임 식별 번호(외래키)
+    grlike = 좋아요, 싫어요
+    grtitle = 제목
     grcontent = 본문
-    grrecomment = ?���? 추천 ?��
-    grdate = ?��?��?��
+    grrecomment = 평가 추천 수
+    grdate = 작성일
 */
 CREATE SEQUENCE gamereview_num;
 CREATE TABLE gameReview (
     grnum NUMBER PRIMARY KEY,
     gnum NUMBER NOT NULL,
-    email VARCHAR2(100) NOT NULL,
+    cid VARCHAR2(20) NOT NULL,
     grlike NUMBER(3) NOT NULL,
     grtitle VARCHAR2(100) NOT NULL,
     grcontent VARCHAR2(2000) NOT NULL,
     grrecommend NUMBER,
     grdate DATE DEFAULT sysdate,
     CONSTRAINT fk_gamereview FOREIGN KEY(gnum) 
-    REFERENCES game(gnum)
+    REFERENCES game(gnum),
+    CONSTRAINT fk_consumer FOREIGN KEY(cid) 
+    REFERENCES consumer(cid)
 );
 
-/*  리뷰 ?���? ?��?���?
-    rcnum = ?���? ?���? 번호
-    grnum = 리뷰 ?���? 번호(?��?��?��)
-    rccontent = ?���? 본문
-    rcdate = ?��?��?��
+/*  리뷰 댓글 테이블
+    rcnum = 댓글 식별 번호
+    grnum = 리뷰 식별 번호(외래키)
+    rccontent = 댓글 본문
+    rcdate = 작성일
 */
 CREATE SEQUENCE reviewcomment_num;
 CREATE TABLE reviewComment (
@@ -167,40 +170,40 @@ CREATE TABLE reviewComment (
     REFERENCES consumer(cid)
 );
 
-/*  친구 ?��?���?
-    친구 ?���? 번호(기본?��)
-    친구 ?��메일
-    본인 ?��메일(?��?��?��)
-    ?��로잉(본인?�� ?��른사?��?��)
-    ?��로워(?��른사?��?�� 본인?��)
+/*  친구 테이블
+    친구 식별 번호(기본키)
+    친구 이메일
+    본인 이메일(외래키)
+    팔로잉(본인이 다른사람을)
+    팔로워(다른사람이 본인을)
 */
 CREATE SEQUENCE friends_num;
 CREATE TABLE friends (
     fnum NUMBER PRIMARY KEY,
     follower VARCHAR2(30) NOT NULL,
     following VARCHAR2(30) NOT NULL,
-    CONSTRAINT fk_friends FOREIGN KEY(following) REFERENCES join_user(email)
+    CONSTRAINT fk_friends FOREIGN KEY(following) REFERENCES consumer(cid)
 );
 
-/*  ?��?���? ?��?���?
-    ?��?���? ?���? 번호(기본?��)
-    ?��메일(?��?��?��)
-    ?��?���? ?��?��?��
+/*  상태글 테이블
+    상태글 식별 번호(기본키)
+    이메일(외래키)
+    상태글 작성일
 */
 CREATE SEQUENCE statuscomment_num;
 CREATE TABLE statuscomment(
     snum NUMBER PRIMARY KEY,
-    semail VARCHAR2(30) NOT NULL,
-    CONSTRAINT fk_statuscomment FOREIGN KEY(semail) REFERENCES join_user(email),
+    sid VARCHAR2(30) NOT NULL,
+    CONSTRAINT fk_statuscomment FOREIGN KEY(sid) REFERENCES consumer(cid),
     sdate DATE DEFAULT SYSDATE
 );
 
-/*  Question ?��?���?
-    �? ?���? 번호(기본?��)
-    ?���?
+/*  Question 테이블
+    글 식별 번호(기본키)
+    제목
     본문
-    �??��?��(?��?��?��)
-    질문 ?���?
+    글쓴이(외래키)
+    질문 날짜
 */
 CREATE SEQUENCE question_num;
 CREATE TABLE question (
@@ -212,11 +215,11 @@ CREATE TABLE question (
     qdate DATE DEFAULT SYSDATE
 );
 
-/*  Answer ?��?���?
-    �? ?���? 번호(기본?��)
-    질문�? ?���? 번호(?��?��?��)
+/*  Answer 테이블
+    글 식별 번호(기본키)
+    질문글 식별 번호(외래키)
     본문
-    ?���? ?���?
+    답변 날짜
 */
 CREATE SEQUENCE answer_num;
 CREATE TABLE answer (
@@ -227,13 +230,13 @@ CREATE TABLE answer (
     adate DATE DEFAULT SYSDATE
 );
 
-/*  ?��?��?�� 결제 ?��?��
+/*  사용자 결제 내역
     결제 번호
-    ?��?��?�� ?��메일(?��?��?��)
-    결제 ?���?
+    사용자 이메일(외래키)
+    결제 날짜
     결제 금액
     결제 방법
-    결제 ?��?��
+    결제 상태
 */
 CREATE TABLE consumerPayment (
     upnum NUMBER PRIMARY KEY,
@@ -244,31 +247,31 @@ CREATE TABLE consumerPayment (
     
 );
 
-/*  ?��?��?�� �? 목록
-    �? ?���? 번호
-    ?��?��?�� ?��메일
-    게임 ?���? 번호
+/*  사용자 찜 목록
+    찜 식별 번호
+    사용자 이메일
+    게임 식별 번호
 */
 CREATE SEQUENCE gamewishlist_num;
 CREATE TABLE gameWishlist (
     wishnum NUMBER PRIMARY KEY,
     cid VARCHAR2(20) NOT NULL,
     gnum NUMBER NOT NULL,
-    CONSTRAINTS fk_gamewishlist FOREIGN KEY(cid)REFERENCES consumer(cid),
-    CONSTRAINTS fk_gamewhishlist FOREIGN KEY(gnum)REFERENCES game(gnum)
+    CONSTRAINT fk_gamewishlist FOREIGN KEY(cid)REFERENCES consumer(cid),
+    CONSTRAINT fk_gamewhishlist FOREIGN KEY(gnum)REFERENCES game(gnum)
 );
 
-/*  ��ٱ���
-    ��ٱ��� ��ȣ
-    ����� �̸���
-    ���� �ĺ� ��ȣ
+/*  장바구니
+    장바구니 번호
+    사용자 이메일
+    게임 식별 번호
 */
 CREATE SEQUENCE shoppingbasket_num;
 CREATE TABLE shoppingBasket (
     sbnum NUMBER PRIMARY KEY,
     cid VARCHAR2(20) NOT NULL,
     gnum NUMBER NOT NULL,
-    CONSTRAINTS fk_shoppingbasket FOREIGN KEY(cid)REFERENCES consumer(cid),
-    CONSTRAINTS fk_shoppingbasket FOREIGN KEY(gnum)REFERENCES game(gnum)
+    CONSTRAINT fk_shoppingbasket FOREIGN KEY(cid)REFERENCES consumer(cid),
+    CONSTRAINT fk_shoppingbasket FOREIGN KEY(gnum)REFERENCES game(gnum)
 
 );

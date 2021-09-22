@@ -3,10 +3,11 @@ package org.game.friends.mapper;
 import java.util.List;
 
 import org.game.friends.domain.FriendsVO;
+import org.game.user.domain.ConsumerVO;
 
 public interface FriendsMapper {
 	// 친구 추가를 위한 전체 회원 조회 
-	// public List<CostomerVO> getUser();
+	public List<ConsumerVO> getUser();
 	
 	// 친구 추가(insert-selectKey)
 	public void insertFriend(FriendsVO vo);
