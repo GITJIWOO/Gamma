@@ -61,7 +61,7 @@ CREATE TABLE consumer (
     cid VARCHAR2(20) PRIMARY KEY,
     email VARCHAR2(100) NOT NULL,
     password VARCHAR2(20) NOT NULL,
-    nick_name VARCHAR(20) NOT NULL,
+    nick_name VARCHAR(20) NOT NULL UNIQUE,
     cadmin NUMBER(3) DEFAULT 0
 );
 
