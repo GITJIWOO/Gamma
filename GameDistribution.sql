@@ -116,10 +116,11 @@ CREATE TABLE socialuser(
     gnum = 게임 식별 번호(외래키)
     tag = 태그
 */
-
+CREATE SEQUENCE gametag_num;
 CREATE TABLE gameTag (
-    tagname VARCHAR2(100) PRIMARY KEY,
-    gnum NUMBER,
+    gtnum NUMBER PRIMARY KEY,
+    tagname VARCHAR2(100) NOT NULL,
+    gnum NUMBER NOT NULL,
     CONSTRAINT fk_gametag FOREIGN KEY(gnum) 
     REFERENCES game(gnum)
 );
