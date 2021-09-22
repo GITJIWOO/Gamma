@@ -55,7 +55,7 @@ CREATE TABLE gameRequirement (
     google_login_yn	= 구글 로그인
 
 */
-CREATE TABLE user (
+CREATE TABLE consumer (
     email VARCHAR2(100) PRIMARY KEY,
     password VARCHAR2(20) NOT NULL,
     nick_name VARCHAR(20) NOT NULL
