@@ -38,13 +38,13 @@ SELECT * FROM game;
 */
 CREATE TABLE gameRequirement (
     gnum NUMBER NOT NULL,
-    gos VARCHAR2(100) NOT NULL,
+    gos VARCHAR2(100) PRIMARY KEY,
     gprocessor VARCHAR2(100) NOT NULL,
     gmemory VARCHAR2(100) NOT NULL,
     ggraphic VARCHAR2(100) NOT NULL,
     gdirectx VARCHAR2(100) NOT NULL,
     gstore VARCHAR2(100) NOT NULL,
-    CONSTRAINTS fk_gameRequirement FOREIGN KEY(gnum) 
+    CONSTRAINT fk_gameRequirement FOREIGN KEY(gnum) 
     REFERENCES game(gnum)
 
 );
@@ -55,8 +55,11 @@ CREATE TABLE gameRequirement (
     google_login_yn	= 구글 로그인
     
 */
-CREATE TABLE user (
-    email VARCHAR2(100) PRIMARY KEY,
+CREATE SEQUENCE consumer_num;
+CREATE TABLE consumer (
+    cnum NUMBER,
+    cid VARCHAR2(20) PRIMARY KEY,
+    email VARCHAR2(100) NOT NULL,
     password VARCHAR2(20) NOT NULL,
     nick_name VARCHAR(20) NOT NULL
 );
@@ -67,13 +70,13 @@ CREATE TABLE user (
     번호
     UUID
 */
-CREATE TABLE userPicture (
+CREATE TABLE consumerPicture (
     uuid VARCHAR2(100) PRIMARY KEY,
-    email VARCHAR2(100),
+    cid VARCHAR2(100),
     upic_num VARCHAR2(20),
     upic_time VARCHAR2(20),
-    CONSTRAINT fk_userPicture FOREIGN KEY (email)
-    REFERENCES user(email)
+    CONSTRAINT fk_Picture FOREIGN KEY (cid)
+    REFERENCES consumer(cid)
 );
 
 CREATE TABLE gamePicture (
@@ -87,12 +90,12 @@ CREATE TABLE gamePicture (
     사용자 이메일
     게임 식별 번호
 */
-CREATE TABLE userLibrary (
+CREATE TABLE consumerLibrary (
     ubnum number PRIMARY KEY,
-    email VARCHAR2(100),
+    cid VARCHAR2(100),
     gnum NUMBER,
-    CONSTRAINT fk_userlibrary FOREIGN KEY (email)
-    REFERENCES user(email)
+    CONSTRAINT fk_consumerlibrary FOREIGN KEY (cid)
+    REFERENCES consumer(cid)
 );
 
 /*  구글 로그인
@@ -156,11 +159,13 @@ CREATE SEQUENCE reviewcomment_num;
 CREATE TABLE reviewComment (
     rcnum NUMBER PRIMARY KEY,
     grnum NUMBER,
-    email VARCHAR2(100) NOT NULL,
+    cid VARCHAR2(20) NOT NULL,
     rccontent VARCHAR2(1000) NOT NULL,
     rcdate DATE DEFAULT sysdate,
     CONSTRAINT fk_reviewcomment FOREIGN KEY(grnum) 
-    REFERENCES gamereview(grnum)
+    REFERENCES gamereview(grnum),
+    CONSTRAINT fk_consumer FOREIGN KEY(cid) 
+    REFERENCES consumer(cid)
 );
 
 /*  친구 테이블
@@ -203,8 +208,13 @@ CREATE TABLE question (
     qnum NUMBER PRIMARY KEY,
     qtitle VARCHAR2(50) NOT NULL,
     qcontent VARCHAR2(1000) NOT NULL,
+<<<<<<< HEAD
     qemail VARCHAR2(30) NOT NULL,
     CONSTRAINT fk_question FOREIGN KEY(qemail) REFERENCES join_user(email),
+=======
+    qwriter VARCHAR2(30) NOT NULL,
+    CONSTRAINT fk_question FOREIGN KEY(qwriter) REFERENCES consumer(cid),
+>>>>>>> master
     qdate DATE DEFAULT SYSDATE
 );
 
@@ -231,7 +241,7 @@ CREATE TABLE answer (
     결제 방법
     결제 상태
 */
-CREATE TABLE userPayment (
+CREATE TABLE consumerPayment (
     upnum NUMBER PRIMARY KEY,
     email VARCHAR2(100) PRIMARY KEY,
     upday DATE DEFAULT sysdate,
@@ -248,22 +258,30 @@ CREATE TABLE userPayment (
 CREATE SEQUENCE gamewishlist_num;
 CREATE TABLE gameWishlist (
     wishnum NUMBER PRIMARY KEY,
-    email VARCHAR2(100) NOT NULL,
+    cid VARCHAR2(20) NOT NULL,
     gnum NUMBER NOT NULL,
-    CONSTRAINTS fk_gamewishlist FOREIGN KEY(email)REFERENCES join_user(email),
+    CONSTRAINTS fk_gamewishlist FOREIGN KEY(cid)REFERENCES consumer(cid),
     CONSTRAINTS fk_gamewhishlist FOREIGN KEY(gnum)REFERENCES game(gnum)
 );
+<<<<<<< HEAD
 /*  장바구니
     장바구니 번호
     사용자 이메일
     게임 식별 번호
+=======
+
+/*  ��ٱ���
+    ��ٱ��� ��ȣ
+    ����� �̸���
+    ���� �ĺ� ��ȣ
+>>>>>>> master
 */
 CREATE SEQUENCE shoppingbasket_num;
 CREATE TABLE shoppingBasket (
     sbnum NUMBER PRIMARY KEY,
-    email VARCHAR2(100) NOT NULL,
+    cid VARCHAR2(20) NOT NULL,
     gnum NUMBER NOT NULL,
-    CONSTRAINTS fk_shoppingbasket FOREIGN KEY(email)REFERENCES join_user(email),
+    CONSTRAINTS fk_shoppingbasket FOREIGN KEY(cid)REFERENCES consumer(cid),
     CONSTRAINTS fk_shoppingbasket FOREIGN KEY(gnum)REFERENCES game(gnum)
 
 );
