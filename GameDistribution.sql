@@ -38,13 +38,13 @@ SELECT * FROM game;
 */
 CREATE TABLE gameRequirement (
     gnum NUMBER NOT NULL,
-    gos VARCHAR2(100) NOT NULL,
+    gos VARCHAR2(100) PRIMARY KEY,
     gprocessor VARCHAR2(100) NOT NULL,
     gmemory VARCHAR2(100) NOT NULL,
     ggraphic VARCHAR2(100) NOT NULL,
     gdirectx VARCHAR2(100) NOT NULL,
     gstore VARCHAR2(100) NOT NULL,
-    CONSTRAINTS fk_gameRequirement FOREIGN KEY(gnum) 
+    CONSTRAINT fk_gameRequirement FOREIGN KEY(gnum) 
     REFERENCES game(gnum)
 
 );
