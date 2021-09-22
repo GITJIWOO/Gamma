@@ -9,7 +9,7 @@ public class ReviewCommentVO {
 	
 	private long rcnum;
 	private long grnum;
-	private String email;
+	private String cid;
 	private String rccontent;
 	private Date rcdate;
 }

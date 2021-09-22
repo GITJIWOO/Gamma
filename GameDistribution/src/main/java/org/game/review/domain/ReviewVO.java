@@ -8,7 +8,7 @@ import lombok.Data;
 public class ReviewVO {
 	private long grnum;
 	private long gnum;
-	private String email;
+	private String cid;
 	private int grlike;
 	private String grtitle;
 	private String grcontent;
