@@ -27,13 +27,35 @@ CREATE TABLE game (
 );
 SELECT * FROM game;
 
+/*  게임 시스템 요구 사항
+    gnum = 게임 식별 번호(외래키)
+    운영체제
+    프로세서
+    메모리
+    그래픽
+    DirectX
+    저장공간
+*/
+CREATE TABLE gameRequirement (
+    gnum NUMBER NOT NULL,
+    gos VARCHAR2(100) PRIMARY KEY,
+    gprocessor VARCHAR2(100) NOT NULL,
+    gmemory VARCHAR2(100) NOT NULL,
+    ggraphic VARCHAR2(100) NOT NULL,
+    gdirectx VARCHAR2(100) NOT NULL,
+    gstore VARCHAR2(100) NOT NULL,
+    CONSTRAINT fk_gameRequirement FOREIGN KEY(gnum) 
+    REFERENCES game(gnum)
+
+);
+
 /*  사용자 테이블
     email = 이메일
     password = 비밀번호
     google_login_yn	= 구글 로그인
 
 */
-CREATE TABLE user (
+CREATE TABLE consumer (
     email VARCHAR2(100) PRIMARY KEY,
     password VARCHAR2(20) NOT NULL,
     nick_name VARCHAR(20) NOT NULL
