@@ -1,15 +1,15 @@
-/*  °ÔÀÓ Å×ÀÌºí
-    gnum = °ÔÀÓ ½Äº° ¹øÈ£
-    °ÔÀÓ Á¦¸ñ
-    °ÔÀÓ Ãâ½ÃÀÏ
-    °³¹ß»ç
-    ¹è±Þ»ç
-    ÅÂ±×
-    °¡°Ý
-    ¼³¸í
-    µî±Þ
-    °ÔÀÓ »çÀÌÆ®
-    µ¿¿µ»ó ÁÖ¼Ò
+/*  ê²Œìž„ ?ï¿½ï¿½?ï¿½ï¿½ï¿½?
+    gnum = ê²Œìž„ ?ï¿½ï¿½ï¿½? ë²ˆí˜¸
+    ê²Œìž„ ?ï¿½ï¿½ï¿½?
+    ê²Œìž„ ì¶œì‹œ?ï¿½ï¿½
+    ê°œë°œ?ï¿½ï¿½
+    ë°°ê¸‰?ï¿½ï¿½
+    ?ï¿½ï¿½ï¿½?
+    ï¿½?ï¿½?
+    ?ï¿½ï¿½ï¿½?
+    ?ï¿½ï¿½ï¿½?
+    ê²Œìž„ ?ï¿½ï¿½?ï¿½ï¿½?ï¿½ï¿½
+    ?ï¿½ï¿½?ï¿½ï¿½?ï¿½ï¿½ ì£¼ì†Œ
 */
 
 CREATE SEQUENCE game_num;
@@ -27,14 +27,14 @@ CREATE TABLE game (
 );
 SELECT * FROM game;
 
-/*  °ÔÀÓ ½Ã½ºÅÛ ¿ä±¸ »çÇ×
-    gnum = °ÔÀÓ ½Äº° ¹øÈ£(¿Ü·¡Å°)
-    ¿î¿µÃ¼Á¦
-    ÇÁ·Î¼¼¼­
-    ¸Þ¸ð¸®
-    ±×·¡ÇÈ
+/*  ê²Œìž„ ?ï¿½ï¿½?ï¿½ï¿½?ï¿½ï¿½ ?ï¿½ï¿½ï¿½? ?ï¿½ï¿½?ï¿½ï¿½
+    gnum = ê²Œìž„ ?ï¿½ï¿½ï¿½? ë²ˆí˜¸(?ï¿½ï¿½?ï¿½ï¿½?ï¿½ï¿½)
+    ?ï¿½ï¿½?ï¿½ï¿½ì²´ì œ
+    ?ï¿½ï¿½ë¡œì„¸?ï¿½ï¿½
+    ë©”ëª¨ï¿½?
+    ê·¸ëž˜?ï¿½ï¿½
     DirectX
-    ÀúÀå°ø°£
+    ???ï¿½ï¿½ê³µê°„
 */
 CREATE TABLE gameRequirement (
     gnum NUMBER NOT NULL,
@@ -49,11 +49,11 @@ CREATE TABLE gameRequirement (
 
 );
 
-/*  »ç¿ëÀÚ Å×ÀÌºí
-    email = ÀÌ¸ÞÀÏ
-    password = ºñ¹Ð¹øÈ£
-    google_login_yn	= ±¸±Û ·Î±×ÀÎ
-
+/*  ?ï¿½ï¿½?ï¿½ï¿½?ï¿½ï¿½ ?ï¿½ï¿½?ï¿½ï¿½ï¿½?
+    email = ?ï¿½ï¿½ë©”ì¼
+    password = ë¹„ï¿½?ë²ˆí˜¸
+    google_login_yn	= êµ¬ï¿½? ë¡œê·¸?ï¿½ï¿½
+    
 */
 CREATE SEQUENCE consumer_num;
 CREATE TABLE consumer (
@@ -61,13 +61,14 @@ CREATE TABLE consumer (
     cid VARCHAR2(20) PRIMARY KEY,
     email VARCHAR2(100) NOT NULL,
     password VARCHAR2(20) NOT NULL,
-    nick_name VARCHAR(20) NOT NULL
+    nick_name VARCHAR(20) NOT NULL UNIQUE,
+    cadmin NUMBER(3) DEFAULT 0
 );
 
 
-/*  »çÁø Å×ÀÌºí
-    ½Ã°£
-    ¹øÈ£
+/*  ?ï¿½ï¿½ï¿½? ?ï¿½ï¿½?ï¿½ï¿½ï¿½?
+    ?ï¿½ï¿½ï¿½?
+    ë²ˆí˜¸
     UUID
 */
 CREATE TABLE consumerPicture (
@@ -86,9 +87,9 @@ CREATE TABLE gamePicture (
     gpic_time VARCHAR2(20) NOT NULL
 );
 
-/*  »ç¿ëÀÚ ¶óÀÌºê·¯¸®
-    »ç¿ëÀÚ ÀÌ¸ÞÀÏ
-    °ÔÀÓ ½Äº° ¹øÈ£
+/*  ?ï¿½ï¿½?ï¿½ï¿½?ï¿½ï¿½ ?ï¿½ï¿½?ï¿½ï¿½ë¸ŒëŸ¬ï¿½?
+    ?ï¿½ï¿½?ï¿½ï¿½?ï¿½ï¿½ ?ï¿½ï¿½ë©”ì¼
+    ê²Œìž„ ?ï¿½ï¿½ï¿½? ë²ˆí˜¸
 */
 CREATE TABLE consumerLibrary (
     ubnum number PRIMARY KEY,
@@ -98,23 +99,23 @@ CREATE TABLE consumerLibrary (
     REFERENCES consumer(cid)
 );
 
-/*  ±¸±Û ·Î±×ÀÎ
-    ¾ÆÀÌµð
-    ÀÎÁõ ÀÌ¸ÞÀÏ
+/*  êµ¬ï¿½? ë¡œê·¸?ï¿½ï¿½
+    ?ï¿½ï¿½?ï¿½ï¿½?ï¿½ï¿½
+    ?ï¿½ï¿½ï¿½? ?ï¿½ï¿½ë©”ì¼
     
-    >> user table°ú ±¸±Û ·Î±×ÀÎ Å×ÀÌºí ÄÃ¸²ÀÌ Áßº¹µÇ¾î ºÐ¸® ÇÒ ÀÌÀ¯°¡ ¾øÀ¸¸ç (±¸±Û id = ÀÌ¸ÞÀÏ, ÀÎÁõ ÀÌ¸ÞÀÏ = ÀÌ¸ÞÀÏ)
-    , ºÐ¸®½Ã °³¹ß¿¡ È¥µ¿ÀÌ ¿Ã ¼ö ÀÖÀ½
+    >> user tableï¿½? êµ¬ï¿½? ë¡œê·¸?ï¿½ï¿½ ?ï¿½ï¿½?ï¿½ï¿½ï¿½? ì»¬ë¦¼?ï¿½ï¿½ ì¤‘ë³µ?ï¿½ï¿½?ï¿½ï¿½ ë¶„ë¦¬ ?ï¿½ï¿½ ?ï¿½ï¿½?ï¿½ï¿½ï¿½? ?ï¿½ï¿½?ï¿½ï¿½ï¿½? (êµ¬ï¿½? id = ?ï¿½ï¿½ë©”ì¼, ?ï¿½ï¿½ï¿½? ?ï¿½ï¿½ë©”ì¼ = ?ï¿½ï¿½ë©”ì¼)
+    , ë¶„ë¦¬?ï¿½ï¿½ ê°œë°œ?ï¿½ï¿½ ?ï¿½ï¿½?ï¿½ï¿½?ï¿½ï¿½ ?ï¿½ï¿½ ?ï¿½ï¿½ ?ï¿½ï¿½?ï¿½ï¿½
     
-    ´Ü, À¯ÀúÅ×ÀÌºí¿¡ ±¸±Û ·Î±×ÀÎ col À» Ãß°¡ÇÏ¿©, ±¸±Û ·Î±×ÀÎ ÀÎÁö, È¨ÆäÀÌÁö È¸¿ø°¡ÀÔ ÀÚ ÀÎÁö ±¸ºÐÀº ÇÊ¿ä ÇÏ±â¿¡ user Å×ÀÌºí¿¡ google_login ÄÃ·³À» Ãß°¡ ÇÔ.
+    ?ï¿½ï¿½, ?ï¿½ï¿½???ï¿½ï¿½?ï¿½ï¿½ë¸”ì— êµ¬ï¿½? ë¡œê·¸?ï¿½ï¿½ col ?ï¿½ï¿½ ì¶”ï¿½??ï¿½ï¿½?ï¿½ï¿½, êµ¬ï¿½? ë¡œê·¸?ï¿½ï¿½ ?ï¿½ï¿½ï¿½?, ?ï¿½ï¿½?ï¿½ï¿½?ï¿½ï¿½ï¿½? ?ï¿½ï¿½?ï¿½ï¿½ï¿½??ï¿½ï¿½ ?ï¿½ï¿½ ?ï¿½ï¿½ï¿½? êµ¬ë¶„?? ?ï¿½ï¿½?ï¿½ï¿½ ?ï¿½ï¿½ê¸°ì— user ?ï¿½ï¿½?ï¿½ï¿½ë¸”ì— google_login ì»¬ëŸ¼?ï¿½ï¿½ ì¶”ï¿½? ?ï¿½ï¿½.
     
 CREATE TABLE socialuser(
     
 );
 */
-/*  °ÔÀÓ ÅÂ±× Å×ÀÌºí
-    ÅÂ±× ½Äº° ¹øÈ£
-    gnum = °ÔÀÓ ½Äº° ¹øÈ£(¿Ü·¡Å°)
-    tag = ÅÂ±×
+/*  ê²Œìž„ ?ï¿½ï¿½ï¿½? ?ï¿½ï¿½?ï¿½ï¿½ï¿½?
+    ?ï¿½ï¿½ï¿½? ?ï¿½ï¿½ï¿½? ë²ˆí˜¸
+    gnum = ê²Œìž„ ?ï¿½ï¿½ï¿½? ë²ˆí˜¸(?ï¿½ï¿½?ï¿½ï¿½?ï¿½ï¿½)
+    tag = ?ï¿½ï¿½ï¿½?
 */
 CREATE SEQUENCE gametag_num;
 CREATE TABLE gameTag (
@@ -125,34 +126,36 @@ CREATE TABLE gameTag (
     REFERENCES game(gnum)
 );
 
-/*  °ÔÀÓ ¸®ºä Å×ÀÌºí
-    grnum = ¸®ºä ½Äº° ¹øÈ£
-    gnum = °ÔÀÓ ½Äº° ¹øÈ£(¿Ü·¡Å°)
-    grlike = ÁÁ¾Æ¿ä, ½È¾î¿ä
-    grtitle = Á¦¸ñ
-    grcontent = º»¹®
-    grrecomment = Æò°¡ ÃßÃµ ¼ö
-    grdate = ÀÛ¼ºÀÏ
+/*  ê²Œìž„ ë¦¬ë·° ?ï¿½ï¿½?ï¿½ï¿½ï¿½?
+    grnum = ë¦¬ë·° ?ï¿½ï¿½ï¿½? ë²ˆí˜¸
+    gnum = ê²Œìž„ ?ï¿½ï¿½ï¿½? ë²ˆí˜¸(?ï¿½ï¿½?ï¿½ï¿½?ï¿½ï¿½)
+    grlike = ì¢‹ì•„?ï¿½ï¿½, ?ï¿½ï¿½?ï¿½ï¿½?ï¿½ï¿½
+    grtitle = ?ï¿½ï¿½ï¿½?
+    grcontent = ë³¸ë¬¸
+    grrecomment = ?ï¿½ï¿½ï¿½? ì¶”ì²œ ?ï¿½ï¿½
+    grdate = ?ï¿½ï¿½?ï¿½ï¿½?ï¿½ï¿½
 */
 CREATE SEQUENCE gamereview_num;
 CREATE TABLE gameReview (
     grnum NUMBER PRIMARY KEY,
     gnum NUMBER NOT NULL,
-    email VARCHAR2(100) NOT NULL,
+    cid VARCHAR2(20) NOT NULL,
     grlike NUMBER(3) NOT NULL,
     grtitle VARCHAR2(100) NOT NULL,
     grcontent VARCHAR2(2000) NOT NULL,
     grrecommend NUMBER,
     grdate DATE DEFAULT sysdate,
     CONSTRAINT fk_gamereview FOREIGN KEY(gnum) 
-    REFERENCES game(gnum)
+    REFERENCES game(gnum),
+    CONSTRAINT fk_consumer FOREIGN KEY(cid) 
+    REFERENCES consumer(cid)
 );
 
-/*  ¸®ºä ´ñ±Û Å×ÀÌºí
-    rcnum = ´ñ±Û ½Äº° ¹øÈ£
-    grnum = ¸®ºä ½Äº° ¹øÈ£(¿Ü·¡Å°)
-    rccontent = ´ñ±Û º»¹®
-    rcdate = ÀÛ¼ºÀÏ
+/*  ë¦¬ë·° ?ï¿½ï¿½ï¿½? ?ï¿½ï¿½?ï¿½ï¿½ï¿½?
+    rcnum = ?ï¿½ï¿½ï¿½? ?ï¿½ï¿½ï¿½? ë²ˆí˜¸
+    grnum = ë¦¬ë·° ?ï¿½ï¿½ï¿½? ë²ˆí˜¸(?ï¿½ï¿½?ï¿½ï¿½?ï¿½ï¿½)
+    rccontent = ?ï¿½ï¿½ï¿½? ë³¸ë¬¸
+    rcdate = ?ï¿½ï¿½?ï¿½ï¿½?ï¿½ï¿½
 */
 CREATE SEQUENCE reviewcomment_num;
 CREATE TABLE reviewComment (
@@ -167,27 +170,25 @@ CREATE TABLE reviewComment (
     REFERENCES consumer(cid)
 );
 
-/*  Ä£±¸ Å×ÀÌºí
-    Ä£±¸ ½Äº° ¹øÈ£(±âº»Å°)
-    Ä£±¸ ÀÌ¸ÞÀÏ
-    º»ÀÎ ÀÌ¸ÞÀÏ(¿Ü·¡Å°)
-    ÆÈ·ÎÀ×(º»ÀÎÀÌ ´Ù¸¥»ç¶÷À»)
-    ÆÈ·Î¿ö(´Ù¸¥»ç¶÷ÀÌ º»ÀÎÀ»)
+/*  ì¹œêµ¬ ?ï¿½ï¿½?ï¿½ï¿½ï¿½?
+    ì¹œêµ¬ ?ï¿½ï¿½ï¿½? ë²ˆí˜¸(ê¸°ë³¸?ï¿½ï¿½)
+    ì¹œêµ¬ ?ï¿½ï¿½ë©”ì¼
+    ë³¸ì¸ ?ï¿½ï¿½ë©”ì¼(?ï¿½ï¿½?ï¿½ï¿½?ï¿½ï¿½)
+    ?ï¿½ï¿½ë¡œìž‰(ë³¸ì¸?ï¿½ï¿½ ?ï¿½ï¿½ë¥¸ì‚¬?ï¿½ï¿½?ï¿½ï¿½)
+    ?ï¿½ï¿½ë¡œì›Œ(?ï¿½ï¿½ë¥¸ì‚¬?ï¿½ï¿½?ï¿½ï¿½ ë³¸ì¸?ï¿½ï¿½)
 */
 CREATE SEQUENCE friends_num;
 CREATE TABLE friends (
     fnum NUMBER PRIMARY KEY,
-    femail VARCHAR2(30) NOT NULL,
-    memail VARCHAR2(30) NOT NULL,
-    CONSTRAINT fk_friends FOREIGN KEY(memail) REFERENCES join_user(email),
-    following NUMBER DEFAULT 1,
-    follower NUMBER DEFAULT 1
+    follower VARCHAR2(30) NOT NULL,
+    following VARCHAR2(30) NOT NULL,
+    CONSTRAINT fk_friends FOREIGN KEY(following) REFERENCES join_user(email)
 );
 
-/*  »óÅÂ±Û Å×ÀÌºí
-    »óÅÂ±Û ½Äº° ¹øÈ£(±âº»Å°)
-    ÀÌ¸ÞÀÏ(¿Ü·¡Å°)
-    »óÅÂ±Û ÀÛ¼ºÀÏ
+/*  ?ï¿½ï¿½?ï¿½ï¿½ï¿½? ?ï¿½ï¿½?ï¿½ï¿½ï¿½?
+    ?ï¿½ï¿½?ï¿½ï¿½ï¿½? ?ï¿½ï¿½ï¿½? ë²ˆí˜¸(ê¸°ë³¸?ï¿½ï¿½)
+    ?ï¿½ï¿½ë©”ì¼(?ï¿½ï¿½?ï¿½ï¿½?ï¿½ï¿½)
+    ?ï¿½ï¿½?ï¿½ï¿½ï¿½? ?ï¿½ï¿½?ï¿½ï¿½?ï¿½ï¿½
 */
 CREATE SEQUENCE statuscomment_num;
 CREATE TABLE statuscomment(
@@ -197,12 +198,12 @@ CREATE TABLE statuscomment(
     sdate DATE DEFAULT SYSDATE
 );
 
-/*  Question Å×ÀÌºí
-    ±Û ½Äº° ¹øÈ£(±âº»Å°)
-    Á¦¸ñ
-    º»¹®
-    ±Û¾´ÀÌ(¿Ü·¡Å°)
-    Áú¹® ³¯Â¥
+/*  Question ?ï¿½ï¿½?ï¿½ï¿½ï¿½?
+    ï¿½? ?ï¿½ï¿½ï¿½? ë²ˆí˜¸(ê¸°ë³¸?ï¿½ï¿½)
+    ?ï¿½ï¿½ï¿½?
+    ë³¸ë¬¸
+    ï¿½??ï¿½ï¿½?ï¿½ï¿½(?ï¿½ï¿½?ï¿½ï¿½?ï¿½ï¿½)
+    ì§ˆë¬¸ ?ï¿½ï¿½ï¿½?
 */
 CREATE SEQUENCE question_num;
 CREATE TABLE question (
@@ -214,11 +215,11 @@ CREATE TABLE question (
     qdate DATE DEFAULT SYSDATE
 );
 
-/*  Answer Å×ÀÌºí
-    ±Û ½Äº° ¹øÈ£(±âº»Å°)
-    Áú¹®±Û ½Äº° ¹øÈ£(¿Ü·¡Å°)
-    º»¹®
-    ´äº¯ ³¯Â¥
+/*  Answer ?ï¿½ï¿½?ï¿½ï¿½ï¿½?
+    ï¿½? ?ï¿½ï¿½ï¿½? ë²ˆí˜¸(ê¸°ë³¸?ï¿½ï¿½)
+    ì§ˆë¬¸ï¿½? ?ï¿½ï¿½ï¿½? ë²ˆí˜¸(?ï¿½ï¿½?ï¿½ï¿½?ï¿½ï¿½)
+    ë³¸ë¬¸
+    ?ï¿½ï¿½ï¿½? ?ï¿½ï¿½ï¿½?
 */
 CREATE SEQUENCE answer_num;
 CREATE TABLE answer (
@@ -229,13 +230,13 @@ CREATE TABLE answer (
     adate DATE DEFAULT SYSDATE
 );
 
-/*  »ç¿ëÀÚ °áÁ¦ ³»¿ª
-    °áÁ¦ ¹øÈ£
-    »ç¿ëÀÚ ÀÌ¸ÞÀÏ(¿Ü·¡Å°)
-    °áÁ¦ ³¯Â¥
-    °áÁ¦ ±Ý¾×
-    °áÁ¦ ¹æ¹ý
-    °áÁ¦ »óÅÂ
+/*  ?ï¿½ï¿½?ï¿½ï¿½?ï¿½ï¿½ ê²°ì œ ?ï¿½ï¿½?ï¿½ï¿½
+    ê²°ì œ ë²ˆí˜¸
+    ?ï¿½ï¿½?ï¿½ï¿½?ï¿½ï¿½ ?ï¿½ï¿½ë©”ì¼(?ï¿½ï¿½?ï¿½ï¿½?ï¿½ï¿½)
+    ê²°ì œ ?ï¿½ï¿½ï¿½?
+    ê²°ì œ ê¸ˆì•¡
+    ê²°ì œ ë°©ë²•
+    ê²°ì œ ?ï¿½ï¿½?ï¿½ï¿½
 */
 CREATE TABLE consumerPayment (
     upnum NUMBER PRIMARY KEY,
@@ -246,31 +247,31 @@ CREATE TABLE consumerPayment (
     
 );
 
-/*  »ç¿ëÀÚ Âò ¸ñ·Ï
-    Âò ½Äº° ¹øÈ£
-    »ç¿ëÀÚ ÀÌ¸ÞÀÏ
-    °ÔÀÓ ½Äº° ¹øÈ£
+/*  ?ï¿½ï¿½?ï¿½ï¿½?ï¿½ï¿½ ï¿½? ëª©ë¡
+    ï¿½? ?ï¿½ï¿½ï¿½? ë²ˆí˜¸
+    ?ï¿½ï¿½?ï¿½ï¿½?ï¿½ï¿½ ?ï¿½ï¿½ë©”ì¼
+    ê²Œìž„ ?ï¿½ï¿½ï¿½? ë²ˆí˜¸
 */
 CREATE SEQUENCE gamewishlist_num;
 CREATE TABLE gameWishlist (
     wishnum NUMBER PRIMARY KEY,
     cid VARCHAR2(20) NOT NULL,
     gnum NUMBER NOT NULL,
-    CONSTRAINTS fk_gamewishlist FOREIGN KEY(cid)REFERENCES consumer(cid),
-    CONSTRAINTS fk_gamewhishlist FOREIGN KEY(gnum)REFERENCES game(gnum)
+    CONSTRAINT fk_gamewishlist FOREIGN KEY(cid)REFERENCES consumer(cid),
+    CONSTRAINT fk_gamewhishlist FOREIGN KEY(gnum)REFERENCES game(gnum)
 );
 
-/*  Àå¹Ù±¸´Ï
-    Àå¹Ù±¸´Ï ¹øÈ£
-    »ç¿ëÀÚ ÀÌ¸ÞÀÏ
-    °ÔÀÓ ½Äº° ¹øÈ£
+/*  ï¿½ï¿½Ù±ï¿½ï¿½ï¿½
+    ï¿½ï¿½Ù±ï¿½ï¿½ï¿½ ï¿½ï¿½È£
+    ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ì¸ï¿½ï¿½ï¿½
+    ï¿½ï¿½ï¿½ï¿½ ï¿½Äºï¿½ ï¿½ï¿½È£
 */
 CREATE SEQUENCE shoppingbasket_num;
 CREATE TABLE shoppingBasket (
     sbnum NUMBER PRIMARY KEY,
     cid VARCHAR2(20) NOT NULL,
     gnum NUMBER NOT NULL,
-    CONSTRAINTS fk_shoppingbasket FOREIGN KEY(cid)REFERENCES consumer(cid),
-    CONSTRAINTS fk_shoppingbasket FOREIGN KEY(gnum)REFERENCES game(gnum)
+    CONSTRAINT fk_shoppingbasket FOREIGN KEY(cid)REFERENCES consumer(cid),
+    CONSTRAINT fk_shoppingbasket FOREIGN KEY(gnum)REFERENCES game(gnum)
 
 );
