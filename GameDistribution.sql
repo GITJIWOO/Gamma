@@ -1,3 +1,9 @@
+/*  미완성 테이블
+    consumerPicture
+    gamePicture
+    consumerPayment
+*/
+
 /*  게임 테이블
     gnum = 게임 식별 번호
     게임 제목
@@ -50,24 +56,28 @@ CREATE TABLE gameRequirement (
 );
 
 /*  사용자 테이블
+    cnum = 사용자 식별 번호
+    cid = 아이디
     email = 이메일
     password = 비밀번호
-    google_login_yn	= 구글 로그인
-    
+    nickname = 닉네임
+    cadmin = 관리자 여부(0 = 일반 사용자)
 */
 CREATE SEQUENCE consumer_num;
 CREATE TABLE consumer (
-    cnum NUMBER,
-    cid VARCHAR2(20) PRIMARY KEY,
+    cnum NUMBER PRIMARY KEY,
+    cid VARCHAR2(20) NOT NULL UNIQUE,
     email VARCHAR2(100) NOT NULL,
     password VARCHAR2(20) NOT NULL,
     nickname VARCHAR(20) NOT NULL UNIQUE,
     cadmin NUMBER(3) DEFAULT 0
 );
-
+INSERT INTO consumer(cid, email, password, nickname, cadmin) 
+    VALUES('kjw011231', 'kjw0111231@gmail.com', 'rlawldn', '김지우', 1);
 
 /*  사진 테이블
     시간
+    외래키
     번호
     UUID
 */
@@ -76,7 +86,7 @@ CREATE TABLE consumerPicture (
     cid VARCHAR2(100),
     upic_num VARCHAR2(20),
     upic_time VARCHAR2(20),
-    CONSTRAINT fk_Picture FOREIGN KEY (cid)
+    CONSTRAINT fk_consumerPicture FOREIGN KEY (cid)
     REFERENCES consumer(cid)
 );
 
@@ -84,7 +94,9 @@ CREATE TABLE gamePicture (
     uuid VARCHAR2(100) PRIMARY KEY,
     gnum NUMBER NOT NULL,
     gpic_num VARCHAR2(20) NOT NULL,
-    gpic_time VARCHAR2(20) NOT NULL
+    gpic_time VARCHAR2(20) NOT NULL,
+    CONSTRAINT fk_gamePicture FOREIGN KEY (gnum)
+    REFERENCES game(gnum)
 );
 
 /*  사용자 라이브러리
@@ -96,22 +108,11 @@ CREATE TABLE consumerLibrary (
     cid VARCHAR2(100),
     gnum NUMBER,
     CONSTRAINT fk_consumerlibrary FOREIGN KEY (cid)
-    REFERENCES consumer(cid)
+    REFERENCES consumer(cid),
+    CONSTRAINT fk_consumerlibrary FOREIGN KEY (gnum)
+    REFERENCES game(gnum)
 );
 
-/*  구글 로그인
-    아이디
-    인증 이메일
-    
-    >> user table과 구글 로그인 테이블 컬림이 중복되어 분리 할 이유가 없으며 (구글 id = 이메일, 인증 이메일 = 이메일)
-    , 분리시 개발에 혼동이 올 수 있음
-    
-    단, 유저테이블에 구글 로그인 col 을 추가하여, 구글 로그인 인지, 홈페이지 회원가입 자 인지 구분은 필요 하기에 user 테이블에 google_login 컬럼을 추가 함.
-    
-CREATE TABLE socialuser(
-    
-);
-*/
 /*  게임 태그 테이블
     태그 식별 번호
     gnum = 게임 식별 번호(외래키)
@@ -179,9 +180,10 @@ CREATE TABLE reviewComment (
 */
 CREATE SEQUENCE friends_num;
 CREATE TABLE friends (
-    fnum NUMBER PRIMARY KEY,
-    follower VARCHAR2(30) NOT NULL,
-    following VARCHAR2(30) NOT NULL,
+    fnum NUMBER,
+    follower VARCHAR2(20) NOT NULL,
+    following VARCHAR2(20) NOT NULL,/* 로그인 계정 */
+    CONSTRAINT pk_friends PRIMARY KEY(follower, following),
     CONSTRAINT fk_friends FOREIGN KEY(following) REFERENCES consumer(cid)
 );
 
