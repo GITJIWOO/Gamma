@@ -7,7 +7,7 @@ import org.game.user.domain.ConsumerVO;
 
 public interface FriendsMapper {
 	// 친구 추가를 위한 전체 회원 조회 
-	public List<ConsumerVO> getUser();
+	public List<ConsumerVO> getUser(String keyword);
 	
 	// 친구 추가(insert-selectKey)
 	public void insertFriend(FriendsVO vo);
