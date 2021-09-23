@@ -42,9 +42,11 @@ SELECT * FROM game;
     DirectX
     저장공간
 */
+CREATE SEQUENCE gamerequirement_num;
 CREATE TABLE gameRequirement (
+    grnum NUMBER PRIMARY KEY,
     gnum NUMBER NOT NULL,
-    gos VARCHAR2(100) PRIMARY KEY,
+    gos VARCHAR2(100) NOT NULL,
     gprocessor VARCHAR2(100) NOT NULL,
     gmemory VARCHAR2(100) NOT NULL,
     ggraphic VARCHAR2(100) NOT NULL,
