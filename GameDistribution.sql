@@ -66,7 +66,7 @@ CREATE TABLE consumer (
     nickname VARCHAR(20) NOT NULL UNIQUE,
     cadmin NUMBER(3) DEFAULT 0
 );
-INSERT INTO cid, email, password, nickname, cadmin 
+INSERT INTO consumer(cid, email, password, nickname, cadmin) 
     VALUES('kjw011231', 'kjw0111231@gmail.com', 'rlawldn', '김지우', 1);
 
 /*  사진 테이블
