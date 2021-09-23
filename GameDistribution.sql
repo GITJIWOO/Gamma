@@ -50,10 +50,12 @@ CREATE TABLE gameRequirement (
 );
 
 /*  사용자 테이블
+    cnum = 사용자 식별 번호
+    cid = 아이디
     email = 이메일
     password = 비밀번호
-    google_login_yn	= 구글 로그인
-    
+    nickname = 닉네임
+    cadmin = 관리자 여부(0 = 일반 사용자)
 */
 CREATE SEQUENCE consumer_num;
 CREATE TABLE consumer (
