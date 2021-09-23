@@ -14,7 +14,7 @@ local.properties
 .loadpath
 .recommenders
 Servers/
-.pom.properties
+pom.properties
 target/*
 META-INF/*
 
