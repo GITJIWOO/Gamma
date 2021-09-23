@@ -1,3 +1,9 @@
+/*  미완성 테이블
+    consumerPicture
+    gamePicture
+    consumerPayment
+*/
+
 /*  게임 테이블
     gnum = 게임 식별 번호
     게임 제목
@@ -80,7 +86,7 @@ CREATE TABLE consumerPicture (
     cid VARCHAR2(100),
     upic_num VARCHAR2(20),
     upic_time VARCHAR2(20),
-    CONSTRAINT fk_Picture FOREIGN KEY (cid)
+    CONSTRAINT fk_consumerPicture FOREIGN KEY (cid)
     REFERENCES consumer(cid)
 );
 
@@ -88,7 +94,9 @@ CREATE TABLE gamePicture (
     uuid VARCHAR2(100) PRIMARY KEY,
     gnum NUMBER NOT NULL,
     gpic_num VARCHAR2(20) NOT NULL,
-    gpic_time VARCHAR2(20) NOT NULL
+    gpic_time VARCHAR2(20) NOT NULL,
+    CONSTRAINT fk_gamePicture FOREIGN KEY (gnum)
+    REFERENCES game(gnum)
 );
 
 /*  사용자 라이브러리
@@ -100,7 +108,9 @@ CREATE TABLE consumerLibrary (
     cid VARCHAR2(100),
     gnum NUMBER,
     CONSTRAINT fk_consumerlibrary FOREIGN KEY (cid)
-    REFERENCES consumer(cid)
+    REFERENCES consumer(cid),
+    CONSTRAINT fk_consumerlibrary FOREIGN KEY (gnum)
+    REFERENCES game(gnum)
 );
 
 /*  게임 태그 테이블
