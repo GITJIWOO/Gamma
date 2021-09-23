@@ -180,9 +180,10 @@ CREATE TABLE reviewComment (
 */
 CREATE SEQUENCE friends_num;
 CREATE TABLE friends (
-    fnum NUMBER PRIMARY KEY,
-    follower VARCHAR2(30) NOT NULL,
-    following VARCHAR2(30) NOT NULL,
+    fnum NUMBER,
+    follower VARCHAR2(20) NOT NULL,
+    following VARCHAR2(20) NOT NULL,/* 로그인 계정 */
+    CONSTRAINT pk_friends PRIMARY KEY(follower, following),
     CONSTRAINT fk_friends FOREIGN KEY(following) REFERENCES consumer(cid)
 );
 
