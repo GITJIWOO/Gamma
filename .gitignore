@@ -17,6 +17,7 @@ Servers/
 *.properties
 target/*
 META-INF/*
+*.MF
 
 # External tool builders
 .externalToolBuilders/

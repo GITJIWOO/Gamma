@@ -72,8 +72,8 @@ CREATE TABLE consumer (
     nickname VARCHAR(20) NOT NULL UNIQUE,
     cadmin NUMBER(3) DEFAULT 0
 );
-INSERT INTO consumer(cid, email, password, nickname, cadmin) 
-    VALUES('kjw011231', 'kjw0111231@gmail.com', 'rlawldn', '김지우', 1);
+INSERT INTO consumer(cnum, cid, email, password, nickname, cadmin) 
+    VALUES(consumer_num.nextval,'kjw011231', 'kjw0111231@gmail.com', 'rlawldn', '김지우', 1);
 
 /*  사진 테이블
     시간
@@ -84,8 +84,8 @@ INSERT INTO consumer(cid, email, password, nickname, cadmin)
 CREATE TABLE consumerPicture (
     uuid VARCHAR2(100) PRIMARY KEY,
     cid VARCHAR2(100),
-    upic_num VARCHAR2(20),
-    upic_time VARCHAR2(20),
+    upic_num VARCHAR2(100),
+    upic_time VARCHAR2(100),
     CONSTRAINT fk_consumerPicture FOREIGN KEY (cid)
     REFERENCES consumer(cid)
 );
@@ -93,8 +93,8 @@ CREATE TABLE consumerPicture (
 CREATE TABLE gamePicture (
     uuid VARCHAR2(100) PRIMARY KEY,
     gnum NUMBER NOT NULL,
-    gpic_num VARCHAR2(20) NOT NULL,
-    gpic_time VARCHAR2(20) NOT NULL,
+    gpic_num VARCHAR2(100) NOT NULL,
+    gpic_time VARCHAR2(100) NOT NULL,
     CONSTRAINT fk_gamePicture FOREIGN KEY (gnum)
     REFERENCES game(gnum)
 );
@@ -107,9 +107,9 @@ CREATE TABLE consumerLibrary (
     ubnum number PRIMARY KEY,
     cid VARCHAR2(100),
     gnum NUMBER,
-    CONSTRAINT fk_consumerlibrary FOREIGN KEY (cid)
+    CONSTRAINT fk_consumerlibrarycid FOREIGN KEY (cid)
     REFERENCES consumer(cid),
-    CONSTRAINT fk_consumerlibrary FOREIGN KEY (gnum)
+    CONSTRAINT fk_consumerlibrarygnum FOREIGN KEY (gnum)
     REFERENCES game(gnum)
 );
 
@@ -146,9 +146,9 @@ CREATE TABLE gameReview (
     grcontent VARCHAR2(2000) NOT NULL,
     grrecommend NUMBER,
     grdate DATE DEFAULT sysdate,
-    CONSTRAINT fk_gamereview FOREIGN KEY(gnum) 
+    CONSTRAINT fk_gamereviewgnum FOREIGN KEY(gnum) 
     REFERENCES game(gnum),
-    CONSTRAINT fk_consumer FOREIGN KEY(cid) 
+    CONSTRAINT fk_gamereviewcid FOREIGN KEY(cid) 
     REFERENCES consumer(cid)
 );
 
@@ -165,9 +165,9 @@ CREATE TABLE reviewComment (
     cid VARCHAR2(20) NOT NULL,
     rccontent VARCHAR2(1000) NOT NULL,
     rcdate DATE DEFAULT sysdate,
-    CONSTRAINT fk_reviewcomment FOREIGN KEY(grnum) 
+    CONSTRAINT fk_reviewcommentgrnum FOREIGN KEY(grnum) 
     REFERENCES gamereview(grnum),
-    CONSTRAINT fk_consumer FOREIGN KEY(cid) 
+    CONSTRAINT fk_reviewCommentcid FOREIGN KEY(cid) 
     REFERENCES consumer(cid)
 );
 
@@ -259,8 +259,8 @@ CREATE TABLE gameWishlist (
     wishnum NUMBER PRIMARY KEY,
     cid VARCHAR2(20) NOT NULL,
     gnum NUMBER NOT NULL,
-    CONSTRAINT fk_gamewishlist FOREIGN KEY(cid)REFERENCES consumer(cid),
-    CONSTRAINT fk_gamewhishlist FOREIGN KEY(gnum)REFERENCES game(gnum)
+    CONSTRAINT fk_gamewishlistcid FOREIGN KEY(cid)REFERENCES consumer(cid),
+    CONSTRAINT fk_gamewishlistgnum FOREIGN KEY(gnum)REFERENCES game(gnum)
 );
 
 /*  장바구니
@@ -273,7 +273,7 @@ CREATE TABLE shoppingBasket (
     sbnum NUMBER PRIMARY KEY,
     cid VARCHAR2(20) NOT NULL,
     gnum NUMBER NOT NULL,
-    CONSTRAINT fk_shoppingbasket FOREIGN KEY(cid)REFERENCES consumer(cid),
-    CONSTRAINT fk_shoppingbasket FOREIGN KEY(gnum)REFERENCES game(gnum)
+    CONSTRAINT fk_shoppingbasketcid FOREIGN KEY(cid)REFERENCES consumer(cid),
+    CONSTRAINT fk_shoppingbasketgnum FOREIGN KEY(gnum)REFERENCES game(gnum)
 
 );
