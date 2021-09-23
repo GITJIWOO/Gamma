@@ -14,7 +14,10 @@ local.properties
 .loadpath
 .recommenders
 Servers/
-.pom.properties
+*.properties
+target/*
+META-INF/*
+*.MF
 
 # External tool builders
 .externalToolBuilders/
