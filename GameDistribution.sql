@@ -59,17 +59,19 @@ CREATE TABLE gameRequirement (
 */
 CREATE SEQUENCE consumer_num;
 CREATE TABLE consumer (
-    cnum NUMBER,
-    cid VARCHAR2(20) PRIMARY KEY,
+    cnum NUMBER PRIMARY KEY,
+    cid VARCHAR2(20) NOT NULL UNIQUE,
     email VARCHAR2(100) NOT NULL,
     password VARCHAR2(20) NOT NULL,
     nickname VARCHAR(20) NOT NULL UNIQUE,
     cadmin NUMBER(3) DEFAULT 0
 );
-
+INSERT INTO cid, email, password, nickname, cadmin 
+    VALUES('kjw011231', 'kjw0111231@gmail.com', 'rlawldn', '김지우', 1);
 
 /*  사진 테이블
     시간
+    외래키
     번호
     UUID
 */
@@ -101,19 +103,6 @@ CREATE TABLE consumerLibrary (
     REFERENCES consumer(cid)
 );
 
-/*  구글 로그인
-    아이디
-    인증 이메일
-    
-    >> user table과 구글 로그인 테이블 컬림이 중복되어 분리 할 이유가 없으며 (구글 id = 이메일, 인증 이메일 = 이메일)
-    , 분리시 개발에 혼동이 올 수 있음
-    
-    단, 유저테이블에 구글 로그인 col 을 추가하여, 구글 로그인 인지, 홈페이지 회원가입 자 인지 구분은 필요 하기에 user 테이블에 google_login 컬럼을 추가 함.
-    
-CREATE TABLE socialuser(
-    
-);
-*/
 /*  게임 태그 테이블
     태그 식별 번호
     gnum = 게임 식별 번호(외래키)
