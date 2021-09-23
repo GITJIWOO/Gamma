@@ -3,5 +3,18 @@
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="org.game.review.mapper.ReviewCommentMapper">
-
+	<!-- 리뷰 댓글 조회 -->
+	<select id="reviewCommentSelect" resultType="org.game.review.domain.ReviewVO">
+		
+	</select>
+	
+	<!-- 리뷰 댓글 작성 -->
+	<insert id="reviewCommentInsert">
+		
+	</insert>
+	
+	<!-- 리뷰 댓글 삭제 -->
+	<delete id="reviewCommentDelete">
+		
+	</delete>
 </mapper>

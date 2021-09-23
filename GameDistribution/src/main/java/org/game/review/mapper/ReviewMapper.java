@@ -6,8 +6,11 @@ import org.game.review.domain.ReviewVO;
 
 public interface ReviewMapper {
 	
-	// 평가 조회
-	public List<ReviewVO> ReviewList();
+	// 평가 최신 순 조회
+	public List<ReviewVO> reviewList();
+	
+	// 평가 좋아요 순 조회
+	public List<ReviewVO> reviewRecommendList();
 	
 	// 평가 상세 조회
 	public ReviewVO reviewSelect();
