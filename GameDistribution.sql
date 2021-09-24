@@ -135,7 +135,7 @@ CREATE TABLE gameTag (
     grlike = 좋아요, 싫어요
     grtitle = 제목
     grcontent = 본문
-    grrecomment = 평가 추천 수
+    grrecommend = 평가 추천 수
     grdate = 작성일
 */
 CREATE SEQUENCE gamereview_num;
@@ -146,7 +146,7 @@ CREATE TABLE gameReview (
     grlike NUMBER(3) NOT NULL,
     grtitle VARCHAR2(100) NOT NULL,
     grcontent VARCHAR2(2000) NOT NULL,
-    grrecommend NUMBER,
+    grrecommend NUMBER DEFAULT 0,
     grdate DATE DEFAULT sysdate,
     CONSTRAINT fk_gamereviewgnum FOREIGN KEY(gnum) 
     REFERENCES game(gnum),
