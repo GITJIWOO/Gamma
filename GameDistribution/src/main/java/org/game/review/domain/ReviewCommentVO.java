@@ -12,4 +12,5 @@ public class ReviewCommentVO {
 	private String cid;
 	private String rccontent;
 	private Date rcdate;
+	
 }

@@ -23,30 +23,18 @@
 		 조건1. 로그인 계정을 기준으로 follower/following 을 불러와야함
 		 	follower = 로그인 계정 -> following =  로그인 계정을 팔로우 하는 사람들
 		 	following = 로그인 계정 -> follower =  로그인 계정이 팔로우 하는 사람들 
-		 조건2. 키워드 검색을 해야하는데, 이메일과 닉네임 둘 다 검색 가능해야함 - 닉네임 검색을 하려면 join 사용 
+		 조건2. 키워드 검색을 해야하는데, 이메일과 닉네임 둘 다 검색 가능해야함
 		 WHERE email LIKE '%'||#{keyword}||'%'
 	-->
-	<select id="getFollower" resultType="org.game.friends.domain.FriendsVO">
+	<select id="getFollower" resultType="org.game.user.domain.ConsumerVO">
 		SELECT * FROM consumer WHERE cid IN (SELECT follower FROM friends WHERE following = #{following}) AND (cid LIKE '%'||#{keyword}||'%' OR nickname LIKE '%'||#{keyword}||'%')
 	</select>
 
-	<select id="getFollowing" resultType="org.game.friends.domain.FriendsVO">
+	<select id="getFollowing" resultType="org.game.user.domain.ConsumerVO">
 		SELECT * FROM consumer WHERE cid IN (SELECT following FROM friends WHERE follower = #{follower}) AND (cid LIKE '%'||#{keyword}||'%' OR nickname LIKE '%'||#{keyword}||'%')
 	</select>
 	
 	<delete id="deleteFriend">
-		DELETE FROM friends WHERE follower = #{follower}
+		DELETE FROM friends WHERE follower = #{follower} AND following = #{following}
 	</delete>
 </mapper>
-
-
-
-
-
-
-
-
-
-
-
-
