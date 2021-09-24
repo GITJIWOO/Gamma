@@ -46,4 +46,7 @@ public class ReviewController {
 	
 	
 	// 평가 댓글 삭제
+	
+	
+	
 }

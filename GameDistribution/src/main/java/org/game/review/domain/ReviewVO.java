@@ -6,6 +6,7 @@ import lombok.Data;
 
 @Data
 public class ReviewVO {
+	
 	private long grnum;
 	private long gnum;
 	private String cid;
@@ -14,4 +15,5 @@ public class ReviewVO {
 	private String grcontent;
 	private long grrecommend;
 	private Date grdate;
+	
 }

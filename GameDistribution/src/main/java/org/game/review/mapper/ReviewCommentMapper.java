@@ -4,7 +4,7 @@ import org.game.review.domain.ReviewCommentVO;
 
 public interface ReviewCommentMapper {
 	
-	// 평가 댓글 조회
+	// 평가 댓글 최신 순 조회
 	public ReviewCommentVO reviewCommentSelect(long grnum);
 	
 	// 평가 댓글 작성
@@ -12,4 +12,5 @@ public interface ReviewCommentMapper {
 	
 	// 평가 댓글 삭제
 	public void reviewCommentDelete(long rcnum);
+	
 }
