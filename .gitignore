@@ -14,10 +14,10 @@ local.properties
 .loadpath
 .recommenders
 Servers/
-/*.properties
+*.properties
 /target/*
 /META-INF/*
-/*.MF
+*.MF
 
 # External tool builders
 .externalToolBuilders/
