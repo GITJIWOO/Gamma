@@ -21,7 +21,11 @@ public class ReviewController {
 	@Autowired
 	private ReviewCommentService commentService;
 	
-	// 평가 리스트 조회
+	// 평가 최신 순 조회
+	
+	
+	
+	// 평가 좋아요 순 조회
 	
 	
 	
