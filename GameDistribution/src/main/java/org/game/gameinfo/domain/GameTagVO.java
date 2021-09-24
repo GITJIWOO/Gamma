@@ -3,9 +3,9 @@ package org.game.gameinfo.domain;
 import lombok.Data;
 
 @Data
-public class GameWishListVO {
+public class GameTagVO {
 	
-	private long wishNum;
-	private String email;
+	private long gtnum;
+	private String tagName;
 	private long gNum;
 }
