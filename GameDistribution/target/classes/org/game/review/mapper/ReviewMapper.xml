@@ -6,12 +6,12 @@
 
 	<!-- 평가 최신 순 조회 -->
 	<select id="reviewList" resultType="org.game.review.domain.ReviewVO">
-		SELECT * FROM gameReview ORDER BY grnum DESC
+		SELECT * FROM gameReview WHERE gnum=#{gnum} ORDER BY grnum DESC
 	</select>
 	
 	<!-- 평가 좋아요 순 조회 -->
 	<select id="reviewRecommendList" resultType="org.game.review.domain.ReviewVO">
-		SELECT * FROM gameReview ORDER BY grrecommend DESC
+		SELECT * FROM gameReview WHERE gnum=#{gnum} ORDER BY grrecommend DESC
 	</select>
 	
 	<!-- 평가 상세 조회 -->
@@ -27,7 +27,7 @@
 	
 	<!-- 평가 수정 -->
 	<update id="reviewUpdate">
-		UPDATE gameReview(grlike, grtitle, grcontent) SET (grlike=#{grlike}, grtitle=#{grtitle}, grcontent=#{grcontent})
+		UPDATE gameReview SET grlike=#{grlike}, grtitle=#{grtitle}, grcontent=#{grcontent}
 			WHERE grnum=#{grnum}
 	</update>
 	

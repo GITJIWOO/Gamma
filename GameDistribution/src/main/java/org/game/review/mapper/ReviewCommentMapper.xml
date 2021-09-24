@@ -5,14 +5,14 @@
 <mapper namespace="org.game.review.mapper.ReviewCommentMapper">
 
 	<!-- 리뷰 댓글 조회 -->
-	<select id="reviewCommentSelect" resultType="org.game.review.domain.ReviewVO">
-		SELECT * FROM reviewComment ORDER BY rcnum DESC
+	<select id="reviewCommentSelect" resultType="org.game.review.domain.ReviewCommentVO">
+		SELECT * FROM reviewComment WHERE grnum=#{grnum} ORDER BY rcnum DESC
 	</select>
 	
 	<!-- 리뷰 댓글 작성 -->
 	<insert id="reviewCommentInsert">
 		INSERT INTO reviewComment(rcnum, grnum, cid, rccontent, rcdate) 
-			VALUES (reviewComment_num.nextval, #{grnum}, #{cid}, #{rccontent}, #{rcdate})
+			VALUES (reviewcomment_num.nextval, #{grnum}, #{cid}, #{rccontent}, sysdate)
 	</insert>
 	
 	<!-- 리뷰 댓글 삭제 -->
