@@ -22,6 +22,11 @@
 	</beans:bean>
 	
 	<context:component-scan base-package="org.game.controller" />
+	<context:component-scan base-package="org.game.friends.controller" />
+	<context:component-scan base-package="org.game.gameinfo.controller" />
+	<context:component-scan base-package="org.game.gamepurchase.controller" />
+	<context:component-scan base-package="org.game.review.controller" />
+	<context:component-scan base-package="org.game.user.controller" />
 	
 	
 	
