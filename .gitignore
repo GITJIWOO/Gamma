@@ -15,8 +15,8 @@ local.properties
 .recommenders
 Servers/
 *.properties
-target/*
-META-INF/*
+/target/*
+/META-INF/*
 *.MF
 
 # External tool builders
