@@ -32,7 +32,7 @@ public class ReviewCommentMapperTest {
 		mapper.reviewCommentInsert(vo);
 	}
 	
-	@Test
+	// @Test
 	public void reviewCommentDeleteTest() {
 		mapper.reviewCommentDelete(4L);
 	}
