@@ -19,14 +19,14 @@ public class ReviewServiceImpl implements ReviewService {
 	private ReviewMapper mapper;
 	
 	@Override
-	public List<ReviewVO> getNewReview() {
-		List<ReviewVO> reviewList = mapper.reviewList(1L);
+	public List<ReviewVO> getNewReview(long gnum) {
+		List<ReviewVO> reviewList = mapper.reviewList(gnum);
 		return reviewList;
 	}
 
 	@Override
-	public List<ReviewVO> getFamousReview() {
-		List<ReviewVO> reviewFamousList = mapper.reviewRecommendList(1L);
+	public List<ReviewVO> getFamousReview(long gnum) {
+		List<ReviewVO> reviewFamousList = mapper.reviewRecommendList(gnum);
 		return reviewFamousList;
 	}
 

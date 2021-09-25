@@ -7,10 +7,10 @@ import org.game.review.domain.ReviewVO;
 public interface ReviewService {
 	
 	// 평가 최신 순 조회
-	public List<ReviewVO> getNewReview();
+	public List<ReviewVO> getNewReview(long gnum);
 	
 	// 평가 좋아요 순 조회
-	public List<ReviewVO> getFamousReview();
+	public List<ReviewVO> getFamousReview(long gnum);
 	
 	// 평가 상세 조회
 	public ReviewVO getReviewDetail(long grnum);

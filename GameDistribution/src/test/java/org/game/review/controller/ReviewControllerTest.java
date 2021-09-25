@@ -31,7 +31,7 @@ public class ReviewControllerTest {
 		this.mockMvc = MockMvcBuilders.webAppContextSetup(ctx).build();
 	}
 	
-	@Test
+	// @Test
 	public void getReviewListTest() throws Exception {
 		String resultPage = mockMvc.perform(
 					MockMvcRequestBuilders.get("/review/reviewList"))
