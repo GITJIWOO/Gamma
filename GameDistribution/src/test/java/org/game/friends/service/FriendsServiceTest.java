@@ -16,7 +16,7 @@ public class FriendsServiceTest {
 	@Autowired
 	private FriendsService service;
 	
-	@Test
+	//@Test
 	public void testUserList() {
 		service.UserList("abc");
 	}
@@ -29,7 +29,7 @@ public class FriendsServiceTest {
 		service.addFriend(vo);
 	}
 	
-	//Test
+	//@Test
 	public void testFollowerList() {
 		service.FollowerList("asfgd", "dv");
 	}

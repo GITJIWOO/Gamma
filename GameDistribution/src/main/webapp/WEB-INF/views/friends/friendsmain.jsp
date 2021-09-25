@@ -15,8 +15,9 @@
 //	4. 상태글 남기기 - 해당 페이지에서
 	 -->
 <!-- 이 페이지에서 각 url로 이동하고 거기서 각 기능 보여줌 -->
-	<a href="/friends/friendslist"><button>친구 목록 보기</button></a>
-	<a href="/friends/searchfriends"><button>친구 검색</button></a>
-	<a href="/friends/chatting"><button>채팅 메세지 보내기</button></a>
+    <a href="/friends/followerlist">팔로우한 친구</a>
+    <a href="/friends/followinglist">팔로잉한 친구</a>
+	<a href="/friends/searchfriends">친구 검색</a>
+	<a href="/friends/chatting">채팅 메세지 보내기</a>
 </body>
 </html>
