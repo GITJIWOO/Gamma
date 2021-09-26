@@ -37,9 +37,9 @@ public class FriendsController {
 	public String followerList(String keyword, Model model) {
 		// 해당 로그인계정 정보 가져와야 함
 //		model.addAttribute("userId", cid);
-//		List<FriendsVO> followerList = service.FollowerList(cid, keyword);
+//		List<FriendsVO> followerList = service.followerList(cid, keyword);
 //		model.addAttribute("followerList", followerList);
-		return "friends/followerlist";
+		return "/friends/followerlist";
 	}
 	
 	// 언팔로우 
@@ -55,12 +55,12 @@ public class FriendsController {
 	public String followingList(String keyword, Model model) {
 		// 해당 로그인계정 정보 가져와야 함
 //		model.addAttribute("userId", cid);
-//		List<FriendsVO> followingList = service.FollowerList(cid, keyword);
+//		List<FriendsVO> followingList = service.followerList(cid, keyword);
 //		model.addAttribute("followingList", followingList);
-		return "friends/followinglist";
+		return "/friends/followinglist";
 	}
 	
-	// 언팔로 
+	// 언팔로우
 	@PostMapping("/followingremove")
 	public String followingRemove(String cid, String following, RedirectAttributes rttr) {
 		service.removeFriend(following, cid);
