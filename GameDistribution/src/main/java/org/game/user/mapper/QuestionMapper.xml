@@ -3,5 +3,35 @@
 "http://mybatis.rg/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="org.game.user.mapper.QuestionMapper">
+	<select id="getAdmin" resultType="Int">
+		SELECT cadmin FROM consumer WHERE cid = #{cid}
+	</select>
+
+	<insert id="insertQuestion">
+		<selectKey keyProperty="qnum" resultType="Long" order="BEFORE">
+			SELECT question_num.nextval FROM DUAL
+		</selectKey>
+		INSERT INTO question (qnum, qtype, qtitle, qcontent, qwriter) VALUES (#{qnum}, #{qtype}, #{qtitle}, #{qcontent}, #{qwriter})
+	</insert>
 	
+	<select id="getQuestionList" resultType="org.game.user.domain.QuestionVO">
+		SELECT * FROM question WHERE qwriter LIKE #{qwriter} ORDER BY qnum DESC
+	</select>
+
+	<select id="getQtypeQuestion" resultType="org.game.user.domain.QuestionVO">
+		SELECT * FROM question WHERE qtype = #{qtype} ORDER BY qnum DESC
+	</select>
+	
+	<select id="getOwnQuestion" resultType="org.game.user.domain.QuestionVO">
+		SELECT * FROM question WHERE qnum = #{qnum}
+	</select>
+	
+	<update id="updateQuestion">
+		UPDATE question SET qtype = #{qtype}, qtitle = #{qtitle}, qcontent = #{qcontent}, qdate = SYSDATE WHERE qnum = #{qnum}
+	</update>
+	
+	<delete id="deleteQuestion">
+		DELETE FROM question WHERE qnum = #{qnum}
+	</delete> 
+
 </mapper>

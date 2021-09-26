@@ -11,9 +11,9 @@ public interface FriendsService {
 	
 	public void addFriend(FriendsVO vo);
 	
-	public List<FriendsVO> FollowerList(@Param("following")String following, @Param("keyword")String keyword);
+	public List<FriendsVO> followerList(@Param("following")String following, @Param("keyword")String keyword);
 	
-	public List<FriendsVO> FollowingList(@Param("follower")String follower, @Param("keyword")String keyword);
+	public List<FriendsVO> followingList(@Param("follower")String follower, @Param("keyword")String keyword);
 	
 	public void removeFriend(@Param("follower")String follower, @Param("following")String following);
 }
