@@ -11,6 +11,6 @@ public interface ReviewCommentMapper {
 	public void reviewCommentInsert(ReviewCommentVO vo);
 	
 	// 평가 댓글 삭제
-	public void reviewCommentDelete(long rcnum);
+	public void reviewCommentDelete(ReviewCommentVO vo);
 	
 }

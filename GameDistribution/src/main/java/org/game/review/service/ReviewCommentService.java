@@ -11,6 +11,6 @@ public interface ReviewCommentService {
 	public void writeReviewComment(ReviewCommentVO vo);
 	
 	// 평가 댓글 삭제
-	public void removeReviewComment(long rcnum);
+	public void removeReviewComment(ReviewCommentVO vo);
 	
 }

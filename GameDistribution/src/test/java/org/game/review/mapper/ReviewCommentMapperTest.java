@@ -25,7 +25,6 @@ public class ReviewCommentMapperTest {
 	// @Test
 	public void reviewCommentInsertTest() {
 		ReviewCommentVO vo = new ReviewCommentVO();
-		vo.setRcnum(2L);
 		vo.setGrnum(1L);
 		vo.setCid("kjw011231");
 		vo.setRccontent("동의동의");
@@ -34,6 +33,9 @@ public class ReviewCommentMapperTest {
 	
 	// @Test
 	public void reviewCommentDeleteTest() {
-		mapper.reviewCommentDelete(4L);
+		ReviewCommentVO vo = new ReviewCommentVO();
+		vo.setGrnum(1L);
+		vo.setRcnum(1L);
+		mapper.reviewCommentDelete(vo);
 	}
 }

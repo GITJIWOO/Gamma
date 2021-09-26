@@ -28,7 +28,7 @@ public class ReviewCommentServiceImpl implements ReviewCommentService {
 	}
 
 	@Override
-	public void removeReviewComment(long rcnum) {
-		mapper.reviewCommentDelete(rcnum);
+	public void removeReviewComment(ReviewCommentVO vo) {
+		mapper.reviewCommentDelete(vo);
 	}
 }

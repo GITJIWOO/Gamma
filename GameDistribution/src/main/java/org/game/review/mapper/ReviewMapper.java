@@ -24,4 +24,7 @@ public interface ReviewMapper {
 	// 평가 삭제
 	public void reviewDelete(long grnum);
 	
+	// 평가 좋아요
+	public void reviewLike(long grnum);
+	
 }

@@ -36,4 +36,9 @@
 		DELETE FROM gameReview WHERE grnum=#{grnum}
 	</delete>
 	
+	<!-- 평가 좋아요 -->
+	<update id="reviewLike">
+		UPDATE gameReview SET grrecommend=grrecommend + 1 WHERE grnum=#{grnum}
+	</update>
+	
 </mapper>

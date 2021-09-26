@@ -26,12 +26,12 @@ public class ReviewServiceTest {
 	
 	// @Test
 	public void getNewReviewTest() {
-		service.getNewReview();
+		service.getNewReview(1L);
 	}
 	
 	// @Test
 	public void getFamousReview() {
-		service.getFamousReview();
+		service.getFamousReview(1L);
 	}
 	
 	// @Test
@@ -64,5 +64,10 @@ public class ReviewServiceTest {
 	// @Test
 	public void removeReviewTest() {
 		service.removeReview(1L);
+	}
+	
+	// @Test
+	public void likeReviewTest() {
+		service.likeReview(1L);
 	}
 }

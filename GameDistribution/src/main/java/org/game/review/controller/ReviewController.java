@@ -34,12 +34,12 @@ public class ReviewController {
 	@GetMapping("/reviewList")
 	public String getReviewList(long gnum, String listKind, Model model) {
 		
-		if(listKind == null || listKind == "new") {
-			List<ReviewVO> newReview = reviewService.getNewReview(gnum);
-			model.addAttribute("review", newReview);
-		} else if(listKind == "famous") {
+		if(listKind == null || listKind == "famous") {
 			List<ReviewVO> famousReview = reviewService.getFamousReview(gnum);
 			model.addAttribute("review", famousReview);
+		} else if(listKind == "new") {
+			List<ReviewVO> newReview = reviewService.getNewReview(gnum);
+			model.addAttribute("review", newReview);
 		}
 		return "/review/reviewList";
 	}
@@ -50,36 +50,77 @@ public class ReviewController {
 		
 		ReviewVO review = reviewService.getReviewDetail(grnum);
 		
+		ReviewCommentVO reviewComment = commentService.getReviewComment(grnum);
+		
 		model.addAttribute("review", review);
+		model.addAttribute("reviewComment", reviewComment);
 		
 		return "/review/reviewDetail";
 	}
 	
 	// 평가 작성
-	@GetMapping("/review/reviewWrite")
-	public String writeReview(Model model) {
-		return "/review/reviewWrite";
+	@PostMapping("/reviewWrite")
+	public String writeReview(ReviewVO review, RedirectAttributes rttr) {
+		
+		reviewService.writeReview(review);
+		
+		rttr.addFlashAttribute("reviewNumber", review.getGrnum());
+		
+		return "redirect:/review/reviewList";
 	}
 	
 	// 평가 수정
-	@PostMapping("/review/reviewWrite")
-	public String writeReview(RedirectAttributes rttr) {
+	@GetMapping("/reviewModify")
+	public String modifyReview() {
+		return "/review/reviewModify";
+	}
+	
+	@PostMapping("review/reviewModify")
+	public String modifyReview(ReviewVO review, RedirectAttributes rttr) {
 		
+		reviewService.modifyReview(review);
 		
+		rttr.addFlashAttribute("reviewNumber", review.getGrnum());
 		
 		return "redirect:/review/reviewList";
 	}
 	
 	// 평가 삭제
+	@PostMapping("/reviewRemove")
+	public String removeReview(long grnum, RedirectAttributes rttr) {
+		
+		reviewService.removeReview(grnum);
+
+		rttr.addFlashAttribute("reviewNumber", grnum);
+		
+		return "redirect:/review/reviewList";
+	}
 	
-	
+	// 평가 좋아요
+	@PostMapping("/reviewLike")
+	public String likeReview(long grnum, RedirectAttributes rttr) {
+		
+		reviewService.likeReview(grnum);
+		
+		return "redirect:/review/reviewDetail/" + grnum;
+	}
 	
 	// 평가 댓글 작성
-	
-	
+	@PostMapping("/reviewCommmentWrite")
+	public String writeReviewComment(ReviewCommentVO rc, Model model) {
+		
+		commentService.writeReviewComment(rc);
+		
+		return "/review/reviewDetail/" + rc.getGrnum();
+	}
 	
 	// 평가 댓글 삭제
-	
-	
+	@PostMapping("/reviewCommentRemove")
+	public String removeReviewComment(ReviewCommentVO rc, Model model) {
+		
+		commentService.removeReviewComment(rc);
+		
+		return "review/reviewDetail/" + rc.getGrnum();
+	}
 	
 }

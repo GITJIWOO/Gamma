@@ -40,6 +40,9 @@ public class ReviewCommentServiceTest {
 	
 	// @Test
 	public void removeReviewCommentTest() {
-		service.removeReviewComment(1L);
+		ReviewCommentVO reviewComment = new ReviewCommentVO();
+		reviewComment.setGrnum(1L);
+		reviewComment.setRcnum(1L);
+		service.removeReviewComment(reviewComment);
 	}
 }

@@ -50,5 +50,10 @@ public class ReviewServiceImpl implements ReviewService {
 	public void removeReview(long grnum) {
 		mapper.reviewDelete(grnum);
 	}
+	
+	@Override
+	public void likeReview(long grnum) {
+		mapper.reviewLike(grnum);
+	}
 
 }

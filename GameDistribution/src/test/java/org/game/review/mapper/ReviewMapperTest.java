@@ -57,4 +57,9 @@ public class ReviewMapperTest {
 	public void reviewDeleteTest() {
 		mapper.reviewDelete(2L);
 	}
+	
+	// @Test
+	public void reviewLikeTest() {
+		mapper.reviewLike(1L);
+	}
 }

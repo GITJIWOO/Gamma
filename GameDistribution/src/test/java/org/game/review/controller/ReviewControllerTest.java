@@ -38,4 +38,73 @@ public class ReviewControllerTest {
 						.andReturn().getModelAndView().getViewName();
 		log.info(resultPage);
 	}
+	
+	// @Test
+	public void getReviewDetailTest() throws Exception {
+		String resultPage = mockMvc.perform(
+					MockMvcRequestBuilders.get("/review/reviewDetail/1"))
+						.andReturn().getModelAndView().getViewName();
+		log.info(resultPage);
+	}
+	
+	// @Test
+	public void writeReviewTest() throws Exception {
+		String resultPage = mockMvc.perform(
+					MockMvcRequestBuilders.post("/review/reviewWrite")
+						.param("gnum", "1")
+						.param("cid", "kjw011231")
+						.param("grlike", "1")
+						.param("grtitle", "테스트제목제목")
+						.param("grcontent", "테스트내용내용"))
+						.andReturn().getModelAndView().getViewName();
+		log.info(resultPage);
+	}
+	
+	// @Test
+	public void modifyReviewTest() throws Exception {
+		String resultPage = mockMvc.perform(
+					MockMvcRequestBuilders.post("/review/reviewModify")
+						.param("gnum", "1")
+						.param("cid", "kjw011231")
+						.param("grlike", "0")
+						.param("grtitle", "테스트제목제목수정")
+						.param("grcontent", "테스트내용내용수정"))
+						.andReturn().getModelAndView().getViewName();
+		log.info(resultPage);
+	}
+	
+	// @Test
+	public void removeReviewTest() throws Exception {
+		String resultPage = mockMvc.perform(
+					MockMvcRequestBuilders.post("/review/reviewRemove?grnum=2"))
+						.andReturn().getModelAndView().getViewName();
+		log.info(resultPage);
+	}
+
+	// @Test
+	public void likeReviewTest() throws Exception {
+		String resultPage = mockMvc.perform(
+					MockMvcRequestBuilders.post("/review/reviewLike?grnum=1"))
+						.andReturn().getModelAndView().getViewName();
+		log.info(resultPage);
+	}
+
+	// @Test
+	public void writeReviewCommentTest() throws Exception {
+		String resultPage = mockMvc.perform(
+					MockMvcRequestBuilders.post("/review/reviewCommmentWrite")
+						.param("grnum", "1")
+						.param("cid", "kjw011231")
+						.param("rccontent", "댓글테스트내용"))
+						.andReturn().getModelAndView().getViewName();
+		log.info(resultPage);
+	}
+
+	// @Test
+	public void removeReviewCommentTest() throws Exception {
+		String resultPage = mockMvc.perform(
+					MockMvcRequestBuilders.post("/review/reviewCommentRemove?grnum=2"))
+						.andReturn().getModelAndView().getViewName();
+		log.info(resultPage);
+	}
 }
