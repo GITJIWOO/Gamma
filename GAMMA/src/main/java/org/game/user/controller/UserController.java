@@ -7,9 +7,14 @@ import org.game.user.domain.ConsumerVO;
 import org.game.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+<<<<<<< HEAD
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+=======
+>>>>>>> user
 
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j;
@@ -22,25 +27,56 @@ public class UserController {
 	@Autowired
 	private UserService service;
 	
-	@PostMapping("/userLogin")
-public String login(ConsumerVO userVO, HttpServletRequest request) {
-        
-        ConsumerVO userVO = service.userSearch(userVO);
-        HttpSession session = request.getSession();
-        session.setAttribute("userVO", userVO);
-        
-        return "userLogin";
-    }
+	@GetMapping("/userjoin")
+<<<<<<< HEAD
+	public String userJoin() {
+		return "/user/userjoin";
+	}
 	
-	  @PostMapping("/userLogout")
-	    public String userLogout(@ModelAttribute("userVO") ConsumerVO userVO, HttpServletRequest request) {
-	        
-	        service.userLogout(userVO);
-	        HttpSession session = request.getSession();
-	        session.invalidate();
-	        
-	        return "redirect:/user/userLogin";
-	    }
+	@PostMapping("/userjoin")
+	public String userJoin(ConsumerVO userVO,RedirectAttributes rttr) {
+		service.userJoin(userVO);
+		log.info("userVO : " + userVO);
+		
+		rttr.addFlashAttribute("cnum",userVO.getCnum());
+		rttr.addFlashAttribute("success","userJoin");
+		
+		return "redirect:/user/userlogin";
+		
+	}
+	
+	
+=======
+	public 
+>>>>>>> user
+	
+	/*
+	 * @PostMapping("/userlogin") public String login(ConsumerVO userVO,
+	 * HttpServletRequest request) {
+	 * 
+	 * ConsumerVO userVO = service.userSearch(userVO); HttpSession session =
+	 * request.getSession(); session.setAttribute("userVO", userVO);
+	 * 
+	 * return "userlogin"; }
+	 * 
+	 * @PostMapping("/userlogout") public String
+	 * userLogout(@ModelAttribute("userVO") ConsumerVO userVO, HttpServletRequest
+	 * request) {
+	 * 
+<<<<<<< HEAD
+	 * service.userLogout(userVO); HttpSession session = request.getSession();
+	 * session.invalidate();
+	 * 
+	 * return "redirect:/user/userlogin"; }
+	 */
 	
 
+=======
+	 * service.userlogout(userVO); HttpSession session = request.getSession();
+	 * session.invalidate();
+	 * 
+	 * return "redirect:/user/userlogin"; }
+	 * 
+	 */
+>>>>>>> user
 }
