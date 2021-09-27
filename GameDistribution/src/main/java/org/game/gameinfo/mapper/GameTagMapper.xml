@@ -1,3 +1,31 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.game.gameinfo.mapper.GameTagMapper">
+
+	<!-- 게임 태그 조회 -->
+	<select id="selectTag" resultType="org.game.gameinfo.domain.GameTagVO">
+		SELECT * FROM gameTag where gtnum = #{gtnum}
+	</select>
+	
+	<!-- 게임 태그 추가 -->
+	<insert id="insertTag">
+	<selectKey keyProperty="gtnum" order="BEFORE" resultType="long">
+		SELECT gametag_num.nextval FROM DUAL
+	</selectKey>
+	INSERT INTO gametag (gtnum, tagname, gnum)
+	VALUES (gametag_num.nextval, #{tagname}, #{gnum})
+	</insert>
+	
+	<!-- 게엠 태그 삭제 -->
+	<delete id="deleteTag">
+		DELETE FROM gametag WHERE gtnum = #{gtnum}
+	</delete>
+	
+	<!-- 개임 태그 수정 -->
+	<update id="updateTag">
+		UPDATE gametag SET tagname = #{tagname}
+		WHERE gtnum = #{gtnum}
+	</update>
+</mapper>
