@@ -33,13 +33,13 @@ public class FriendsServiceImpl implements FriendsService{
 	}
 
 	@Override
-	public List<FriendsVO> FollowerList(String following, String keyword) {
+	public List<FriendsVO> followerList(String following, String keyword) {
 		log.info("로그인 계정이 팔로워하는 계정 조회");
 		return mapper.getFollower(following, keyword);
 	}
 
 	@Override
-	public List<FriendsVO> FollowingList(String follower, String keyword) {
+	public List<FriendsVO> followingList(String follower, String keyword) {
 		log.info("로그인 계정을 팔로우하는 계정 조회");
 		return mapper.getFollowing(follower, keyword);
 	}

@@ -221,6 +221,7 @@ CREATE TABLE statuscomment(
 CREATE SEQUENCE question_num;
 CREATE TABLE question (
     qnum NUMBER PRIMARY KEY,
+    qtype VARCHAR(50) NOT NULL,
     qtitle VARCHAR2(50) NOT NULL,
     qcontent VARCHAR2(1000) NOT NULL,
     qwriter VARCHAR2(30) NOT NULL,
