@@ -63,11 +63,11 @@ public class ReviewServiceTest {
 	
 	// @Test
 	public void removeReviewTest() {
-		service.removeReview(1L);
+		service.removeReview(2L);
 	}
 	
 	// @Test
 	public void likeReviewTest() {
-		service.likeReview(1L);
+		service.likeReview(41L);
 	}
 }
