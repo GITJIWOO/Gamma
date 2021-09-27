@@ -75,7 +75,7 @@ public class ReviewController {
 		return "/review/reviewModify";
 	}
 	
-	@PostMapping("review/reviewModify")
+	@PostMapping("/reviewModify")
 	public String modifyReview(ReviewVO review, RedirectAttributes rttr) {
 		
 		reviewService.modifyReview(review);
