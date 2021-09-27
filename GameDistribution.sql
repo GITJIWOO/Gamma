@@ -65,7 +65,7 @@ CREATE TABLE gameRequirement (
     nickname = 닉네임
     cadmin = 관리자 여부(0 = 일반 사용자)
 */
-CREATE SEQUENCE consumer_num;
+CREATE SEQUENCE consumer_num INCREMENT BY 1 START WITH 1;
 CREATE TABLE consumer (
     cnum NUMBER PRIMARY KEY,
     cid VARCHAR2(20) NOT NULL UNIQUE,
@@ -212,6 +212,7 @@ CREATE TABLE statuscomment(
 CREATE SEQUENCE question_num;
 CREATE TABLE question (
     qnum NUMBER PRIMARY KEY,
+    qtype VARCHAR(50) NOT NULL,
     qtitle VARCHAR2(50) NOT NULL,
     qcontent VARCHAR2(1000) NOT NULL,
     qwriter VARCHAR2(30) NOT NULL,

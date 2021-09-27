@@ -29,14 +29,14 @@ public class FriendsServiceTest {
 		service.addFriend(vo);
 	}
 	
-	@Test
+	//@Test
 	public void testFollowerList() {
-		service.FollowerList("asfgd", "dv");
+		service.followerList("asfgd", "dv");
 	}
 	
 	//@Test
 	public void testFollowingList() {
-		service.FollowingList("asfgd", "bc");
+		service.followingList("asfgd", "bc");
 	}
 	
 	//@Test
