@@ -5,12 +5,12 @@ import lombok.Data;
 @Data
 public class RequirementVO {
 
-	private long grNum;
-	private long gNum;
-	private String gOs;
-	private String gProcessor;
-	private String gMemory;
-	private String gGraphic;
-	private String gDirectx;
-	private String gStore;
+	private long grnum;
+	private long gnum;
+	private String gos;
+	private String gprocessor;
+	private String gmemory;
+	private String ggraphic;
+	private String gdirectx;
+	private String gstore;
 }

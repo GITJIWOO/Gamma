@@ -32,6 +32,8 @@ CREATE TABLE game (
     gaddress VARCHAR2(1000) NOT NULL
 );
 SELECT * FROM game;
+INSERT INTO game 
+VALUES (game_num.nextval, '배그', TO_DATE('2021/09/24 ', 'YYYY/MM/DD '), 'duo', 'dou', 18000, 'good', 18, 'www.bg.com', 'www.youtube.com/2312eqeqw');
 
 /*  게임 시스템 요구 사항
     gnum = 게임 식별 번호(외래키)
@@ -54,8 +56,10 @@ CREATE TABLE gameRequirement (
     gstore VARCHAR2(100) NOT NULL,
     CONSTRAINT fk_gameRequirement FOREIGN KEY(gnum) 
     REFERENCES game(gnum)
-
 );
+SELECT * FROM gamerequirement;
+INSERT INTO gamerequirement VALUES (gamerequirement_num.nextval, 23,'a', 'a','a','a','a','a');
+select * from gamerequirement left join game using (gnum);
 
 /*  사용자 테이블
     cnum = 사용자 식별 번호
@@ -120,6 +124,7 @@ CREATE TABLE consumerLibrary (
     gnum = 게임 식별 번호(외래키)
     tag = 태그
 */
+select gametag_num.nextval from dual;
 CREATE SEQUENCE gametag_num;
 CREATE TABLE gameTag (
     gtnum NUMBER PRIMARY KEY,
@@ -128,6 +133,10 @@ CREATE TABLE gameTag (
     CONSTRAINT fk_gametag FOREIGN KEY(gnum) 
     REFERENCES game(gnum)
 );
+SELECT * FROM gametag;
+SELECT * FROM game;
+INSERT INTO gametag VALUES(gametag_num.nextval, '롤은 타워 깨는 게임이야', 6);
+select * from gametag a left join game b using (gnum);
 
 /*  게임 리뷰 테이블
     grnum = 리뷰 식별 번호
