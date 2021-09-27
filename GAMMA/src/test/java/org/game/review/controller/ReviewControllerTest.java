@@ -22,21 +22,21 @@ import lombok.extern.log4j.Log4j;
 public class ReviewControllerTest {
 	
 	@Autowired
-	WebApplicationContext context; 
+	WebApplicationContext ctx; 
 	
 	MockMvc mockMvc; 
 	
 	@Before
 	public void setUpMockMvc() { 
-		this.mockMvc = MockMvcBuilders.webAppContextSetup(context).build(); 
+		this.mockMvc = MockMvcBuilders.webAppContextSetup(ctx).build(); 
 	}
 	
 	@Test
 	public void getReviewListTest() throws Exception {
-		log.info(mockMvc.perform(
-					MockMvcRequestBuilders.get("/review/reviewList"))
-						.andReturn().getModelAndView());
-		//log.info(resultPage);
+		String resultPage = mockMvc.perform(
+					MockMvcRequestBuilders.get("/review/reviewList?gnum=1"))
+						.andReturn().getModelAndView().getViewName();
+		log.info(resultPage);
 	}
 	
 	// @Test
