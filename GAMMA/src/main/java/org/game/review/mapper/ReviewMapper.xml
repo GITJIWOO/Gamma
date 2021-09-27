@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.game.review.mapper.ReviewMapper">
+
+	<!-- 평가 최신 순 조회 -->
+	<select id="reviewList" resultType="org.game.review.domain.ReviewVO">
+		SELECT * FROM gameReview WHERE gnum=#{gnum} ORDER BY grnum DESC
+	</select>
+	
+	<!-- 평가 좋아요 순 조회 -->
+	<select id="reviewRecommendList" resultType="org.game.review.domain.ReviewVO">
+		SELECT * FROM gameReview WHERE gnum=#{gnum} ORDER BY grrecommend DESC
+	</select>
+	
+	<!-- 평가 상세 조회 -->
+	<select id="reviewSelect" resultType="org.game.review.domain.ReviewVO">
+		SELECT * FROM gameReview WHERE grnum=#{grnum}
+	</select>
+	
+	<!-- 평가 작성 -->
+	<insert id="reviewInsert">
+		INSERT INTO gameReview(grnum, gnum, cid, grlike, grtitle, grcontent, grdate)
+			VALUES(gamereview_num.nextval, #{gnum}, #{cid}, #{grlike}, #{grtitle}, #{grcontent}, sysdate)
+	</insert>
+	
+	<!-- 평가 수정 -->
+	<update id="reviewUpdate">
+		UPDATE gameReview SET grlike=#{grlike}, grtitle=#{grtitle}, grcontent=#{grcontent}
+			WHERE grnum=#{grnum}
+	</update>
+	
+	<!-- 평가 삭제 -->
+	<delete id="reviewDelete">
+		DELETE FROM gameReview WHERE grnum=#{grnum}
+	</delete>
+	
+	<!-- 평가 좋아요 -->
+	<update id="reviewLike">
+		UPDATE gameReview SET grrecommend=grrecommend + 1 WHERE grnum=#{grnum}
+	</update>
+	
+</mapper>

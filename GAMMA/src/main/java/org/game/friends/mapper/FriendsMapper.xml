@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.rg/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.game.friends.mapper.FriendsMapper">
+	<select id="getUser" resultType="org.game.user.domain.ConsumerVO">
+		SELECT * FROM consumer WHERE cadmin = 0 AND (cid LIKE '%'||#{keyword}||'%' OR nickname LIKE '%'||#{keyword}||'%') ORDER BY cnum ASC
+	</select>
+
+	<insert id="insertFriend">
+		<selectKey keyProperty="fnum" resultType="Long" order="BEFORE">
+			SELECT friends_num.nextval FROM DUAL
+		</selectKey>
+		INSERT INTO friends VALUES (#{fnum}, #{follower}, #{following})
+	</insert>
+
+	<!-- 검색 기능 구현시, 이메일과 닉네임 전부 검색이 가능하도록 작성
+		 user 테이블과 friends 테이블을 join
+		 SELECT nick_name FROM join_user u LEFT OUTER JOIN friends f ON (u.email = f.follower)
+	-->
+	<!-- 작성하고자 하는 쿼리문 
+		 follower와 following 목록을 불러옴
+		 조건1. 로그인 계정을 기준으로 follower/following 을 불러와야함
+		 	follower = 로그인 계정 -> following =  로그인 계정을 팔로우 하는 사람들
+		 	following = 로그인 계정 -> follower =  로그인 계정이 팔로우 하는 사람들 
+		 조건2. 키워드 검색을 해야하는데, 이메일과 닉네임 둘 다 검색 가능해야함
+		 WHERE email LIKE '%'||#{keyword}||'%'
+	-->
+	<select id="getFollower" resultType="org.game.user.domain.ConsumerVO">
+		SELECT * FROM consumer WHERE cid IN (SELECT follower FROM friends WHERE following = #{following}) AND (cid LIKE '%'||#{keyword}||'%' OR nickname LIKE '%'||#{keyword}||'%')
+	</select>
+
+	<select id="getFollowing" resultType="org.game.user.domain.ConsumerVO">
+		SELECT * FROM consumer WHERE cid IN (SELECT following FROM friends WHERE follower = #{follower}) AND (cid LIKE '%'||#{keyword}||'%' OR nickname LIKE '%'||#{keyword}||'%')
+	</select>
+	
+	<delete id="deleteFriend">
+		DELETE FROM friends WHERE follower = #{follower} AND following = #{following}
+	</delete>
+</mapper>

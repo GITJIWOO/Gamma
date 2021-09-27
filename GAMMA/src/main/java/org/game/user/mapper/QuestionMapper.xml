@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.rg/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.game.user.mapper.QuestionMapper">
+	<select id="getAdmin" resultType="Int">
+		SELECT cadmin FROM consumer WHERE cid = #{cid}
+	</select>
+
+	<insert id="insertQuestion">
+		<selectKey keyProperty="qnum" resultType="Long" order="BEFORE">
+			SELECT question_num.nextval FROM DUAL
+		</selectKey>
+		INSERT INTO question (qnum, qtype, qtitle, qcontent, qwriter) VALUES (#{qnum}, #{qtype}, #{qtitle}, #{qcontent}, #{qwriter})
+	</insert>
+	
+	<!-- list -->
+	<select id="getQuestionList" resultType="org.game.user.domain.QuestionVO">
+		SELECT * FROM question WHERE qwriter LIKE #{qwriter} ORDER BY qnum DESC
+	</select>
+	<select id="getQuestionListP" resultType="org.game.user.domain.QuestionVO">
+		<![CDATA[
+		SELECT qnum, qtype, qtitle, qcontent, qwriter, qdate FROM
+		(SELECT
+		/*+ SELECT * FROM question ORDER BY qnum DESC */
+		rownum rn, question.* FROM question WHERE qwriter LIKE #{qwriter}
+		AND rownum <= #{cri.pageNum} * #{cri.amount}) qu
+		WHERE rn > (#{cri.pageNum} - 1) * #{cri.amount}
+		]]>
+	</select>
+	<select id="getCountQuestion" resultType="Int">
+		SELECT count(*) FROM question WHERE qwriter LIKE #{qwriter}
+	</select>
+	
+	<!-- list -->
+	<select id="getQtypeQuestion" resultType="org.game.user.domain.QuestionVO">
+		SELECT * FROM question WHERE qtype = #{qtype} ORDER BY qnum DESC
+	</select>
+	<select id="getQtypeQuestionP" resultType="org.game.user.domain.QuestionVO">
+		<![CDATA[
+		SELECT qnum, qtype, qtitle, qcontent, qwriter, qdate FROM
+		(SELECT
+		/*+ SELECT * FROM question ORDER BY qnum DESC */
+		rownum rn, question.* FROM question WHERE qtype LIKE #{qtype}
+		AND rownum <= #{pageNum} * #{amount}) qu
+		WHERE rn > (#{pageNum} - 1) * #{amount}
+		]]>		
+	</select>
+	<select id="getCountQtype" resultType="Int">
+		SELECT count(*) FROM question WHERE qtype = #{qtype}
+	</select>
+	
+	<select id="getOwnQuestion" resultType="org.game.user.domain.QuestionVO">
+		SELECT * FROM question WHERE qnum = #{qnum}
+	</select>
+	
+	<update id="updateQuestion">
+		UPDATE question SET qtype = #{qtype}, qtitle = #{qtitle}, qcontent = #{qcontent}, qdate = SYSDATE WHERE qnum = #{qnum}
+	</update>
+	
+	<delete id="deleteQuestion">
+		DELETE FROM question WHERE qnum = #{qnum}
+	</delete> 
+
+</mapper>
