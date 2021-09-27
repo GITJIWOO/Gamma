@@ -14,12 +14,40 @@
 		INSERT INTO question (qnum, qtype, qtitle, qcontent, qwriter) VALUES (#{qnum}, #{qtype}, #{qtitle}, #{qcontent}, #{qwriter})
 	</insert>
 	
+	<!-- list -->
 	<select id="getQuestionList" resultType="org.game.user.domain.QuestionVO">
 		SELECT * FROM question WHERE qwriter LIKE #{qwriter} ORDER BY qnum DESC
 	</select>
-
+	<select id="getQuestionListP" resultType="org.game.user.domain.QuestionVO">
+		<![CDATA[
+		SELECT qnum, qtype, qtitle, qcontent, qwriter, qdate FROM
+		(SELECT
+		/*+ SELECT * FROM question ORDER BY qnum DESC */
+		rownum rn, question.* FROM question WHERE qwriter LIKE #{qwriter}
+		AND rownum <= #{cri.pageNum} * #{cri.amount}) qu
+		WHERE rn > (#{cri.pageNum} - 1) * #{cri.amount}
+		]]>
+	</select>
+	<select id="getCountQuestion" resultType="Int">
+		SELECT count(*) FROM question WHERE qwriter LIKE #{qwriter}
+	</select>
+	
+	<!-- list -->
 	<select id="getQtypeQuestion" resultType="org.game.user.domain.QuestionVO">
 		SELECT * FROM question WHERE qtype = #{qtype} ORDER BY qnum DESC
+	</select>
+	<select id="getQtypeQuestionP" resultType="org.game.user.domain.QuestionVO">
+		<![CDATA[
+		SELECT qnum, qtype, qtitle, qcontent, qwriter, qdate FROM
+		(SELECT
+		/*+ SELECT * FROM question ORDER BY qnum DESC */
+		rownum rn, question.* FROM question WHERE qtype LIKE #{qtype}
+		AND rownum <= #{pageNum} * #{amount}) qu
+		WHERE rn > (#{pageNum} - 1) * #{amount}
+		]]>		
+	</select>
+	<select id="getCountQtype" resultType="Int">
+		SELECT count(*) FROM question WHERE qtype = #{qtype}
 	</select>
 	
 	<select id="getOwnQuestion" resultType="org.game.user.domain.QuestionVO">

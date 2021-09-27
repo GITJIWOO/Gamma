@@ -10,8 +10,10 @@ public interface QuestionService {
 	public void addQuestion(QuestionVO vo);
 	
 	public List<QuestionVO> questionList(String qwriter);
+	public int countQuestion(String qwriter);
 	
 	public List<QuestionVO> typeQuestion(String qtype);
+	public int countQtype(String qtype);
 	
 	public QuestionVO ownQuestion(Long qnum);
 	

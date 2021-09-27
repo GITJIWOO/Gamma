@@ -34,7 +34,9 @@ public class QuestionController {
 	@PostMapping("/registerquestion")
 	public String registerQuestion(QuestionVO vo, RedirectAttributes rttr) {
 		service.addQuestion(vo);
-		rttr.addFlashAttribute("vo", vo);
+		rttr.addFlashAttribute("cid", vo.getQwriter());
+		rttr.addFlashAttribute("qnum", vo.getQnum());
+		rttr.addFlashAttribute("success", "register");	// 이걸로 모달 넣기
 		return "redirect:/qna/questionlist";
 	}
 	
@@ -50,6 +52,7 @@ public class QuestionController {
 			List<QuestionVO> vo = service.questionList(cid);
 			model.addAttribute("vo", vo);
 		}
+		
 		return "/qna/questionlist";
 	}
 	
@@ -62,7 +65,7 @@ public class QuestionController {
 	}
 	
 	// 질문글 수정 완료
-	@PostMapping("modifyclear")
+	@PostMapping("/modifyclear")
 	public String modifyQuestion(QuestionVO vo, RedirectAttributes rttr) {
 		service.modifyQuestion(vo);
 		rttr.addFlashAttribute("success", "modify");
@@ -73,7 +76,7 @@ public class QuestionController {
 	}
 	
 	// 질문글 상세 조회
-	@PostMapping("getquestion")
+	@PostMapping("/getquestion")
 	public String getQuestion(Long qnum, Model model) {
 		QuestionVO vo = service.ownQuestion(qnum);
 		model.addAttribute("vo", vo);
@@ -81,7 +84,7 @@ public class QuestionController {
 	}
 	
 	// 질문글 삭제
-	@PostMapping("removequestion")
+	@PostMapping("/removequestion")
 	public String removeQuestion(Long qnum, RedirectAttributes rttr) {
 		service.removeQuestion(qnum);
 		rttr.addFlashAttribute("success", "remove");
