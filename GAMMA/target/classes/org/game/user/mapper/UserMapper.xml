@@ -5,7 +5,7 @@
 <mapper namespace="org.game.user.mapper.UserMapper">
 
 	<!-- 회원가입 -->
-	<insert id="userJoin">
+	<insert id="userjoin">
 		INSERT INTO consumer(cnum,cid,email,password,nickname)
 			VALUES(consumer_num.nextval,#{cid},#{email},#{password},#{nickname})
 	</insert>

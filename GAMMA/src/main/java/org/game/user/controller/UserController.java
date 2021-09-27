@@ -11,10 +11,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-<<<<<<< HEAD
+
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-=======
->>>>>>> user
 
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j;
@@ -28,11 +26,7 @@ public class UserController {
 	private UserService service;
 	
 	@GetMapping("/userjoin")
-<<<<<<< HEAD
-	public String userJoin() {
-		return "/user/userjoin";
-	}
-	
+
 	@PostMapping("/userjoin")
 	public String userJoin(ConsumerVO userVO,RedirectAttributes rttr) {
 		service.userJoin(userVO);
@@ -46,10 +40,7 @@ public class UserController {
 	}
 	
 	
-=======
-	public 
->>>>>>> user
-	
+
 	/*
 	 * @PostMapping("/userlogin") public String login(ConsumerVO userVO,
 	 * HttpServletRequest request) {
@@ -63,7 +54,7 @@ public class UserController {
 	 * userLogout(@ModelAttribute("userVO") ConsumerVO userVO, HttpServletRequest
 	 * request) {
 	 * 
-<<<<<<< HEAD
+
 	 * service.userLogout(userVO); HttpSession session = request.getSession();
 	 * session.invalidate();
 	 * 
@@ -71,12 +62,4 @@ public class UserController {
 	 */
 	
 
-=======
-	 * service.userlogout(userVO); HttpSession session = request.getSession();
-	 * session.invalidate();
-	 * 
-	 * return "redirect:/user/userlogin"; }
-	 * 
-	 */
->>>>>>> user
 }
