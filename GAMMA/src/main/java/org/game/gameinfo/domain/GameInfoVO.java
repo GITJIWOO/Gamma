@@ -7,14 +7,14 @@ import lombok.Data;
 @Data
 public class GameInfoVO {
 	
-	private long gNum;
-	private String gName;
-	private Date gLaunch;
-	private String gDeveloper;
-	private String gFublisher;
-	private int gPrice;
-	private String gContent;
-	private int gGrade;
-	private String gSite;
-	private String gAddress;
+	private long gnum;
+	private String gname;
+	private String glaunch;
+	private String gdeveloper;
+	private String gfublisher;
+	private int gprice;
+	private String gcontent;
+	private int ggrade;
+	private String gsite;
+	private String gaddress;
 }
