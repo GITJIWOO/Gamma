@@ -18,12 +18,12 @@ public class FriendsMapperTest {
 	@Autowired
 	private FriendsMapper mapper;
 	
-	//@Test 됨 
+	//@Test
 	public void testGetUser() {
 		log.info(mapper.getUser("abc"));
 	}
 	
-	//@Test 됨 
+	//@Test
 	public void testInsertFriend() {
 		FriendsVO vo = new FriendsVO();
 		vo.setFollower("htrew");
@@ -31,18 +31,17 @@ public class FriendsMapperTest {
 		mapper.insertFriend(vo);
 	}
 	
-	//@Test 됨
+	//@Test
 	public void testGetFollower() {
 		mapper.getFollower("asfgd", "dv");
 	}
 	
-	//@Test 됨 
-	@Test
+	//@Test
 	public void testGetFollowing() {
 		mapper.getFollowing("asfgd", "bc");
 	}
 	
-	//@Test 됨
+	//@Test
 	public void testDeleteFriend() {
 		mapper.deleteFriend("excfnjg", "htrew");
 	}

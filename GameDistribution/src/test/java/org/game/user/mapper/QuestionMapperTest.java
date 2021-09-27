@@ -1,5 +1,6 @@
 package org.game.user.mapper;
 
+import org.game.user.domain.QuestionCriteria;
 import org.game.user.domain.QuestionVO;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -16,7 +17,7 @@ public class QuestionMapperTest {
 	@Autowired
 	private QuestionMapper mapper;
 	
-	@Test
+	//@Test
 	public void testGetAdmin() {
 		mapper.getAdmin("admin");
 	}
@@ -33,17 +34,30 @@ public class QuestionMapperTest {
 	
 	//@Test
 	public void testGetQuestionList() {
-		log.info(mapper.getQuestionList("%%"));	// 관리자일 경우 %% 넣어주는 것으로 고정 
+		mapper.getQuestionList("%%");	// 관리자일 경우 %% 넣어주는 것으로 고정 
+	}
+	@Test
+	public void testGetQuestionListP() {
+		QuestionCriteria cri = new QuestionCriteria(1, 10);
+		mapper.getQuestionListP(cri, "%%");
+	}
+	//@Test
+	public void testGetCountQuestion() {
+		mapper.getCountQuestion("%%");
 	}
 	
 	//@Test
 	public void testGetQtypeQuestion() {
-		log.info(mapper.getQtypeQuestion("계정 및 내정보"));
+		mapper.getQtypeQuestion("계정 및 내정보");
+	}
+	//@Test
+	public void testGetCountQtype() {
+		mapper.getCountQtype("계정 및 내정보");
 	}
 	
 	//@Test
 	public void testGetOwnQuestion() {
-		log.info(mapper.getOwnQuestion(2L));
+		mapper.getOwnQuestion(2L);
 	}
 	
 	//@Test

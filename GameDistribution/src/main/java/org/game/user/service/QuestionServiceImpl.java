@@ -37,9 +37,21 @@ public class QuestionServiceImpl implements QuestionService{
 	}
 
 	@Override
+	public int countQuestion(String qwriter) {
+		log.info("질문글 목록 개수 조회");
+		return mapper.getCountQuestion(qwriter);
+	}
+	
+	@Override
 	public List<QuestionVO> typeQuestion(String qtype) {
 		log.info("타입별 질문글 목록 조회");
 		return mapper.getQtypeQuestion(qtype);
+	}
+
+	@Override
+	public int countQtype(String qtype) {
+		log.info("타입별 질문글 목록 개수 조회");
+		return mapper.getCountQtype(qtype);
 	}
 
 	@Override
@@ -59,6 +71,4 @@ public class QuestionServiceImpl implements QuestionService{
 		log.info("질문글 삭제");
 		mapper.deleteQuestion(qnum);
 	}
-
-
 }

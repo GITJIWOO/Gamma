@@ -16,7 +16,7 @@ public class QuestionServiceTest {
 	@Autowired
 	private QuestionService service;
 	
-	@Test
+	//@Test
 	public void testAdminOrNot() {
 		service.adminOrNot("admin");
 	}
@@ -34,10 +34,18 @@ public class QuestionServiceTest {
 	public void testQuestionList() {
 		service.questionList("%%");
 	}
-	
 	//@Test
-	public void testTypeQuestion() {
+	public void testCountQuestion() {
+		service.countQuestion("%%");
+	}
+	
+	@Test
+	public void testQtypeQuestion() {
 		service.typeQuestion("소프트웨어 및 게임");
+	}
+	@Test
+	public void testCountQtype() {
+		service.countQtype("소프트웨어 및 게임");
 	}
 	
 	//@Test
