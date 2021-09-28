@@ -34,14 +34,16 @@ public class ReviewController {
 	@GetMapping("/reviewList/{gnum}")
 	public String getReviewList(@PathVariable long gnum, String listKind, Model model) {
 		
-		if(listKind == null || listKind == "famous") {
+		if(listKind == null || listKind == "" || listKind == "famous") {
 			List<ReviewVO> famousReview = reviewService.getFamousReview(gnum);
 			model.addAttribute("review", famousReview);
+			model.addAttribute("gameNum", gnum);
 		} else if(listKind == "new") {
 			List<ReviewVO> newReview = reviewService.getNewReview(gnum);
 			model.addAttribute("review", newReview);
+			model.addAttribute("gameNum", gnum);
 		}
-		return "/review/reviewList/" + gnum;
+		return "/review/reviewList";
 	}
 	
 	// 평가 상세 조회
@@ -55,7 +57,7 @@ public class ReviewController {
 		model.addAttribute("review", review);
 		model.addAttribute("reviewComment", reviewComment);
 		
-		return "/review/reviewDetail/" + grnum;
+		return "/review/reviewDetail";
 	}
 	
 	// 평가 작성

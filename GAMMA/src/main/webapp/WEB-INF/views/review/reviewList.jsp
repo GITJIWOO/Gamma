@@ -9,29 +9,33 @@
 </head>
 <body>
 	<div class="body">
-		<form action="/review/reviewList/review.gnum" method="get">
-			<select name="reviewType">
+		<form action="/review/reviewList/${gameNum}" method="get">
+			<select name="listKind">
 				<option value="" selected>정렬 기준</option>
 				<option value="famous">인기 순</option>
 				<option value="new">최신 순</option>
 			</select>
 			<input type="submit" value="적용">
 		</form>
-		<c:forEach var="review" items="${review}">
-			<tr>
-				<td>${review.cid}</td>
-				<td>
-					<c:choose>
-						<c:when test="${review.grlike == 1}">추천</c:when>
-						<c:when test="${review.grlike == 0}">비추천</c:when>
-					</c:choose>
-				</td>
-				<td>${review.grtitle}</td>
-				<td>${review.grcontent}</td>
-				<td>${review.grdate}</td>
-			</tr>
-			<hr/>
-		</c:forEach>
+		<div id="review">
+			<c:forEach var="review" items="${review}">
+				<a href="/review/reviewDetail/${review.grnum}">
+					<tr>
+						<td>${review.cid}</td>
+						<td>
+							<c:choose>
+								<c:when test="${review.grlike == 1}">추천</c:when>
+								<c:when test="${review.grlike == 0}">비추천</c:when>
+							</c:choose>
+						</td>
+						<td>${review.grtitle}</td>
+						<td>${review.grcontent}</td>
+						<td>${review.grdate}</td>
+					</tr>
+					<hr/>
+				</a>
+			</c:forEach>
+		</div>
 	</div>
 </body>
 </html>
