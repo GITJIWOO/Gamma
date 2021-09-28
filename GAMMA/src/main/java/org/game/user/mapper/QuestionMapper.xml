@@ -22,7 +22,7 @@
 		<![CDATA[
 		SELECT qnum, qtype, qtitle, qcontent, qwriter, qdate FROM
 		(SELECT
-		/*+ SELECT * FROM question ORDER BY qnum DESC */
+		/*+ INDEX_DESC quesiton pk_question */
 		rownum rn, question.* FROM question WHERE qwriter LIKE #{qwriter}
 		AND rownum <= #{cri.pageNum} * #{cri.amount}) qu
 		WHERE rn > (#{cri.pageNum} - 1) * #{cri.amount}
@@ -40,7 +40,7 @@
 		<![CDATA[
 		SELECT qnum, qtype, qtitle, qcontent, qwriter, qdate FROM
 		(SELECT
-		/*+ SELECT * FROM question ORDER BY qnum DESC */
+		/*+ INDEX_DESC quesiton pk_question */
 		rownum rn, question.* FROM question WHERE qtype LIKE #{qtype}
 		AND rownum <= #{cri.pageNum} * #{cri.amount}) qu
 		WHERE rn > (#{cri.pageNum} - 1) * #{cri.amount}
