@@ -9,12 +9,22 @@
 <title>Insert title here</title>
 </head>
 <body>
+	<!-- 검색창 - 관리자만 볼 수 있음 -->
+	<c:if test="${admin == 1 }">
+	<form>
+		<select name="searchType">
+			<option value="" disabled selected>--작성자 아이디 혹은 닉네임--</option>
+		</select>
+		<input type="text" name="keyword" value="${vo.qwriter }" placeholder="작성자 아이디 혹은 닉네임"/>
+		<input type="submit" value="검색"/>
+	</form>
+	</c:if>
 	<table>
 		<thead>
 			<tr>
 				<th>No</th>
-				<th>제목</th>
 				<th>유형</th>
+				<th>제목</th>
 				<th>본문</th>
 				<th>작성자</th>
 				<th>등록일</th>
@@ -24,8 +34,8 @@
 			<c:forEach items="${vo }" var="vo">
 				<tr>
 					<td>${vo.qnum }</td>
-					<td>${vo.qtitle }</td>
 					<td>${vo.qtype }</td>
+					<td><a href="/board">${vo.qtitle }</a></td>
 					<td>${vo.qcontent }</td>
 					<td>${vo.qwriter }</td>
 					<td>${vo.qdate  }</td>
@@ -33,17 +43,18 @@
 			</c:forEach>
 		</tbody>
 	</table>
-	<!-- pagination -->
+	<!-- 페이징 처리 -->
 	<nav aria-label="...">
 	  <ul class="pagination">
-	    <li class="page-item disabled">
+	    <li class="page-item">
 	      <a class="page-link">Previous</a>
 	    </li>
-	    <li class="page-item"><a class="page-link" href="#">1</a></li>
+	    <li class="page-item">
+	    	<a class="page-link" href="#">1</a>
+	    </li>
 	    <li class="page-item active" aria-current="page">
 	      <a class="page-link" href="#">2</a>
 	    </li>
-	    <li class="page-item"><a class="page-link" href="#">3</a></li>
 	    <li class="page-item">
 	      <a class="page-link" href="#">Next</a>
 	    </li>

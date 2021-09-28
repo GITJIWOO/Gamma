@@ -1,5 +1,6 @@
 package org.game.user.service;
 
+import org.game.user.domain.QuestionCriteria;
 import org.game.user.domain.QuestionVO;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -43,6 +44,13 @@ public class QuestionServiceTest {
 	public void testQtypeQuestion() {
 		service.typeQuestion("소프트웨어 및 게임");
 	}
+	
+	//@Test
+	public void testQtypeQuestionP() {
+		QuestionCriteria cri = new QuestionCriteria(1, 10);
+		service.typeQuestionP(cri, "");
+	}
+	
 	@Test
 	public void testCountQtype() {
 		service.countQtype("소프트웨어 및 게임");

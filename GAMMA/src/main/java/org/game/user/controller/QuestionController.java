@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.game.user.domain.QuestionVO;
 import org.game.user.service.QuestionService;
+import org.game.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,10 +24,13 @@ public class QuestionController {
 	@Autowired
 	private QuestionService service;
 	
+	@Autowired
+	private UserService uservice;
+	
 	// 질문글 작성하는 폼 
 	@PostMapping("/questionform")
-	public String addQuestion(String qwriter, Model model) {
-		model.addAttribute("qwriter", qwriter);
+	public String addQuestion(String cid, Model model) {
+		model.addAttribute("qwriter", cid);
 		return "/qna/registerquestion";
 	}
 	
@@ -52,7 +56,8 @@ public class QuestionController {
 			List<QuestionVO> vo = service.questionList(cid);
 			model.addAttribute("vo", vo);
 		}
-		
+		model.addAttribute("admin", admin);
+		model.addAttribute("cid", model);
 		return "/qna/questionlist";
 	}
 	

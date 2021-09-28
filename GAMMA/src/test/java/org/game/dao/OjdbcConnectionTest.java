@@ -21,7 +21,7 @@ public class OjdbcConnectionTest {
 	
 	@Test
 	public void testConnection() {
-		try(Connection con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521/XEPDB1", "mytest", "mytest")){
+		try(Connection con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:51521/XEPDB1", "mytest", "mytest")){
 			log.info(con);
 		}catch(Exception e) {
 			fail(e.getMessage());

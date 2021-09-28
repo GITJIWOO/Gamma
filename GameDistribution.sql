@@ -80,7 +80,7 @@ CREATE TABLE consumer (
 );
 INSERT INTO consumer(cnum, cid, email, password, nickname, cadmin) 
     VALUES(consumer_num.nextval,'kjw011231', 'kjw0111231@gmail.com', 'rlawldn', '김지우', 1);
-
+SELECT * FROM consumer; 
 /*  사진 테이블
     시간
     외래키
@@ -220,7 +220,7 @@ CREATE TABLE statuscomment(
 */
 CREATE SEQUENCE question_num;
 CREATE TABLE question (
-    qnum NUMBER PRIMARY KEY,
+    qnum NUMBER,
     qtype VARCHAR(50) NOT NULL,
     qtitle VARCHAR2(50) NOT NULL,
     qcontent VARCHAR2(1000) NOT NULL,
@@ -228,6 +228,8 @@ CREATE TABLE question (
     CONSTRAINT fk_question FOREIGN KEY(qwriter) REFERENCES consumer(cid),
     qdate DATE DEFAULT SYSDATE
 );
+ALTER TABLE question ADD CONSTRAINT pk_question PRIMARY KEY(qnum);
+
 
 /*  Answer 테이블
     글 식별 번호(기본키)

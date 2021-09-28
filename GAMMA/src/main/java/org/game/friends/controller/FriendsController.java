@@ -5,6 +5,7 @@ import java.util.List;
 import org.game.friends.domain.FriendsVO;
 import org.game.friends.service.FriendsService;
 import org.game.user.domain.ConsumerVO;
+import org.game.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -24,10 +25,13 @@ public class FriendsController {
 	@Autowired
 	private FriendsService service;
 	
+	@Autowired
+	private UserService uservice;
+	
 	// 메인화면 
 	@GetMapping("/friendsmain")
 	public String friendsMain(Model model) {
-		// 해당 로그인계정 정보 가져와야 함 - user contoller에서 넘겨받기
+		// 해당 로그인계정 정보 가져와야 함 - user service에서 세션확인
 		//model.addAttribute("userId", cid);
 		return "/friends/friendsmain";
 	}
