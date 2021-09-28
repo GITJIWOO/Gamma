@@ -11,6 +11,7 @@ import org.game.user.service.UserService;
 import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -40,9 +41,13 @@ public class UserController {
 	}
 
 	// 회원가입 get방식으로 접근여부 가능
-	@GetMapping("/userjoin")
+	@GetMapping("/userJoin")
 	public String userJoin() {
-		return "/user/userjoin";
+		log.info("주소감지");
+		log.info("주소감지");
+		log.info("주소감지");
+		log.info("주소감지");
+		return "user/userjoin";
 	}
 
 	// 회원가입
@@ -51,7 +56,7 @@ public class UserController {
 		int result = service.idChk(userVO);
 
 		if (result == 1) {
-			return "/user/userjoin";
+			return "user/userjoin";
 		} else if (result == 0) {
 			String hashedPw =BCrypt.hashpw(userVO.getPassword(),BCrypt.gensalt());
 			userVO.setPassword(hashedPw);
@@ -61,16 +66,41 @@ public class UserController {
 			rttr.addFlashAttribute("cnum", userVO.getCnum());
 			rttr.addFlashAttribute("success", "userJoin");
 		}
-		return "redirect:/user/userlogin";
+		return "redirect:user/userlogin";
 	}
-
-	// 로그인 처리
+	// 로그인
 	@PostMapping("/userlogin")
-	public ModelAndView userLogin(HttpServletResponse response, @ModelAttribute ConsumerVO userVO)
-			throws IOException {// input 창에 입력 받은 것을 memberVO에 저장.
-		ModelAndView mav = new ModelAndView(); // 객체 생성후
-		mav = service.userLogin(userVO, response); // service에 있는 메소드를 호출한 결과를 저장.
-		return mav;
-	}
+    public String userLogin(ConsumerVO userVO, HttpServletRequest req, RedirectAttributes rttr) throws Exception {
+        
+        HttpSession session = req.getSession();
+        ConsumerVO uservo = service.userLogin(userVO);
+        
+        if(userVO == null|| !BCrypt.checkpw(userVO.getPassword(), null)) {
+            session.setAttribute("userVO", null);
+            rttr.addFlashAttribute("msg", false);
+        } else {
+            session.setAttribute("userVO", userVO);
+        }
+        
+        return "redirect:main";
+    }
+	@GetMapping("/usermodify")
+    public String userModify(HttpServletRequest req, Model model, ConsumerVO memverVO){
+        
+        HttpSession session = req.getSession();
+        
+        ConsumerVO userVO = (ConsumerVO) session.getAttribute("userVO");
+        ConsumerVO userModify = service.userModify(userVO.getCid());
+        
+        model.addAttribute("modifyId", userModify.getCid());
+        model.addAttribute("modifyEmail", userModify.getEmail());
+        model.addAttribute("modifyNick", userModify.getNickname());
+        model.addAttribute("modifyPass", userModify.getPassword());
+        
+        return "userModify";    
+    }
+
+
+
 
 }

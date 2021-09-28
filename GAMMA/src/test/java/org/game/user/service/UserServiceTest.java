@@ -17,6 +17,8 @@ public class UserServiceTest {
 
 	@Autowired
 	private UserService service;
+	
+	
 
 	//@Test
 	public void testuserJoin() {
@@ -26,6 +28,12 @@ public class UserServiceTest {
 		userVO.setNickname("서비스닉넴");
 		userVO.setPassword("서비스비번");
 		service.userJoin(userVO);
+	}
+	//@Test
+	public void testuserLogin() {
+		ConsumerVO userVO = new ConsumerVO();
+		String cid="서비스아디";
+		service.userLogin(userVO);
 	}
 
 }
