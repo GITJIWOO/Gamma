@@ -2,6 +2,7 @@ package org.game.user.service;
 
 import java.util.List;
 
+import org.game.user.domain.QuestionCriteria;
 import org.game.user.domain.QuestionVO;
 import org.game.user.mapper.QuestionMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,6 +38,12 @@ public class QuestionServiceImpl implements QuestionService{
 	}
 
 	@Override
+	public List<QuestionVO> questionListP(QuestionCriteria cri, String qwriter) {
+		log.info("페이징 처리용 질문글 목록 조회");
+		return mapper.getQuestionListP(cri, qwriter);
+	}
+
+	@Override
 	public int countQuestion(String qwriter) {
 		log.info("질문글 목록 개수 조회");
 		return mapper.getCountQuestion(qwriter);
@@ -48,6 +55,12 @@ public class QuestionServiceImpl implements QuestionService{
 		return mapper.getQtypeQuestion(qtype);
 	}
 
+	@Override
+	public List<QuestionVO> typeQuestionP(QuestionCriteria cri, String qtype) {
+		log.info("페이징 처리용 타입별 질문글 목록 조회");
+		return mapper.getQtypeQuestionP(cri, qtype);
+	}
+	
 	@Override
 	public int countQtype(String qtype) {
 		log.info("타입별 질문글 목록 개수 조회");

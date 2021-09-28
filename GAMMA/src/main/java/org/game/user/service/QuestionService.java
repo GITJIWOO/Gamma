@@ -2,6 +2,7 @@ package org.game.user.service;
 
 import java.util.List;
 
+import org.game.user.domain.QuestionCriteria;
 import org.game.user.domain.QuestionVO;
 
 public interface QuestionService {
@@ -10,9 +11,11 @@ public interface QuestionService {
 	public void addQuestion(QuestionVO vo);
 	
 	public List<QuestionVO> questionList(String qwriter);
+	public List<QuestionVO> questionListP(QuestionCriteria cri, String qwriter);
 	public int countQuestion(String qwriter);
 	
 	public List<QuestionVO> typeQuestion(String qtype);
+	public List<QuestionVO> typeQuestionP(QuestionCriteria cri, String qtype);
 	public int countQtype(String qtype);
 	
 	public QuestionVO ownQuestion(Long qnum);

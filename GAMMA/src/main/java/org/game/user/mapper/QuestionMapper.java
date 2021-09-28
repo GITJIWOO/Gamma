@@ -24,7 +24,7 @@ public interface QuestionMapper {
 	
 	// 유형별 조회
 	public List<QuestionVO> getQtypeQuestion(String qtype);
-	public List<QuestionVO> getQtypeQuestionP(QuestionCriteria cri, @Param("qtype")String qtype);
+	public List<QuestionVO> getQtypeQuestionP(@Param("cri")QuestionCriteria cri, @Param("qtype")String qtype);
 	// 위 메서드 개수 조회 
 	public int getCountQtype(String qtype);
 	/*
