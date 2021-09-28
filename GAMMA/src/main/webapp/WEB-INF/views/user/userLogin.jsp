@@ -8,7 +8,7 @@
 </head>
 <body>
 <h1>userLogin.jsp</h1>
-	<form action=userLogin name="userLogin" method=post>
+	<form action="userLogin" name="userLogin" method=post>
 		<input type="text" name="cid" placeholder="id 입력"><br>
 		<input type="password" name="password" placeholder="password 입력"><br>
 		<input type="button" onclick ="login()" value="로그인">
