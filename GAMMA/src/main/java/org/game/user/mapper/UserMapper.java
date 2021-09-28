@@ -15,12 +15,14 @@ public interface UserMapper {
 	
 	// 로그인
 	public ConsumerVO userLogin(ConsumerVO userVO);
+
+	// 회원정보수정
+	public ConsumerVO userModify(String cid);
 	
 	public void userLogout();
 	
 	public void userRemove();
 	
-	public void userModify(ConsumerVO userVO);
 	
 	public ConsumerVO userGet(ConsumerVO userVO);
 
