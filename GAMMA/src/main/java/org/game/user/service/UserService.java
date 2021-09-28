@@ -11,19 +11,19 @@ import org.springframework.web.servlet.ModelAndView;
 public interface UserService {
 
 	// 아이디 중복 체크
-	public int idChk(ConsumerVO userVO);
+	public int idChk(ConsumerVO userVO) throws Exception;
 	
 	// 패스워드 중복 체크
-	public int passChk(ConsumerVO userVO);
+	public int passChk(ConsumerVO userVO) throws Exception;
 	
 	// 회원가입
-	public void userJoin(ConsumerVO userVO);
+	public void userJoin(ConsumerVO userVO) throws Exception;
 
 	// 로그인
-	 public ConsumerVO userLogin(ConsumerVO userVO) ;
+	 public ConsumerVO userLogin(ConsumerVO userVO) throws Exception;
 
 	 // 회원정보 수정
-	 public ConsumerVO userModify(String cid);
+	 public ConsumerVO userModify(String cid) throws Exception;
 
 	public void userLogout();
 

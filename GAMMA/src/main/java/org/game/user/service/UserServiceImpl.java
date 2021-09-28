@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.game.user.domain.ConsumerVO;
+import org.game.user.domain.UserDAO;
 import org.game.user.mapper.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,27 +24,27 @@ public class UserServiceImpl implements UserService {
 	@Autowired
 	private UserMapper mapper;
 	@Autowired
-	private HttpSession session;
-
+	private UserDAO dao;
+	
 	// 아이디 중복 체크
 	@Override
-	public int idChk(ConsumerVO userVO) {
-		int result =mapper.idChk(userVO);
+	public int idChk(ConsumerVO userVO) throws Exception {
+		int result =dao.idChk(userVO);
 		return result;
 	}
 	
 	// 패스워드 중복 체크
 	@Override
-	public int passChk(ConsumerVO userVO) {
-		int result =mapper.passChk(userVO);
+	public int passChk(ConsumerVO userVO) throws Exception {
+		int result =dao.passChk(userVO);
 		return result;
 	}
 	
 	// 회원가입
 	@Override
-	public void userJoin(ConsumerVO userVO) {
+	public void userJoin(ConsumerVO userVO) throws Exception {
 	log.info("유저회원가입실행");
-	mapper.userJoin(userVO);
+	dao.userJoin(userVO);
 	}
 	
 	//로그인

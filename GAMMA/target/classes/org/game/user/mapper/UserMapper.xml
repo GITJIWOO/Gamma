@@ -6,16 +6,16 @@
 
 	<!-- 아이디 중복체크 -->
 	<select id="idChk" resultType="int">
-	<![CDATA[
+	
 		SELECT COUNT(*) FROM consumer WHERE cid =#{cid}
-		]]>
+		
 	</select>
 
 	<!-- 패스워드 체크 -->
 	<select id="passChk" resultType="int">
-		<![CDATA[
+		
 		SELECT COUNT(*) FROM consumer WHERE cid=#{cid} AND password=#{password}
-		]]>
+		
 	</select>
 
  

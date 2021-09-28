@@ -16,7 +16,7 @@
 		$(document).ready(function(){
 			// 취소
 			$(".cencle").on("click", function(){
-				location.href = "/";
+				location.href = "/userJoin";
 			})
 			
 			$("#submit").on("click", function(){

@@ -35,41 +35,42 @@ public class UserController {
 	// 아이디 중복 체크
 	@ResponseBody
 	@RequestMapping(value = "/idChk", method = RequestMethod.POST)
-	public int idChk(ConsumerVO vo) {
+	public int idChk(ConsumerVO vo) throws Exception {
 		int result = service.idChk(vo);
+		return result;
+	}
+	// 비밀번호 중복 체크
+	@ResponseBody
+	@RequestMapping(value = "/passChk", method = RequestMethod.POST)
+	public int passChk(ConsumerVO vo) throws Exception {
+		int result = service.passChk(vo);
 		return result;
 	}
 
 	// 회원가입 get방식으로 접근여부 가능
 	@GetMapping("/userJoin")
-	public String userJoin() {
-		log.info("주소감지");
-		log.info("주소감지");
-		log.info("주소감지");
-		log.info("주소감지");
-		return "user/userjoin";
+	public void getuserJoin() throws Exception {
+		log.info("get방식회원가입접속");
+		
 	}
 
 	// 회원가입
-	@PostMapping("/userjoin")
-	public String userJoin(ConsumerVO userVO, RedirectAttributes rttr) {
+	@PostMapping("/userJoin")
+	public String userJoin(ConsumerVO userVO) throws Exception {
 		int result = service.idChk(userVO);
-
-		if (result == 1) {
-			return "user/userjoin";
-		} else if (result == 0) {
-			String hashedPw =BCrypt.hashpw(userVO.getPassword(),BCrypt.gensalt());
-			userVO.setPassword(hashedPw);
-			service.userJoin(userVO);
-			log.info("userVO : " + userVO);
-			rttr.addFlashAttribute("msg","REGISTERED");
-			rttr.addFlashAttribute("cnum", userVO.getCnum());
-			rttr.addFlashAttribute("success", "userJoin");
+		try {
+			if(result == 1) {
+				return "/user/userJoin";
+			}else if(result == 0) {
+				service.userJoin(userVO);
+			}
+			} catch (Exception e) {
+			throw new RuntimeException();
 		}
-		return "redirect:user/userlogin";
+		return "redirect:user/userLogin";
 	}
 	// 로그인
-	@PostMapping("/userlogin")
+	@PostMapping("/userLogin")
     public String userLogin(ConsumerVO userVO, HttpServletRequest req, RedirectAttributes rttr) throws Exception {
         
         HttpSession session = req.getSession();
@@ -82,7 +83,7 @@ public class UserController {
             session.setAttribute("userVO", userVO);
         }
         
-        return "redirect:main";
+        return "redirect:/main";
     }
 	@GetMapping("/usermodify")
     public String userModify(HttpServletRequest req, Model model, ConsumerVO memverVO){
@@ -90,13 +91,14 @@ public class UserController {
         HttpSession session = req.getSession();
         
         ConsumerVO userVO = (ConsumerVO) session.getAttribute("userVO");
-        ConsumerVO userModify = service.userModify(userVO.getCid());
+       // ConsumerVO userModify = service.userModify(userVO.getCid());
         
-        model.addAttribute("modifyId", userModify.getCid());
-        model.addAttribute("modifyEmail", userModify.getEmail());
-        model.addAttribute("modifyNick", userModify.getNickname());
-        model.addAttribute("modifyPass", userModify.getPassword());
-        
+		/*
+		 * model.addAttribute("modifyId", userModify.getCid());
+		 * model.addAttribute("modifyEmail", userModify.getEmail());
+		 * model.addAttribute("modifyNick", userModify.getNickname());
+		 * model.addAttribute("modifyPass", userModify.getPassword());
+		 */
         return "userModify";    
     }
 
