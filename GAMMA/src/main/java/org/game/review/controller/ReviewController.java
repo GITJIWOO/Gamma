@@ -31,8 +31,8 @@ public class ReviewController {
 	private ReviewCommentService commentService;
 	
 	// 모든 평가 조회
-	@GetMapping("/reviewList")
-	public String getReviewList(long gnum, String listKind, Model model) {
+	@GetMapping("/reviewList/{gnum}")
+	public String getReviewList(@PathVariable long gnum, String listKind, Model model) {
 		
 		if(listKind == null || listKind == "famous") {
 			List<ReviewVO> famousReview = reviewService.getFamousReview(gnum);
@@ -41,7 +41,7 @@ public class ReviewController {
 			List<ReviewVO> newReview = reviewService.getNewReview(gnum);
 			model.addAttribute("review", newReview);
 		}
-		return "/review/reviewList";
+		return "/review/reviewList/" + gnum;
 	}
 	
 	// 평가 상세 조회
@@ -55,7 +55,7 @@ public class ReviewController {
 		model.addAttribute("review", review);
 		model.addAttribute("reviewComment", reviewComment);
 		
-		return "/review/reviewDetail";
+		return "/review/reviewDetail/" + grnum;
 	}
 	
 	// 평가 작성

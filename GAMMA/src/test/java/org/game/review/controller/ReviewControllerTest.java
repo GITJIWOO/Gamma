@@ -31,18 +31,18 @@ public class ReviewControllerTest {
 		this.mockMvc = MockMvcBuilders.webAppContextSetup(ctx).build(); 
 	}
 	
-	@Test
+	// @Test
 	public void getReviewListTest() throws Exception {
 		String resultPage = mockMvc.perform(
-					MockMvcRequestBuilders.get("/review/reviewList?gnum=1"))
+					MockMvcRequestBuilders.get("/review/reviewList/1"))
 						.andReturn().getModelAndView().getViewName();
 		log.info(resultPage);
 	}
 	
-	// @Test
+	@Test
 	public void getReviewDetailTest() throws Exception {
 		String resultPage = mockMvc.perform(
-					MockMvcRequestBuilders.get("/review/reviewDetail/1"))
+					MockMvcRequestBuilders.get("/review/reviewDetail/23"))
 						.andReturn().getModelAndView().getViewName();
 		log.info(resultPage);
 	}
