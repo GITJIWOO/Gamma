@@ -10,6 +10,7 @@
 </head>
 <body>
 	<!-- 검색창 - 관리자만 볼 수 있음 -->
+	<c:if test="${admin == 1 }">
 	<form>
 		<select name="searchType">
 			<option value="" disabled selected>--작성자 아이디 혹은 닉네임--</option>
@@ -17,6 +18,7 @@
 		<input type="text" name="keyword" value="${vo.qwriter }" placeholder="작성자 아이디 혹은 닉네임"/>
 		<input type="submit" value="검색"/>
 	</form>
+	</c:if>
 	<table>
 		<thead>
 			<tr>
