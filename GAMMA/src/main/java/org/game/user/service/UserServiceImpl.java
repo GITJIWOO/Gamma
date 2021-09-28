@@ -35,32 +35,32 @@ public class UserServiceImpl implements UserService {
 	// 패스워드 중복 체크
 	@Override
 	public int passChk(ConsumerVO userVO) {
-		int result =mapper.idChk(userVO);
+		int result =mapper.passChk(userVO);
 		return result;
 	}
 	
 	// 회원가입
 	@Override
 	public void userJoin(ConsumerVO userVO) {
-	log.info("유저로그인실행");
+	log.info("유저회원가입실행");
 	mapper.userJoin(userVO);
 	}
 	
+	//로그인
+	@Override
+	 public ConsumerVO userLogin(ConsumerVO userVO) {
+		log.info("로그인실행");
+        return mapper.userLogin(userVO);
+    }
 
 	@Override
-	public ConsumerVO userLogin(ConsumerVO userVO,HttpServletRequest request, HttpServletResponse response) {
-		HttpSession session = null;
-		session = request.getSession();
-		
-		String s_id = (String)session.getAttribute("id_session");
-		String s_pw = (String)session.getAttribute("pw_session");
-		if(s_id==null) {
-		userVO.setCid(cid);
-		
-		}else
-			mapper.userLogin(userVO);
-		return ;
-	}
+	public ConsumerVO userModify(String cid)  {
+        return mapper.userModify(cid);
+ }
+
+
+
+
 
 	@Override
 	public void userLogout() {
@@ -74,11 +74,6 @@ public class UserServiceImpl implements UserService {
 		
 	}
 
-	@Override
-	public void userUpdate(ConsumerVO userVO) {
-		// TODO Auto-generated method stub
-		
-	}
 
 	@Override
 	public ConsumerVO userSearch(ConsumerVO userVO) {
