@@ -33,15 +33,16 @@ public class ReviewController {
 	// 모든 평가 조회
 	@GetMapping("/reviewList/{gnum}")
 	public String getReviewList(@PathVariable long gnum, String listKind, Model model) {
-		
-		if(listKind == null || listKind == "" || listKind == "famous") {
+		if(listKind == null || listKind.equals("") || listKind.equals("famous")) {
 			List<ReviewVO> famousReview = reviewService.getFamousReview(gnum);
+			log.info("디버깅 :" + famousReview);
 			model.addAttribute("review", famousReview);
 			model.addAttribute("gameNum", gnum);
-		} else if(listKind == "new") {
+		} else if(listKind.equals("new")) {
 			List<ReviewVO> newReview = reviewService.getNewReview(gnum);
 			model.addAttribute("review", newReview);
 			model.addAttribute("gameNum", gnum);
+			log.info("디버깅 :" + newReview);
 		}
 		return "/review/reviewList";
 	}

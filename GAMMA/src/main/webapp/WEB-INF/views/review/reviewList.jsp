@@ -19,7 +19,6 @@
 		</form>
 		<div id="review">
 			<c:forEach var="review" items="${review}">
-				<a href="/review/reviewDetail/${review.grnum}">
 					<tr>
 						<td>${review.cid}</td>
 						<td>
@@ -28,12 +27,13 @@
 								<c:when test="${review.grlike == 0}">∫Ò√ﬂ√µ</c:when>
 							</c:choose>
 						</td>
-						<td>${review.grtitle}</td>
+						<td>
+							<a href="/review/reviewDetail/${review.grnum}">${review.grtitle}</a>
+						</td>
 						<td>${review.grcontent}</td>
 						<td>${review.grdate}</td>
 					</tr>
-					<hr/>
-				</a>
+				<hr/>
 			</c:forEach>
 		</div>
 	</div>
