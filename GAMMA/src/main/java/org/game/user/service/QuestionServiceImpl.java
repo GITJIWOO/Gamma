@@ -3,6 +3,7 @@ package org.game.user.service;
 import java.util.List;
 
 import org.game.user.domain.QuestionCriteria;
+import org.game.user.domain.QuestionSearchCriteria;
 import org.game.user.domain.QuestionVO;
 import org.game.user.mapper.QuestionMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,7 +39,7 @@ public class QuestionServiceImpl implements QuestionService{
 	}
 
 	@Override
-	public List<QuestionVO> questionListP(QuestionCriteria cri, String qwriter) {
+	public List<QuestionVO> questionListP(QuestionSearchCriteria cri, String qwriter) {
 		log.info("페이징 처리용 질문글 목록 조회");
 		return mapper.getQuestionListP(cri, qwriter);
 	}
@@ -56,7 +57,7 @@ public class QuestionServiceImpl implements QuestionService{
 	}
 
 	@Override
-	public List<QuestionVO> typeQuestionP(QuestionCriteria cri, String qtype) {
+	public List<QuestionVO> typeQuestionP(QuestionSearchCriteria cri, String qtype) {
 		log.info("페이징 처리용 타입별 질문글 목록 조회");
 		return mapper.getQtypeQuestionP(cri, qtype);
 	}
@@ -69,7 +70,7 @@ public class QuestionServiceImpl implements QuestionService{
 
 	@Override
 	public QuestionVO ownQuestion(Long qnum) {
-		log.info("본인 단일 질문글 조회");
+		log.info("본인 단일 질문글 조회_질문글 번호로");
 		return mapper.getOwnQuestion(qnum);
 	}
 

@@ -80,7 +80,7 @@ CREATE TABLE consumer (
 );
 INSERT INTO consumer(cnum, cid, email, password, nickname, cadmin) 
     VALUES(consumer_num.nextval,'kjw011231', 'kjw0111231@gmail.com', 'rlawldn', '김지우', 1);
-
+SELECT * FROM consumer; 
 /*  사진 테이블
     시간
     외래키
