@@ -9,6 +9,9 @@
 </head>
 <body>
 	<div class="body">
+		<form action="/gameinfo/" method="get">
+			<input type="submit" value="돌아가기">
+		</form>
 		<form action="/review/reviewList/${gameNum}" method="get">
 			<select name="listKind">
 				<option value="" selected>정렬 기준</option>
