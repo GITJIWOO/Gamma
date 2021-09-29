@@ -26,6 +26,10 @@
 					${review.grtitle}
 					${review.grcontent}
 					${review.grrecommend}
+					<form action="/review/reviewLike" method="post">
+						<input type="hidden" name="grnum" value="${review.grnum}">
+						<input type="submit" value="좋아요">
+					</form>
 					<hr/>
 				</div>
 				<div id="reviewComment">
