@@ -31,6 +31,7 @@
 							<a href="/review/reviewDetail/${review.grnum}">${review.grtitle}</a>
 						</td>
 						<td>${review.grcontent}</td>
+						<td>${review.grrecommend}</td>
 						<td>${review.grdate}</td>
 					</tr>
 				<hr/>
