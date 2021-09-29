@@ -2,6 +2,8 @@ package org.game.user.controller;
 
 import java.util.List;
 
+import org.game.user.domain.QuestionPageDTO;
+import org.game.user.domain.QuestionSearchCriteria;
 import org.game.user.domain.QuestionVO;
 import org.game.user.service.QuestionService;
 import org.game.user.service.UserService;
@@ -45,25 +47,29 @@ public class QuestionController {
 	}
 	
 	// 질문글 목록 조회
-	@PostMapping("/questionlist")
-	public String questionList(String cid, Model model) {
-		int admin = service.adminOrNot(cid);
+	@GetMapping("/questionlist")
+	public String questionList(String qwriter, QuestionSearchCriteria cri, Model model) {
+		int admin = service.adminOrNot(qwriter);
 		// 1이면 관리자, 0이면 일반회원
 		if(admin == 1) {
-			List<QuestionVO> vo = service.questionList("%%");			
+			List<QuestionVO> vo = service.questionListP(cri, "%%");			
 			model.addAttribute("vo", vo);
+			QuestionPageDTO btnMaker = new QuestionPageDTO(cri, service.countQuestion("%%"), 10);
+			model.addAttribute("btnMaker", btnMaker);
 		}else {
-			List<QuestionVO> vo = service.questionList(cid);
+			List<QuestionVO> vo = service.questionListP(cri, qwriter);
 			model.addAttribute("vo", vo);
+			QuestionPageDTO btnMaker = new QuestionPageDTO(cri, service.countQuestion(qwriter), 10);
+			model.addAttribute("btnMaker", btnMaker);
 		}
 		model.addAttribute("admin", admin);
-		model.addAttribute("cid", model);
+		model.addAttribute("qwriter", qwriter);
 		return "/qna/questionlist";
 	}
 	
 	// 질문글 수정
 	@PostMapping("/modifyquestion")
-	public String modifyQuestionForm(Long qnum, Model model) {
+	public String modifyQuestionForm(int qnum, Model model) {
 		QuestionVO vo = service.ownQuestion(qnum);
 		model.addAttribute("vo", vo);
 		return "qna/modifyclear";
@@ -82,7 +88,7 @@ public class QuestionController {
 	
 	// 질문글 상세 조회
 	@PostMapping("/getquestion")
-	public String getQuestion(Long qnum, Model model) {
+	public String getQuestion(int qnum, Model model) {
 		QuestionVO vo = service.ownQuestion(qnum);
 		model.addAttribute("vo", vo);
 		return "/qna/getquestion";
@@ -90,7 +96,7 @@ public class QuestionController {
 	
 	// 질문글 삭제
 	@PostMapping("/removequestion")
-	public String removeQuestion(Long qnum, RedirectAttributes rttr) {
+	public String removeQuestion(int qnum, RedirectAttributes rttr) {
 		service.removeQuestion(qnum);
 		rttr.addFlashAttribute("success", "remove");
 		rttr.addFlashAttribute("qnum", qnum);

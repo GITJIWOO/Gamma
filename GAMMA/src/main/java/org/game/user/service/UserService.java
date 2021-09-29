@@ -20,13 +20,15 @@ public interface UserService {
 	public void userJoin(ConsumerVO userVO);
 
 	// 로그인
-	public ConsumerVO userLogin(ConsumerVO userVO,HttpServletRequest request, HttpServletResponse response) throws Exception;
+	 public ConsumerVO userLogin(ConsumerVO userVO) ;
+
+	 // 회원정보 수정
+	 public ConsumerVO userModify(String cid);
 
 	public void userLogout();
 
 	public void userDelete();
 
-	public void userUpdate(ConsumerVO userVO);
 
 	public ConsumerVO userSearch(ConsumerVO userVO);
 

@@ -17,6 +17,7 @@ public interface QuestionMapper {
 	// - 관리자는 모든 데이터 열람 가능 - qwriter에 정보없이 검색 가능-%%? / 일반 사용자는 기본으로 qwiter에 본인 계정 입력되도록 작성
 	public List<QuestionVO> getQuestionList(String qwriter);
 	public List<QuestionVO> getQuestionListP(@Param("cri")QuestionSearchCriteria cri, @Param("qwriter")String qwriter);
+	
 	// 위 메서드 개수 조회 
 	public int getCountQuestion(String qwriter);
 	// 본인이 작성한 질문글 리스트 가져오기
@@ -29,11 +30,11 @@ public interface QuestionMapper {
 	public int getCountQtype(String qtype);
 
 	// 본인이 작성한 질문글 하나만 가져오기
-	public QuestionVO getOwnQuestion(Long qnum);
+	public QuestionVO getOwnQuestion(int qnum);
 	
 	// 본인이 작성한 질문글 수정하기 
 	public void updateQuestion(QuestionVO vo);
 	
 	// 본인이 작성한 질문글 삭제하기
-	public void deleteQuestion(Long qnum);
+	public void deleteQuestion(int qnum);
 }

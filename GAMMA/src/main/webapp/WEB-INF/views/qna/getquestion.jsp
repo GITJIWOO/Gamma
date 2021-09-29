@@ -8,5 +8,14 @@
 </head>
 <body>
 
+
+	<form action="/qna/modifyquestion" method="post">
+		<input type="hidden" name="qnum" value="${vo.qnum }"/>
+		<input type="submit" value="질문글 수정"/>
+	</form>
+	<form action="/qna/removequestion" method="post">
+		<input type="hidden" name="qnum" value="${vo.qnum }"/>
+		<input type="submit" value="질문글 삭제"/>
+	</form>
 </body>
 </html>

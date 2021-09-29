@@ -2,7 +2,6 @@ package org.game.user.service;
 
 import java.util.List;
 
-import org.game.user.domain.QuestionCriteria;
 import org.game.user.domain.QuestionSearchCriteria;
 import org.game.user.domain.QuestionVO;
 import org.game.user.mapper.QuestionMapper;
@@ -40,10 +39,11 @@ public class QuestionServiceImpl implements QuestionService{
 
 	@Override
 	public List<QuestionVO> questionListP(QuestionSearchCriteria cri, String qwriter) {
-		log.info("페이징 처리용 질문글 목록 조회");
+		log.info("페이징 처리된 질문글 목록 조회");
+		log.info("service 에서 cri 확인:" + cri);
 		return mapper.getQuestionListP(cri, qwriter);
 	}
-
+	
 	@Override
 	public int countQuestion(String qwriter) {
 		log.info("질문글 목록 개수 조회");
@@ -57,20 +57,14 @@ public class QuestionServiceImpl implements QuestionService{
 	}
 
 	@Override
-	public List<QuestionVO> typeQuestionP(QuestionSearchCriteria cri, String qtype) {
-		log.info("페이징 처리용 타입별 질문글 목록 조회");
-		return mapper.getQtypeQuestionP(cri, qtype);
-	}
-	
-	@Override
 	public int countQtype(String qtype) {
 		log.info("타입별 질문글 목록 개수 조회");
 		return mapper.getCountQtype(qtype);
 	}
 
 	@Override
-	public QuestionVO ownQuestion(Long qnum) {
-		log.info("본인 단일 질문글 조회_질문글 번호로");
+	public QuestionVO ownQuestion(int qnum) {
+		log.info("본인 단일 질문글 조회");
 		return mapper.getOwnQuestion(qnum);
 	}
 
@@ -81,8 +75,9 @@ public class QuestionServiceImpl implements QuestionService{
 	}
 
 	@Override
-	public void removeQuestion(Long qnum) {
+	public void removeQuestion(int qnum) {
 		log.info("질문글 삭제");
 		mapper.deleteQuestion(qnum);
 	}
+
 }
