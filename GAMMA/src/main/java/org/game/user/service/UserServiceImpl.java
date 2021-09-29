@@ -23,6 +23,7 @@ public class UserServiceImpl implements UserService {
 
 	@Autowired
 	private UserMapper mapper;
+	
 	@Autowired
 	private UserDAO dao;
 

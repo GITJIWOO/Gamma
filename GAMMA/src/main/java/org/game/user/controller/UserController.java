@@ -27,7 +27,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j;
 
-@RestController
+@Controller
 @Log4j
 @RequestMapping("/user/*")
 @AllArgsConstructor
@@ -70,7 +70,7 @@ public class UserController {
 		int result = service.idChk(userVO);
 		try {
 			if (result == 1) {
-				return "/user/userJoin";
+				return "/user/userLogin";
 			} else if (result == 0) {
 				String inputPass=userVO.getPassword();
 				String pwd=pwdEncoder.encode(inputPass);
@@ -80,7 +80,7 @@ public class UserController {
 		} catch (Exception e) {
 			throw new RuntimeException();
 		}
-		return "redirect:user/userLogin";
+		return "redirect:/user/userLogin";
 	}
 
 	// 로그인

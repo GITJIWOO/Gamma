@@ -11,9 +11,14 @@
 	 	
 	 	<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 		<title>회원가입</title>
+		<style>* {
+	padding: 0;
+	margin: 0;
+}</style>
 	</head>
+	
 	<script type="text/javascript">
-		$(document).ready(function(){
+<!--		$(document).ready(function(){
 			// 취소
 			$(".cencle").on("click", function(){
 				location.href = "/userJoin";
@@ -76,11 +81,11 @@
 					confirmMsg.innerHTML ="비밀번호 불일치";
 				}
 			}
-		
+		-->
 	</script>
 	<body>
 		<section id="container">
-			<form action="/userjoin" method="post" id="regForm">
+			<form action="/userJoin" method="post" id="regForm">
 				<div class="form-group has-feedback">
 					<label class="control-label" for="cid">아이디</label>
 					<input class="form-control" type="text" id="cid" name="cid" />
@@ -103,11 +108,11 @@
 					<input class="form-control" type="text" id="nickname" name="nickname" />
 				</div>
 				
-			</form>
 				<div class="form-group has-feedback">
 					<button class="btn btn-success" type="button" id="submit">회원가입</button>
 					<button class="cencle btn btn-danger" type="button">취소</button>
 				</div>
+			</form>
 		</section>
 		
 	</body>
