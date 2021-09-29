@@ -1,6 +1,10 @@
 package org.game.user.mapper;
 
+import java.util.List;
+
 import org.game.user.domain.QuestionCriteria;
+import org.game.user.domain.QuestionPageDTO;
+import org.game.user.domain.QuestionSearchCriteria;
 import org.game.user.domain.QuestionVO;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -36,11 +40,7 @@ public class QuestionMapperTest {
 	public void testGetQuestionList() {
 		mapper.getQuestionList("%%");	// 관리자일 경우 %% 넣어주는 것으로 고정 
 	}
-	@Test
-	public void testGetQuestionListP() {
-		QuestionCriteria cri = new QuestionCriteria(1, 10);
-		mapper.getQuestionListP(cri, "%%");
-	}
+
 	//@Test
 	public void testGetCountQuestion() {
 		mapper.getCountQuestion("%%");
@@ -57,13 +57,13 @@ public class QuestionMapperTest {
 	
 	//@Test
 	public void testGetOwnQuestion() {
-		mapper.getOwnQuestion(2L);
+		mapper.getOwnQuestion(2);
 	}
 	
 	//@Test
 	public void testUpdateQuestion() {
 		QuestionVO vo = new QuestionVO();
-		vo.setQnum(7L);
+		vo.setQnum(7);
 		vo.setQtitle("updateTest");
 		vo.setQcontent("updateTest");
 		mapper.updateQuestion(vo);
@@ -71,6 +71,6 @@ public class QuestionMapperTest {
 	
 	//@Test
 	public void testDeleteQuestion() {
-		mapper.deleteQuestion(2L);
+		mapper.deleteQuestion(2);
 	}
 }

@@ -220,7 +220,7 @@ CREATE TABLE statuscomment(
 */
 CREATE SEQUENCE question_num;
 CREATE TABLE question (
-    qnum NUMBER PRIMARY KEY,
+    qnum NUMBER,
     qtype VARCHAR(50) NOT NULL,
     qtitle VARCHAR2(50) NOT NULL,
     qcontent VARCHAR2(1000) NOT NULL,
@@ -228,6 +228,8 @@ CREATE TABLE question (
     CONSTRAINT fk_question FOREIGN KEY(qwriter) REFERENCES consumer(cid),
     qdate DATE DEFAULT SYSDATE
 );
+ALTER TABLE question ADD CONSTRAINT pk_question PRIMARY KEY(qnum);
+
 
 /*  Answer 테이블
     글 식별 번호(기본키)

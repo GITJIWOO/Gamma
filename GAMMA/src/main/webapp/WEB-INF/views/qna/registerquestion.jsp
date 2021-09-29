@@ -21,7 +21,7 @@
 			<option value="app">어플리케이션</option>
 			<option value="etc">기타</option>		
 		</select><br>
-		<input type="hidden" name="qwriter" value="${qwriter }" />
+		<input type="hidden" name="qwriter" value="${vo.qwriter }" />
 		<input type="text" name="qtitle" placeholder="제목을 입력해주세요"/><br>
 		<textarea rows="10" cols="50" name="qcontent" placeholder="질문 할 내용을 입력해주세요"></textarea><br>
 		<input type="submit" value="질문글 등록"/><br>

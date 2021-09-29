@@ -50,13 +50,13 @@ public class QuestionServiceTest {
 	
 	//@Test
 	public void testOwnQuestion() {
-		service.ownQuestion(3L);
+		service.ownQuestion(3);
 	}
 	
 	//@Test
 	public void testModifyQuestion() {
 		QuestionVO vo = new QuestionVO();
-		vo.setQnum(109L);
+		vo.setQnum(109);
 		vo.setQtype("채팅");
 		vo.setQtitle("modifyTest");
 		vo.setQcontent("modifyTest");
@@ -65,6 +65,6 @@ public class QuestionServiceTest {
 	
 	//@Test
 	public void testDeleteQuestion() {
-		service.removeQuestion(9L);
+		service.removeQuestion(9);
 	}
 }
