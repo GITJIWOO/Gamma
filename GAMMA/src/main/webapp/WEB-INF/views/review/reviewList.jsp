@@ -19,21 +19,21 @@
 		</form>
 		<div id="review">
 			<c:forEach var="review" items="${review}">
-					<tr>
-						<td>${review.cid}</td>
-						<td>
-							<c:choose>
-								<c:when test="${review.grlike == 1}">추천</c:when>
-								<c:when test="${review.grlike == 0}">비추천</c:when>
-							</c:choose>
-						</td>
-						<td>
-							<a href="/review/reviewDetail/${review.grnum}">${review.grtitle}</a>
-						</td>
-						<td>${review.grcontent}</td>
-						<td>${review.grrecommend}</td>
-						<td>${review.grdate}</td>
-					</tr>
+				<tr>
+					<td>${review.cid}</td>
+					<td>
+						<c:choose>
+							<c:when test="${review.grlike == 1}">추천</c:when>
+							<c:when test="${review.grlike == 0}">비추천</c:when>
+						</c:choose>
+					</td>
+					<td>
+						<a href="/review/reviewDetail/${review.grnum}">${review.grtitle}</a>
+					</td>
+					<td>${review.grcontent}</td>
+					<td>${review.grrecommend}</td>
+					<td>${review.grdate}</td>
+				</tr>
 				<hr/>
 			</c:forEach>
 		</div>

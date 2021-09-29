@@ -1,5 +1,8 @@
 package org.game.review.service;
 
+import java.util.List;
+
+import org.game.review.domain.ReviewCommentCriteria;
 import org.game.review.domain.ReviewCommentVO;
 import org.game.review.mapper.ReviewCommentMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,9 +20,15 @@ public class ReviewCommentServiceImpl implements ReviewCommentService {
 	private ReviewCommentMapper mapper; 
 	
 	@Override
-	public ReviewCommentVO getReviewComment(long grnum) {
-		ReviewCommentVO reviewComment = mapper.reviewCommentSelect(grnum);
+	public List<ReviewCommentVO> getReviewComment(long grnum, ReviewCommentCriteria rccri) {
+		List<ReviewCommentVO> reviewComment = mapper.reviewCommentSelect(grnum, rccri);
 		return reviewComment;
+	}
+	
+	@Override
+	public int getAllReviewComment(long grnum) {
+		int total = mapper.reviewCommentCount(grnum);
+		return total;
 	}
 
 	@Override
@@ -31,4 +40,5 @@ public class ReviewCommentServiceImpl implements ReviewCommentService {
 	public void removeReviewComment(ReviewCommentVO vo) {
 		mapper.reviewCommentDelete(vo);
 	}
+
 }
