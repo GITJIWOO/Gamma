@@ -14,7 +14,19 @@
 		<div id="content">
 			<div id="review">
 				<div id="reviewContent">
-					${review}
+					<form action="/review/reviewList/${review.gnum}">
+						<input type="submit" value="돌아가기">
+					</form>
+					${review.cid}
+					${review.grdate}
+					<c:choose>
+						<c:when test="${review.grlike == 1}">추천</c:when>
+						<c:when test="${review.grlike == 0}">비추천</c:when>
+					</c:choose>
+					${review.grtitle}
+					${review.grcontent}
+					${review.grrecommend}
+					<hr/>
 				</div>
 				<div id="reviewComment">
 					<!-- 리뷰 댓글 삭제는 hidden으로 grnum 과 rcnum을 보내야 한다. -->
@@ -33,8 +45,10 @@
 						      </a>
 						    </li>
 					    </c:if>
-					    <c:forEach var="pageBtn" items="${pageBtns}">
-					    	<li class="page-item"><a class="page-link" href="#">${pageBtn.rcnum}</a></li>
+					    <c:forEach begin="${pageBtn.startPage}" end="${pageBtn.endPage}" var="pageNum">
+					    	<li class="page-item ${pageBtn.rccri.pageNum == pageNum ? 'active' : ''}">
+					    		<a class="page-link" href="/review/reviewDetail/${review.grnum}?pageNum=${pageNum}">${pageNum}</a>
+					    	</li>
 					    </c:forEach>
 					    <c:if test="${pageBtn.next}">
 						    <li class="page-item">

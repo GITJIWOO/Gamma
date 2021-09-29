@@ -50,7 +50,7 @@ public class ReviewController {
 	// 평가 상세 조회
 	@GetMapping("/reviewDetail/{grnum}")
 	public String getReviewDetail(@PathVariable long grnum, ReviewCommentCriteria rccri, Model model) {
-		System.out.println(grnum);	
+		
 		// 리뷰 디테일
 		ReviewVO review = reviewService.getReviewDetail(grnum);
 		
@@ -63,7 +63,7 @@ public class ReviewController {
 		
 		model.addAttribute("review", review);
 		model.addAttribute("reviewComment", reviewComment);
-		model.addAttribute("pageBtns", pageBtn);
+		model.addAttribute("pageBtn", pageBtn);
 		
 		return "/review/reviewDetail";
 	}

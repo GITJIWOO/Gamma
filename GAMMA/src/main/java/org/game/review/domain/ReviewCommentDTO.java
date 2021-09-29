@@ -31,7 +31,7 @@ public class ReviewCommentDTO {
 		}
 		
 		// 이전 버튼 여부
-		this.prev = this.startPage == 1 ? true : false;
+		this.prev = this.startPage == 1 ? false : true;
 		
 		// 다음 버튼 여부
 		this.next = this.endPage > realEnd;

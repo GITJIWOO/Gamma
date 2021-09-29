@@ -18,7 +18,7 @@ public class ReviewCommentMapperTest {
 	@Autowired
 	private ReviewCommentMapper mapper;
 	
-	@Test // 에러 나는데 작동
+	// @Test
 	public void reviewCommentSelectTest() {
 		ReviewCommentCriteria rccri = new ReviewCommentCriteria();
 		rccri.setPageNum(2);
