@@ -3,6 +3,22 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="org.game.user.mapper.QuestionMapper">
+	<sql id="search">
+		<if test="cri.keyword != null">
+			AND (qwriter LIKE #{cri.keyword}) 
+		</if>
+	</sql>
+
+	<sql id="type">
+	<if test="qtype == 'account'.toString()">'계정 및 내정보'</if>
+	<if test="qtype == 'softngame'.toString()">'소프트웨어 및 게임'</if>
+	<if test="qtype == 'library'.toString()">'라이브러리'</if>
+	<if test="qtype == 'purchase'.toString()">'구매'</if>
+	<if test="qtype == 'friends'.toString()">'친구'</if>
+	<if test="qtype == 'chatting'.toString()">'채팅'</if>
+	<if test="qtype == 'app'.toString()">'어플리케이션'</if>
+	<if test="qtype == 'etc'.toString()">'기타'</if>
+	</sql> 
 	<select id="getAdmin" resultType="int">
 		SELECT cadmin FROM consumer WHERE cid = #{cid}
 	</select>
@@ -11,7 +27,7 @@
 		<selectKey keyProperty="qnum" resultType="int" order="BEFORE">
 			SELECT question_num.nextval FROM DUAL
 		</selectKey>
-		INSERT INTO question (qnum, qtype, qtitle, qcontent, qwriter) VALUES (#{qnum}, #{qtype}, #{qtitle}, #{qcontent}, #{qwriter})
+		INSERT INTO question (qnum, qtype, qtitle, qcontent, qwriter) VALUES (#{qnum}, <include refid="type"></include>, #{qtitle}, #{qcontent}, #{qwriter})
 	</insert>
 	
 	<!-- list -->
@@ -20,22 +36,16 @@
 	</select>
 	<select id="getQuestionListP" resultType="org.game.user.domain.QuestionVO">
 		<![CDATA[
-		SELECT qnum, qtype, qtitle, qcontent, qwriter, qdate FROM
-		(SELECT
-		/*+ INDEX_DESC(question pk_question) */
-		rownum rn, question.* FROM question WHERE qwriter LIKE #{qwriter}
-		AND 
-		]]>
-		<if test="cri.keyword != null">
-			(qwriter LIKE #{cri.keyword}) AND
-		</if>
-		<![CDATA[
-		rownum <= #{cri.pageNum} * #{cri.amount}) qu
-		WHERE rn > (#{cri.pageNum} - 1) * #{cri.amount}
+			SELECT qnum, qtype, qtitle, qcontent, qwriter, qdate FROM 
+			(SELECT 
+			/*+ INDEX_DESC(question pk_question) */ 
+			rownum rn, question.* FROM question WHERE (qwriter LIKE  #{qwriter}) AND rownum <= #{cri.pageNum} * #{cri.amount}) qu 
+			WHERE rn > (#{cri.pageNum} - 1) * #{cri.amount}
 		]]>
 	</select>
 	<select id="getCountQuestion" resultType="Int">
-		SELECT count(*) FROM question WHERE qwriter LIKE #{qwriter}
+		SELECT count(*) FROM question WHERE (qwriter LIKE #{qwriter})
+		<include refid="search"></include>
 	</select>
 	
 	<!-- list -->
@@ -61,7 +71,7 @@
 	</select>
 	
 	<update id="updateQuestion">
-		UPDATE question SET qtype = #{qtype}, qtitle = #{qtitle}, qcontent = #{qcontent}, qdate = SYSDATE WHERE qnum = #{qnum}
+		UPDATE question SET qtype = <include refid="type"></include>, qtitle = #{qtitle}, qcontent = #{qcontent}, qdate = SYSDATE WHERE qnum = #{qnum}
 	</update>
 	
 	<delete id="deleteQuestion">

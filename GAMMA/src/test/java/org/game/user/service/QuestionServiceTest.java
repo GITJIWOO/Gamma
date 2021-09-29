@@ -1,5 +1,6 @@
 package org.game.user.service;
 
+import org.game.user.domain.QuestionSearchCriteria;
 import org.game.user.domain.QuestionVO;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -36,7 +37,8 @@ public class QuestionServiceTest {
 	}
 	//@Test
 	public void testCountQuestion() {
-		service.countQuestion("%%");
+		QuestionSearchCriteria cri = new QuestionSearchCriteria();
+		service.countQuestion(cri, "%%");
 	}
 	
 	@Test
