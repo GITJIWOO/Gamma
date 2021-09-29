@@ -12,7 +12,7 @@ public interface QuestionService {
 	
 	public List<QuestionVO> questionList(String qwriter);
 	public List<QuestionVO> questionListP(QuestionSearchCriteria cri, String qwriter);
-	public int countQuestion(String qwriter);
+	public int countQuestion(QuestionSearchCriteria cri, String qwriter);
 	
 	public List<QuestionVO> typeQuestion(String qtype);
 	public int countQtype(String qtype);

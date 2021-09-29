@@ -25,9 +25,6 @@ public class FriendsController {
 	@Autowired
 	private FriendsService service;
 	
-	@Autowired
-	private UserService uservice;
-	
 	// 메인화면 
 	@GetMapping("/friendsmain")
 	public String friendsMain(Model model) {
