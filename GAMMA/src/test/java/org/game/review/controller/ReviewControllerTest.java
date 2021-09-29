@@ -34,7 +34,8 @@ public class ReviewControllerTest {
 	@Test
 	public void getReviewListTest() throws Exception {
 		String resultPage = mockMvc.perform(
-					MockMvcRequestBuilders.get("/review/reviewList?gnum=1"))
+					MockMvcRequestBuilders.get("/review/reviewList/1")
+						.param("listKind", "new"))
 						.andReturn().getModelAndView().getViewName();
 		log.info(resultPage);
 	}
@@ -42,7 +43,7 @@ public class ReviewControllerTest {
 	// @Test
 	public void getReviewDetailTest() throws Exception {
 		String resultPage = mockMvc.perform(
-					MockMvcRequestBuilders.get("/review/reviewDetail/1"))
+					MockMvcRequestBuilders.get("/review/reviewDetail/23"))
 						.andReturn().getModelAndView().getViewName();
 		log.info(resultPage);
 	}
@@ -93,7 +94,7 @@ public class ReviewControllerTest {
 	public void writeReviewCommentTest() throws Exception {
 		String resultPage = mockMvc.perform(
 					MockMvcRequestBuilders.post("/review/reviewCommmentWrite")
-						.param("grnum", "1")
+						.param("grnum", "23")
 						.param("cid", "kjw011231")
 						.param("rccontent", "댓글테스트내용"))
 						.andReturn().getModelAndView().getViewName();

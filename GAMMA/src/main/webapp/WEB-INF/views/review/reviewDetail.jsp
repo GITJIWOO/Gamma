@@ -8,5 +8,7 @@
 </head>
 <body>
 	<!-- 리뷰 댓글 삭제는 hidden으로 grnum 과 rcnum을 보내야 한다. -->
+	${review}<br/>
+	${reviewComment}
 </body>
 </html>

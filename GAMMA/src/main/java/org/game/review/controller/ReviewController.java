@@ -31,15 +31,18 @@ public class ReviewController {
 	private ReviewCommentService commentService;
 	
 	// 모든 평가 조회
-	@GetMapping("/reviewList")
-	public String getReviewList(long gnum, String listKind, Model model) {
-		
-		if(listKind == null || listKind == "famous") {
+	@GetMapping("/reviewList/{gnum}")
+	public String getReviewList(@PathVariable long gnum, String listKind, Model model) {
+		if(listKind == null || listKind.equals("") || listKind.equals("famous")) {
 			List<ReviewVO> famousReview = reviewService.getFamousReview(gnum);
+			log.info("디버깅 :" + famousReview);
 			model.addAttribute("review", famousReview);
-		} else if(listKind == "new") {
+			model.addAttribute("gameNum", gnum);
+		} else if(listKind.equals("new")) {
 			List<ReviewVO> newReview = reviewService.getNewReview(gnum);
 			model.addAttribute("review", newReview);
+			model.addAttribute("gameNum", gnum);
+			log.info("디버깅 :" + newReview);
 		}
 		return "/review/reviewList";
 	}
