@@ -17,14 +17,14 @@ public class UserMapperTest {
 	@Autowired
 	private UserMapper mapper;
 	
-	//@Test
+	@Test
 	public void testuserJoin() {
 		ConsumerVO userVO =new ConsumerVO();
-			userVO.setCid("메퍼2아디");
-			userVO.setEmail("메퍼2이메일");
-			userVO.setNickname("매퍼2닉넴");
-			userVO.setPassword("매퍼2비번");
-		mapper.userJoin(userVO);
+			userVO.setCid("메퍼3아디");
+			userVO.setEmail("메퍼3이메일");
+			userVO.setNickname("매퍼3닉넴");
+			userVO.setPassword("매퍼3비번");
+		   mapper.userJoin(userVO);
 	}
 
 	

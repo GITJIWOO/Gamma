@@ -23,13 +23,18 @@ public interface UserService {
 	 public ConsumerVO userLogin(ConsumerVO userVO) throws Exception;
 
 	 // 회원정보 수정
-	 public ConsumerVO userModify(String cid) throws Exception;
+	 public void userModify(ConsumerVO userVO) throws Exception;
 
-	public void userLogout();
+	 // 회원탈퇴
+	 public void userDelete(ConsumerVO userVO) throws Exception;
+	 
+	 // 로그아웃
+	 public void userLogout();
 
-	public void userDelete();
+	ConsumerVO userSearch(ConsumerVO userVO);
 
 
-	public ConsumerVO userSearch(ConsumerVO userVO);
+
+
 
 }

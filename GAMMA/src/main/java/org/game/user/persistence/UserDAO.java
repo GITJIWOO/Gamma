@@ -1,9 +1,14 @@
-package org.game.user.domain;
+package org.game.user.persistence;
+
+import org.game.user.domain.ConsumerVO;
 
 public interface UserDAO {
 	
 	// 회원가입 
 	public void userJoin(ConsumerVO userVO) throws Exception;
+	
+	// 로그인
+	public ConsumerVO userLogin(ConsumerVO userVO) throws Exception;
 	
 	// 회원정보수정
 	public void userModify(ConsumerVO userVO) throws Exception;
@@ -16,4 +21,5 @@ public interface UserDAO {
 
 	//패스워드 체크
 	public int passChk(ConsumerVO userVO) throws Exception;
+	
 }
