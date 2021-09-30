@@ -26,6 +26,8 @@
 			</param-value>
 		</init-param>
 		<load-on-startup>1</load-on-startup>
+		<!-- 채팅 - 웹소켓을 위한 설정(비동기 지원) -->
+		<async-supported>true</async-supported>
 	</servlet>
 		
 	<servlet-mapping>
