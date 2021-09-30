@@ -7,8 +7,10 @@ import javax.servlet.http.HttpSession;
 import org.game.review.domain.ReviewCommentCriteria;
 import org.game.review.domain.ReviewCommentDTO;
 import org.game.review.domain.ReviewCommentVO;
+import org.game.review.domain.ReviewLikeVO;
 import org.game.review.domain.ReviewVO;
 import org.game.review.service.ReviewCommentService;
+import org.game.review.service.ReviewLikeService;
 import org.game.review.service.ReviewService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -33,6 +35,9 @@ public class ReviewController {
 	
 	@Autowired
 	private ReviewCommentService commentService;
+	
+	@Autowired
+	private ReviewLikeService reviewLikeService;
 	
 	// 모든 평가 조회
 	@GetMapping("/reviewList/{gnum}")
@@ -63,9 +68,14 @@ public class ReviewController {
 		int total = commentService.getAllReviewComment(grnum);
 		ReviewCommentDTO pageBtn = new ReviewCommentDTO(rccri, total, 10);
 		
+		// 세션 아이디
 		String cid = (String)session.getAttribute("member");
 		
+		// 좋아요 여부
+		ReviewLikeVO rlvo = reviewLikeService.getReviewLike(grnum, cid);
+		
 		model.addAttribute("cid", cid);
+		model.addAttribute("rlvo", rlvo);
 		model.addAttribute("review", review);
 		model.addAttribute("reviewComment", reviewComment);
 		model.addAttribute("pageBtn", pageBtn);
@@ -113,9 +123,28 @@ public class ReviewController {
 	
 	// 평가 좋아요
 	@PostMapping("/reviewLike")
-	public String likeReview(long grnum, RedirectAttributes rttr) {
+	public String likeReview(ReviewLikeVO vo, HttpSession session, RedirectAttributes rttr) {
 		
-		reviewService.likeReview(grnum);
+		reviewLikeService.reviewLike(vo);
+		reviewService.likeReview(vo.getGrnum());
+
+		rttr.addFlashAttribute("grnum", vo.getGrnum());
+		rttr.addFlashAttribute("cid", session.getAttribute("member"));
+		
+		return "redirect:/review/reviewDetail/" + vo.getGrnum();
+	}
+	
+	// 평가 좋아요 취소
+	@PostMapping("/reviewLikeCancel")
+	public String likeCancelReview(long grnum, HttpSession session, RedirectAttributes rttr) {
+		
+		String cid = (String)session.getAttribute("member");
+		
+		reviewLikeService.reviewLikeCancel(grnum, cid);
+		reviewService.likeReviewCancel(grnum);
+		
+		rttr.addFlashAttribute("grnum", grnum);
+		rttr.addFlashAttribute("cid", cid);
 		
 		return "redirect:/review/reviewDetail/" + grnum;
 	}

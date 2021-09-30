@@ -24,24 +24,24 @@
 					</form>
 					
 					<div id="review">
-						${review.cid}
-						${review.grdate}
+						아이디 : ${review.cid}
+						작성일 : ${review.grdate}
 						<c:choose>
 							<c:when test="${review.grlike == 1}">추천</c:when>
 							<c:when test="${review.grlike == 0}">비추천</c:when>
 						</c:choose>
-						${review.grtitle}
-						${review.grcontent}
-						${review.grrecommend}
+						제목 : ${review.grtitle}
+						내용 : ${review.grcontent}
+						좋아요 : ${review.grrecommend}
 					</div>
 					
 					<!-- 리뷰 수정 폼(아이디 검사) -->
 					<div id="reviewModify">
-						<c:if test="${review.cie == review.cid}">
+						<c:if test="${review.cid == review.cid}">
 							<form action="/review/reviewModify" method="post">
 								<input type="hidden" name="cid" value="${cid}">
-								<input type="text" name="grtitle" placeholder="제목" value="${review.grtitle }" required><br/>
-								<textarea name="grcontent" rows="10" cols="15" placeholder="내용" required>${review.grcontent}</textarea><br/>
+								<input type="text" class="form-control form-control-lg" name="grtitle" placeholder="제목" value="${review.grtitle }" required><br/>
+								<textarea class="form-control" id="exampleFormControlTextarea1" name="grcontent" rows="10" cols="15" placeholder="내용" required>${review.grcontent}</textarea><br/>
 								<button type="button" id="reviewLike" name="grlike" value="1" class="btn btn-primary" >추천</button>
 								<button type="button" id="reviewLike" name="grlike" value="0" class="btn btn-danger">비추천</button>
 								<input type="submit" class="btn btn-secondary" id="reviewUpdate" value="작성">
@@ -49,12 +49,22 @@
 						</c:if>
 					</div>
 					
+					<c:choose>
+						<c:when test="${rlvo == null}">
+							<form action="/review/reviewLike" method="post" id="reviewLike">
+								<input type="hidden" name="grnum" value="${review.grnum}">
+								<input type="submit" value="좋아요">
+							</form>
+						</c:when>
+						<c:when test="${rlvo != null}">
+							<form action="/review/reviewLikeCancel" method="post" id="reviewLike">
+								<input type="hidden" name="grnum" value="${review.grnum}">
+								<input type="submit" value="좋아요 취소">
+							</form>
+						</c:when>
+					</c:choose>
 					<!-- 리뷰 좋아요 버튼(로그인 검사) -->
 					<c:if test="${cid != null}">
-						<form action="/review/reviewLike" method="post" id="reviewLike">
-							<input type="hidden" name="grnum" value="${review.grnum}">
-							<input type="submit" value="좋아요">
-						</form>
 					</c:if>
 					
 					<!-- 리뷰 수정 버튼(아이디 검사) -->

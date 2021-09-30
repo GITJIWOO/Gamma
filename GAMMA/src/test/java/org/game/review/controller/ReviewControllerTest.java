@@ -31,7 +31,7 @@ public class ReviewControllerTest {
 		this.mockMvc = MockMvcBuilders.webAppContextSetup(ctx).build(); 
 	}
 	
-	@Test
+	// @Test
 	public void getReviewListTest() throws Exception {
 		String resultPage = mockMvc.perform(
 					MockMvcRequestBuilders.get("/review/reviewList/1")
@@ -65,6 +65,7 @@ public class ReviewControllerTest {
 	public void modifyReviewTest() throws Exception {
 		String resultPage = mockMvc.perform(
 					MockMvcRequestBuilders.post("/review/reviewModify")
+						.param("grnum", "23")
 						.param("gnum", "1")
 						.param("cid", "kjw011231")
 						.param("grlike", "0")
@@ -85,8 +86,20 @@ public class ReviewControllerTest {
 	// @Test
 	public void likeReviewTest() throws Exception {
 		String resultPage = mockMvc.perform(
-					MockMvcRequestBuilders.post("/review/reviewLike?grnum=1"))
+					MockMvcRequestBuilders.post("/review/reviewLike?grnum=1")
+					.param("grnum", "23")
+					.param("cid", "kjw011231"))
 						.andReturn().getModelAndView().getViewName();
+		log.info(resultPage);
+	}
+	
+	// @Test
+	public void likeReviewCancelTest() throws Exception {
+		String resultPage = mockMvc.perform(
+				MockMvcRequestBuilders.post("/review/reviewLikeCancel?grnum=1")
+				.param("grnum", "233")
+				.param("cid", "kjw011231"))
+					.andReturn().getModelAndView().getViewName();
 		log.info(resultPage);
 	}
 
