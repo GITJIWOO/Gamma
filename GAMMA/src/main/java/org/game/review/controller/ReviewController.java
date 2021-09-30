@@ -2,6 +2,8 @@ package org.game.review.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.game.review.domain.ReviewCommentCriteria;
 import org.game.review.domain.ReviewCommentDTO;
 import org.game.review.domain.ReviewCommentVO;
@@ -49,7 +51,7 @@ public class ReviewController {
 	
 	// 평가 상세 조회
 	@GetMapping("/reviewDetail/{grnum}")
-	public String getReviewDetail(@PathVariable long grnum, ReviewCommentCriteria rccri, Model model) {
+	public String getReviewDetail(@PathVariable long grnum, ReviewCommentCriteria rccri, HttpSession session, Model model) {
 		
 		// 리뷰 디테일
 		ReviewVO review = reviewService.getReviewDetail(grnum);
@@ -61,6 +63,9 @@ public class ReviewController {
 		int total = commentService.getAllReviewComment(grnum);
 		ReviewCommentDTO pageBtn = new ReviewCommentDTO(rccri, total, 10);
 		
+		String cid = (String)session.getAttribute("member");
+		
+		model.addAttribute("cid", cid);
 		model.addAttribute("review", review);
 		model.addAttribute("reviewComment", reviewComment);
 		model.addAttribute("pageBtn", pageBtn);
