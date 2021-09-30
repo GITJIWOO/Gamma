@@ -82,10 +82,15 @@ public class UserController {
 		}
 		return "redirect:/user/userLogin";
 	}
-
+	@GetMapping("/userLogin")
+	public String userLogin() throws Exception {
+		log.info("get방식로그인접속");
+		return "/user/userLogin";
+	}
+	
 	// 로그인
 	@PostMapping("/userLogin")
-	public String login(ConsumerVO userVO, HttpSession session, RedirectAttributes rttr) throws Exception {
+	public String userLogin(ConsumerVO userVO,HttpSession session, RedirectAttributes rttr) throws Exception {
 		log.info("로그인컨트롤실행");
 		
 		session.getAttribute("member");
@@ -98,7 +103,7 @@ public class UserController {
 			rttr.addFlashAttribute("msg", false);
 		}
 
-		return "redirect:main";
+		return "redirect:/user/userLogin";
 	}
 
 	// 로그아웃 과 세션 초기화
