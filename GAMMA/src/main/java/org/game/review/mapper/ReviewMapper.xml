@@ -6,7 +6,7 @@
 
 	<!-- 평가 최신 순 조회 -->
 	<select id="reviewList" resultType="org.game.review.domain.ReviewVO">
-		SELECT * FROM gameReview WHERE gnum=#{gnum} ORDER BY grnum DESC
+		SELECT * FROM gameReview WHERE gnum=#{gnum} ORDER BY grdate DESC
 	</select>
 	
 	<!-- 평가 좋아요 순 조회 -->

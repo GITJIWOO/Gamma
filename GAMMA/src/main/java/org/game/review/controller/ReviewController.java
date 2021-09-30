@@ -2,6 +2,8 @@ package org.game.review.controller;
 
 import java.util.List;
 
+import org.game.review.domain.ReviewCommentCriteria;
+import org.game.review.domain.ReviewCommentDTO;
 import org.game.review.domain.ReviewCommentVO;
 import org.game.review.domain.ReviewVO;
 import org.game.review.service.ReviewCommentService;
@@ -35,28 +37,33 @@ public class ReviewController {
 	public String getReviewList(@PathVariable long gnum, String listKind, Model model) {
 		if(listKind == null || listKind.equals("") || listKind.equals("famous")) {
 			List<ReviewVO> famousReview = reviewService.getFamousReview(gnum);
-			log.info("디버깅 :" + famousReview);
 			model.addAttribute("review", famousReview);
 			model.addAttribute("gameNum", gnum);
 		} else if(listKind.equals("new")) {
 			List<ReviewVO> newReview = reviewService.getNewReview(gnum);
 			model.addAttribute("review", newReview);
 			model.addAttribute("gameNum", gnum);
-			log.info("디버깅 :" + newReview);
 		}
 		return "/review/reviewList";
 	}
 	
 	// 평가 상세 조회
 	@GetMapping("/reviewDetail/{grnum}")
-	public String getReviewDetail(@PathVariable long grnum, Model model) {
+	public String getReviewDetail(@PathVariable long grnum, ReviewCommentCriteria rccri, Model model) {
 		
+		// 리뷰 디테일
 		ReviewVO review = reviewService.getReviewDetail(grnum);
 		
-		ReviewCommentVO reviewComment = commentService.getReviewComment(grnum);
+		// 리뷰 댓글
+		List<ReviewCommentVO> reviewComment = commentService.getReviewComment(grnum, rccri);
+
+		// 리뷰 댓글 페이징
+		int total = commentService.getAllReviewComment(grnum);
+		ReviewCommentDTO pageBtn = new ReviewCommentDTO(rccri, total, 10);
 		
 		model.addAttribute("review", review);
 		model.addAttribute("reviewComment", reviewComment);
+		model.addAttribute("pageBtn", pageBtn);
 		
 		return "/review/reviewDetail";
 	}
@@ -110,20 +117,20 @@ public class ReviewController {
 	
 	// 평가 댓글 작성
 	@PostMapping("/reviewCommmentWrite")
-	public String writeReviewComment(ReviewCommentVO rc, Model model) {
+	public String writeReviewComment(ReviewCommentVO rc) {
 		
 		commentService.writeReviewComment(rc);
 		
-		return "/review/reviewDetail/" + rc.getGrnum();
+		return "redirect:/review/reviewDetail/" + rc.getGrnum();
 	}
 	
 	// 평가 댓글 삭제
 	@PostMapping("/reviewCommentRemove")
-	public String removeReviewComment(ReviewCommentVO rc, Model model) {
+	public String removeReviewComment(ReviewCommentVO rc) {
 		
 		commentService.removeReviewComment(rc);
 		
-		return "review/reviewDetail/" + rc.getGrnum();
+		return "redirect:/review/reviewDetail/" + rc.getGrnum();
 	}
 	
 }
