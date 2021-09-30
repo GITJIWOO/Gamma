@@ -1,14 +1,107 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
+<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+<title>${review.grtitle}</title>
 </head>
 <body>
-	<!-- 리뷰 댓글 삭제는 hidden으로 grnum 과 rcnum을 보내야 한다. -->
-	${review}<br/>
-	${reviewComment}
+	<div id="body">
+		<div id="content">
+			<div id="review">
+				<div id="reviewContent">
+					<form action="/review/reviewList/${review.gnum}">
+						<input type="submit" value="돌아가기">
+					</form>
+					${review.cid}
+					${review.grdate}
+					<c:choose>
+						<c:when test="${review.grlike == 1}">추천</c:when>
+						<c:when test="${review.grlike == 0}">비추천</c:when>
+					</c:choose>
+					${review.grtitle}
+					${review.grcontent}
+					${review.grrecommend}
+					
+					<!-- 리뷰 좋아요 버튼(로그인 검사) -->
+					<c:if test="${review.cid != null}">
+						<form action="/review/reviewLike" method="post">
+							<input type="hidden" name="grnum" value="${review.grnum}">
+							<input type="submit" value="좋아요">
+						</form>
+					</c:if>
+					
+					<!-- 리뷰 삭제 버튼(아이디 검사) -->
+					<c:if test="${cid == review.cid}">
+						<form action="/review/reviewRemove" method="post">
+							<input type="hidden" name="grnum" value="${review.grnum}">
+							<input type="submit" value="삭제">
+						</form>
+					</c:if>
+					
+					<hr/>
+				</div>
+				<div id="reviewComment">
+				
+					<!-- 리뷰 댓글 작성(로그인 여부) -->
+					<c:if test="${cid != null}">
+						<form action="/review/reviewCommentWrite" method="post">
+							<input type="hidden" name="grnum" value="${review.grnum}">
+							<textarea rows="10" cols="3" required></textarea>
+							<input type="submit" value="작성">
+						</form>
+						<hr/>
+					</c:if>
+					
+					<!-- 리뷰 댓글 삭제는 hidden으로 grnum 과 rcnum을 보내야 한다. -->
+					<c:forEach var="reviewComment" items="${reviewComment}">
+						${reviewComment.cid}
+						${reviewComment.rcdate}
+						${reviewComment.rccontent}
+						
+						<!-- 리뷰 댓글 삭제 버튼(아이디 검사) -->
+						<c:if test="${reviewComment.cid != null}">
+							<form action="/review/reviewCommentRemove" method="post">
+								<input type="hidden" name="grnum" value="${reviewComment.grnum}">
+								<input type="hidden" name="rcnum" value="${reviewComment.rcnum}">
+								<input type="submit" value="삭제">
+							</form>
+						</c:if>
+						
+						<hr/>
+						
+					<!-- 리뷰 댓글 페이징 -->
+					</c:forEach>
+					<nav aria-label="Page navigation example">
+					  <ul class="pagination">
+					  	<c:if test="${pageBtn.prev}">
+						    <li class="page-item">
+						      <a class="page-link" href="#">	 
+						        <span aria-hidden="true">&laquo;</span>
+						      </a>
+						    </li>
+					    </c:if>
+					    <c:forEach begin="${pageBtn.startPage}" end="${pageBtn.endPage}" var="pageNum">
+					    	<li class="page-item ${pageBtn.rccri.pageNum == pageNum ? 'active' : ''}">
+					    		<a class="page-link" href="/review/reviewDetail/${review.grnum}?pageNum=${pageNum}">${pageNum}</a>
+					    	</li>
+					    </c:forEach>
+					    <c:if test="${pageBtn.next}">
+						    <li class="page-item">
+						      <a class="page-link" href="#">
+						        <span aria-hidden="true">&raquo;</span>
+						      </a>
+						    </li>
+					    </c:if>
+					  </ul>
+					</nav>
+				</div>
+			</div>
+		</div>
+	</div>
 </body>
 </html>

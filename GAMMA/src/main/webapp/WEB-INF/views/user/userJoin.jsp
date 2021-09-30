@@ -106,7 +106,7 @@
 				</div>
 				<div class="form-group has-feedback">
 					<label class="control-label" for="password">패스워드</label>
-					<input class="form-control" type="password"name="userPW" id="password" onchange="check_pw()" />
+					<input class="form-control" type="password"name="userPW" id="password" onchange="check_pw()" placeholder="!,@,#,$,%중 하나이상을 포함해주세요" />
 				</div>
 				<div class="form-group has-feedback">
 					<label class="control-label" for="passwordConfirm">패스워드확인</label>

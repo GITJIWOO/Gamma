@@ -1,5 +1,6 @@
 package org.game.review.mapper;
 
+import org.game.review.domain.ReviewCommentCriteria;
 import org.game.review.domain.ReviewCommentVO;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -17,9 +18,12 @@ public class ReviewCommentMapperTest {
 	@Autowired
 	private ReviewCommentMapper mapper;
 	
-	// @Test // 에러 나는데 작동
+	// @Test
 	public void reviewCommentSelectTest() {
-		log.info(mapper.reviewCommentSelect(1L));
+		ReviewCommentCriteria rccri = new ReviewCommentCriteria();
+		rccri.setPageNum(2);
+		rccri.setAmount(10);
+		log.info(mapper.reviewCommentSelect(23L, rccri));
 	}
 	
 	// @Test

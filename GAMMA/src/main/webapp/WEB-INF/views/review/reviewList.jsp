@@ -5,10 +5,13 @@
 <html>
 <head>
 <meta charset="EUC-KR">
-<title>Insert title here</title>
+<title>${gameTitle} 리뷰</title>
 </head>
 <body>
 	<div class="body">
+		<form action="/gameinfo/" method="get">
+			<input type="submit" value="돌아가기">
+		</form>
 		<form action="/review/reviewList/${gameNum}" method="get">
 			<select name="listKind">
 				<option value="" selected>정렬 기준</option>
@@ -19,21 +22,21 @@
 		</form>
 		<div id="review">
 			<c:forEach var="review" items="${review}">
-					<tr>
-						<td>${review.cid}</td>
-						<td>
-							<c:choose>
-								<c:when test="${review.grlike == 1}">추천</c:when>
-								<c:when test="${review.grlike == 0}">비추천</c:when>
-							</c:choose>
-						</td>
-						<td>
-							<a href="/review/reviewDetail/${review.grnum}">${review.grtitle}</a>
-						</td>
-						<td>${review.grcontent}</td>
-						<td>${review.grrecommend}</td>
-						<td>${review.grdate}</td>
-					</tr>
+				<tr>
+					<td>${review.cid}</td>
+					<td>
+						<c:choose>
+							<c:when test="${review.grlike == 1}">추천</c:when>
+							<c:when test="${review.grlike == 0}">비추천</c:when>
+						</c:choose>
+					</td>
+					<td>
+						<a href="/review/reviewDetail/${review.grnum}">${review.grtitle}</a>
+					</td>
+					<td>${review.grcontent}</td>
+					<td>${review.grrecommend}</td>
+					<td>${review.grdate}</td>
+				</tr>
 				<hr/>
 			</c:forEach>
 		</div>

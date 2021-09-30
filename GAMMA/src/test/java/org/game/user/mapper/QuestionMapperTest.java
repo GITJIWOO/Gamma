@@ -36,14 +36,19 @@ public class QuestionMapperTest {
 		mapper.insertQuestion(vo);
 	}
 	
-	//@Test
-	public void testGetQuestionList() {
-		mapper.getQuestionList("%%");	// 관리자일 경우 %% 넣어주는 것으로 고정 
+	@Test
+	public void testGetQuestionListP() {
+		QuestionSearchCriteria cri = new QuestionSearchCriteria();
+		cri.setKeyword("dgjf");
+		cri.setAmount(10);
+		cri.setPageNum(3);
+		mapper.getQuestionListP(cri, "%%");	// 관리자일 경우 %% 넣어주는 것으로 고정 
 	}
 
 	//@Test
 	public void testGetCountQuestion() {
-		mapper.getCountQuestion("%%");
+		QuestionSearchCriteria cri = new QuestionSearchCriteria();
+		mapper.getCountQuestion(cri, "%%");
 	}
 	
 	//@Test

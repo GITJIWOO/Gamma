@@ -26,7 +26,7 @@ public class ReviewCommentServiceTest {
 	
 	// @Test
 	public void getReviewCommentTest() {
-		service.getReviewComment(1L);
+		service.getReviewComment(1L, null);
 	}
 	
 	// @Test

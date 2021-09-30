@@ -9,13 +9,16 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<!-- 검색창 - 관리자만 볼 수 있음 -->
+	<!-- 검색창 - 관리자만 볼 수 있음 
 	<c:if test="${admin == 1 }">
-	<form action="qna/questionlist?qwriter=${qwriter }" method="get">
+	<form action="qna/questionlist" method="get">
+		<input type="hidden" name="pageNum" value="${btnMaker.cri.pageNum }"/>
+		<input type="hidden" name="amount" value="${btnMaker.cri.amount }"/>
 		<input type="text" name="keyword" value="${btnMaker.cri.keyword }" placeholder="작성자 아이디를 입력해주세요"/>
 		<input type="submit" value="검색"/>
 	</form>
-	</c:if>
+	</c:if> -->
+	<h2>질문 목록</h2>
 	<table class="table table-hover">
 		<thead>
 			<tr>
@@ -25,6 +28,7 @@
 				<th>본문</th>
 				<th>작성자</th>
 				<th>등록일</th>
+				<th>답변여부</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -32,10 +36,11 @@
 				<tr>
 					<td>${vo.qnum }</td>
 					<td>${vo.qtype }</td>
-					<td><a href="/qna/getquestion?qnum=${vo.qnum }">${vo.qtitle }</a></td>
+					<td><a href="/qna/getquestion?qnum=${vo.qnum }&qwriter=${qwriter }&pageNum=${btnMaker.cri.pageNum }">${vo.qtitle }</a></td>
 					<td>${vo.qcontent }</td>
 					<td>${vo.qwriter }</td>
 					<td>${vo.qdate  }</td>
+					<td>Y/N으로 표시할 예정</td>					
 				</tr>
 			</c:forEach>
 		</tbody>
@@ -45,17 +50,17 @@
 	  <ul class="pagination justify-content-center">
 	  	<c:if test="${btnMaker.prev }">
 		    <li class="page-item">
-		      <a class="page-link" href="/qna/questionlist?qwriter=${qwriter }&pageNum=${btnMaker.startPage - 1 }&keyword=${btnMaker.cri.keyword }">Previous</a>
+		      <a class="page-link" href="/qna/questionlist?qwriter=${qwriter }&pageNum=${btnMaker.startPage - 1 }">Previous</a>
 		    </li>
 		</c:if>
 		<c:forEach var="pageNum" begin="${btnMaker.startPage }" end="${btnMaker.endPage }">
 		    <li class="page-item ${btnMaker.cri.pageNum == pageNum ? 'active' : '' }">
-		    	<a class="page-link"href="/qna/questionlist?qwriter=${qwriter }&pageNum=${pageNum }&keyword=${btnMaker.cri.keyword}">${pageNum }</a>
+		    	<a class="page-link"href="/qna/questionlist?qwriter=${qwriter }&pageNum=${pageNum }">${pageNum }</a>
 		    </li>
 		</c:forEach>
 		<c:if test="${btnMaker.next }">
 		    <li class="page-item">
-		      <a class="page-link" href="/qna/questionlist?qwriter=${qwriter }&pageNum=${btnMaker.endPage + 1 }&keyword=${btnMaker.cri.keyword }">Next</a>
+		      <a class="page-link" href="/qna/questionlist?qwriter=${qwriter }&pageNum=${btnMaker.endPage + 1 }">Next</a>
 		    </li>
 		</c:if>
 	  </ul>
