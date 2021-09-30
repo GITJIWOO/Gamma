@@ -138,10 +138,10 @@
 		$("#reviewModify").show();
 	});
 	
-	$("#reviewUpdate").click(function(){
+	$("#cancel").click(function(){
 		$("#review").show();
-		$("#modifyBtn").hide();
-		$("#reviewModify").show();
+		$("#modifyBtn").show();
+		$("#reviewModify").hide();
 	});
 </script>
 </html>
