@@ -12,13 +12,13 @@
 	 	<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 		<title>회원가입</title>
 		<style>* {
-	padding: 0;
+	padding: 10;
 	margin: 0;
 }</style>
 	</head>
 	
 	<script type="text/javascript">
-<!--		$(document).ready(function(){
+		$(document).ready(function(){
 			// 취소
 			$(".cencle").on("click", function(){
 				location.href = "/userJoin";
@@ -65,24 +65,37 @@
 				}
 			})
 		}
-		function passConfirm() {
-		
-				var password = document.getElementById('password');					//비밀번호 
-				var passwordConfirm = document.getElementById('passwordConfirm');	//비밀번호 확인 값
-				var confrimMsg = document.getElementById('confirmMsg');				//확인 메세지
-				var correctColor = "#00ff00";	//맞았을 때 출력되는 색깔.
-				var wrongColor ="#ff0000";	//틀렸을 때 출력되는 색깔
-				
-				if(password.value == passwordConfirm.value){
-					confirmMsg.style.color = correctColor;
-					confirmMsg.innerHTML ="비밀번호 일치";
-				}else{
-					confirmMsg.style.color = wrongColor;
-					confirmMsg.innerHTML ="비밀번호 불일치";
-				}
-			}
-		-->
-	</script>
+		 function check_pw(){
+			 
+	            var pw = document.getElementById('password').value;
+	            var SC = ["!","@","#","$","%"];
+	            var check_SC = 0;
+	 
+	            if(pw.length < 6 || pw.length>16){
+	                window.alert('비밀번호는 6글자 이상, 16글자 이하만 이용 가능합니다.');
+	                document.getElementById('password').value='';
+	            }
+	            for(var i=0;i<SC.length;i++){
+	                if(pw.indexOf(SC[i]) != -1){
+	                    check_SC = 1;
+	                }
+	            }
+	            if(check_SC == 0){
+	                window.alert('!,@,#,$,% 의 특수문자가 들어가 있지 않습니다.')
+	                document.getElementById('password').value='';
+	            }
+	            if(document.getElementById('password').value !='' && document.getElementById('pw2').value!=''){
+	                if(document.getElementById('password').value==document.getElementById('pw2').value){
+	                    document.getElementById('check').innerHTML='비밀번호가 일치합니다.'
+	                    document.getElementById('check').style.color='blue';
+	                }
+	                else{
+	                    document.getElementById('check').innerHTML='비밀번호가 일치하지 않습니다.';
+	                    document.getElementById('check').style.color='red';
+	                }
+	            }
+	        }
+	    </script>
 	<body>
 		<section id="container">
 			<form action="/userJoin" method="post" id="regForm">
@@ -93,11 +106,11 @@
 				</div>
 				<div class="form-group has-feedback">
 					<label class="control-label" for="password">패스워드</label>
-					<input class="form-control" type="password" id="password" name="password" />
+					<input class="form-control" type="password"name="userPW" id="password" onchange="check_pw()" />
 				</div>
 				<div class="form-group has-feedback">
 					<label class="control-label" for="passwordConfirm">패스워드확인</label>
-					<input class="form-control" type="password" id="passwordConfirm" name="passwordConfirm" />
+					<input class="form-control" type="password"name="userPW2" id="pw2" onchange="check_pw()">&nbsp;<span id="check"></span>
 				</div>
 				<div class="form-group has-feedback">
 					<label class="control-label" for="email">Email</label>
