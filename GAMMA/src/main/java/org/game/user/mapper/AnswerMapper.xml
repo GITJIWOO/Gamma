@@ -3,5 +3,19 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="org.game.user.mapper.AnswerMapper">
+	<insert id="insertAnswer">
+		INSERT INTO answer (anum, qnum, acontent) VALUES (answer_num.nextval, #{qnum}, #{acontent})
+	</insert>
 	
+	<select id="getAnswer" resultType="org.game.user.domain.AnswerVO">
+		SELECT * FROM answer WHERE qnum = #{qnum}
+	</select>
+	
+	<update id="updateAnswer">
+		UPDATE answer SET acontent = #{acontent} WHERE anum = #{anum}
+	</update>
+	
+	<delete id="deleteAnswer">
+		DELETE FROM answer WHERE anum = #{anum}
+	</delete>
 </mapper>

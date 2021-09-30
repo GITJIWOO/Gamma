@@ -17,7 +17,7 @@ public class QuestionServiceTest {
 	@Autowired
 	private QuestionService service;
 	
-	//@Test
+	@Test
 	public void testAdminOrNot() {
 		service.adminOrNot("admin");
 	}
