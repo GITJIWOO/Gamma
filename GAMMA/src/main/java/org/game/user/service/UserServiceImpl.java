@@ -1,5 +1,7 @@
 package org.game.user.service;
 
+import java.util.List;
+
 import javax.inject.Inject;
 
 import org.game.user.domain.ConsumerVO;
@@ -16,6 +18,12 @@ public class UserServiceImpl implements UserService {
 
 	@Inject
 	private UserDAO dao;
+
+	// 회원정보상세조회
+	@Override
+	public ConsumerVO userGet(String cid) {
+		return dao.userGet(cid);
+	}
 
 	// 아이디 중복 체크
 	@Override
@@ -58,17 +66,7 @@ public class UserServiceImpl implements UserService {
 		dao.userDelete(userVO);
 	}
 
-	@Override
-	public void userLogout() {
-		// TODO Auto-generated method stub
-
-	}
 
 
-	@Override
-	public ConsumerVO userSearch(ConsumerVO userVO) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 }

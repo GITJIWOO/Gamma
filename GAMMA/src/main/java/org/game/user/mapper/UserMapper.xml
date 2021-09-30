@@ -5,6 +5,11 @@
 <!-- <mapper namespace="org.game.user.mapper.UserMapper"> -->
 <mapper namespace="org.game.user.persistence.UserDAO">
 
+	<!--  유저정보 상세조회 -->
+	<select id="userGet" resultType="org.game.user.domain.ConsumerVO">
+		SELECT * FROM consumer WHERE cid=#{cid}
+	</select>
+	
 	<!-- 아이디 중복체크 -->
 	<select id="idChk" resultType="int">
 	

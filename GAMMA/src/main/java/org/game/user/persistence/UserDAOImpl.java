@@ -1,5 +1,7 @@
 package org.game.user.persistence;
 
+import java.util.List;
+
 import javax.inject.Inject;
 
 import org.apache.ibatis.session.SqlSession;
@@ -10,6 +12,13 @@ import org.springframework.stereotype.Repository;
 public class UserDAOImpl implements UserDAO{
 	@Inject
 	SqlSession sql;
+	
+	// 회원정보 상세조회
+	@Override
+	public ConsumerVO userGet(String cid) {
+		ConsumerVO result = sql.selectOne("mapper.userGet",cid);
+		return result;
+	}
 			
 	// 회원가입
 	@Override
@@ -48,6 +57,7 @@ public class UserDAOImpl implements UserDAO{
 		int result =sql.selectOne("mapper.passChk",userVO);
 		return result;
 	}
+	
 
 
 

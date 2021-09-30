@@ -1,16 +1,12 @@
 package org.game.user.controller;
 
-import java.io.IOException;
+import java.util.List;
 
 import javax.inject.Inject;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.game.user.domain.ConsumerVO;
 import org.game.user.service.UserService;
-import org.mindrot.jbcrypt.BCrypt;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,9 +16,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
 
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j;
@@ -32,12 +27,12 @@ import lombok.extern.log4j.Log4j;
 @RequestMapping("/user/*")
 @AllArgsConstructor
 public class UserController {
-	 
+
 	@Inject
 	UserService service;
 	@Inject
 	BCryptPasswordEncoder pwdEncoder;
-	
+
 	// 아이디 중복 체크
 	@ResponseBody
 	@RequestMapping(value = "/idChk", method = RequestMethod.POST)
@@ -51,9 +46,16 @@ public class UserController {
 	@RequestMapping(value = "/passChk", method = RequestMethod.POST)
 	public boolean passChk(ConsumerVO userVO) throws Exception {
 
-		ConsumerVO login=service.userLogin(userVO);
+		ConsumerVO login = service.userLogin(userVO);
 		boolean pwdChk = pwdEncoder.matches(userVO.getPassword(), login.getPassword());
 		return pwdChk;
+	}
+	//유저 상제정보창
+	@PostMapping("/user/user")
+	public String userView(String cid,Model model) {
+		model.addAttribute("dto",service.userGet(cid));
+		log.info("클릭한유저번호"+cid);
+		return "/user/user";
 	}
 
 	// 회원가입 get방식으로 접근여부 가능
@@ -66,44 +68,49 @@ public class UserController {
 
 	// 회원가입
 	@PostMapping("/userJoin")
-	public String postRegister(ConsumerVO userVO) throws Exception {
-		log.info("post register");
-		
-		service.userJoin(userVO);
-		
-		return null;
+	public String userJoin(ConsumerVO userVO) throws Exception {
+		log.info("poset회원가입실행");
+		int result = service.idChk(userVO);
+		try {
+			if (result == 1) {
+				return "/user/userLogin";
+			} else if (result == 0) {
+				String inputPass = userVO.getPassword();
+				String pwd = pwdEncoder.encode(inputPass);
+				userVO.setPassword(pwd);
+				service.userJoin(userVO);
+			}
+		} catch (Exception e) {
+			throw new RuntimeException();
+		}
+		return "/user/userHome";
 	}
+
 	/*
-	 * @PostMapping("/userJoin") public String userJoin(ConsumerVO userVO) throws
-	 * Exception { log.info("poset회원가입실행"); int result = service.idChk(userVO); try
-	 * { if (result == 1) { return "/user/userLogin"; } else if (result == 0) {
-	 * String inputPass=userVO.getPassword(); String
-	 * pwd=pwdEncoder.encode(inputPass); userVO.setPassword(pwd);
-	 * service.userJoin(userVO); } } catch (Exception e) { throw new
-	 * RuntimeException(); } return "redirect:/user/userLogin"; }
-	 * 
 	 * @GetMapping("/userLogin") public String userLogin() throws Exception {
 	 * log.info("get방식로그인접속"); return "/user/userLogin"; }
 	 */
-	
-	//get로그인
+
+	// get로그인
 	@GetMapping("/userLogin")
 	public String userLogin() throws Exception {
 		return "/user/userLogin";
 	}
+
 	// 로그인
 	@PostMapping("/userLogin")
-	public String userLogin(ConsumerVO userVO,HttpServletRequest req, RedirectAttributes rttr) throws Exception {
+	public String userLogin(ConsumerVO vo, HttpSession session, RedirectAttributes rttr) throws Exception {
 		log.info("로그인컨트롤실행");
-		HttpSession session=req.getSession();
-		//session.getAttribute("member");
-		ConsumerVO login = service.userLogin(userVO);
-		//boolean pwdMatch = pwdEncoder.matches(userVO.getPassword(),login.getPassword());
-		if (login == null) {// && pwdMatch == true) {
+		 session.getAttribute("member");
+		ConsumerVO login = service.userLogin(vo);
+		 boolean pwdMatch =
+		 pwdEncoder.matches(vo.getPassword(),login.getPassword());
+		 
+		if (login == null && pwdMatch == true) {
 			session.setAttribute("member", login);
-			rttr.addFlashAttribute("msg", false);
 		} else {
 			session.setAttribute("member", null);
+			rttr.addFlashAttribute("msg", false);
 		}
 
 		return "/user/userHome";
@@ -115,7 +122,7 @@ public class UserController {
 
 		session.invalidate();
 
-		return "redirect:/user/userLogin";
+		return "/user/userHome";
 	}
 
 	// 겟으로 접근하는 수정창
@@ -123,38 +130,27 @@ public class UserController {
 	public String userModify() throws Exception {
 		return "user/userModify";
 	}
+
 	// post 회원정보 수정
 	@PostMapping("/userModify")
-	public String userModify(ConsumerVO userVO, HttpSession session) throws Exception {
-		service.userModify(userVO);
+	public String registerUpdate(ConsumerVO vo, HttpSession session) throws Exception{
+		service.userModify(vo);
 		session.invalidate();
-		return "redirect:userLogin";
+		return "redirect:/user/userHome";
 	}
-
 	// 회원 탈퇴 get
 	@GetMapping("/userDelete")
 	public String userDelete() throws Exception {
-		return "user/userDelete";
+		return "/user/userDelete";
 	}
 
 	// 회원 탈퇴 post
 	@PostMapping("/userDelete")
-	public String memberDelete(ConsumerVO uservo, HttpSession session, RedirectAttributes rttr) throws Exception {
+	public String memberDelete(ConsumerVO userVO, HttpSession session, RedirectAttributes rttr) throws Exception {
 
-		// 세션에 있는 member를 가져와 member변수에 넣어줍니다.
-		ConsumerVO userVO = (ConsumerVO) session.getAttribute("useVO");
-		// 세션에있는 비밀번호
-		String sessionPass = userVO.getPassword();
-		// vo로 들어오는 비밀번호
-		String voPass = userVO.getPassword();
-
-		if (!(sessionPass.equals(voPass))) {
-			rttr.addFlashAttribute("msg", false);
-			return "redirect:user/userDelete";
-		}
 		service.userDelete(userVO);
 		session.invalidate();
-		return "redirect:userLogin";
+		return "/user/userHome";
 	}
 
 }
