@@ -58,52 +58,55 @@ public class UserController {
 
 	// 회원가입 get방식으로 접근여부 가능
 	@GetMapping("/userJoin")
-	public void getuserJoin() throws Exception {
+	public String userJoin() throws Exception {
 		log.info("get방식회원가입접속");
+		return "/user/userJoin";
 
 	}
 
 	// 회원가입
 	@PostMapping("/userJoin")
-	public String userJoin(ConsumerVO userVO) throws Exception {
-		log.info("poset회원가입실행");
-		int result = service.idChk(userVO);
-		try {
-			if (result == 1) {
-				return "/user/userLogin";
-			} else if (result == 0) {
-				String inputPass=userVO.getPassword();
-				String pwd=pwdEncoder.encode(inputPass);
-				userVO.setPassword(pwd);
-				service.userJoin(userVO);
-			}
-		} catch (Exception e) {
-			throw new RuntimeException();
-		}
-		return "redirect:/user/userLogin";
+	public String postRegister(ConsumerVO userVO) throws Exception {
+		log.info("post register");
+		
+		service.userJoin(userVO);
+		
+		return null;
 	}
+	/*
+	 * @PostMapping("/userJoin") public String userJoin(ConsumerVO userVO) throws
+	 * Exception { log.info("poset회원가입실행"); int result = service.idChk(userVO); try
+	 * { if (result == 1) { return "/user/userLogin"; } else if (result == 0) {
+	 * String inputPass=userVO.getPassword(); String
+	 * pwd=pwdEncoder.encode(inputPass); userVO.setPassword(pwd);
+	 * service.userJoin(userVO); } } catch (Exception e) { throw new
+	 * RuntimeException(); } return "redirect:/user/userLogin"; }
+	 * 
+	 * @GetMapping("/userLogin") public String userLogin() throws Exception {
+	 * log.info("get방식로그인접속"); return "/user/userLogin"; }
+	 */
+	
+	//get로그인
 	@GetMapping("/userLogin")
 	public String userLogin() throws Exception {
-		log.info("get방식로그인접속");
 		return "/user/userLogin";
 	}
-	
 	// 로그인
 	@PostMapping("/userLogin")
-	public String userLogin(ConsumerVO userVO,HttpSession session, RedirectAttributes rttr) throws Exception {
+	public String userLogin(ConsumerVO userVO,HttpServletRequest req, RedirectAttributes rttr) throws Exception {
 		log.info("로그인컨트롤실행");
-		
-		session.getAttribute("member");
+		HttpSession session=req.getSession();
+		//session.getAttribute("member");
 		ConsumerVO login = service.userLogin(userVO);
-		boolean pwdMatch = pwdEncoder.matches(userVO.getPassword(),login.getPassword());
-		if (login == null && pwdMatch == true) {
+		//boolean pwdMatch = pwdEncoder.matches(userVO.getPassword(),login.getPassword());
+		if (login == null) {// && pwdMatch == true) {
 			session.setAttribute("member", login);
+			rttr.addFlashAttribute("msg", false);
 		} else {
 			session.setAttribute("member", null);
-			rttr.addFlashAttribute("msg", false);
 		}
 
-		return "redirect:/user/userLogin";
+		return "/user/userHome";
 	}
 
 	// 로그아웃 과 세션 초기화

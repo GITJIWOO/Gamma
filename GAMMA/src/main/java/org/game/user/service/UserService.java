@@ -1,12 +1,6 @@
 package org.game.user.service;
 
-import java.io.IOException;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import org.game.user.domain.ConsumerVO;
-import org.springframework.web.servlet.ModelAndView;
 
 public interface UserService {
 

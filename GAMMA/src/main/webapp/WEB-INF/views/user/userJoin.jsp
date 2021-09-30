@@ -40,12 +40,12 @@
 					$("#nickname").focus();
 					return false;
 				}
-				var idChkVal = $("#idChk").val();
+				 var idChkVal = $("#idChk").val();
 				if(idChkVal == "N"){
 					alert("중복확인 버튼을 눌러주세요.");
 				}else if(idChkVal == "Y"){
 					$("#regForm").submit();
-				}
+				} 
 			});
 		})
 		
@@ -64,7 +64,7 @@
 					}
 				}
 			})
-		}
+		} 
 		 function check_pw(){
 			 
 	            var pw = document.getElementById('password').value;
@@ -98,7 +98,7 @@
 	    </script>
 	<body>
 		<section id="container">
-			<form action="/userJoin" method="post" id="regForm">
+			<form action="/user/userJoin" method="post" id="regForm">
 				<div class="form-group has-feedback">
 					<label class="control-label" for="cid">아이디</label>
 					<input class="form-control" type="text" id="cid" name="cid" />
@@ -120,12 +120,12 @@
 					<label class="control-label" for="nickname">닉네임</label>
 					<input class="form-control" type="text" id="nickname" name="nickname" />
 				</div>
+			</form>
 				
 				<div class="form-group has-feedback">
 					<button class="btn btn-success" type="button" id="submit">회원가입</button>
 					<button class="cencle btn btn-danger" type="button">취소</button>
 				</div>
-			</form>
 		</section>
 		
 	</body>

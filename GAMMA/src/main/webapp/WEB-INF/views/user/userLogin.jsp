@@ -35,7 +35,7 @@
 			</div>
 			<div>
 				<button type="submit">로그인</button>
-				<button type="button">회원가입</button>
+				<a href="http://localhost:8181/user/userJoin"><button type="button">회원가입</button></a>
 			</div>
 		</c:if>
 		<c:if test="${member != null }">
