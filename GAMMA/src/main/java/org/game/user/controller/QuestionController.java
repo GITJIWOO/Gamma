@@ -26,9 +26,6 @@ public class QuestionController {
 	@Autowired
 	private QuestionService service;
 	
-	@Autowired
-	private UserService uservice;
-	
 	// 질문글 작성하는 폼 
 	@PostMapping("/questionform")
 	public String addQuestion(String cid, Model model) {
@@ -54,14 +51,18 @@ public class QuestionController {
 		if(admin == 1) {
 			List<QuestionVO> vo = service.questionListP(cri, "%%");			
 			model.addAttribute("vo", vo);
-			QuestionPageDTO btnMaker = new QuestionPageDTO(cri, service.countQuestion("%%"), 10);
+			QuestionPageDTO btnMaker = new QuestionPageDTO(cri, service.countQuestion(cri, "%%"), 10);
 			model.addAttribute("btnMaker", btnMaker);
 		}else {
 			List<QuestionVO> vo = service.questionListP(cri, qwriter);
 			model.addAttribute("vo", vo);
-			QuestionPageDTO btnMaker = new QuestionPageDTO(cri, service.countQuestion(qwriter), 10);
+			QuestionPageDTO btnMaker = new QuestionPageDTO(cri, service.countQuestion(cri, qwriter), 10);
 			model.addAttribute("btnMaker", btnMaker);
 		}
+		log.info("qwriter 확인: " + qwriter );
+		log.info("cri값 확인 keyword: " + cri.getKeyword());
+		log.info("cri값 확인 pageNum: " + cri.getPageNum());
+		log.info("cri값 확인 amount: " + cri.getAmount());
 		model.addAttribute("admin", admin);
 		model.addAttribute("qwriter", qwriter);
 		return "/qna/questionlist";
@@ -72,34 +73,39 @@ public class QuestionController {
 	public String modifyQuestionForm(int qnum, Model model) {
 		QuestionVO vo = service.ownQuestion(qnum);
 		model.addAttribute("vo", vo);
-		return "qna/modifyclear";
+		return "qna/modifyquestion";
 	}
 	
 	// 질문글 수정 완료
 	@PostMapping("/modifyclear")
-	public String modifyQuestion(QuestionVO vo, RedirectAttributes rttr) {
+	public String modifyQuestion(QuestionVO vo, QuestionSearchCriteria cri, RedirectAttributes rttr) {
 		service.modifyQuestion(vo);
 		rttr.addFlashAttribute("success", "modify");
 		rttr.addFlashAttribute("qnum", vo.getQnum());
-
-		// 아래 주소로 넘길 때 post 이지만 파라미터 값으로 번호를 넘겨서 해당 번호 질문글 상세로 넘어가게 하려면? 
+		log.info("cri 페이지번호: " +cri.getPageNum());
+		rttr.addAttribute("qnum", vo.getQnum());
+		rttr.addAttribute("qwriter", vo.getQwriter());
+		rttr.addAttribute("pageNum", cri.getPageNum());
 		return "redirect:/qna/getquestion";
 	}
 	
 	// 질문글 상세 조회
-	@PostMapping("/getquestion")
-	public String getQuestion(int qnum, Model model) {
+	@GetMapping("/getquestion")
+	public String getQuestion(String qwriter, int qnum, Model model) {
+		int admin = service.adminOrNot(qwriter);
 		QuestionVO vo = service.ownQuestion(qnum);
+		model.addAttribute("admin", admin);
 		model.addAttribute("vo", vo);
 		return "/qna/getquestion";
 	}
 	
 	// 질문글 삭제
 	@PostMapping("/removequestion")
-	public String removeQuestion(int qnum, RedirectAttributes rttr) {
+	public String removeQuestion(String qwriter, int qnum, RedirectAttributes rttr) {
 		service.removeQuestion(qnum);
 		rttr.addFlashAttribute("success", "remove");
 		rttr.addFlashAttribute("qnum", qnum);
+		rttr.addAttribute("qwriter", qwriter);
 		return "redirect:/qna/questionlist";
 	}
 }

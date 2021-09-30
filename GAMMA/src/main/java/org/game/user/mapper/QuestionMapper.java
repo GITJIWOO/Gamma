@@ -19,7 +19,7 @@ public interface QuestionMapper {
 	public List<QuestionVO> getQuestionListP(@Param("cri")QuestionSearchCriteria cri, @Param("qwriter")String qwriter);
 	
 	// 위 메서드 개수 조회 
-	public int getCountQuestion(String qwriter);
+	public int getCountQuestion(@Param("cri")QuestionSearchCriteria cri, @Param("qwriter")String qwriter);
 	// 본인이 작성한 질문글 리스트 가져오기
 	//public List<QuestionVO> getOwnQuestionList(String qwriter);
 	
