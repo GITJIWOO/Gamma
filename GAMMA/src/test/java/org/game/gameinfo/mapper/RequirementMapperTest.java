@@ -1,6 +1,5 @@
 package org.game.gameinfo.mapper;
 
-import org.game.gameinfo.domain.GameTagVO;
 import org.game.gameinfo.domain.RequirementVO;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -23,7 +22,7 @@ public class RequirementMapperTest {
 		log.info(mapper.selectRequirement(21L));
 	}
 	
-//	@Test
+	@Test
 	public void testRequirementInsert() {
 		RequirementVO vo = new RequirementVO();
 		vo.setGdirectx("Version 11");
@@ -33,7 +32,7 @@ public class RequirementMapperTest {
 		vo.setGprocessor(" Intel Core i5-6600K / AMD Ryzen 5 1600");
 		vo.setGstore("50 GB available space");
 		vo.setGnum(1L);
-		mapper.insertrequirement(vo);
+		mapper.insertRequirement(vo);
 	}
 	
 //	@Test
