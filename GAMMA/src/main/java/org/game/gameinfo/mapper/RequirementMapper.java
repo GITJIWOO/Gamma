@@ -8,7 +8,7 @@ public interface RequirementMapper {
 	public RequirementVO selectRequirement(Long grNum);
 	
 	// 요구사양 추가
-	public void insertrequirement(RequirementVO vo);
+	public void insertRequirement(RequirementVO vo);
 	
 	// 요구사양 삭제
 	public void deleteRequirement(Long grNum);

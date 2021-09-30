@@ -17,7 +17,7 @@ public class GameInfoMapperTest {
 	@Autowired
 	private GameInfoMapper mapper;
 	
-//	@Test
+	@Test
 	public void testGameList() {
 		log.info(mapper.gameList());
 	}
