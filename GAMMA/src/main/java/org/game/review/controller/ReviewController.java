@@ -117,20 +117,20 @@ public class ReviewController {
 	
 	// 평가 댓글 작성
 	@PostMapping("/reviewCommmentWrite")
-	public String writeReviewComment(ReviewCommentVO rc, Model model) {
+	public String writeReviewComment(ReviewCommentVO rc) {
 		
 		commentService.writeReviewComment(rc);
 		
-		return "/review/reviewDetail/" + rc.getGrnum();
+		return "redirect:/review/reviewDetail/" + rc.getGrnum();
 	}
 	
 	// 평가 댓글 삭제
 	@PostMapping("/reviewCommentRemove")
-	public String removeReviewComment(ReviewCommentVO rc, Model model) {
+	public String removeReviewComment(ReviewCommentVO rc) {
 		
 		commentService.removeReviewComment(rc);
 		
-		return "review/reviewDetail/" + rc.getGrnum();
+		return "redirect:/review/reviewDetail/" + rc.getGrnum();
 	}
 	
 }

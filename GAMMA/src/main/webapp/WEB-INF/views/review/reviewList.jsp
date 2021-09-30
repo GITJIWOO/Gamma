@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="EUC-KR">
-<title>Insert title here</title>
+<title>${gameTitle} 리뷰</title>
 </head>
 <body>
 	<div class="body">
