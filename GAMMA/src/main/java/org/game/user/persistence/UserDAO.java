@@ -4,6 +4,9 @@ import org.game.user.domain.ConsumerVO;
 
 public interface UserDAO {
 	
+	// 유저정보 상세조회
+	public ConsumerVO userGet(String cid);
+	
 	// 회원가입 
 	public void userJoin(ConsumerVO userVO) throws Exception;
 	

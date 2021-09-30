@@ -14,12 +14,12 @@
 	<li><a href="/board/list">목록</a></li>
 	<li><a href="/board/writeView">글 작성</a></li>
 	<li>
-		<c:if test="${userVO } != null}"><a href="/member/logout">로그아웃</a></c:if>
-		<c:if test="${userVO == null}"><a href="/">로그인</a></c:if>
+		<c:if test="${member != null}"><a href="/user/userLogout">로그아웃</a></c:if>
+		<c:if test="${member == null}"><a href="/">로그인</a></c:if>
 	</li>
 	<li>
-		<c:if test="${userVO != null}">
-			<p>${userVO.cid}님 안녕하세요.</p>
+		<c:if test="${member != null}">
+			<p>${member.cid}님 안녕하세요.</p>
 		</c:if>
 	</li>
 </ul>
