@@ -239,12 +239,13 @@ ALTER TABLE question ADD CONSTRAINT pk_question PRIMARY KEY(qnum);
 */
 CREATE SEQUENCE answer_num;
 CREATE TABLE answer (
-    anum NUMBER PRIMARY KEY,
-    qnanum NUMBER NOT NULL,
-    CONSTRAINT fk_answer FOREIGN KEY(qnanum) REFERENCES question(qnum),
+    anum NUMBER,
+    qnum NUMBER NOT NULL,
+    CONSTRAINT fk_answer FOREIGN KEY(qnum) REFERENCES question(qnum),
     acontent VARCHAR2(1000) NOT NULL,
     adate DATE DEFAULT SYSDATE
 );
+ALTER TABLE answer ADD CONSTRAINT pk_answer PRIMARY KEY(anum);
 
 /*  사용자 결제 내역
     결제 번호

@@ -6,8 +6,8 @@ import lombok.Data;
 
 @Data
 public class AnswerVO {
-	private Long anum;
-	private Long qnanum;
+	private int anum;
+	private int qnum;
 	private String acontent;
 	private Date adate;
 }
