@@ -72,10 +72,10 @@ public class ReviewController {
 		String cid = (String)session.getAttribute("member");
 		
 		// 좋아요 여부
-		ReviewLikeVO rlvo = reviewLikeService.getReviewLike(grnum, cid);
+		// ReviewLikeVO rlvo = reviewLikeService.getReviewLike(grnum, cid);
 		
 		model.addAttribute("cid", cid);
-		model.addAttribute("rlvo", rlvo);
+		// model.addAttribute("rlvo", rlvo);
 		model.addAttribute("review", review);
 		model.addAttribute("reviewComment", reviewComment);
 		model.addAttribute("pageBtn", pageBtn);
