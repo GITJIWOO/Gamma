@@ -44,13 +44,15 @@
 								<textarea class="form-control" id="exampleFormControlTextarea1" name="grcontent" rows="10" cols="15" placeholder="내용" required>${review.grcontent}</textarea><br/>
 								<button type="button" id="reviewLike" name="grlike" value="1" class="btn btn-primary" >추천</button>
 								<button type="button" id="reviewLike" name="grlike" value="0" class="btn btn-danger">비추천</button>
-								<input type="submit" class="btn btn-secondary" id="reviewUpdate" value="작성">
+								<button type="button" id="modifyCancel" class="btn btn-secondary">취소</button>
+								<input type="submit" class="btn btn-success" id="reviewUpdate" value="작성">
 							</form>
 						</c:if>
 					</div>
 					
+					<!-- 리뷰 좋아요 버튼(로그인 검사) -->
 					<c:choose>
-						<c:when test="${rlvo == null}">
+						<c:when test="${rlvo == null && cid != null}">
 							<form action="/review/reviewLike" method="post" id="reviewLike">
 								<input type="hidden" name="grnum" value="${review.grnum}">
 								<input type="submit" value="좋아요">
@@ -63,9 +65,6 @@
 							</form>
 						</c:when>
 					</c:choose>
-					<!-- 리뷰 좋아요 버튼(로그인 검사) -->
-					<c:if test="${cid != null}">
-					</c:if>
 					
 					<!-- 리뷰 수정 버튼(아이디 검사) -->
 					<c:if test="${cid == review.cid}">
@@ -79,7 +78,6 @@
 							<input type="submit" value="삭제">
 						</form>
 					</c:if>
-					
 					<hr/>
 				</div>
 				<div id="reviewComment">
@@ -108,9 +106,7 @@
 								<input type="submit" value="삭제">
 							</form>
 						</c:if>
-						
 						<hr/>
-						
 					<!-- 리뷰 댓글 페이징 -->
 					</c:forEach>
 					<nav aria-label="Page navigation example">
