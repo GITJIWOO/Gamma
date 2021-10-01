@@ -29,10 +29,10 @@ public class ReviewCommentServiceTest {
 		service.getReviewComment(1L, null);
 	}
 	
-	// @Test
+	@Test
 	public void writeReviewCommentTest() {
 		ReviewCommentVO reviewComment = new ReviewCommentVO();
-		reviewComment.setGrnum(1L);
+		reviewComment.setGrnum(23L);
 		reviewComment.setCid("kjw011231");
 		reviewComment.setRccontent("동의보감");
 		service.writeReviewComment(reviewComment);

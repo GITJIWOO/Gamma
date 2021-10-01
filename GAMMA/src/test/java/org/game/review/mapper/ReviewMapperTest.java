@@ -62,4 +62,9 @@ public class ReviewMapperTest {
 	public void reviewLikeTest() {
 		mapper.reviewLike(1L);
 	}
+	
+	@Test
+	public void reviewLikeDeleteTest() {
+		mapper.reviewLikeDelete(1L);
+	}
 }
