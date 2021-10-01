@@ -180,7 +180,7 @@
 
 
 		<!-- jackson -->
-		
+
 		<dependency>
 			<groupId>org.codehaus.jackson</groupId>
 			<artifactId>jackson-mapper-asl</artifactId>
@@ -195,7 +195,7 @@
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
 			<artifactId>jackson-databind</artifactId>
-			<version>2.10.0</version>
+			<version>2.13.0-rc2</version>
 		</dependency>
 
 		<!-- 채팅을 위한 웹 소켓(아래 2개) -->
