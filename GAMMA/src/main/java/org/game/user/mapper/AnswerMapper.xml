@@ -8,7 +8,7 @@
 	</insert>
 	
 	<select id="getAnswer" resultType="org.game.user.domain.AnswerVO">
-		SELECT * FROM answer WHERE qnum = #{qnum}
+		SELECT * FROM answer WHERE qnum = #{qnum} ORDER BY anum
 	</select>
 	
 	<update id="updateAnswer">
