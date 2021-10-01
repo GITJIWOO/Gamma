@@ -27,4 +27,6 @@ public interface ReviewService {
 	// 평가 좋아요
 	public void likeReview(long grnum);
 	
+	// 평가 좋아요 취소
+	public void likeReviewCancel(long grnum);
 }

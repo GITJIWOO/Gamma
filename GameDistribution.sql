@@ -166,6 +166,22 @@ CREATE TABLE gameReview (
     REFERENCES consumer(cid)
 );
 
+/*  리뷰 좋아요 테이블
+    rlnum = 좋아요 식별 번호
+    grnum = 게임 리뷰 번호
+    cid = 사용자 아이디
+*/
+CREATE SEQUENCE reviewlike_num;
+CREATE TABLE reviewLike (
+    rlnum NUMBER PRIMARY KEY,
+    grnum NUMBER NOT NULL,
+    cid VARCHAR2(20) NOT NULL,
+    CONSTRAINT fk_reviewlikegrnum FOREIGN KEY(grnum)
+    REFERENCES gameReview(grnum),
+    CONSTRAINT fk_reviewlikecid FOREIGN KEY(cid)
+    REFERENCES consumer(cid)
+);
+
 /*  리뷰 댓글 테이블
     rcnum = 댓글 식별 번호
     grnum = 리뷰 식별 번호(외래키)
