@@ -31,7 +31,7 @@
 				$("#password").focus();
 				return false;
 			}
-			$.ajax({
+			/* $.ajax({d
 				url : "/user/passChk",
 				type : "POST",
 				dataType : "json",
@@ -48,7 +48,7 @@
 
 					}
 				}
-			})
+			}) */
 
 		});
 

@@ -1,9 +1,7 @@
 package org.game.user.service;
 
-import java.util.List;
 
 import org.game.user.domain.ConsumerVO;
-import org.game.user.persistence.UserDAO;
 
 public interface UserService {
 
