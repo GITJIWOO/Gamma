@@ -4,6 +4,7 @@
 
 <html>
 <head>
+<meta charset="UTF-8">
 	<title>userHome</title>
 		<!-- 합쳐지고 최소화된 최신 CSS -->
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
@@ -15,12 +16,25 @@
 </head>
 <a href="/board/list">게시판</a><br />
 <script type="text/javascript">
-	$(document).ready(function(){
-		$("#logoutBtn").on("click", function(){
-			location.href="user/userLogout";
-		})
-		
+$(document).ready(function(){
+	$("#logoutBtn").on("click", function(){
+		location.href="user/userLogout";
 	})
+	$("#registerBtn").on("click", function(){
+		location.href="user/userJoin";
+	})
+	
+	
+	
+	$("#userUpdateBtn").on("click", function(){
+		location.href="user/userModify";
+	})
+	
+	$("#usererDeleteBtn").on("click", function(){
+		location.href="user/userDelete";
+	})
+	
+})
 </script>
 <body>
 	<form name='homeForm' method="post" action="/user/userLogin">
@@ -35,12 +49,14 @@
 			</div>
 			<div>
 				<button type="submit">로그인</button>
-				<button type="button">회원가입</button>
+				<button id=registerBtn type="button">회원가입</button>
 			</div>
 		</c:if>
-		<c:if test="${userVO != null }">
+		<c:if test="${member != null }">
 			<div>
-				<p>${userVO.cid}님 환영 합니다.</p>
+				<p>${member.cid}님 환영 합니다.</p>
+				<button id="userUpdateBtn" type="button">회원정보수정</button>
+				<button id="userDeleteBtn" type="button">회원탈퇴</button>
 				<button id="logoutBtn" type="button">로그아웃</button>
 			</div>
 		</c:if>
