@@ -16,7 +16,7 @@
 </head>
 <a href="/board/list">게시판</a><br />
 <script type="text/javascript">
-$(document).ready(function(){
+ $(document).ready(function(){
 	$("#logoutBtn").on("click", function(){
 		location.href="user/userLogout";
 	})
@@ -34,7 +34,7 @@ $(document).ready(function(){
 		location.href="user/userDelete";
 	})
 	
-})
+}) 
 </script>
 <body>
 	<form name='homeForm' method="post" action="/user/userLogin">
@@ -49,15 +49,15 @@ $(document).ready(function(){
 			</div>
 			<div>
 				<button type="submit">로그인</button>
-				<button id=registerBtn type="button">회원가입</button>
+				<a href="/user/userJoin"><button id=registerBtn type="button">회원가입</button></a>
 			</div>
 		</c:if>
 		<c:if test="${member != null }">
 			<div>
 				<p>${member.cid}님 환영 합니다.</p>
-				<button id="userUpdateBtn" type="button">회원정보수정</button>
-				<button id="userDeleteBtn" type="button">회원탈퇴</button>
-				<button id="logoutBtn" type="button">로그아웃</button>
+				<a href="/user/userModify"><button id="userUpdateBtn" type="button">회원정보수정</button></a>
+				<a href="/user/userDelete"><button id="userDeleteBtn" type="button">회원탈퇴</button></a>
+				<a href="/user/userLogout"><button id="logoutBtn" type="button">로그아웃</button></a>
 			</div>
 		</c:if>
 		<c:if test="${msg == false}">

@@ -59,13 +59,13 @@ public class UserMapperTest {
 	
 	
 	@Test
-	public void testuserJoin() {
+	public void testuserJoin() throws Exception {
 		ConsumerVO userVO =new ConsumerVO();
-			userVO.setCid("메퍼3아디");
-			userVO.setEmail("메퍼3이메일");
-			userVO.setNickname("매퍼3닉넴");
-			userVO.setPassword("매퍼3비번");
-		   mapper.userJoin(userVO);
+			userVO.setCid("test");
+			userVO.setEmail("test@test.test");
+			userVO.setNickname("test");
+			userVO.setPassword("test");
+		    mapper.userJoin(userVO);
 	}
 
 	
