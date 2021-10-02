@@ -69,6 +69,7 @@ select * from gamerequirement left join game using (gnum);
     nickname = 닉네임
     cadmin = 관리자 여부(0 = 일반 사용자)
 */
+drop table consumer;
 CREATE SEQUENCE consumer_num INCREMENT BY 1 START WITH 1;
 CREATE TABLE consumer (
     cnum NUMBER PRIMARY KEY,
@@ -77,7 +78,9 @@ CREATE TABLE consumer (
     password VARCHAR2(20) NOT NULL,
     nickname VARCHAR(20) NOT NULL UNIQUE,
     cadmin NUMBER(3) DEFAULT 0
-);
+   );
+
+ALTER TABLE consumer ADD(userregdate DATE Default sysdate NOT NULL,userupdatedate DATE Default sysdate NOT NULL);
 INSERT INTO consumer(cnum, cid, email, password, nickname, cadmin) 
     VALUES(consumer_num.nextval,'kjw011231', 'kjw0111231@gmail.com', 'rlawldn', '김지우', 1);
 SELECT * FROM consumer; 
@@ -160,6 +163,22 @@ CREATE TABLE gameReview (
     CONSTRAINT fk_gamereviewgnum FOREIGN KEY(gnum) 
     REFERENCES game(gnum),
     CONSTRAINT fk_gamereviewcid FOREIGN KEY(cid) 
+    REFERENCES consumer(cid)
+);
+
+/*  리뷰 좋아요 테이블
+    rlnum = 좋아요 식별 번호
+    grnum = 게임 리뷰 번호
+    cid = 사용자 아이디
+*/
+CREATE SEQUENCE reviewlike_num;
+CREATE TABLE reviewLike (
+    rlnum NUMBER PRIMARY KEY,
+    grnum NUMBER NOT NULL,
+    cid VARCHAR2(20) NOT NULL,
+    CONSTRAINT fk_reviewlikegrnum FOREIGN KEY(grnum)
+    REFERENCES gameReview(grnum),
+    CONSTRAINT fk_reviewlikecid FOREIGN KEY(cid)
     REFERENCES consumer(cid)
 );
 
@@ -292,3 +311,5 @@ CREATE TABLE shoppingBasket (
     CONSTRAINT fk_shoppingbasketgnum FOREIGN KEY(gnum)REFERENCES game(gnum)
 
 );
+
+

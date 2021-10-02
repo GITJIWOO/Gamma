@@ -13,8 +13,8 @@
 	<c:if test="${라이브러리에 게임 보유 여부 확인}">
 		<form action="/review/reviewWrite" method="post">
 			<input type="hidden" name="cid" value="${cid}">
-			<input type="text" name="grtitle" placeholder="제목" required><br/>
-			<textarea name="grcontent" rows="10" cols="15" placeholder="내용" required></textarea><br/>
+			<input type="text" class="form-control form-control-lg" name="grtitle" placeholder="제목" required><br/>
+			<textarea class="form-control" id="exampleFormControlTextarea1" name="grcontent" rows="10" cols="15" placeholder="내용" required></textarea><br/>
 			<button type="button" id="reviewLike" name="grlike" value="1" class="btn btn-primary">추천</button>
 			<button type="button" id="reviewLike" name="grlike" value="0" class="btn btn-danger">비추천</button>
 			<input type="submit" class="btn btn-secondary" id="reviewWrite" value="작성">

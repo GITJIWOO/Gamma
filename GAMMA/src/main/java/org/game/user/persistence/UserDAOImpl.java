@@ -1,28 +1,25 @@
 package org.game.user.persistence;
 
+import java.util.List;
+
 import javax.inject.Inject;
-import javax.servlet.http.HttpSession;
 
 import org.apache.ibatis.session.SqlSession;
 import org.game.user.domain.ConsumerVO;
-import org.game.user.mapper.UserMapper;
-import org.game.user.service.UserServiceImpl;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Repository;
 
-import lombok.AllArgsConstructor;
-import lombok.extern.log4j.Log4j;
-
-@Log4j
-@Service
-@AllArgsConstructor
+@Repository
 public class UserDAOImpl implements UserDAO{
-	@Autowired
+	@Inject
 	SqlSession sql;
 	
-	@Autowired
-	private UserMapper mapper;
-	
+	// 회원정보 상세조회
+	@Override
+	public ConsumerVO userGet(String cid) {
+		ConsumerVO result = sql.selectOne("mapper.userGet",cid);
+		return result;
+	}
+			
 	// 회원가입
 	@Override
 	public void userJoin(ConsumerVO userVO) throws Exception {
@@ -60,6 +57,7 @@ public class UserDAOImpl implements UserDAO{
 		int result =sql.selectOne("mapper.passChk",userVO);
 		return result;
 	}
+	
 
 
 

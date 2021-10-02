@@ -41,4 +41,8 @@
 		UPDATE gameReview SET grrecommend=grrecommend + 1 WHERE grnum=#{grnum}
 	</update>
 	
+	<!-- 평가 좋아요 취소 -->
+	<update id="reviewLikeDelete">
+		UPDATE gameReview SET grrecommend=grrecommend - 1 WHERE grnum=#{grnum}
+	</update>
 </mapper>

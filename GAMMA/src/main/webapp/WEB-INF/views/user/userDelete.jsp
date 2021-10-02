@@ -13,6 +13,7 @@
 
 <script
 	src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<meta charset="UTF-8">
 <title>회원탈퇴</title>
 </head>
 <script type="text/javascript">
@@ -20,7 +21,7 @@
 		// 취소
 		$(".cencle").on("click", function() {
 
-			location.href = "/";
+			location.href = "/user/userHome";
 
 		})
 
@@ -37,12 +38,12 @@
 				data : $("#delForm").serializeArray(),
 				success : function(data) {
 
-					if (data == 0) {
-						alert("패스워드가 틀렸습니다.");
-						return;
-					} else {
+					if (data == true) {
 						if (confirm("회원탈퇴하시겠습니까?")) {
 							$("#delForm").submit();
+					} else {
+						alert("패스워드가 틀렸습니다.");
+						return;
 						}
 
 					}
@@ -55,11 +56,11 @@
 </script>
 <body>
 	<section id="container">
-		<form action="/user/userDelete" method="post">
+		<form action="/user/userDelete" method="post" id="delForm">
 			<div class="form-group has-feedback">
 				<label class="control-label" for="cid">아이디</label> <input
 					class="form-control" type="text" id="cid" name="cid"
-					value="${userVO.cid}" readonly="readonly" />
+					value="${member.cid}" readonly="readonly" />
 			</div>
 			<div class="form-group has-feedback">
 				<label class="control-label" for="password">패스워드</label> <input
@@ -68,7 +69,7 @@
 			<div class="form-group has-feedback">
 				<label class="control-label" for="nickname">별칭</label> <input
 					class="form-control" type="text" id="nickname" name="nickname"
-					value="${userVO.nickname}" readonly="readonly" />
+					value="${member.nickname}" readonly="readonly" />
 			</div>
 			<div class="form-group has-feedback">
 				<button class="btn btn-success" type="submit" id="submit">회원탈퇴</button>
