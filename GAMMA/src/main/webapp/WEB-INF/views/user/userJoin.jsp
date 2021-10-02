@@ -24,10 +24,10 @@
 </head>
 
 <script type="text/javascript">
-		$(document).ready(function(){
+		 $(document).ready(function(){
 			// 취소
 			$(".cencle").on("click", function(){
-				location.href = "/userJoin";
+				location.href = "/user/userJoin";
 			})
 			
 			$("#submit").on("click", function(){
@@ -53,13 +53,14 @@
 					$("#regForm").submit();
 				} 
 			});
-		})
+		}) 
 		
-		function fn_idChk(){
+	 	function fn_idChk(){
 			$.ajax({
 				url : "/user/idChk",
 				type : "post",
-				dataType : "json",
+				headers:{"Content-Type":"application/json","X-HTTP-Method-Override":"POST"},
+				dataType : "text",
 				data : {"cid" : $("#cid").val()},
 				success : function(data){
 					if(data == 1){
@@ -70,8 +71,9 @@
 					}
 				}
 			})
-		} 
-		 function check_pw(){
+		}  
+		//작동잘됨
+		/*  function check_pw(){
 			 
 	            var pw = document.getElementById('password').value;
 	            var SC = ["!","@","#","$","%"];
@@ -100,7 +102,7 @@
 	                    document.getElementById('check').style.color='red';
 	                }
 	            }
-	        }
+	        } */
 	    </script>
 <body>
 	<section id="container">
@@ -108,19 +110,19 @@
 			<div class="form-group has-feedback">
 				<label class="control-label" for="cid">아이디</label> <input
 					class="form-control" type="text" id="cid" name="cid" />
-				<button class="idChk" type="button" id="idChk" onclick="fn_idChk();"
-					value="N">중복확인</button>
+				<!-- <button class="idChk" type="button" id="idChk" onclick="fn_idChk();"
+					value="N">중복확인</button> -->
 			</div>
 			<div class="form-group has-feedback">
 				<label class="control-label" for="password">패스워드</label> <input
-					class="form-control" type="password" name="userPW" id="password"
+					class="form-control" type="password" name="password" id="password"
 					onchange="check_pw()" placeholder="!,@,#,$,%중 하나이상을 포함해주세요" />
 			</div>
-			<div class="form-group has-feedback">
+			<!-- <div class="form-group has-feedback">
 				<label class="control-label" for="passwordConfirm">패스워드확인</label> <input
 					class="form-control" type="password" name="userPW2" id="pw2"
 					onchange="check_pw()">&nbsp;<span id="check"></span>
-			</div>
+			</div> -->
 			<div class="form-group has-feedback">
 				<label class="control-label" for="email">Email</label> <input
 					class="form-control" type="text" id="email" name="email" />
@@ -129,12 +131,13 @@
 				<label class="control-label" for="nickname">닉네임</label> <input
 					class="form-control" type="text" id="nickname" name="nickname" />
 			</div>
-		</form>
 
 		<div class="form-group has-feedback">
-			<button class="btn btn-success" type="button" id="submit">회원가입</button>
-			<button class="cencle btn btn-danger" type="button">취소</button>
+		<input type ="submit" value ="회원가입" class="btn btn-success" >
+			<!-- <button class="btn btn-success" type="button" id="submit">회원가입</button>
+			<button class="cencle btn btn-danger" type="button">취소</button> -->
 		</div>
+		</form>
 	</section>
 
 </body>

@@ -11,11 +11,15 @@
 </head>
 <body>
 <ul>
-	<li><a href="/board/list">목록</a></li>
-	<li><a href="/board/writeView">글 작성</a></li>
+	<li><a href="/board/?">목록</a></li>
+	<li><a href="/board/?">글 작성</a></li>
 	<li>
 		<c:if test="${member != null}"><a href="/user/userLogout">로그아웃</a></c:if>
-		<c:if test="${member == null}"><a href="/">로그인</a></c:if>
+		<c:if test="${member == null}"><a href="/user/userLogin">로그인</a></c:if>
+		<c:if test="${member != null}"><a href="/user/userModify">유저수정</a></c:if>
+		<c:if test="${member != null}"><a href="/user/userDelete">탈퇴</a></c:if>
+		<c:if test="${member != null}"><a href="/user/userGet">상세창</a></c:if>
+		
 	</li>
 	<li>
 		<c:if test="${member != null}">

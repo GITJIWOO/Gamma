@@ -2,8 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<!-- <mapper namespace="org.game.user.mapper.UserMapper"> -->
-<mapper namespace="org.game.user.persistence.UserDAO">
+<mapper namespace="org.game.user.mapper.UserMapper"> 
 
 	<!--  유저정보 상세조회 -->
 	<select id="userGet" resultType="org.game.user.domain.ConsumerVO">
@@ -30,10 +29,10 @@
 		nickname)
 		VALUES(consumer_num.nextval,#{cid},#{email},#{password},#{nickname})
 	</insert>
-
+	
 	<!-- 로그인 -->
 	<select id="userLogin" resultType="org.game.user.domain.ConsumerVO">
-		SELECT cid,password,email,nickname
+		SELECT *
 		FROM consumer
 		WHERE cid = #{cid} AND password=#{password}
 
@@ -47,7 +46,7 @@
 	</update>
 	
 	<!-- 회원탈퇴 -->
-	<delete id="meberDelete">
+	<delete id="userDelete">
 		DELETE FROM consumer
 		WHERE cid=#{cid} 
 	</delete>
