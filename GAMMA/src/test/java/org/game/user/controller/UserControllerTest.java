@@ -3,7 +3,7 @@ package org.game.user.controller;
 import javax.inject.Inject;
 
 import org.game.user.domain.ConsumerVO;
-import org.game.user.persistence.UserDAO;
+import org.game.user.mapper.UserMapper;
 import org.game.user.service.UserServiceTest;
 import org.junit.Before;
 import org.junit.Test;
@@ -18,7 +18,7 @@ import lombok.extern.log4j.Log4j;
 @Log4j
 public class UserControllerTest {
 	@Inject
-	private UserDAO dao;
+	private UserMapper dao;
 	
 	@Test //@Test 전에 실행
 	public void testInsertMember() throws Exception{

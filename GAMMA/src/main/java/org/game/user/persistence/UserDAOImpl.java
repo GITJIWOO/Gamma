@@ -1,15 +1,15 @@
 package org.game.user.persistence;
 
-import java.util.List;
 
 import javax.inject.Inject;
 
 import org.apache.ibatis.session.SqlSession;
 import org.game.user.domain.ConsumerVO;
+import org.game.user.mapper.UserMapper;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class UserDAOImpl implements UserDAO{
+public class UserDAOImpl implements UserMapper{
 	@Inject
 	SqlSession sql;
 	

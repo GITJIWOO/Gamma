@@ -1,8 +1,10 @@
-package org.game.user.persistence;
+package org.game.user.mapper;
+
 
 import org.game.user.domain.ConsumerVO;
 
-public interface UserDAO {
+public interface UserMapper {
+	
 	
 	// 유저정보 상세조회
 	public ConsumerVO userGet(String cid);
