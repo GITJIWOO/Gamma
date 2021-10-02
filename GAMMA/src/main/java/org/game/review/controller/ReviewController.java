@@ -41,7 +41,7 @@ public class ReviewController {
 	
 	// 모든 평가 조회
 	@GetMapping("/reviewList/{gnum}")
-	public String getReviewList(@PathVariable long gnum, String listKind, Model model) {
+	public String getReviewList(@PathVariable("gnum") long gnum, String listKind, Model model) {
 		if(listKind == null || listKind.equals("") || listKind.equals("famous")) {
 			List<ReviewVO> famousReview = reviewService.getFamousReview(gnum);
 			model.addAttribute("review", famousReview);
@@ -56,7 +56,7 @@ public class ReviewController {
 	
 	// 평가 상세 조회
 	@GetMapping("/reviewDetail/{grnum}")
-	public String getReviewDetail(@PathVariable long grnum, ReviewCommentCriteria rccri, HttpSession session, Model model) {
+	public String getReviewDetail(@PathVariable("grnum") long grnum, ReviewCommentCriteria rccri, HttpSession session, Model model) {
 		
 		// 리뷰 디테일
 		ReviewVO review = reviewService.getReviewDetail(grnum);
@@ -68,17 +68,19 @@ public class ReviewController {
 		int total = commentService.getAllReviewComment(grnum);
 		ReviewCommentDTO pageBtn = new ReviewCommentDTO(rccri, total, 10);
 		
-		// 세션 아이디
-		String cid = (String)session.getAttribute("member");
+		// 세션 아이디, 어드민
+		String cid = String.valueOf(session.getAttribute("session_cid"));
+		String cadmin = String.valueOf(session.getAttribute("session_cadmin"));
 		
 		// 좋아요 여부
-		// ReviewLikeVO rlvo = reviewLikeService.getReviewLike(grnum, cid);
+		ReviewLikeVO rlvo = reviewLikeService.getReviewLike(grnum, cid);
 		
 		model.addAttribute("cid", cid);
-		// model.addAttribute("rlvo", rlvo);
+		model.addAttribute("rlvo", rlvo);
+		model.addAttribute("cadmin", cadmin);
 		model.addAttribute("review", review);
-		model.addAttribute("reviewComment", reviewComment);
 		model.addAttribute("pageBtn", pageBtn);
+		model.addAttribute("reviewComment", reviewComment);
 		
 		return "/review/reviewDetail";
 	}
@@ -87,38 +89,42 @@ public class ReviewController {
 	@PostMapping("/reviewWrite")
 	public String writeReview(ReviewVO review, RedirectAttributes rttr) {
 		
+		long gnum = review.getGnum();
+		
 		reviewService.writeReview(review);
 		
 		rttr.addFlashAttribute("reviewNumber", review.getGrnum());
 		
-		return "redirect:/review/reviewList";
+		return "redirect:/review/reviewList/" + gnum;
 	}
 	
 	// 평가 수정
-	@GetMapping("/reviewModify")
-	public String modifyReview() {
-		return "/review/reviewModify";
-	}
-	
 	@PostMapping("/reviewModify")
 	public String modifyReview(ReviewVO review, RedirectAttributes rttr) {
+		
+		long grnum = review.getGrnum();
 		
 		reviewService.modifyReview(review);
 		
 		rttr.addFlashAttribute("reviewNumber", review.getGrnum());
 		
-		return "redirect:/review/reviewList";
+		return "redirect:/review/reviewDetail/" + grnum;
 	}
 	
 	// 평가 삭제
 	@PostMapping("/reviewRemove")
 	public String removeReview(long grnum, RedirectAttributes rttr) {
 		
+		ReviewVO grvo = reviewService.getReviewDetail(grnum);
+		
+		long gnum = grvo.getGnum();
+		
+		commentService.removeAllReviewComment(grnum);
 		reviewService.removeReview(grnum);
 
 		rttr.addFlashAttribute("reviewNumber", grnum);
 		
-		return "redirect:/review/reviewList";
+		return "redirect:/review/reviewList/" + gnum;
 	}
 	
 	// 평가 좋아요
@@ -131,40 +137,44 @@ public class ReviewController {
 		rttr.addFlashAttribute("grnum", vo.getGrnum());
 		rttr.addFlashAttribute("cid", session.getAttribute("member"));
 		
-		return "redirect:/review/reviewDetail/" + vo.getGrnum();
+		long grnum = vo.getGrnum();
+		
+		return "redirect:/review/reviewDetail/" + grnum;
 	}
 	
 	// 평가 좋아요 취소
 	@PostMapping("/reviewLikeCancel")
-	public String likeCancelReview(long grnum, HttpSession session, RedirectAttributes rttr) {
-		
-		String cid = (String)session.getAttribute("member");
-		
+	public String likeCancelReview(long grnum, String cid, HttpSession session, RedirectAttributes rttr) {
+
 		reviewLikeService.reviewLikeCancel(grnum, cid);
 		reviewService.likeReviewCancel(grnum);
 		
-		rttr.addFlashAttribute("grnum", grnum);
 		rttr.addFlashAttribute("cid", cid);
+		rttr.addFlashAttribute("grnum", grnum);
 		
 		return "redirect:/review/reviewDetail/" + grnum;
 	}
 	
 	// 평가 댓글 작성
-	@PostMapping("/reviewCommmentWrite")
+	@PostMapping("/reviewCommentWrite")
 	public String writeReviewComment(ReviewCommentVO rc) {
+		
+		long grnum = rc.getGrnum();
 		
 		commentService.writeReviewComment(rc);
 		
-		return "redirect:/review/reviewDetail/" + rc.getGrnum();
+		return "redirect:/review/reviewDetail/" + grnum;
 	}
 	
 	// 평가 댓글 삭제
 	@PostMapping("/reviewCommentRemove")
 	public String removeReviewComment(ReviewCommentVO rc) {
 		
+		long grnum = rc.getGrnum();
+		
 		commentService.removeReviewComment(rc);
 		
-		return "redirect:/review/reviewDetail/" + rc.getGrnum();
+		return "redirect:/review/reviewDetail/" + grnum;
 	}
 	
 }

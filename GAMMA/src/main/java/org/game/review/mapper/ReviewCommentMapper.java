@@ -14,6 +14,9 @@ public interface ReviewCommentMapper {
 	// 평가 댓글 수
 	public int reviewCommentCount(long grnum);
 	
+	// 평가의 모든 댓글 삭제
+	public void reviewCommentAllDelete(long grnum);
+	
 	// 평가 댓글 작성
 	public void reviewCommentInsert(ReviewCommentVO vo);
 	

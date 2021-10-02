@@ -17,7 +17,7 @@ public class ReviewLikeMapperTest {
 	@Autowired
 	private ReviewLikeMapper mapper;
 	
-	@Test
+	// @Test
 	public void ReviewLikeSelectTest() {
 		mapper.reviewLikeSelect(23L, "kjw011231");
 	}

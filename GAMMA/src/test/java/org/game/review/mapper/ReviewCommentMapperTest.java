@@ -27,6 +27,16 @@ public class ReviewCommentMapperTest {
 	}
 	
 	// @Test
+	public void reviewCommentCountTest() {
+		mapper.reviewCommentCount(23L);
+	}
+	
+	// @Test
+	public void reviewCommentAllDeleteTest() {
+		mapper.reviewCommentAllDelete(25L);
+	}
+	
+	// @Test
 	public void reviewCommentInsertTest() {
 		ReviewCommentVO vo = new ReviewCommentVO();
 		vo.setGrnum(1L);

@@ -29,7 +29,12 @@ public class ReviewCommentServiceTest {
 		service.getReviewComment(1L, null);
 	}
 	
-	@Test
+	// @Test
+	public void removeAllReviewCommentTest() {
+		service.removeAllReviewComment(6L);
+	}
+	
+	// @Test
 	public void writeReviewCommentTest() {
 		ReviewCommentVO reviewComment = new ReviewCommentVO();
 		reviewComment.setGrnum(23L);

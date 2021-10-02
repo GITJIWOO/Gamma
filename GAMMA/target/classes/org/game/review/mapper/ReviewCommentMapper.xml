@@ -18,6 +18,11 @@
 		SELECT COUNT(rcnum) FROM reviewComment WHERE grnum=#{grnum}
 	</select>
 	
+	<!-- 리뷰 모든 댓글 삭제 -->
+	<delete id="reviewCommentAllDelete">
+		DELETE reviewComment WHERE grnum=#{grnum}
+	</delete>
+	
 	<!-- 리뷰 댓글 작성 -->
 	<insert id="reviewCommentInsert">
 		INSERT INTO reviewComment(rcnum, grnum, cid, rccontent, rcdate) 
