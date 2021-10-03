@@ -190,7 +190,7 @@
 			<version>2.13.0-rc2</version>
 		</dependency>
 
-		<!-- 채팅을 위한 웹 소켓(아래 2개) -->
+		<!-- 채팅을 위한 웹 소켓(아래 3개) -->
 		<!-- https://mvnrepository.com/artifact/org.springframework/spring-websocket -->
 		<dependency>
 			<groupId>org.springframework</groupId>
@@ -198,12 +198,18 @@
 			<version>5.0.7.RELEASE</version>
 		</dependency>
 
-		<!-- https://mvnrepository.com/artifact/javax.websocket/javax.websocket-api -->
+		<!-- https://mvnrepository.com/artifact/org.springframework/spring-messaging -->
 		<dependency>
-			<groupId>javax.websocket</groupId>
-			<artifactId>javax.websocket-api</artifactId>
-			<version>1.1</version>
-			<scope>provided</scope>
+		    <groupId>org.springframework</groupId>
+		    <artifactId>spring-messaging</artifactId>
+		    <version>5.0.7.RELEASE</version>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/org.json/json -->
+		<dependency>
+		    <groupId>org.json</groupId>
+		    <artifactId>json</artifactId>
+		    <version>20160810</version>
 		</dependency>
 
 	</dependencies>
