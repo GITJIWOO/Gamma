@@ -87,9 +87,15 @@ public class ReviewController {
 	
 	// 평가 작성
 	@PostMapping("/reviewWrite")
-	public String writeReview(ReviewVO review, RedirectAttributes rttr) {
+	public String writeReview(ReviewVO review, HttpSession session, RedirectAttributes rttr) {
 		
 		long gnum = review.getGnum();
+		String cid = String.valueOf(session.getAttribute("session_cid"));
+		
+		if(cid == null) {
+			return "redirect:/review/reviewList/" + gnum;
+		}
+		
 		
 		reviewService.writeReview(review);
 		
@@ -100,9 +106,15 @@ public class ReviewController {
 	
 	// 평가 수정
 	@PostMapping("/reviewModify")
-	public String modifyReview(ReviewVO review, RedirectAttributes rttr) {
+	public String modifyReview(ReviewVO review, HttpSession session, RedirectAttributes rttr) {
 		
 		long grnum = review.getGrnum();
+		String cid = String.valueOf(session.getAttribute("session_cid"));
+		
+		if(cid == null) {
+			return "redirect:/review/reviewDetail/" + grnum;
+		}
+		
 		
 		reviewService.modifyReview(review);
 		
@@ -113,11 +125,17 @@ public class ReviewController {
 	
 	// 평가 삭제
 	@PostMapping("/reviewRemove")
-	public String removeReview(long grnum, RedirectAttributes rttr) {
+	public String removeReview(long grnum, HttpSession session, RedirectAttributes rttr) {
 		
 		ReviewVO grvo = reviewService.getReviewDetail(grnum);
 		
 		long gnum = grvo.getGnum();
+		String cid = String.valueOf(session.getAttribute("session_cid"));
+		
+		if(cid == null) {
+			return "redirect:/review/reviewDetail/" + grnum;
+		}
+		
 		
 		commentService.removeAllReviewComment(grnum);
 		reviewService.removeReview(grnum);
@@ -131,13 +149,20 @@ public class ReviewController {
 	@PostMapping("/reviewLike")
 	public String likeReview(ReviewLikeVO vo, HttpSession session, RedirectAttributes rttr) {
 		
+		long grnum = vo.getGrnum();
+		String cid = String.valueOf(session.getAttribute("session_cid"));
+		
+		if(cid == null) {
+			return "redirect:/review/reviewDetail/" + grnum;
+		}
+		
 		reviewLikeService.reviewLike(vo);
 		reviewService.likeReview(vo.getGrnum());
+		
 
 		rttr.addFlashAttribute("grnum", vo.getGrnum());
-		rttr.addFlashAttribute("cid", session.getAttribute("member"));
+		rttr.addFlashAttribute("cid", cid);
 		
-		long grnum = vo.getGrnum();
 		
 		return "redirect:/review/reviewDetail/" + grnum;
 	}
@@ -145,7 +170,7 @@ public class ReviewController {
 	// 평가 좋아요 취소
 	@PostMapping("/reviewLikeCancel")
 	public String likeCancelReview(long grnum, String cid, HttpSession session, RedirectAttributes rttr) {
-
+		
 		reviewLikeService.reviewLikeCancel(grnum, cid);
 		reviewService.likeReviewCancel(grnum);
 		
@@ -157,9 +182,14 @@ public class ReviewController {
 	
 	// 평가 댓글 작성
 	@PostMapping("/reviewCommentWrite")
-	public String writeReviewComment(ReviewCommentVO rc) {
+	public String writeReviewComment(ReviewCommentVO rc, HttpSession session) {
 		
 		long grnum = rc.getGrnum();
+		String cid = String.valueOf(session.getAttribute("session_cid"));
+		
+		if(cid == null) {
+			return "redirect:/review/reviewDetail/" + grnum;
+		}
 		
 		commentService.writeReviewComment(rc);
 		
@@ -168,9 +198,15 @@ public class ReviewController {
 	
 	// 평가 댓글 삭제
 	@PostMapping("/reviewCommentRemove")
-	public String removeReviewComment(ReviewCommentVO rc) {
+	public String removeReviewComment(ReviewCommentVO rc, HttpSession session) {
 		
 		long grnum = rc.getGrnum();
+		String cid = String.valueOf(session.getAttribute("session_cid"));
+		
+		if(cid == null) {
+			return "redirect:/review/reviewDetail/" + grnum;
+		}
+		
 		
 		commentService.removeReviewComment(rc);
 		
