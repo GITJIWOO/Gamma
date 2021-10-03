@@ -2,11 +2,12 @@ package org.game.user.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.game.user.domain.QuestionPageDTO;
 import org.game.user.domain.QuestionSearchCriteria;
 import org.game.user.domain.QuestionVO;
 import org.game.user.service.QuestionService;
-import org.game.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -28,7 +29,8 @@ public class QuestionController {
 	
 	// 질문글 작성하는 폼 
 	@PostMapping("/questionform")
-	public String addQuestion(String cid, Model model) {
+	public String addQuestion(HttpSession session, Model model) {
+		String cid = (String)session.getAttribute("member");
 		model.addAttribute("qwriter", cid);
 		return "/qna/registerquestion";
 	}
