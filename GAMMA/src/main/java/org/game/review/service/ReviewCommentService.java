@@ -13,6 +13,9 @@ public interface ReviewCommentService {
 	// 평가 댓글 수 조회
 	public int getAllReviewComment(long grnum);
 	
+	// 평가 댓글 모두 삭제
+	public void removeAllReviewComment(long grnum);
+	
 	// 평가 댓글 작성
 	public void writeReviewComment(ReviewCommentVO vo);
 	

@@ -12,6 +12,9 @@
 	#reviewModify {
 		display: none;
 	}
+	input[type="radio"] {
+		visibility:hidden;
+	}
 </style>
 </head>
 <body>
@@ -23,7 +26,8 @@
 						<input type="submit" value="돌아가기">
 					</form>
 					
-					<div id="review">
+					<div id="reviewInfo">
+						리뷰 번호 : ${review.grnum}
 						아이디 : ${review.cid}
 						작성일 : ${review.grdate}
 						<c:choose>
@@ -37,13 +41,18 @@
 					
 					<!-- 리뷰 수정 폼(아이디 검사) -->
 					<div id="reviewModify">
-						<c:if test="${review.cid == review.cid}">
+						<c:if test="${cid == review.cid}">
 							<form action="/review/reviewModify" method="post">
 								<input type="hidden" name="cid" value="${cid}">
+								<input type="hidden" name="grnum" value="${review.grnum}">
 								<input type="text" class="form-control form-control-lg" name="grtitle" placeholder="제목" value="${review.grtitle }" required><br/>
-								<textarea class="form-control" id="exampleFormControlTextarea1" name="grcontent" rows="10" cols="15" placeholder="내용" required>${review.grcontent}</textarea><br/>
-								<button type="button" id="reviewLike" name="grlike" value="1" class="btn btn-primary" >추천</button>
-								<button type="button" id="reviewLike" name="grlike" value="0" class="btn btn-danger">비추천</button>
+								<textarea class="form-control" id="exampleFormControlTextarea1" name="grcontent" rows="7" cols="70" placeholder="내용" required>${review.grcontent}</textarea><br/>
+								<div id="isLike" class="btn btn-secondary">
+									<input type="radio" class="isLike" name="grlike" value="1">추천
+								</div>
+								<div id="notLike" class="btn btn-secondary">
+									<input type="radio" class="notLike" name="grlike" value="0">비추천
+								</div>
 								<button type="button" id="modifyCancel" class="btn btn-secondary">취소</button>
 								<input type="submit" class="btn btn-success" id="reviewUpdate" value="작성">
 							</form>
@@ -54,12 +63,16 @@
 					<c:choose>
 						<c:when test="${rlvo == null && cid != null}">
 							<form action="/review/reviewLike" method="post" id="reviewLike">
+								<input type="hidden" name="cid" value="${cid}">
+								<input type="hidden" name="gnum" value="${review.gnum}">
 								<input type="hidden" name="grnum" value="${review.grnum}">
 								<input type="submit" value="좋아요">
 							</form>
 						</c:when>
 						<c:when test="${rlvo != null}">
-							<form action="/review/reviewLikeCancel" method="post" id="reviewLike">
+							<form action="/review/reviewLikeCancel" method="post" id="reviewLikeCancel">
+								<input type="hidden" name="cid" value="${cid}">
+								<input type="hidden" name="gnum" value="${review.gnum}">
 								<input type="hidden" name="grnum" value="${review.grnum}">
 								<input type="submit" value="좋아요 취소">
 							</form>
@@ -73,10 +86,10 @@
 					
 					<!-- 리뷰 삭제 버튼(아이디 검사) -->
 					<c:if test="${cid == review.cid}">
-						<form action="/review/reviewRemove" method="post">
+						<form action="/review/reviewRemove" method="post" id="removeReview">
 							<input type="hidden" name="grnum" value="${review.grnum}">
-							<input type="submit" value="삭제">
 						</form>
+						<button onclick="removeReview()">리뷰 삭제</button>
 					</c:if>
 					<hr/>
 				</div>
@@ -85,8 +98,9 @@
 					<!-- 리뷰 댓글 작성(로그인 여부) -->
 					<c:if test="${cid != null}">
 						<form action="/review/reviewCommentWrite" method="post">
+							<input type="hidden" name="cid" value="${cid}">
 							<input type="hidden" name="grnum" value="${review.grnum}">
-							<textarea rows="3" cols="10" required></textarea>
+							<textarea name="rccontent" rows="3" cols="70" required></textarea>
 							<input type="submit" value="작성">
 						</form>
 						<hr/>
@@ -97,18 +111,18 @@
 						${reviewComment.cid}
 						${reviewComment.rcdate}
 						${reviewComment.rccontent}
-						
 						<!-- 리뷰 댓글 삭제 버튼(아이디 검사) -->
 						<c:if test="${reviewComment.cid == cid}">
-							<form action="/review/reviewCommentRemove" method="post">
+							<form action="/review/reviewCommentRemove" method="post" id="removeReviewComment">
 								<input type="hidden" name="grnum" value="${reviewComment.grnum}">
 								<input type="hidden" name="rcnum" value="${reviewComment.rcnum}">
-								<input type="submit" value="삭제">
 							</form>
+							<button onclick="removeReviewComment()">삭제</button>
 						</c:if>
 						<hr/>
-					<!-- 리뷰 댓글 페이징 -->
 					</c:forEach>
+					
+					<!-- 리뷰 댓글 페이징 -->
 					<nav aria-label="Page navigation example">
 					  <ul class="pagination">
 					  	<c:if test="${pageBtn.prev}">
@@ -138,16 +152,54 @@
 	</div>
 </body>
 <script>
-	$("#modifyBtn").click(function(){
-		$("#review").hide();
-		$("#modifyBtn").hide();
-		$("#reviewModify").show();
+	$("div#isLike").click(function() {
+		let notCheck = $(".notLike").is(":checked");
+		$(".isLike").prop("checked", true);
+		$("#isLike").toggleClass().addClass("btn btn-success");
+		if(notCheck === true) {
+			$(".notLike").prop("checked", false);
+			$("#notLike").toggleClass().addClass("btn btn-secondary");
+		}
 	});
 	
-	$("#cancel").click(function(){
-		$("#review").show();
+	$("div#notLike").click(function() {
+		let isCheck = $(".isLike").is(":checked");
+		$(".notLike").prop("checked", true);
+		$("#notLike").toggleClass().addClass("btn btn-danger");
+		if(isCheck === true) {
+			$(".isLike").prop("checked", false);
+			$("#isLike").toggleClass().addClass("btn btn-secondary");
+		}
+	});
+
+	function removeReview() {
+		if(confirm("리뷰를 삭제하시겠습니까?")) {
+			let choice = document.getElementById("removeReview");
+			choice.submit();
+		} else {
+			location.href="/review/reviewDetail/${review.grnum}";
+		}
+	}
+
+	function removeReviewComment() {
+		if(confirm("리뷰를 삭제하시겠습니까?")) {
+			let choice = document.getElementById("removeReviewComment");
+			choice.submit();
+		} else {
+			location.href="/review/reviewDetail/${review.grnum}";
+		}
+	}
+
+	$("#modifyBtn").click(function(){
+		$("#reviewInfo").hide();
+		$("#modifyBtn").hide();
+		$("#reviewModify").css("display", "flex");
+	});
+	
+	$("#modifyCancel").click(function(){
+		$("#reviewInfo").show();
 		$("#modifyBtn").show();
-		$("#reviewModify").hide();
+		$("#reviewModify").css("display", "none");
 	});
 </script>
 </html>

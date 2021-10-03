@@ -108,7 +108,7 @@ public class UserController {
 	}
 
 	@PostMapping("/userLogin")
-	public String login(ConsumerVO userVO,HttpServletRequest req, RedirectAttributes rttr) throws Exception {
+	public String userLogin(ConsumerVO userVO,HttpServletRequest req, RedirectAttributes rttr) throws Exception {
 		
 		log.info("로그인컨트롤실행"); 
 		HttpSession session = req.getSession();
@@ -124,6 +124,8 @@ public class UserController {
 		boolean result =(login.getPassword()==userVO.getPassword());
 		if(result != true) { //잘못된거임 위의 주입된비번 db내비번같은데 같지않다고떠서 해놓은거 위해결하면 ==으로바꾸기
 			session.setAttribute("member", login);
+			session.setAttribute("session_cid", login.getCid());
+			session.setAttribute("session_cadmin", login.getCadmin());
 			memberSession = String.valueOf(session.getAttribute("member"));
 			System.out.println("멤버세션값 iftrue : " + memberSession);
 		} else {

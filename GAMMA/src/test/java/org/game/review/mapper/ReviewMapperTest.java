@@ -63,7 +63,7 @@ public class ReviewMapperTest {
 		mapper.reviewLike(1L);
 	}
 	
-	@Test
+	// @Test
 	public void reviewLikeDeleteTest() {
 		mapper.reviewLikeDelete(1L);
 	}
