@@ -109,7 +109,6 @@ public class UserController {
 
 	@PostMapping("/userLogin")
 	public String userLogin(ConsumerVO userVO,HttpServletRequest req, RedirectAttributes rttr) throws Exception {
-		
 		log.info("로그인컨트롤실행"); 
 		HttpSession session = req.getSession();
 		String memberSession = String.valueOf(session.getAttribute("member"));
@@ -121,8 +120,8 @@ public class UserController {
 		System.out.println("DB의 비번 " + login.getPassword());
 		//boolean pwdMatch = pwdEncoder.matches(userVO.getPassword(), login.getPassword());
 		//System.out.println("비번매칭 : " + pwdMatch);
-		boolean result =(login.getPassword()==userVO.getPassword());
-		if(result != true) { //잘못된거임 위의 주입된비번 db내비번같은데 같지않다고떠서 해놓은거 위해결하면 ==으로바꾸기
+		boolean result =login.getPassword().equals(userVO.getPassword());
+		if(result == true) { //위의 result는 나중에 바꿔야함 복호화와 시큐리티 적용하면 오류생길가능성이 높다 .equls는 단순한 문자열 비교라 그럼
 			session.setAttribute("member", login);
 			session.setAttribute("session_cid", login.getCid());
 			session.setAttribute("session_cadmin", login.getCadmin());

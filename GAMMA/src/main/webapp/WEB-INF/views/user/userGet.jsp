@@ -9,7 +9,7 @@
 <meta charset="UTF-8">
 <title>회원정보 상세 페이지</title>
 <script>
-	/* $(document).ready(function() {
+	 $(document).ready(function() {
 		$("#btnUpdate").click(function() {
 			// 확인 대화상자
 			if (confirm("수정하시겠습니까?")) {
@@ -26,7 +26,7 @@
 				document.form1.submit();
 			}
 		});
-	}); */
+	}); 
 </script>
 </head>
 <body>
