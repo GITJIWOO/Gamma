@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -19,9 +20,15 @@ import org.springframework.web.bind.annotation.RestController;
 public class AnswerController {
 	@Autowired
 	private AnswerService service;
-	
+	/*
+	HomeController 에 붙여넣을 메서드
+	@GetMapping("/answer")
+	public void answer() {
+		
+	}
+	*/
 	// 답변 작성 
-	@PostMapping(value="", consumes="application/json", produces= {MediaType.TEXT_PLAIN_VALUE})
+	@PostMapping(value="/answer/new", consumes="application/json", produces= {MediaType.TEXT_PLAIN_VALUE})
 	public ResponseEntity<String> registerAnswer(@RequestBody AnswerVO vo){
 		ResponseEntity<String> entity = null;
 		try {
@@ -38,7 +45,7 @@ public class AnswerController {
 	/* 같은 질문글에 여러개의 답변글이 들어갈 수 있지만(qnum이 기본키가 아니기 때문에) List로 작성하지 않음
 	 * 해당 질문글에 답변글이 작성되었는지 확인하고 작성된 답변글이 있다면 자바스크립트로 alert 창 띄울 예정
 	 */
-	@PostMapping(value="/{qnum}", produces= {MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_UTF8_VALUE})
+	@GetMapping(value="/answer/{qnum}", produces= {MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_UTF8_VALUE})
 	public ResponseEntity<AnswerVO> getAnswer(@PathVariable("qnum") int qnum){
 		ResponseEntity<AnswerVO> entity = null;
 		try {
@@ -50,8 +57,10 @@ public class AnswerController {
 		return entity;
 	}
 	
+	// 위 답변에 해당하는 질문 조회
+	
 	// 답변 수정 - 답변글 번호로 조회해 수정
-	@RequestMapping(value="/{anum}", method= {RequestMethod.PATCH, RequestMethod.PUT}, consumes="application/json", produces=MediaType.TEXT_PLAIN_VALUE)
+	@RequestMapping(value="/answer/{anum}", method= {RequestMethod.PATCH, RequestMethod.PUT}, consumes="application/json", produces=MediaType.TEXT_PLAIN_VALUE)
 	public ResponseEntity<String> modifyAnswer(@RequestBody AnswerVO vo, @PathVariable("anum")int anum){
 		ResponseEntity<String> entity = null;
 		try {
@@ -66,7 +75,7 @@ public class AnswerController {
 	}
 	
 	// 답변 삭제 - 답변글 번호로 조회해 수정
-	@DeleteMapping(value="/{anum}", produces= {MediaType.TEXT_PLAIN_VALUE})
+	@DeleteMapping(value="/answer/{anum}", produces= {MediaType.TEXT_PLAIN_VALUE})
 	public ResponseEntity<String> removeAnswer(@PathVariable("anum")int anum){
 		ResponseEntity<String> entity = null;
 		try {
