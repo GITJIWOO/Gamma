@@ -19,7 +19,7 @@ public class GameInfoMapperTest {
 	
 	@Test
 	public void testGameList() {
-		log.info(mapper.gameList());
+		log.info(mapper.gameList("배"));
 	}
 	
 //	@Test

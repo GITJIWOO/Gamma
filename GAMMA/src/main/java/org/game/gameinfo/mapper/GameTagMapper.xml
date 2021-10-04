@@ -3,10 +3,20 @@
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="org.game.gameinfo.mapper.GameTagMapper">
-
-	<!-- 게임 태그 조회 -->
-	<select id="selectTag" resultType="org.game.gameinfo.domain.GameTagVO">
-		SELECT * FROM gameTag where gtnum = #{gtnum}
+	
+	<resultMap type="org.game.gameinfo.domain.GameInfoVO" id="gameTagMap">
+		<result property="gnum"			column="gnum"/>			   
+		<result property="gtnum"		column="gtnum"/>			   
+		<result property="tagname" 		column="tagname"/>	   
+	</resultMap>
+	
+	<!-- 게임 태그 조회  -->
+	<select id="selectTag" parameterType="Long" resultMap="gameTagMap">
+		SELECT * FROM gametag where gnum = #{gnum} ORDER BY tagname 
+	</select>
+	
+	<select id="selectOneTag" resultType="org.game.gameinfo.domain.GameInfoVO">
+		SELECT * FROM gametag where gtnum = #{gtnum}  ORDER BY tagname 
 	</select>
 	
 	<!-- 게임 태그 추가 -->
@@ -20,12 +30,12 @@
 	
 	<!-- 게엠 태그 삭제 -->
 	<delete id="deleteTag">
-		DELETE FROM gametag WHERE gtnum = #{gtnum}
+		DELETE FROM gametag WHERE gnum = #{gnum}
 	</delete>
 	
 	<!-- 개임 태그 수정 -->
 	<update id="updateTag">
 		UPDATE gametag SET tagname = #{tagname}
-		WHERE gtnum = #{gtnum}
+		WHERE gnum = #{gnum}
 	</update>
 </mapper>
