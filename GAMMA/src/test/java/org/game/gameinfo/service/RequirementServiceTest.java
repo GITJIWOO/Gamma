@@ -2,6 +2,7 @@ package org.game.gameinfo.service;
 
 import static org.junit.Assert.assertNotNull;
 
+import org.game.gameinfo.domain.GameInfoVO;
 import org.game.gameinfo.domain.RequirementVO;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -27,7 +28,7 @@ public class RequirementServiceTest {
 	}
 //	@Test
 	public void testRegister() {
-		RequirementVO vo = new RequirementVO();
+		GameInfoVO vo = new GameInfoVO();
 		vo.setGdirectx("dirextx10");
 		vo.setGgraphic("NVIDIA GeForce 8800 GT");
 		vo.setGmemory("4GB");
@@ -48,7 +49,7 @@ public class RequirementServiceTest {
 	}
 //	@Test
 	public void testUpdate() {
-		RequirementVO vo = new RequirementVO();
+		GameInfoVO vo = new GameInfoVO();
 		vo.setGdirectx("xxxxxxxxx");
 		vo.setGgraphic("xxxxxxxxxxxxxxx");
 		vo.setGmemory("4GB");

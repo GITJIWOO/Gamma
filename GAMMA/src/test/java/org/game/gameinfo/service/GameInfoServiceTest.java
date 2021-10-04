@@ -45,6 +45,11 @@ public class GameInfoServiceTest {
 	}
 	
 //	@Test
+	public void testGameList() {
+		service.gameList("배");
+	}
+	
+	@Test
 	public void testGameSelect() {
 		service.getGame(1L);
 	}
