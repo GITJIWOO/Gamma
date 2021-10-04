@@ -41,7 +41,7 @@
 					
 					<!-- 리뷰 수정 폼(아이디 검사) -->
 					<div id="reviewModify">
-						<c:if test="${cid == review.cid}">
+						<c:if test="${cid eq review.cid}">
 							<form action="/review/reviewModify" method="post" name="reviewUpdate"onsubmit="return updateCheck()">
 								<input type="hidden" name="cid" value="${cid}">
 								<input type="hidden" name="grnum" value="${review.grnum}">
@@ -61,7 +61,7 @@
 					
 					<!-- 리뷰 좋아요 버튼(로그인 검사) -->
 					<c:choose>
-						<c:when test="${cid != null && rlvo.cid == cid}">
+						<c:when test="${cid ne 'null' && rlvo.cid ne cid}">
 							<form action="/review/reviewLike" method="post" id="reviewLike">
 								<input type="hidden" name="cid" value="${cid}">
 								<input type="hidden" name="gnum" value="${review.gnum}">
@@ -69,7 +69,7 @@
 								<input type="submit" value="좋아요">
 							</form>
 						</c:when>
-						<c:when test="${rlvo.cid == cid}">
+						<c:when test="${rlvo.cid eq cid}">
 							<form action="/review/reviewLikeCancel" method="post" id="reviewLikeCancel">
 								<input type="hidden" name="cid" value="${cid}">
 								<input type="hidden" name="gnum" value="${review.gnum}">
@@ -80,13 +80,13 @@
 					</c:choose>
 					
 					<!-- 리뷰 수정 버튼(아이디 검사) -->
-					<c:if test="${cid == review.cid}">
+					<c:if test="${cid eq review.cid}">
 						<button id="modifyBtn">수정하기</button>
 					</c:if>
 					
 					<!-- 리뷰 삭제 버튼(아이디 검사) -->
-					<div id="removeReview">
-						<c:if test="${cid == review.cid}">
+					<div id="removeReviewButton">
+						<c:if test="${cid eq review.cid}">
 							<form action="/review/reviewRemove" method="post" id="removeReview">
 								<input type="hidden" name="grnum" value="${review.grnum}">
 							</form>
@@ -98,7 +98,7 @@
 				<div id="reviewComment">
 				
 					<!-- 리뷰 댓글 작성(로그인 여부) -->
-					<c:if test="${cid != null}">
+					<c:if test="${cid ne 'null'}">
 						<form action="/review/reviewCommentWrite" method="post">
 							<input type="hidden" name="cid" value="${cid}">
 							<input type="hidden" name="grnum" value="${review.grnum}">
