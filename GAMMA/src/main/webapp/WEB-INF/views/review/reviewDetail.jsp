@@ -42,7 +42,7 @@
 					<!-- 리뷰 수정 폼(아이디 검사) -->
 					<div id="reviewModify">
 						<c:if test="${cid == review.cid}">
-							<form action="/review/reviewModify" method="post">
+							<form action="/review/reviewModify" method="post" name="reviewUpdate"onsubmit="return updateCheck()">
 								<input type="hidden" name="cid" value="${cid}">
 								<input type="hidden" name="grnum" value="${review.grnum}">
 								<input type="text" class="form-control form-control-lg" name="grtitle" placeholder="제목" value="${review.grtitle }" required><br/>
@@ -61,7 +61,7 @@
 					
 					<!-- 리뷰 좋아요 버튼(로그인 검사) -->
 					<c:choose>
-						<c:when test="${rlvo == null && cid != null}">
+						<c:when test="${cid != null && rlvo.cid == cid}">
 							<form action="/review/reviewLike" method="post" id="reviewLike">
 								<input type="hidden" name="cid" value="${cid}">
 								<input type="hidden" name="gnum" value="${review.gnum}">
@@ -69,7 +69,7 @@
 								<input type="submit" value="좋아요">
 							</form>
 						</c:when>
-						<c:when test="${rlvo != null}">
+						<c:when test="${rlvo.cid == cid}">
 							<form action="/review/reviewLikeCancel" method="post" id="reviewLikeCancel">
 								<input type="hidden" name="cid" value="${cid}">
 								<input type="hidden" name="gnum" value="${review.gnum}">
@@ -85,12 +85,14 @@
 					</c:if>
 					
 					<!-- 리뷰 삭제 버튼(아이디 검사) -->
-					<c:if test="${cid == review.cid}">
-						<form action="/review/reviewRemove" method="post" id="removeReview">
-							<input type="hidden" name="grnum" value="${review.grnum}">
-						</form>
-						<button onclick="removeReview()">리뷰 삭제</button>
-					</c:if>
+					<div id="removeReview">
+						<c:if test="${cid == review.cid}">
+							<form action="/review/reviewRemove" method="post" id="removeReview">
+								<input type="hidden" name="grnum" value="${review.grnum}">
+							</form>
+							<button onclick="removeReview()">리뷰 삭제</button>
+						</c:if>
+					</div>
 					<hr/>
 				</div>
 				<div id="reviewComment">
@@ -152,6 +154,31 @@
 	</div>
 </body>
 <script>
+
+	$("#modifyBtn").click(function(){
+		$("#reviewInfo").hide();
+		$("#modifyBtn").hide();
+		$("#removeReview").hide();
+		$("#reviewModify").css("display", "flex");
+	});
+	
+	$("#modifyCancel").click(function(){
+		$("#reviewInfo").show();
+		$("#modifyBtn").show();
+		$("#removeReview").show();
+		$("#reviewModify").css("display", "none");
+	});
+
+	$("div#notLike").click(function() {
+		let isCheck = $(".isLike").is(":checked");
+		$(".notLike").prop("checked", true);
+		$("#notLike").toggleClass().addClass("btn btn-danger");
+		if(isCheck === true) {
+			$(".isLike").prop("checked", false);
+			$("#isLike").toggleClass().addClass("btn btn-secondary");
+		}
+	});
+	
 	$("div#isLike").click(function() {
 		let notCheck = $(".notLike").is(":checked");
 		$(".isLike").prop("checked", true);
@@ -161,14 +188,16 @@
 			$("#notLike").toggleClass().addClass("btn btn-secondary");
 		}
 	});
-	
-	$("div#notLike").click(function() {
+
+	$("#reviewUpdate").click(function updateCheck(){
 		let isCheck = $(".isLike").is(":checked");
-		$(".notLike").prop("checked", true);
-		$("#notLike").toggleClass().addClass("btn btn-danger");
-		if(isCheck === true) {
-			$(".isLike").prop("checked", false);
-			$("#isLike").toggleClass().addClass("btn btn-secondary");
+		let notCheck = $(".notLike").is(":checked");
+		
+		if(isCheck === false && notCheck === false) {
+			alert("평가를 선택하십시오.");
+			return false;
+		} else {
+			return true;
 		}
 	});
 
@@ -182,7 +211,7 @@
 	}
 
 	function removeReviewComment() {
-		if(confirm("리뷰를 삭제하시겠습니까?")) {
+		if(confirm("댓글을 삭제하시겠습니까?")) {
 			let choice = document.getElementById("removeReviewComment");
 			choice.submit();
 		} else {
@@ -190,16 +219,5 @@
 		}
 	}
 
-	$("#modifyBtn").click(function(){
-		$("#reviewInfo").hide();
-		$("#modifyBtn").hide();
-		$("#reviewModify").css("display", "flex");
-	});
-	
-	$("#modifyCancel").click(function(){
-		$("#reviewInfo").show();
-		$("#modifyBtn").show();
-		$("#reviewModify").css("display", "none");
-	});
 </script>
 </html>
