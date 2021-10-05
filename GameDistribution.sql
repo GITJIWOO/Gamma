@@ -81,6 +81,7 @@ CREATE TABLE consumer (
    );
 
 ALTER TABLE consumer ADD(userregdate DATE Default sysdate NOT NULL,userupdatedate DATE Default sysdate NOT NULL);
+ALTER TABLE consumer ADD UNIQUE(userphone);
 INSERT INTO consumer(cnum, cid, email, password, nickname, cadmin) 
     VALUES(consumer_num.nextval,'kjw011231', 'kjw0111231@gmail.com', 'rlawldn', '김지우', 1);
 INSERT INTO consumer(cnum, cid, email, password, nickname, cadmin) 
