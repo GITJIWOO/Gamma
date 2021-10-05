@@ -3,10 +3,26 @@
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 	
 <mapper namespace="org.game.gameinfo.mapper.GameInfoMapper">
+	<sql id="search"> 
+		<if test="searchType != null">
+			<if test="searchType == 'n'.toString()">
+				(GNAME like '%'||#{keyword}||'%') AND
+			</if>
+			<if test="searchType == 't'.toString()">
+				(tagname like '%'||#{keyword}||'%') AND
+			</if>
+			<if test="searchType == 'd'.toString()">
+				(GLAUNCH like '%'||#{keyword}||'%') AND
+			</if>
+		</if>
+	</sql>
+	
 	
 	<!-- 게임 리스트 -->
 	<select id="gameList" resultType="org.game.gameinfo.domain.GameInfoVO">
-		SELECT * FROM game
+	<![CDATA[
+		SELECT * FROM game WHERE gname LIKE '%'||#{keyword}||'%' ORDER BY gname DESC
+	]]>
 	</select>
 	
 	<!-- 게임 추가 -->
@@ -15,10 +31,10 @@
 			SELECT game_num.nextval FROM DUAL
 		</selectKey>
 		INSERT INTO game (gnum, gname, glaunch, gfublisher, gdeveloper, gprice, gcontent, ggrade, gsite, gaddress)
-		VALUES (game_num.nextval, #{gname}, TO_DATE(#{glaunch}, 'YYYY/MM/DD '), #{gfublisher}, #{gdeveloper}, #{gprice}, #{gcontent}, #{ggrade}, #{gsite}, #{gaddress})
+		VALUES (#{gnum}, #{gname}, TO_DATE(#{glaunch}, 'YYYY/MM/DD '), #{gfublisher}, #{gdeveloper}, #{gprice}, #{gcontent}, #{ggrade}, #{gsite}, #{gaddress})
 	</insert>
 	
-	<!-- 게임 상세 조화 -->
+	<!-- 게임 상세 조회 -->
 	<select id="selectGame" resultType="org.game.gameinfo.domain.GameInfoVO">
 		SELECT * FROM game WHERE gnum = #{gnum}
 	</select>
@@ -34,5 +50,34 @@
 		gprice = #{gprice}, gcontent = #{gcontent}, ggrade = #{ggrade}, gsite = #{gsite}, gaddress = #{gaddress}
 		WHERE gnum = #{gnum}
 	</update>
+	
+	<select id="getGameListPaging" resultType="org.game.gameinfo.domain.GameInfoVO">
+		<![CDATA[
+		SELECT * FROM
+		(SELECT
+		/*+ INDEX_DESC(game pk_board) */
+		rownum rn, game.* FROM game
+			WHERE
+		]]>
+		
+		<include refid="search"></include>
+
+		<![CDATA[	
+			rownum <= #{pageNum} * #{amount}) tbl
+			WHERE rn > (#{pageNum}-1) * #{amount} 
+		]]>
+	</select>
+	
+	<select id="getTotalGame" resultType="int">
+	<if test="searchType == 't'.toString()">
+		SELECT COUNT(*) FROM gametag WHERE
+	</if>
+	<if test="searchType != 't'.toString()">
+		SELECT COUNT(*) FROM game WHERE
+	</if>
+		<!--  select COUNT(*) from gametag JOIN game on game.gnum = gametag.gnum WHERE-->	
+		<include refid="search"></include>
+		gnum > 0
+	</select>
 
 </mapper>

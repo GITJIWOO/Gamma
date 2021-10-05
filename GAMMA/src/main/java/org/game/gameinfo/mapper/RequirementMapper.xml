@@ -5,8 +5,8 @@
 <mapper namespace="org.game.gameinfo.mapper.RequirementMapper">
 	
 	<!-- 게임사양 조회 -->
-	<select id="selectRequirement" resultType="org.game.gameinfo.domain.RequirementVO">
-		SELECT * FROM gamerequirement WHERE grnum = #{grnum}
+	<select id="selectRequirement" resultType="org.game.gameinfo.domain.GameInfoVO">
+		SELECT * FROM gamerequirement WHERE gnum = #{gnum}
 	</select> 
 	
 	<!-- 사양 추가 -->
@@ -15,12 +15,12 @@
 			SELECT gamerequirement_num.nextval FROM DUAL
 		</selectKey>
 		INSERT INTO gamerequirement (grnum, gnum, gos, gprocessor, gmemory, ggraphic, gdirectx, gstore)
-		VALUES (gamerequirement_num.nextval, #{gnum}, #{gos}, #{gprocessor}, #{gmemory}, #{ggraphic}, #{gdirectx}, #{gstore})
+		VALUES (#{grnum}, #{gnum}, #{gos}, #{gprocessor}, #{gmemory}, #{ggraphic}, #{gdirectx}, #{gstore})
 	</insert>
 	
 	<!-- 사양 삭제 -->
 	<delete id="deleteRequirement">
-		DELETE FROM gamerequirement WHERE grnum = #{grnum}
+		DELETE FROM gamerequirement WHERE gnum = #{gnum}
 	</delete>
 	
 	<!-- 사양 수정 -->
@@ -28,7 +28,7 @@
 		UPDATE gamerequirement 
 		SET gos = #{gos}, gprocessor = #{gprocessor}, gmemory = #{gmemory}, 
 		ggraphic = #{ggraphic}, gdirectx = #{gdirectx}, gstore = #{gstore}
-		WHERE grnum = #{grnum}
+		WHERE gnum = #{gnum}
 	</update>
 	
 </mapper>

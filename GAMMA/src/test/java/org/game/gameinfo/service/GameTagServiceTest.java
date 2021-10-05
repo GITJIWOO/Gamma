@@ -2,6 +2,7 @@ package org.game.gameinfo.service;
 
 import static org.junit.Assert.assertNotNull;
 
+import org.game.gameinfo.domain.GameInfoVO;
 import org.game.gameinfo.domain.GameTagVO;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -30,14 +31,14 @@ public class GameTagServiceTest {
 
 //	@Test
 	public void testRegister() {
-		GameTagVO vo = new GameTagVO();
+		GameInfoVO vo = new GameInfoVO();
 		vo.setTagname("zzzzz");
 		vo.setGnum(1);
 		service.registerTag(vo);
 
 	}
 
-//	@Test
+	@Test
 	public void testTagSelect() {
 		service.getTag(1L);
 	}
@@ -47,9 +48,9 @@ public class GameTagServiceTest {
 		service.removeTag(82L);
 	}
 	
-	@Test
+//	@Test
 	public void testTagUpdate() {
-		GameTagVO vo = new GameTagVO();
+		GameInfoVO vo = new GameInfoVO();
 		vo.setTagname("수정 qwer");
 		vo.setGtnum(62L);
 		service.modifyTag(vo);
