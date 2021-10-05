@@ -1,5 +1,6 @@
 package org.game.gameinfo.service;
 
+import org.game.gameinfo.domain.GameInfoVO;
 import org.game.gameinfo.domain.RequirementVO;
 import org.game.gameinfo.mapper.RequirementMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,29 +18,29 @@ public class RequirementServiceImpl implements RequirementService {
 	private RequirementMapper mapper;
 	
 	@Override
-	public void registerRequirement(RequirementVO vo) {
+	public void registerRequirement(GameInfoVO vo) {
 		log.info("사양 등록");
 		mapper.insertRequirement(vo);
 	}
 
 	@Override
-	public RequirementVO getRequirement(Long grnum) {
-		RequirementVO grno = mapper.selectRequirement(grnum);
-		log.info(grnum + "번 사양 조회");
+	public GameInfoVO getRequirement(Long gnum) {
+		GameInfoVO grno = mapper.selectRequirement(gnum);
+		log.info(gnum + "번 사양 조회");
 		return grno;
 	}
 
 	@Override
-	public void modifyRequirement(RequirementVO vo) {
+	public void modifyRequirement(GameInfoVO vo) {
 		log.info("사양 수정");
 		mapper.updateRequirement(vo);
 		
 	}
 
 	@Override
-	public void removeRequirement(Long grnum) {
+	public void removeRequirement(Long gnum) {
 		log.info("사양 삭제");
-		mapper.deleteRequirement(grnum);
+		mapper.deleteRequirement(gnum);
 	}
 
 }
