@@ -1,5 +1,6 @@
 package org.game.gameinfo.mapper;
 
+import org.game.gameinfo.domain.GameInfoVO;
 import org.game.gameinfo.domain.RequirementVO;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -24,7 +25,7 @@ public class RequirementMapperTest {
 	
 	@Test
 	public void testRequirementInsert() {
-		RequirementVO vo = new RequirementVO();
+		GameInfoVO vo = new GameInfoVO();
 		vo.setGdirectx("Version 11");
 		vo.setGgraphic("NVIDIA GeForce GTX 1060 3GB / AMD Radeon RX 580 4GB");
 		vo.setGmemory(" 16 GB RAM");
@@ -42,7 +43,7 @@ public class RequirementMapperTest {
 	
 //	@Test
 	public void testRequirementUpdate() {
-		RequirementVO vo = new RequirementVO();
+		GameInfoVO vo = new GameInfoVO();
 		vo.setGdirectx("DX11");
 		vo.setGgraphic("NVidia: GeForce 560, AMD: Radeon HD 6950");
 		vo.setGmemory(" 4GB");

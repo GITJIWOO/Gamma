@@ -1,5 +1,8 @@
 package org.game.gameinfo.mapper;
 
+import java.sql.SQLException;
+
+import org.game.gameinfo.domain.GameInfoVO;
 import org.game.gameinfo.domain.GameTagVO;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -17,14 +20,14 @@ public class GameTagMapperTest {
 	@Autowired
 	private GameTagMapper mapper;
 	
-//	@Test
-	public void testTagSelect() {
-		log.info(mapper.selectTag(62L));
+	@Test
+	public void testTagSelect() throws Exception {
+		log.info(mapper.selectTag(1L));
 	}
 	
 //	@Test
 	public void testTagUnsert() {
-		GameTagVO vo = new GameTagVO();
+		GameInfoVO vo = new GameInfoVO();
 		vo.setTagname("qwer");
 		vo.setGnum(1L);
 		mapper.insertTag(vo);
@@ -37,7 +40,7 @@ public class GameTagMapperTest {
 	
 //	@Test
 	public void testTagUpdate() {
-		GameTagVO vo = new GameTagVO();
+		GameInfoVO vo = new GameInfoVO();
 		vo.setTagname("asdfasdf");
 		vo.setGtnum(2L);
 		mapper.updateTag(vo);

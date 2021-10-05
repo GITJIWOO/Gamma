@@ -3,6 +3,7 @@ package org.game.gameinfo.service;
 import java.util.List;
 
 import org.game.gameinfo.domain.GameInfoVO;
+import org.game.gameinfo.domain.GameSearchCriteria;
 import org.game.gameinfo.mapper.GameInfoMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -39,15 +40,30 @@ public class GameInfoServiceImpl implements GameInfoService {
 
 	@Override
 	public void removeGame(Long gnum) {
-		log.info("게임 삭제");
+		System.out.println("서비스단 삭제 진입");
+//		log.info("게임 삭제");
 		mapper.deleteGame(gnum);
+		System.out.println("서비스단 삭제 막줄");
+	}
+
+	
+
+	@Override
+	public List<GameInfoVO> gameList(String keyword) {
+		List<GameInfoVO> gameList = mapper.gameList(keyword);
+		log.info("전체 게임 조회");
+		return gameList;
 	}
 
 	@Override
-	public List<GameInfoVO> gameList() {
-		List<GameInfoVO> gameList = mapper.gameList();
-		log.info("전체 게임 조회");
-		return gameList;
+	public List<GameInfoVO> getGameListPaging(GameSearchCriteria cri) {
+		List<GameInfoVO> gamePaging = mapper.getGameListPaging(cri);
+		return gamePaging;
+	}
+
+	@Override
+	public int getTotalGame(GameSearchCriteria cri) {
+		return mapper.getTotalGame(cri);
 	}
 	
 
