@@ -18,7 +18,7 @@ public class GameLibraryMapperTest {
 	@Autowired
 	private GameLibraryMapper mapper;
 	
-	// @Test
+	@Test
 	public void librarySelectTest() {
 		log.info(mapper.librarySelect("kjw011231"));
 	}
