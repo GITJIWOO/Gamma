@@ -30,10 +30,10 @@
 		INSERT INTO question (qnum, qtype, qtitle, qcontent, qwriter) VALUES (#{qnum}, <include refid="type"></include>, #{qtitle}, #{qcontent}, #{qwriter})
 	</insert>
 	
-	<!-- list -->
+	<!-- list 
 	<select id="getQuestionList" resultType="org.game.user.domain.QuestionVO">
 		SELECT * FROM question WHERE qwriter LIKE #{qwriter} ORDER BY qnum DESC
-	</select>
+	</select> -->
 	<select id="getQuestionListP" resultType="org.game.user.domain.QuestionVO">
 		<![CDATA[
 			SELECT qnum, qtype, qtitle, qcontent, qwriter, qdate FROM 
@@ -48,10 +48,10 @@
 		<include refid="search"></include>
 	</select>
 	
-	<!-- list -->
+	<!-- list 
 	<select id="getQtypeQuestion" resultType="org.game.user.domain.QuestionVO">
 		SELECT * FROM question WHERE qtype = #{qtype} ORDER BY qnum DESC
-	</select>
+	</select> -->
 	<select id="getQtypeQuestionP" resultType="org.game.user.domain.QuestionVO">
 		<![CDATA[
 		SELECT qnum, qtype, qtitle, qcontent, qwriter, qdate FROM
@@ -68,6 +68,10 @@
 	
 	<select id="getOwnQuestion" resultType="org.game.user.domain.QuestionVO">
 		SELECT * FROM question WHERE qnum = #{qnum}
+	</select>
+	
+	<select id="getAnswerOrNot" resultType="int">
+		SELECT count(a.anum) FROM question q INNER JOIN answer a ON (a.qnum = q.qnum) WHERE q.qnum = #{qnum}
 	</select>
 	
 	<update id="updateQuestion">

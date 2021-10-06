@@ -34,7 +34,7 @@ public class FriendsController {
 	}
 	
 	// 현재 팔로우하는 친구 목록 가져오기
-	@PostMapping("/followerlist")
+	@GetMapping("/followerlist")
 	public String followerList(String keyword, Model model) {
 		// 해당 로그인계정 정보 가져와야 함
 //		model.addAttribute("userId", cid);
@@ -52,7 +52,7 @@ public class FriendsController {
 	}
 	
 	// 나를 팔로잉하는 친구 목록 가져오기
-	@PostMapping("/followinglist")
+	@GetMapping("/followinglist")
 	public String followingList(String keyword, Model model) {
 		// 해당 로그인계정 정보 가져와야 함
 //		model.addAttribute("userId", cid);

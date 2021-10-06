@@ -41,7 +41,9 @@ public class QuestionController {
 		service.addQuestion(vo);
 		rttr.addFlashAttribute("cid", vo.getQwriter());
 		rttr.addFlashAttribute("qnum", vo.getQnum());
-		rttr.addFlashAttribute("success", "register");	// 이걸로 모달 넣기
+		rttr.addFlashAttribute("success", "register");
+		
+		rttr.addAttribute("qwriter", vo.getQwriter());
 		return "redirect:/qna/questionlist";
 	}
 	
@@ -51,8 +53,11 @@ public class QuestionController {
 		int admin = service.adminOrNot(qwriter);
 		// 1이면 관리자, 0이면 일반회원
 		if(admin == 1) {
-			List<QuestionVO> vo = service.questionListP(cri, "%%");			
+			List<QuestionVO> vo = service.questionListP(cri, "%%");
 			model.addAttribute("vo", vo);
+			// 여기 문제 있음.. 페이지마다 한 로우의 번호를 받아오는 중 - 일단 이거 추후 해결
+			//model.addAttribute("voget",vo.get(0).getQnum());
+			model.addAttribute("yesorno", service.answerOrNot(vo.get(0).getQnum()));
 			QuestionPageDTO btnMaker = new QuestionPageDTO(cri, service.countQuestion(cri, "%%"), 10);
 			model.addAttribute("btnMaker", btnMaker);
 		}else {

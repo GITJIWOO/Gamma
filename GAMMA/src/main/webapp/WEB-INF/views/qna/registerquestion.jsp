@@ -7,7 +7,8 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<!-- 아직 테스트 못함 -->
+	글쓴이: ${param.qwriter }
+	페이지 번호: ${param.pageNum }
 	<h1>질문 입력창</h1>
 	<form action="/qna/registerquestion" method="post">
 		<!-- 유형: 계정 및 내정보, 소프트웨어 및 게임, 라이브러리, 구매, 친구, 채팅, 어플리케이션, 기타 -->
@@ -22,7 +23,7 @@
 			<option value="app">어플리케이션</option>
 			<option value="etc">기타</option>		
 		</select><br>
-		<input type="hidden" name="qwriter" value="${vo.qwriter }" />
+		<input type="hidden" name="qwriter" value="${param.qwriter }" />
 		<input type="text" name="qtitle" placeholder="제목을 입력해주세요"/><br>
 		<textarea rows="10" cols="50" name="qcontent" placeholder="질문 할 내용을 입력해주세요"></textarea><br>
 		<input type="submit" value="질문 등록"/><br>
