@@ -1,8 +1,15 @@
 package org.game.gamelibrary.service;
 
-import org.springframework.stereotype.Service;
+import java.util.List;
 
-@Service
-public class GameLibraryService {
+import org.game.gamelibrary.domain.GameLibraryVO;
 
+public interface GameLibraryService {
+	
+	// 라이브러리 조회
+	public List<GameLibraryVO> getAllConsumerLibrary(String cid);
+	
+	// 라이브러리 게임 추가
+	public void additionalLibrary(String cid, long gnum);
+	
 }

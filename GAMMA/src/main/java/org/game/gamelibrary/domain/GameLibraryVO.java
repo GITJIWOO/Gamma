@@ -1,5 +1,12 @@
 package org.game.gamelibrary.domain;
 
-public class GameLibraryVO {
+import lombok.Data;
 
+@Data
+public class GameLibraryVO {
+	
+	private long ubnum;
+	private String cid;
+	private long gnum;
+	
 }

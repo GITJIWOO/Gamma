@@ -46,6 +46,8 @@
 		base-package="org.game.review.mapper" />
 	<mybatis-spring:scan
 		base-package="org.game.gamepurchase.mapper" />
+	<mybatis-spring:scan
+		base-package="org.game.gamelibrary.mapper" />
 
 
 	<context:component-scan
@@ -58,4 +60,6 @@
 		base-package="org.game.review.service" />
 	<context:component-scan
 		base-package="org.game.gamepurchase.service" />
+	<context:component-scan
+		base-package="org.game.gamelibrary.service" />
 </beans>
