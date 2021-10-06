@@ -13,4 +13,5 @@
 	<insert id="libraryInsert">
 		INSERT INTO consumerLibrary(ubnum, cid, gnum) VALUES (consumerlibrary_num.nextval, #{cid}, #{gnum})
 	</insert>
+	
 </mapper>
