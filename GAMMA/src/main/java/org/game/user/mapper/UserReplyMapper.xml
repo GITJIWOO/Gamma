@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.rg/dtd/mybatis-3-mapper.dtd">
+<!-- org.ict.mapper.ReplyMapper 인터페이스의 메서드에 쿼리문 연결 -->
+<mapper namespace="org.game.user.mapper.UserReplyMapper">
+
+	<select id="getList" resultType="org.game.user.domain.UserReplyVO">
+		SELECT * FROM userreply_tbl
+			WHERE cnum = #{cnum}
+		ORDER BY rno DESC
+	</select>
+	
+	<insert id="create">
+		INSERT INTO userreply_tbl 
+		(rno, cnum, reply, nickname)
+			VALUES 
+		(userreply_num.nextval, #{cnum}, #{reply}, #{nickname})
+	</insert>
+	
+	<update id="update">
+	<!-- 리플같은경우 제목이 없고 본문만 있기때문에 이렇게 처리 -->
+		UPDATE userreply_tbl
+			SET
+		reply = #{reply}, uupdateDate = SYSDATE
+		 WHERE rno = #{rno}
+	</update>
+	
+	<delete id="delete">
+		DELETE FROM userreply_tbl
+			WHERE rno = #{rno}
+	</delete>
+	
+	
+
+</mapper>
