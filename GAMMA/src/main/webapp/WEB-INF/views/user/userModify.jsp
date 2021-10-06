@@ -17,7 +17,7 @@
 <title>회원가입</title>
 </head>
 <script type="text/javascript">
-/* 	$(document).ready(function() {
+ 	$(document).ready(function() {
 		// 취소
 		$(".cencle").on("click", function() {
 
@@ -35,8 +35,8 @@
 				alert("아이디를 입력해주세요.");
 				$("#cid").focus();
 				return false;
-			} */
-		/* 	$.ajax({
+			} 
+		 	$.ajax({
 				url : "/user/passChk",
 				type : "POST",
 				dateType : "json",
@@ -54,7 +54,7 @@
 
 					}
 				}
-			}) */
+			}) 
 		});
 	})
 </script>
