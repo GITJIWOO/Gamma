@@ -10,9 +10,9 @@
 	</select>
 	
 	<!-- 아이디 중복체크 -->
-	<select id="idChk" resultType="int">
+	<select id="idChk" resultType="org.game.user.domain.ConsumerVO">
 	
-		SELECT COUNT(cid) FROM consumer WHERE cid =#{cid}
+		SELECT COUNT(*) FROM consumer WHERE cid=#{cid}
 		
 	</select>
 

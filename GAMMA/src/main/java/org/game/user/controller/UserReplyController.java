@@ -29,7 +29,7 @@ public class UserReplyController {
 	// produeces는 입력받은 데이터를 토대로 로직을 실행한 다음
 	// 사용자에게 결과로 보여줄 데이터의 형식을 나타냅니다.
 	// jackson-databind 추가해야 작동
-	@PostMapping(value="", consumes="application/json",
+	@PostMapping(value="/", consumes="application/json",
 							produces= {MediaType.TEXT_PLAIN_VALUE})
 	// produces에 TEXT_PLAIN_VALUE를 줬으므로 결과코드와 문자열을 넘김
 	public ResponseEntity<String> register(
@@ -37,6 +37,8 @@ public class UserReplyController {
 					// @RequestBody 어노테이션이 붙어야
 					// consumes와 연결됨
 					@RequestBody UserReplyVO vo){
+		System.out.println("방명록정보 : "+vo);
+		
 		// 깡통 entity를 먼저 생성
 		ResponseEntity<String> entity = null;
 		try {

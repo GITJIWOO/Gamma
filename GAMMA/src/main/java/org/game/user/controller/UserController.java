@@ -32,14 +32,15 @@ public class UserController {
 	@ResponseBody
 	@PostMapping("/idChk")
 	public int idChk(ConsumerVO userVO) throws Exception {
-		int result = service.idChk(userVO);
+
 		System.out.println(userVO.getCid());
+		int result = service.idChk(userVO);
 		return result;
 	}
 
 	// 비밀번호 중복 체크
-	//@ResponseBody
-	//@PostMapping("/passChk")
+	// @ResponseBody
+	// @PostMapping("/passChk")
 	// public boolean passChk(ConsumerVO userVO) throws Exception {
 
 	// ConsumerVO login = service.userLogin(userVO);
@@ -73,8 +74,8 @@ public class UserController {
 
 	@PostMapping("/userJoin")
 	public String userJoin(ConsumerVO userVO) throws Exception {
-		//log.info("회원가입");
-		//service.userJoin(userVO);
+		// log.info("회원가입");
+		// service.userJoin(userVO);
 
 		log.info("poset회원가입실행");
 		int result = service.idChk(userVO);
@@ -82,9 +83,9 @@ public class UserController {
 			if (result == 1) {
 				return "/user/userJoin";
 			} else if (result == 0) {
-				//String inputPass = userVO.getPassword();
-				//String pwd = pwdEncoder.encode(inputPass);
-				//userVO.setPassword(pwd);
+				// String inputPass = userVO.getPassword();
+				// String pwd = pwdEncoder.encode(inputPass);
+				// userVO.setPassword(pwd);
 				service.userJoin(userVO);
 			}
 		} catch (Exception e) {
@@ -141,6 +142,7 @@ public class UserController {
 			memberSession = String.valueOf(session.getAttribute("member"));
 			System.out.println("멤버세션값 else : " + memberSession);
 			rttr.addFlashAttribute("msg", false);
+			return "/user/userLogin";
 		}
 		return "/user/nav";
 	}
@@ -165,17 +167,17 @@ public class UserController {
 	public String registerUpdate(ConsumerVO vo, HttpSession session) throws Exception {
 		service.userModify(vo);
 		session.invalidate();
-		return "redirect:/user/userGet";
+		return "redirect:/user/userLogin";
 	}
 
 	// 회원 탈퇴 get
 	@GetMapping("/userDelete")
 	public String userDelete(HttpSession session) throws Exception {
-		return "/user/userdelete";
+		return "/user/userDelete";
 	}
 
 	// 회원 탈퇴 post
-	@PostMapping("/userdelete")
+	@PostMapping("/userDelete")
 	public String memberDelete(ConsumerVO userVO, HttpSession session, RedirectAttributes rttr) throws Exception {
 		service.userDelete(userVO);
 		session.invalidate();

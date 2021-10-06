@@ -17,7 +17,7 @@
 <title>회원탈퇴</title>
 </head>
 <body>
-
+<h2>${member.cid }</h2>
 	<section id="container">
 		<form action="/user/userDelete" method="post" id="delForm">
 			<div class="form-group has-feedback">

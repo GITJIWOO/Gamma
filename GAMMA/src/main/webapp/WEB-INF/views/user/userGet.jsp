@@ -126,8 +126,8 @@ function getAllList(){
 							  + ":" + date.getSeconds() // 초 추출	
 		
 		  // this.updateDate를 표출하면 시간이 unix시간으로 표시됨
-		  str += "<div class='replyLi' data-rno='" + this.rno + "'><strong>@"
-			+ this.nickname + "</strong> - " + formattedTime + "<br>"
+		  str += "<div class='replyLi' data-rno='" + this.rno + "'><button class='goBtn'><strong>@"
+			+ this.nickname + "</strong></button> - " + formattedTime + "<br>"
 			+ "<div class='reply'>" + this.reply + "</div>"
 			+ "<button type='button' class='btn btn-info'>수정/삭제</button>"
 			+ "</div>";
@@ -143,11 +143,11 @@ getAllList();
 // 글쓰기 부분
 $("#replyAddBtn").on("click", function(){
 	// 각 input태그에 들어있던 글쓴이, 본문의 value값을 변수에 저장함.
-	var replyer = $("#newReplyWriter").val();
+	var nickname = $("#newReplyWriter").val();
 	var reply = $("#newReply").val();
 	// 디버깅시는 console.log() 내부에 적어서 확인합니다.
 	//console.log(replyer + "/" + reply);
-	
+	console.log("디버깅 : " + cnum + "/" + nickname + "/" + reply);
 	$.ajax({
 		type : 'post',
 		url : '/userrp/',
@@ -225,8 +225,6 @@ $('#replyModBtn').on("click", function(){
 });
 
 
-
-
 // 이벤트 위임
 // 내가 현재 이벤트를 걸려는 집단(button) 을 포함하면서 범위가 제일 좁은
 // #replies로 시작조건을 잡습니다.
@@ -252,6 +250,12 @@ $("#replies").on("click", ".replyLi button", function(){
 	$(".modal-title").html(rno);// 모달 상단에 댓글번호 넣기
 	$("#replytext").val(reply);// 모달 수정창에 댓글본문 넣기
 	$("#modDiv").show("slow"); // 창에 애니메이션 효과 넣기
+});
+
+$("#replies").on("click", ".replyLi goBtn", function(){
+	document.getEl
+	
+
 });
 
 
