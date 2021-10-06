@@ -1,5 +1,21 @@
 package org.game.gamepurchase.controller;
 
-public class GamePurchaseController {
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
+import lombok.AllArgsConstructor;
+import lombok.extern.log4j.Log4j;
+
+@Controller
+@Log4j
+@RequestMapping("/gamepayment/*")
+@AllArgsConstructor
+public class GamePurchaseController {
+	
+	@GetMapping("/paymentscreen")
+	public String patmentScreen() {
+		
+		return "/payment/paymentScreen";
+	}
 }
