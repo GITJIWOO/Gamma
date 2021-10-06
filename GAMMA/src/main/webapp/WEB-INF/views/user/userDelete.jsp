@@ -13,54 +13,17 @@
 
 <script
 	src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-	<meta charset="UTF-8">
+<meta charset="UTF-8">
 <title>회원탈퇴</title>
 </head>
-<script type="text/javascript">
-	$(document).ready(function() {
-		// 취소
-		$(".cencle").on("click", function() {
-
-			location.href = "/user/userHome";
-
-		})
-
-		$("#submit").on("click", function() {
-			if ($("#password").val() == "") {
-				alert("비밀번호를 입력해주세요.");
-				$("#password").focus();
-				return false;
-			}
-			 $.ajax({d
-				url : "/user/passChk",
-				type : "POST",
-				dataType : "json",
-				data : $("#delForm").serializeArray(),
-				success : function(data) {
-
-					if (data == true) {
-						if (confirm("회원탈퇴하시겠습니까?")) {
-							$("#delForm").submit();
-					} else {
-						alert("패스워드가 틀렸습니다.");
-						return;
-						}
-
-					}
-				}
-			}) 
-
-		});
-
-	})
-</script>
 <body>
+
 	<section id="container">
 		<form action="/user/userDelete" method="post" id="delForm">
 			<div class="form-group has-feedback">
 				<label class="control-label" for="cid">아이디</label> <input
 					class="form-control" type="text" id="cid" name="cid"
-					value="${member.cid}" readonly="readonly" />
+					value="${member.cid}" readonly/>
 			</div>
 			<div class="form-group has-feedback">
 				<label class="control-label" for="password">패스워드</label> <input
@@ -69,7 +32,7 @@
 			<div class="form-group has-feedback">
 				<label class="control-label" for="nickname">별칭</label> <input
 					class="form-control" type="text" id="nickname" name="nickname"
-					value="${member.nickname}" readonly="readonly" />
+					value="${member.nickname}" readonly />
 			</div>
 			<div class="form-group has-feedback">
 				<button class="btn btn-success" type="submit" id="submit">회원탈퇴</button>
@@ -83,6 +46,44 @@
 		</div>
 	</section>
 
+	<script type="text/javascript">
+		$(document).ready(function() {
+			// 취소
+			$(".cencle").on("click", function() {
+
+				location.href = "/user/userHome";
+
+			})
+
+			$("#submit").on("click", function() {
+				if ($("#password").val() == "") {
+					alert("비밀번호를 입력해주세요.");
+					$("#password").focus();
+					return false;
+				}
+				$.ajax({
+					url : "/user/passChk",
+					type : "POST",
+					dataType : "json",
+					data : $("#delForm").serializeArray(),
+					success : function(data) {
+
+						if (data == true) {
+							if (confirm("회원탈퇴하시겠습니까?")) {
+								$("#delForm").submit();
+							} else {
+								alert("패스워드가 틀렸습니다.");
+								return;
+							}
+
+						}
+					}
+				})
+
+			});
+
+		})
+	</script>
 </body>
 
 </html>

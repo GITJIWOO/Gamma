@@ -110,8 +110,8 @@
 			<div class="form-group has-feedback">
 				<label class="control-label" for="cid">아이디</label> <input
 					class="form-control" type="text" id="cid" name="cid" />
-				<!-- <button class="idChk" type="button" id="idChk" onclick="fn_idChk();"
-					value="N">중복확인</button> -->
+				<button class="idChk" type="button" id="idChk" onclick="fn_idChk();"
+					value="N">중복확인</button>
 			</div>
 			<div class="form-group has-feedback">
 				<label class="control-label" for="password">패스워드</label> <input

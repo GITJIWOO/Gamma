@@ -89,6 +89,25 @@ INSERT INTO consumer(cnum, cid, email, password, nickname, cadmin)
 
 SELECT * FROM consumer; 
 
+CREATE table userreply_tbl(
+    rno number(10,0),
+    cnum number(10,0) not null,
+    reply varchar2(1000) not null,
+    nickname varchar2(20) not null,
+    replyDate date default sysdate,
+    updateDate date default sysdate
+    );
+    
+    create sequence userreply_num;
+    
+    alter table userreply_tbl add constraint pk_reply1 primary key(rno);
+    
+    alter table userreply_tbl add constraint fk_ureply 
+    foreign key (cnum) references consumer(cnum);
+ alter table userreply_tbl add constraint fk_ureply1 
+    foreign key (nickname) references consumer(nickname);
+    ALTER TABLE userreply_tbl RENAME COLUMN replyDate to ureplydate;
+    ALTER TABLE userreply_tbl RENAME COLUMN updateDate to uupdatedate;
 /*  사진 테이블
     시간
     외래키

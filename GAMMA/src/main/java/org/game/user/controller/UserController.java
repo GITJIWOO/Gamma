@@ -11,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import lombok.AllArgsConstructor;
@@ -24,27 +25,33 @@ public class UserController {
 
 	@Inject
 	UserService service;
-	//@Inject
-	//BCryptPasswordEncoder pwdEncoder;
+	// @Inject
+	// BCryptPasswordEncoder pwdEncoder;
 
 	// 아이디 중복 체크
-	/*
-	 * @PostMapping("/idChk") public int idChk(ConsumerVO vo) throws Exception { int
-	 * result = service.idChk(vo); return result;
-	 }*/
+	@ResponseBody
+	@PostMapping("/idChk")
+	public int idChk(ConsumerVO userVO) throws Exception {
+		int result = service.idChk(userVO);
+		System.out.println(userVO.getCid());
+		return result;
+	}
 
 	// 비밀번호 중복 체크
+	//@ResponseBody
 	//@PostMapping("/passChk")
-	//public boolean passChk(ConsumerVO userVO) throws Exception {
+	// public boolean passChk(ConsumerVO userVO) throws Exception {
 
-		//ConsumerVO login = service.userLogin(userVO);
-		//boolean pwdChk = pwdEncoder.matches(userVO.getPassword(), login.getPassword());
-		//return pwdChk;
-	//}
+	// ConsumerVO login = service.userLogin(userVO);
+	// boolean pwdChk = pwdEncoder.matches(userVO.getPassword(),
+	// login.getPassword());
+	// return pwdChk;
+	// }
 	@GetMapping("/userGet")
 	public String userGet() {
 		return "/user/userGet";
 	}
+
 	// 유저 상제정보창
 	@PostMapping("/userGet")
 	public String userGet(String cid, Model model) {
@@ -66,24 +73,25 @@ public class UserController {
 
 	@PostMapping("/userJoin")
 	public String userJoin(ConsumerVO userVO) throws Exception {
-		log.info("회원가입");
-		service.userJoin(userVO);
+		//log.info("회원가입");
+		//service.userJoin(userVO);
 
 		log.info("poset회원가입실행");
-//		int result = service.idChk(userVO);
-//		try {
-//			if (result == 1) {
-//				return "/user/userLogin";
-//			} else if (result == 0) {
-//				String inputPass = userVO.getPassword();
-//				String pwd = pwdEncoder.encode(inputPass);
-//				userVO.setPassword(pwd);
-//				service.userJoin(userVO);
-//			}
-//		} catch (Exception e) {
-//		}
+		int result = service.idChk(userVO);
+		try {
+			if (result == 1) {
+				return "/user/userJoin";
+			} else if (result == 0) {
+				//String inputPass = userVO.getPassword();
+				//String pwd = pwdEncoder.encode(inputPass);
+				//userVO.setPassword(pwd);
+				service.userJoin(userVO);
+			}
+		} catch (Exception e) {
+			throw new RuntimeException();
+		}
 
-		return "/user/userHome";
+		return "/user/userLogin";
 	}
 
 	/*
@@ -108,8 +116,8 @@ public class UserController {
 	}
 
 	@PostMapping("/userLogin")
-	public String userLogin(ConsumerVO userVO,HttpServletRequest req, RedirectAttributes rttr) throws Exception {
-		log.info("로그인컨트롤실행"); 
+	public String userLogin(ConsumerVO userVO, HttpServletRequest req, RedirectAttributes rttr) throws Exception {
+		log.info("로그인컨트롤실행");
 		HttpSession session = req.getSession();
 		String memberSession = String.valueOf(session.getAttribute("member"));
 		System.out.println("멤버세션값 : " + memberSession);
@@ -118,10 +126,11 @@ public class UserController {
 		System.out.println("DB" + login);
 		System.out.println("VO의 비번 " + userVO.getPassword());
 		System.out.println("DB의 비번 " + login.getPassword());
-		//boolean pwdMatch = pwdEncoder.matches(userVO.getPassword(), login.getPassword());
-		//System.out.println("비번매칭 : " + pwdMatch);
-		boolean result =login.getPassword().equals(userVO.getPassword());
-		if(result == true) { //위의 result는 나중에 바꿔야함 복호화와 시큐리티 적용하면 오류생길가능성이 높다 .equls는 단순한 문자열 비교라 그럼
+		// boolean pwdMatch = pwdEncoder.matches(userVO.getPassword(),
+		// login.getPassword());
+		// System.out.println("비번매칭 : " + pwdMatch);
+		boolean result = login.getPassword().equals(userVO.getPassword());
+		if (result == true) { // 위의 result는 나중에 바꿔야함 복호화와 시큐리티 적용하면 오류생길가능성이 높다 .equls는 단순한 문자열 비교라 그럼
 			session.setAttribute("member", login);
 			session.setAttribute("session_cid", login.getCid());
 			session.setAttribute("session_cadmin", login.getCadmin());
@@ -135,7 +144,6 @@ public class UserController {
 		}
 		return "/user/nav";
 	}
-	
 
 	// 로그아웃 과 세션 초기화
 	@GetMapping("/userLogout")
@@ -163,14 +171,12 @@ public class UserController {
 	// 회원 탈퇴 get
 	@GetMapping("/userDelete")
 	public String userDelete(HttpSession session) throws Exception {
-		session.invalidate();
-		return "/user/userDelete";
+		return "/user/userdelete";
 	}
 
 	// 회원 탈퇴 post
-	@PostMapping("/userDelete")
+	@PostMapping("/userdelete")
 	public String memberDelete(ConsumerVO userVO, HttpSession session, RedirectAttributes rttr) throws Exception {
-
 		service.userDelete(userVO);
 		session.invalidate();
 		return "/user/userHome";
