@@ -40,11 +40,23 @@
 					<td>${vo.qcontent }</td>
 					<td>${vo.qwriter }</td>
 					<td>${vo.qdate  }</td>
-					<td>Y/N으로 표시할 예정</td>					
+					<c:if test="${yesorno == 0 }">
+						<td>check: ${voget } 답변이 작성되지 않았습니다.</td>
+					</c:if>
+					<c:if test="${yesorno == 1 }">
+						<td>check: ${voget } 답변이 작성되었습니다.</td>
+					</c:if>									
 				</tr>
 			</c:forEach>
 		</tbody>
 	</table>
+	<c:if test="${admin == 0 }">
+		<form action="/qna/questionform" method="post">
+			<input type="hidden" name="qwriter" value="${qwriter }"/>
+			<input type="hidden" name="pageNum" value="${btnMaker.cri.pageNum }"/>
+			<input type="submit" value="질문 작성" />
+		</form>
+	</c:if>
 	<!-- 페이징 처리 -->
 	<nav aria-label="...">
 	  <ul class="pagination justify-content-center">

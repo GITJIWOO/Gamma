@@ -30,11 +30,12 @@ public class QuestionServiceTest {
 		vo.setQwriter("htrew");
 		service.addQuestion(vo);
 	}
-	
+	/*
 	//@Test
 	public void testQuestionList() {
 		service.questionList("%%");
 	}
+	 */
 	//@Test
 	public void testCountQuestion() {
 		QuestionSearchCriteria cri = new QuestionSearchCriteria();
