@@ -339,5 +339,3 @@ CREATE TABLE shoppingBasket (
     CONSTRAINT fk_shoppingbasketgnum FOREIGN KEY(gnum)REFERENCES game(gnum)
 
 );
-
-
