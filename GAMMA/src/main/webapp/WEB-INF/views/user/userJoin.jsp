@@ -54,13 +54,12 @@
 				} 
 			});
 		}) 
-		
+		$("#idChk").on("click",
 	 	function fn_idChk(){
 			$.ajax({
 				url : "/user/idChk",
 				type : "post",
-				headers:{"Content-Type":"application/json","X-HTTP-Method-Override":"POST"},
-				dataType : "text",
+				dataType : "json",
 				data : {"cid" : $("#cid").val()},
 				success : function(data){
 					if(data == 1){
@@ -71,7 +70,7 @@
 					}
 				}
 			})
-		}  
+		});  
 		//작동잘됨
 		/*  function check_pw(){
 			 
@@ -133,9 +132,8 @@
 			</div>
 
 		<div class="form-group has-feedback">
-		<input type ="submit" value ="회원가입" class="btn btn-success" >
-			<!-- <button class="btn btn-success" type="button" id="submit">회원가입</button>
-			<button class="cencle btn btn-danger" type="button">취소</button> -->
+			 <button class="btn btn-success" type="button" id="submit">회원가입</button>
+			<button class="cencle btn btn-danger" type="button">취소</button> 
 		</div>
 		</form>
 	</section>

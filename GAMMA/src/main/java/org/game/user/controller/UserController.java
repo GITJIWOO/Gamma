@@ -78,7 +78,8 @@ public class UserController {
 		// service.userJoin(userVO);
 
 		log.info("poset회원가입실행");
-		int result = service.idChk(userVO);
+		long result = service.idChk(userVO);
+		log.info("result값: " +result);
 		try {
 			if (result == 1) {
 				return "/user/userJoin";
@@ -88,6 +89,7 @@ public class UserController {
 				// userVO.setPassword(pwd);
 				service.userJoin(userVO);
 			}
+			
 		} catch (Exception e) {
 			throw new RuntimeException();
 		}
