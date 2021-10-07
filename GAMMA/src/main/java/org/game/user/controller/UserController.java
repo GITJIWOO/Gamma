@@ -31,10 +31,10 @@ public class UserController {
 	// 아이디 중복 체크
 	@ResponseBody
 	@PostMapping("/idChk")
-	public int idChk(ConsumerVO userVO) throws Exception {
+	public long idChk(ConsumerVO userVO) throws Exception {
 
 		System.out.println(userVO.getCid());
-		int result = service.idChk(userVO);
+		long result = service.idChk(userVO);
 		return result;
 	}
 

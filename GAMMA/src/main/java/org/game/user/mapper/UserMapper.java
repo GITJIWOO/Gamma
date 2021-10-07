@@ -22,9 +22,9 @@ public interface UserMapper {
 	public void userDelete(ConsumerVO userVO) throws Exception;
 	
 	// 아이디 중복체크
-	public int idChk(ConsumerVO userVO) throws Exception;
+	public long idChk(ConsumerVO userVO) throws Exception;
 
 	//패스워드 체크
-	public int passChk(ConsumerVO userVO) throws Exception;
+	public long passChk(ConsumerVO userVO) throws Exception;
 	
 }

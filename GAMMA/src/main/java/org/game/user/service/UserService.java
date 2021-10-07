@@ -9,10 +9,10 @@ public interface UserService {
 	public ConsumerVO userGet(String cid);
 
 	// 아이디 중복 체크
-	public int idChk(ConsumerVO userVO) throws Exception;
+	public long idChk(ConsumerVO userVO) throws Exception;
 
 	// 패스워드 중복 체크
-	public int passChk(ConsumerVO userVO) throws Exception;
+	public long passChk(ConsumerVO userVO) throws Exception;
 
 	// 회원가입
 	public void userJoin(ConsumerVO userVO) throws Exception;
