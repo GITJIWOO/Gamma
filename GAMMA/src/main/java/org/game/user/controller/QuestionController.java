@@ -51,21 +51,18 @@ public class QuestionController {
 	@GetMapping("/questionlist")
 	public String questionList(String qwriter, QuestionSearchCriteria cri, Model model) {
 		int admin = service.adminOrNot(qwriter);
+		List<QuestionVO> vo;
+		QuestionPageDTO btnMaker;
 		// 1이면 관리자, 0이면 일반회원
 		if(admin == 1) {
-			List<QuestionVO> vo = service.questionListP(cri, "%%");
-			model.addAttribute("vo", vo);
-			// 여기 문제 있음.. 페이지마다 한 로우의 번호를 받아오는 중 - 일단 이거 추후 해결
-			//model.addAttribute("voget",vo.get(0).getQnum());
-			model.addAttribute("yesorno", service.answerOrNot(vo.get(0).getQnum()));
-			QuestionPageDTO btnMaker = new QuestionPageDTO(cri, service.countQuestion(cri, "%%"), 10);
-			model.addAttribute("btnMaker", btnMaker);
+			vo = service.questionListP(cri, "%%");
+			btnMaker = new QuestionPageDTO(cri, service.countQuestion(cri, "%%"), 10);
 		}else {
-			List<QuestionVO> vo = service.questionListP(cri, qwriter);
-			model.addAttribute("vo", vo);
-			QuestionPageDTO btnMaker = new QuestionPageDTO(cri, service.countQuestion(cri, qwriter), 10);
-			model.addAttribute("btnMaker", btnMaker);
+			vo = service.questionListP(cri, qwriter);
+			btnMaker = new QuestionPageDTO(cri, service.countQuestion(cri, qwriter), 10);
 		}
+		model.addAttribute("vo", vo);
+		model.addAttribute("btnMaker", btnMaker);
 		log.info("qwriter 확인: " + qwriter );
 		log.info("cri값 확인 keyword: " + cri.getKeyword());
 		log.info("cri값 확인 pageNum: " + cri.getPageNum());

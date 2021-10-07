@@ -40,12 +40,12 @@
 					<td>${vo.qcontent }</td>
 					<td>${vo.qwriter }</td>
 					<td>${vo.qdate  }</td>
-					<c:if test="${yesorno == 0 }">
-						<td>check: ${voget } 답변이 작성되지 않았습니다.</td>
+					<c:if test="${vo.aornot == 0 }">
+						<td><span class="badge bg-light text-dark">답변 미작성</span></td>
 					</c:if>
-					<c:if test="${yesorno == 1 }">
-						<td>check: ${voget } 답변이 작성되었습니다.</td>
-					</c:if>									
+					<c:if test="${vo.aornot == 1 }">
+						<td><span class="badge bg-dark">답변 확인 가능</span></td>
+					</c:if>	
 				</tr>
 			</c:forEach>
 		</tbody>

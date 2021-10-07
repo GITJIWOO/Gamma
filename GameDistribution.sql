@@ -88,7 +88,7 @@ INSERT INTO consumer(cnum, cid, email, password, nickname, cadmin)
     VALUES(consumer_num.nextval,'cho', 'chocc', 'aaa', 'cho', 0);
 
 SELECT * FROM consumer; 
-// 유저방명록 (각 개인 상태창에 보임)
+/* 유저방명록 (각 개인 상태창에 보임)*/
 CREATE table userreply_tbl(
     rno number(10,0),
     cnum number(10,0) not null,
@@ -275,7 +275,8 @@ CREATE TABLE question (
     qdate DATE DEFAULT SYSDATE
 );
 ALTER TABLE question ADD CONSTRAINT pk_question PRIMARY KEY(qnum);
-
+ALTER TABLE question ADD (aornot NUMBER DEFAULT 0); /* 컬럼 추가 */
+UPDATE question SET aornot = (SELECT count(anum) FROM answer WHERE answer.qnum = question.qnum); /* 반영 */
 
 /*  Answer 테이블
     글 식별 번호(기본키)
@@ -338,5 +339,3 @@ CREATE TABLE shoppingBasket (
     CONSTRAINT fk_shoppingbasketgnum FOREIGN KEY(gnum)REFERENCES game(gnum)
 
 );
-
-

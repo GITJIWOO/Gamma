@@ -19,8 +19,6 @@ public interface QuestionService {
 	
 	public QuestionVO ownQuestion(int qnum);
 	
-	public int answerOrNot(int qnum);
-	
 	public void modifyQuestion(QuestionVO vo);
 	
 	public void removeQuestion(int qnum);
