@@ -4,6 +4,8 @@ import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
+import org.game.gameinfo.domain.GameInfoVO;
+import org.game.gameinfo.service.GameInfoService;
 import org.game.review.domain.ReviewCommentCriteria;
 import org.game.review.domain.ReviewCommentDTO;
 import org.game.review.domain.ReviewCommentVO;
@@ -38,18 +40,22 @@ public class ReviewController {
 	
 	@Autowired
 	private ReviewLikeService reviewLikeService;
+
+	@Autowired
+	private GameInfoService gameService;
 	
 	// 모든 평가 조회
 	@GetMapping("/reviewList/{gnum}")
 	public String getReviewList(@PathVariable("gnum") long gnum, String listKind, Model model) {
+		GameInfoVO game = gameService.getGame(gnum);
 		if(listKind == null || listKind.equals("") || listKind.equals("famous")) {
 			List<ReviewVO> famousReview = reviewService.getFamousReview(gnum);
 			model.addAttribute("review", famousReview);
-			model.addAttribute("gameNum", gnum);
+			model.addAttribute("game", game);
 		} else if(listKind.equals("new")) {
 			List<ReviewVO> newReview = reviewService.getNewReview(gnum);
 			model.addAttribute("review", newReview);
-			model.addAttribute("gameNum", gnum);
+			model.addAttribute("game", game);
 		}
 		return "/review/reviewList";
 	}
