@@ -30,13 +30,13 @@ public class QuestionServiceImpl implements QuestionService{
 		log.info("질문글 추가 실행");
 		mapper.insertQuestion(vo);
 	}
-
+/*
 	@Override
 	public List<QuestionVO> questionList(String qwriter) {
 		log.info("질문글 목록 조회");
 		return mapper.getQuestionList(qwriter);
 	}
-
+*/
 	@Override
 	public List<QuestionVO> questionListP(QuestionSearchCriteria cri, String qwriter) {
 		log.info("페이징 처리된 질문글 목록 조회");
@@ -49,7 +49,7 @@ public class QuestionServiceImpl implements QuestionService{
 		log.info("질문글 목록 개수 조회");
 		return mapper.getCountQuestion(cri, qwriter);
 	}
-	
+
 	@Override
 	public List<QuestionVO> typeQuestion(String qtype) {
 		log.info("타입별 질문글 목록 조회");
@@ -69,6 +69,12 @@ public class QuestionServiceImpl implements QuestionService{
 	}
 
 	@Override
+	public int answerOrNot(int qnum) {
+		log.info("질문글에 대한 답변 여부 조회");
+		return mapper.getAnswerOrNot(qnum);
+	}
+
+	@Override
 	public void modifyQuestion(QuestionVO vo) {
 		log.info("질문글 수정");
 		mapper.updateQuestion(vo);
@@ -79,7 +85,6 @@ public class QuestionServiceImpl implements QuestionService{
 		log.info("질문글 삭제");
 		mapper.deleteQuestion(qnum);
 	}
-
 
 
 }

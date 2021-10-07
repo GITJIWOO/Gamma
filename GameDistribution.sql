@@ -138,6 +138,7 @@ CREATE TABLE gamePicture (
     사용자 이메일
     게임 식별 번호
 */
+CREATE SEQUENCE consumerlibrary_num;
 CREATE TABLE consumerLibrary (
     ubnum number PRIMARY KEY,
     cid VARCHAR2(100),

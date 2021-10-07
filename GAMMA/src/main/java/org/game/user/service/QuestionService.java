@@ -10,7 +10,7 @@ public interface QuestionService {
 	
 	public void addQuestion(QuestionVO vo);
 	
-	public List<QuestionVO> questionList(String qwriter);
+	//public List<QuestionVO> questionList(String qwriter);
 	public List<QuestionVO> questionListP(QuestionSearchCriteria cri, String qwriter);
 	public int countQuestion(QuestionSearchCriteria cri, String qwriter);
 	
@@ -18,6 +18,8 @@ public interface QuestionService {
 	public int countQtype(String qtype);
 	
 	public QuestionVO ownQuestion(int qnum);
+	
+	public int answerOrNot(int qnum);
 	
 	public void modifyQuestion(QuestionVO vo);
 	

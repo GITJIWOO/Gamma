@@ -3,11 +3,13 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:mybatis-spring="http://mybatis.org/schema/mybatis-spring"
 	xmlns:context="http://www.springframework.org/schema/context"
-	xmlns:jdbc="http://www.springframework.org/schema/jdbc"
-	xsi:schemaLocation="http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc-4.3.xsd
-		http://mybatis.org/schema/mybatis-spring http://mybatis.org/schema/mybatis-spring-1.2.xsd
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://mybatis.org/schema/mybatis-spring http://mybatis.org/schema/mybatis-spring-1.2.xsd
 		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
-		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd">
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd">	
 
 	<!-- Root Context: defines shared resources visible to all other web components -->
 	<bean id="hikariConfig" class="com.zaxxer.hikari.HikariConfig">
@@ -36,6 +38,17 @@
 			ref="sqlSessionFactory"></constructor-arg>
 	</bean>
 
+	
+	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+	
+	<tx:annotation-driven />
+	
+	<context:annotation-config />
+	
+	<aop:aspectj-autoproxy />
+	
 	<mybatis-spring:scan
 		base-package="org.game.gameinfo.mapper" />
 	<mybatis-spring:scan
@@ -46,7 +59,8 @@
 		base-package="org.game.review.mapper" />
 	<mybatis-spring:scan
 		base-package="org.game.gamepurchase.mapper" />
-	
+	<mybatis-spring:scan
+		base-package="org.game.gamelibrary.mapper" />
 
 
 	<context:component-scan
@@ -59,4 +73,6 @@
 		base-package="org.game.review.service" />
 	<context:component-scan
 		base-package="org.game.gamepurchase.service" />
+	<context:component-scan
+		base-package="org.game.gamelibrary.service" />
 </beans>

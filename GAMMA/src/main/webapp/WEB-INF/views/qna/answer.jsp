@@ -42,7 +42,7 @@
 		<div>
 			<button type="button" id="answerModBtn">수정</button>
 			<button type="button" id="answerDelBtn">삭제</button>
-			<button type="button" id="CloseBtn">닫기</button>
+			<button type="button" id="closeBtn">닫기</button>
 		</div>
 	</div>
 	<!-- jQuery -->
