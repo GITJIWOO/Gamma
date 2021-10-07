@@ -12,7 +12,7 @@ public class ConsumerVO {
 	private String email;
 	private String password;
 	private String nickname;
-	private int cadmin;
+	private Long cadmin;
 	private Date userregdate;
 	private Date userupdatedate;
 }
