@@ -13,4 +13,5 @@ public class QuestionVO {
 	private String qcontent;
 	private String qwriter;
 	private Date qdate;
+	private int aornot;
 }

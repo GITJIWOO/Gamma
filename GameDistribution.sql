@@ -275,7 +275,8 @@ CREATE TABLE question (
     qdate DATE DEFAULT SYSDATE
 );
 ALTER TABLE question ADD CONSTRAINT pk_question PRIMARY KEY(qnum);
-
+ALTER TABLE question ADD (aornot NUMBER DEFAULT 0); /* 컬럼 추가 */
+UPDATE question SET aornot = (SELECT count(anum) FROM answer WHERE answer.qnum = question.qnum); /* 반영 */
 
 /*  Answer 테이블
     글 식별 번호(기본키)

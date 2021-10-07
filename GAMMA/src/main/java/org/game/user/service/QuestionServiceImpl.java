@@ -69,12 +69,6 @@ public class QuestionServiceImpl implements QuestionService{
 	}
 
 	@Override
-	public int answerOrNot(int qnum) {
-		log.info("질문글에 대한 답변 여부 조회");
-		return mapper.getAnswerOrNot(qnum);
-	}
-
-	@Override
 	public void modifyQuestion(QuestionVO vo) {
 		log.info("질문글 수정");
 		mapper.updateQuestion(vo);

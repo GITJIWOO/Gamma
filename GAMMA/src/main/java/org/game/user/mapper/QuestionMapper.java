@@ -32,11 +32,12 @@ public interface QuestionMapper {
 	// 본인이 작성한 질문글 하나만 가져오기
 	public QuestionVO getOwnQuestion(int qnum);
 	
-	public int getAnswerOrNot(int qnum);
-	
 	// 본인이 작성한 질문글 수정하기 
 	public void updateQuestion(QuestionVO vo);
 	
 	// 본인이 작성한 질문글 삭제하기
 	public void deleteQuestion(int qnum);
+	
+	// 작성한 질문글에 대한 답변 여부
+	public void updateAnswerOrNot(@Param("qnum")int qnum, @Param("amount")int amount);
 }
