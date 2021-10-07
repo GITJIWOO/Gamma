@@ -81,13 +81,35 @@ CREATE TABLE consumer (
    );
 
 ALTER TABLE consumer ADD(userregdate DATE Default sysdate NOT NULL,userupdatedate DATE Default sysdate NOT NULL);
+ALTER TABLE consumer ADD UNIQUE(userphone);
 INSERT INTO consumer(cnum, cid, email, password, nickname, cadmin) 
     VALUES(consumer_num.nextval,'kjw011231', 'kjw0111231@gmail.com', 'rlawldn', '김지우', 1);
 INSERT INTO consumer(cnum, cid, email, password, nickname, cadmin) 
     VALUES(consumer_num.nextval,'cho', 'chocc', 'aaa', 'cho', 0);
 
 SELECT * FROM consumer; 
-
+// 유저방명록 (각 개인 상태창에 보임)
+CREATE table userreply_tbl(
+    rno number(10,0),
+    cnum number(10,0) not null,
+    reply varchar2(1000) not null,
+    nickname varchar2(20) not null,
+    replyDate date default sysdate,
+    updateDate date default sysdate
+    );
+    
+    create sequence userreply_num;
+    
+    alter table userreply_tbl add constraint pk_reply1 primary key(rno);
+    
+    alter table userreply_tbl add constraint fk_ureply 
+    foreign key (cnum) references consumer(cnum);
+ alter table userreply_tbl add constraint fk_ureply1 
+    foreign key (nickname) references consumer(nickname);
+    ALTER TABLE userreply_tbl RENAME COLUMN replyDate to ureplydate;
+    ALTER TABLE userreply_tbl RENAME COLUMN updateDate to uupdatedate;
+    
+    
 /*  사진 테이블
     시간
     외래키
@@ -116,6 +138,7 @@ CREATE TABLE gamePicture (
     사용자 이메일
     게임 식별 번호
 */
+CREATE SEQUENCE consumerlibrary_num;
 CREATE TABLE consumerLibrary (
     ubnum number PRIMARY KEY,
     cid VARCHAR2(100),

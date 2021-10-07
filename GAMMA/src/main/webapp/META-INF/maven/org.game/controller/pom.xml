@@ -172,39 +172,42 @@
 
 
 		<!-- jackson -->
-
+<!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind -->
 		<dependency>
-			<groupId>org.codehaus.jackson</groupId>
-			<artifactId>jackson-mapper-asl</artifactId>
-			<version>1.9.13</version>
-		</dependency>
-		<dependency>
-			<groupId>org.codehaus.jackson</groupId>
-			<artifactId>jackson-core-asl</artifactId>
-			<version>1.9.13</version>
+		    <groupId>com.fasterxml.jackson.core</groupId>
+		    <artifactId>jackson-databind</artifactId>
+		    <version>2.13.0-rc2</version>
 		</dependency>
 
+
+		<!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.dataformat/jackson-dataformat-xml -->
 		<dependency>
-			<groupId>com.fasterxml.jackson.core</groupId>
-			<artifactId>jackson-databind</artifactId>
-			<version>2.13.0-rc2</version>
+		    <groupId>com.fasterxml.jackson.dataformat</groupId>
+		    <artifactId>jackson-dataformat-xml</artifactId>
+		    <version>2.13.0-rc2</version>
 		</dependency>
 
-		<!-- 채팅을 위한 웹 소켓(아래 2개) -->
-		<!-- https://mvnrepository.com/artifact/org.springframework/spring-websocket -->
+		<!-- 채팅을 위한 웹 소켓(아래 3개) -->
+		<!-- https://mvnrepository.com/artifact/org.springframework/spring-websocket 
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-websocket</artifactId>
 			<version>5.0.7.RELEASE</version>
-		</dependency>
+		</dependency>-->
 
-		<!-- https://mvnrepository.com/artifact/javax.websocket/javax.websocket-api -->
+		<!-- https://mvnrepository.com/artifact/org.springframework/spring-messaging 
 		<dependency>
-			<groupId>javax.websocket</groupId>
-			<artifactId>javax.websocket-api</artifactId>
-			<version>1.1</version>
-			<scope>provided</scope>
-		</dependency>
+		    <groupId>org.springframework</groupId>
+		    <artifactId>spring-messaging</artifactId>
+		    <version>5.0.7.RELEASE</version>
+		</dependency>-->
+
+		<!-- https://mvnrepository.com/artifact/org.json/json 
+		<dependency>
+		    <groupId>org.json</groupId>
+		    <artifactId>json</artifactId>
+		    <version>20160810</version>
+		</dependency>-->
 
 	</dependencies>
 	<build>
