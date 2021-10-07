@@ -88,7 +88,7 @@ INSERT INTO consumer(cnum, cid, email, password, nickname, cadmin)
     VALUES(consumer_num.nextval,'cho', 'chocc', 'aaa', 'cho', 0);
 
 SELECT * FROM consumer; 
-// 유저방명록 (각 개인 상태창에 보임)
+/* 유저방명록 (각 개인 상태창에 보임)*/
 CREATE table userreply_tbl(
     rno number(10,0),
     cnum number(10,0) not null,
