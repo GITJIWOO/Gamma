@@ -3,6 +3,7 @@ package org.game.gamelibrary.controller;
 import java.util.List;
 
 import org.game.gamelibrary.domain.GameLibraryVO;
+import org.game.gamelibrary.domain.ResultLibraryVO;
 import org.game.gamelibrary.service.GameLibraryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -26,10 +27,10 @@ public class GameLibraryController {
 	@GetMapping("/conLibrary/{cid}")
 	public String consumerLibraryList(@PathVariable String cid, Model model) {
 		
-		List<GameLibraryVO> library = libraryService.getAllConsumerLibrary(cid);
+		List<ResultLibraryVO> library = libraryService.getAllConsumerLibrary(cid);
 		
 		model.addAttribute("library", library);
 		
-		return "/library/conLibrary/" + cid;
+		return "/library/conLibrary";
 	}
 }
