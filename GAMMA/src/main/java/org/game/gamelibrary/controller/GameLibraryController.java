@@ -2,7 +2,6 @@ package org.game.gamelibrary.controller;
 
 import java.util.List;
 
-import org.game.gamelibrary.domain.GameLibraryVO;
 import org.game.gamelibrary.domain.ResultLibraryVO;
 import org.game.gamelibrary.service.GameLibraryService;
 import org.springframework.beans.factory.annotation.Autowired;
