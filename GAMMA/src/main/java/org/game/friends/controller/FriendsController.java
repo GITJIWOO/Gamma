@@ -2,9 +2,11 @@ package org.game.friends.controller;
 
 import java.util.List;
 
+import org.game.friends.domain.FriendsSearchCriteria;
 import org.game.friends.domain.FriendsVO;
 import org.game.friends.service.FriendsService;
 import org.game.user.domain.ConsumerVO;
+import org.game.user.domain.FriendsPageDTO;
 import org.game.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -26,7 +28,7 @@ public class FriendsController {
 	private FriendsService service;
 	
 	// 메인화면 
-	@GetMapping("/friendsmain")
+	@GetMapping("/friendsmain")	// 이거 메인화면으로 바꾸기 
 	public String friendsMain(Model model) {
 		// 해당 로그인계정 정보 가져와야 함 - user service에서 세션확인
 		//model.addAttribute("userId", cid);
@@ -71,14 +73,12 @@ public class FriendsController {
 	
 	// 전체 회원중에서 친구 추가할 회원 검색 
 	@GetMapping("/searchfriends")
-	public String searchFriends(String keyword, Model model) {
+	public String searchFriends(String cid, FriendsSearchCriteria criteria, Model model) {
 		log.info("전체 회원중에서 친구 찾는 로직 실행");
-		if(keyword == null) {
-			keyword = "";
-		}
-		List<ConsumerVO> userList = service.UserList(keyword);
+		List<ConsumerVO> userList = service.UserList(criteria, cid);
+		FriendsPageDTO page = new FriendsPageDTO(criteria, service.countUser(criteria, cid), 10);
 		model.addAttribute("userList", userList);
-		model.addAttribute("keyword", keyword);
+		model.addAttribute("page", page);
 		return "/friends/searchfriends";
 	}
 }

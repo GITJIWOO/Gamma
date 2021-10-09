@@ -10,17 +10,18 @@
 <body>
 	<h1>친구 검색</h1>
 	<form>
-		<input type="text" name="keyword" value="${keyword }" placeholder="닉네임 또는 아이디로 친구 검색"/>
+		<input type="text" name="keyword" value="${page.criteria.keyword }" placeholder="닉네임 또는 아이디로 친구 검색"/>
 		<input type="submit" value="검색"/>
 	</form>
 	<!-- 처음에는 비어있다가 검색하면 나타나도록 작성 -->
-	<table>
+	<div class="infinite">
 		<c:forEach items="${userList }" var="userList">
-			<tr>
-				<td>${userList.cid }</td>
-				<td>${userList.nickname }</td>
-			</tr>
+			<div class="userList">
+				<div class="userList__cid">${userList.cid }</div>
+				<div class="userList__nick">${userList.nickname }</div>
+			</div>
 		</c:forEach>
-	</table>
+	</div>
+	<div class="pagination"></div>
 </body>
 </html>

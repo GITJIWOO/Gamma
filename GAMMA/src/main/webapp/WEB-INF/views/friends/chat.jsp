@@ -7,32 +7,43 @@
 <meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
 <title>Insert title here</title>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-</head>
-<body>
-	<!-- home.jsp에 작성해야하는 것 -->
-	<form id="chatForm">
-		<input type="text" id="message"/>
-		<button>send</button>
-	</form>
-	<div id="chat"></div>
-	<script>
+<script src="<c:url value="/resources/js/sockjs-0.3.4.js"/>"></script>
+<script>
 		$(document).ready(function(){
-			$("#chatForm").submit(function(event){
-				event.preventDefault();
-				sock.send($("#message").val());
-				$("#message").val('').focus();
+			$("#sendBtn").click(function(){
+				sendMessage();
 			});
 		});
 		
-		var sock = new SockJS("/echo");
-		sock.onmessage = function(e){
-			$("#chat").append(e.data + "<br/>");
+		var sock;
+		// socket을 지정한 url로 연결 
+		sock = new SockJS("<c:url value='/echo'/>");
+		
+		// 데이터가 나에게 전달되면 자동으로 실행되는 function 
+		sock.onmessage = onMessage;
+		
+		// 데이터를 끊고 싶을 때 실행하는 메서드
+		sock.onclose = onClose;
+		
+		// socket으로 보냄
+		function sendMessage(){
+			sock.send($("#message").val());
 		}
 		
-		sock.onclose = function(){
-			$("#chat").append("연결 종료");
+		// evt 파라미터는 websocket 을 보내준 데이터
+		function onMessage(evt){
+			var data = evt.data;
+			$("#data").append(data + "<br>");
 		}
 		
-	</script>
+		function onClose(evt){
+			$("#data").append("연결 끊김")
+		}
+</script>
+</head>
+<body>
+	<input type="text" id="message" />
+	<input type="button" id="sendBtn" value="전송" />
+	<div id="data"></div>
 </body>
 </html>

@@ -240,9 +240,9 @@ CREATE TABLE friends (
     fnum NUMBER,
     follower VARCHAR2(20) NOT NULL,
     following VARCHAR2(20) NOT NULL,/* 로그인 계정 */
-    CONSTRAINT pk_friends PRIMARY KEY(follower, following),
     CONSTRAINT fk_friends FOREIGN KEY(following) REFERENCES consumer(cid)
 );
+ALTER TABLE friends ADD CONSTRAINT pk_friends PRIMARY KEY(follower, following);
 
 /*  상태글 테이블
     상태글 식별 번호(기본키)

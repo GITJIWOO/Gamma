@@ -2,6 +2,7 @@ package org.game.friends.service;
 
 import java.util.List;
 
+import org.game.friends.domain.FriendsSearchCriteria;
 import org.game.friends.domain.FriendsVO;
 import org.game.friends.mapper.FriendsMapper;
 import org.game.user.domain.ConsumerVO;
@@ -20,9 +21,9 @@ public class FriendsServiceImpl implements FriendsService{
 	private FriendsMapper mapper;
 
 	@Override
-	public List<ConsumerVO> UserList(String keyword) {
+	public List<ConsumerVO> UserList(FriendsSearchCriteria criteria, String cid) {
 		log.info("전체 회원 목록 조회");
-		return mapper.getUser(keyword);
+		return mapper.getUser(criteria, cid);
 	}
 
 	@Override
@@ -33,21 +34,27 @@ public class FriendsServiceImpl implements FriendsService{
 	}
 
 	@Override
-	public List<FriendsVO> followerList(String following, String keyword) {
+	public List<FriendsVO> followerList(String following, FriendsSearchCriteria criteria) {
 		log.info("로그인 계정이 팔로워하는 계정 조회");
-		return mapper.getFollower(following, keyword);
+		return mapper.getFollower(following, criteria);
 	}
 
 	@Override
-	public List<FriendsVO> followingList(String follower, String keyword) {
+	public List<FriendsVO> followingList(String follower, FriendsSearchCriteria criteria) {
 		log.info("로그인 계정을 팔로우하는 계정 조회");
-		return mapper.getFollowing(follower, keyword);
+		return mapper.getFollowing(follower, criteria);
 	}
 
 	@Override
 	public void removeFriend(String follower, String following) {
 		log.info("친구 삭제 실행");
 		mapper.deleteFriend(follower, following);
+	}
+
+	@Override
+	public int countUser(FriendsSearchCriteria criteria, String cid) {
+		log.info("유저 명수 조회");
+		return mapper.getCountUser(criteria, cid);
 	}
 
 }

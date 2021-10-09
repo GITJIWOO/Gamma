@@ -31,9 +31,9 @@ public class FriendsMapperTest {
 		mapper.insertFriend(vo);
 	}
 	
-	//@Test
+	@Test
 	public void testGetFollower() {
-		mapper.getFollower("asfgd", "dv");
+		mapper.getFollower("asfgd", "");
 	}
 	
 	//@Test
