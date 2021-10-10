@@ -27,10 +27,15 @@ public class FriendsServiceImpl implements FriendsService{
 	}
 
 	@Override
+	public Integer fOrNot(String follower, String following) {
+		log.info("해당 유저가 팔로워인지 조회");
+		return mapper.getFOrNot(follower, following);
+	}
+	
+	@Override
 	public void addFriend(FriendsVO vo) {
 		log.info("친구 추가 실행");
 		mapper.insertFriend(vo);
-		
 	}
 
 	@Override
@@ -68,5 +73,4 @@ public class FriendsServiceImpl implements FriendsService{
 		log.info("나를 팔로우하는 유저 카운트");
 		return mapper.getCountFollowing(criteria, follower);
 	}
-
 }

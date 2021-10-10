@@ -66,6 +66,7 @@
 	                    oneTime = false;
 	                    /*
 	                  	*** 해결해야되는거 ***
+	                  	스크롤 무한생성은 됨 
 	                  	jstl과의 문제인것 같음.. c:forEach를 인식못하는것같기도하고...
 	                  	1. 다음 페이지를 불러와야되는데 그러려면 스크롤이 내려갔을 때, 현재페이지가 1-2-3 이렇게 변경되야함
 	                  	2. 리스트를 10개씩 불러와야하는데 하나를 여러번 불러오고 있음 
@@ -106,6 +107,7 @@
 			<div class="userList">
 				<div class="userList__cid">${userList.cid }</div>
 				<div class="userList__nick">${userList.nickname }</div>
+				<!-- 해당 유저 프로필로 이동하고 거기서 친구 추가 혹은 삭제 로직 진행, url 바꾸면서 아래 hidden 삭제 예정 -->
 				<form action="/friends/addfriends" method="post">
 					<input type="hidden" name="cid" value="${param.cid }" />
 					<input type="hidden" name="pageNum" value="${page.cri.pageNum }" />
@@ -118,7 +120,6 @@
 		</c:forEach>
 	</div>
 	<div class="pagination">
-		<span>1</span>
 	 <c:forEach var="pageNum" begin="${page.startPage }" end="${page.endPage }">
 			<a href="/friends/searchfriends?cid=${param.cid }&pageNum=${pageNum}" class="nextPage">>></a>
 	 </c:forEach>

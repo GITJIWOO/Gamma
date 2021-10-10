@@ -25,7 +25,12 @@ public class FriendsMapperTest {
 		cri.setAmount(10);
 		cri.setPageNum(1);
 		cri.setKeyword("");
-		log.info(mapper.getUser(cri, "asfgd"));
+		mapper.getUser(cri, "asfgd");
+	}
+	
+	@Test
+	public void testGetFOrNot() {
+		mapper.getFOrNot("asfgd", "kqrqwr");
 	}
 	
 	//@Test
@@ -36,7 +41,7 @@ public class FriendsMapperTest {
 		mapper.insertFriend(vo);
 	}
 	
-	@Test
+	//@Test
 	public void testGetFollower() {
 		FriendsSearchCriteria cri = new FriendsSearchCriteria();
 		cri.setAmount(10);

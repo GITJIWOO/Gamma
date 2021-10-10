@@ -14,6 +14,10 @@
 	]]>
 	</select>
 
+	<select id="getFOrNot" resultType="Integer">
+		SELECT fornot FROM friends WHERE follower = #{follower} AND following = #{following}
+	</select>
+	
 	<insert id="insertFriend">
 		<selectKey keyProperty="fnum" resultType="Long" order="BEFORE">
 			SELECT friends_num.nextval FROM DUAL
