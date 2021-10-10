@@ -1,6 +1,4 @@
-package org.game.user.domain;
-
-import org.game.friends.domain.FriendsCriteria;
+package org.game.friends.domain;
 
 import lombok.Getter;
 import lombok.ToString;
@@ -18,9 +16,10 @@ public class FriendsPageDTO {
 	public FriendsPageDTO(FriendsCriteria cri, int total, int btnNum) {
 		this.cri = cri;
 		this.total = total;
-		
 		this.btnNum = btnNum;
+		
 		this.endPage = (int)(Math.ceil(cri.getPageNum() / (double)this.btnNum) * this.btnNum);
+		
 		this.startPage = this.endPage - this.btnNum + 1;
 		
 		int realEnd = (int)(Math.ceil((total * 1.0) / cri.getAmount()));
@@ -29,6 +28,7 @@ public class FriendsPageDTO {
 		}
 		
 		this.prev = this.startPage == 1 ? false : true;
+		
 		this.next = this.endPage < realEnd;
 	}
 }

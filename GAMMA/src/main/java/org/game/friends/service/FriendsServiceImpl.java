@@ -53,8 +53,20 @@ public class FriendsServiceImpl implements FriendsService{
 
 	@Override
 	public int countUser(FriendsSearchCriteria criteria, String cid) {
-		log.info("유저 명수 조회");
+		log.info("유저 카운트");
 		return mapper.getCountUser(criteria, cid);
+	}
+
+	@Override
+	public int countFollower(FriendsSearchCriteria criteria, String following) {
+		log.info("내가 팔로우하는 유저 카운트");
+		return mapper.getCountFollower(criteria, following);
+	}
+
+	@Override
+	public int countFollowing(FriendsSearchCriteria criteria, String follower) {
+		log.info("나를 팔로우하는 유저 카운트");
+		return mapper.getCountFollowing(criteria, follower);
 	}
 
 }

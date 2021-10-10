@@ -19,4 +19,8 @@ public interface FriendsService {
 	public void removeFriend(@Param("follower")String follower, @Param("following")String following);
 	
 	public int countUser(@Param("cri")FriendsSearchCriteria criteria, String cid);
+	
+	public int countFollower(@Param("cri")FriendsSearchCriteria criteria, @Param("following")String following);
+	
+	public int countFollowing(@Param("cri")FriendsSearchCriteria criteria, @Param("follower")String follower);
 }

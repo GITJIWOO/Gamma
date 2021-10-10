@@ -243,6 +243,7 @@ CREATE TABLE friends (
     CONSTRAINT fk_friends FOREIGN KEY(following) REFERENCES consumer(cid)
 );
 ALTER TABLE friends ADD CONSTRAINT pk_friends PRIMARY KEY(follower, following);
+ALTER TABLE friends ADD (fornot NUMBER DEFAULT 1); /* 컬럼 추가 */
 
 /*  상태글 테이블
     상태글 식별 번호(기본키)

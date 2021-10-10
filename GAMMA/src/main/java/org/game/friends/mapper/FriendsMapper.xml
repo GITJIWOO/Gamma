@@ -7,7 +7,10 @@
 	<!-- 본인 제외 -->
 	<select id="getUser" resultType="org.game.user.domain.ConsumerVO">
 	<![CDATA[
-		SELECT cnum, cid, email, password, nickname, cadmin, userregdate, userupdatedate FROM (SELECT rownum rn, consumer.* FROM consumer WHERE NOT cid = #{cid} AND cadmin = 0 AND (cid LIKE '%'||#{cri.keyword}||'%' OR nickname LIKE '%'||#{cri.keyword}||'%') AND rownum <= #{cri.pageNum} * #{cri.amount}) ORDER BY nickname) co WHERE rn > (#{cri.pageNum} - 1) * #{cri.amount}
+		SELECT cnum, cid, email, password, nickname, cadmin, userregdate, userupdatedate FROM 
+		(SELECT rownum rn, consumer.* FROM consumer 
+		WHERE (NOT cid = #{cid}) AND (cadmin = 0) AND (cid LIKE '%'||#{cri.keyword}||'%' OR nickname LIKE '%'||#{cri.keyword}||'%') AND rownum <= #{cri.pageNum} * #{cri.amount} 
+		ORDER BY nickname) co WHERE rn > (#{cri.pageNum} - 1) * #{cri.amount}
 	]]>
 	</select>
 
@@ -32,18 +35,34 @@
 	-->
 	<select id="getFollower" resultType="org.game.user.domain.ConsumerVO">
 	<![CDATA[
-		 SELECT cnum, cid, email, password, nickname, cadmin, userregdate, userupdatedate FROM (SELECT rownum rn, consumer.* FROM consumer WHERE cid IN (SELECT follower FROM friends WHERE following = #{following}) AND (cid LIKE '%'||#{cri.keyword}||'%' OR nickname LIKE '%'||#{cri.keyword}||'%') AND rownum <= #{cri.pageNum} * #{cri.amount} ORDER BY nickname) co WHERE rn > (#{cri.pageNum} - 1) * #{cri.amount}
+		 SELECT cnum, cid, email, password, nickname, cadmin, userregdate, userupdatedate FROM 
+		 (SELECT rownum rn, consumer.* FROM consumer 
+		 WHERE cid IN (SELECT follower FROM friends 
+		 WHERE following = #{following}) AND (cid LIKE '%'||#{cri.keyword}||'%' OR nickname LIKE '%'||#{cri.keyword}||'%') AND rownum <= #{cri.pageNum} * #{cri.amount} 
+		 ORDER BY nickname) co WHERE rn > (#{cri.pageNum} - 1) * #{cri.amount}
 	]]>
 	</select>
 
 	<select id="getFollowing" resultType="org.game.user.domain.ConsumerVO">
 	<![CDATA[
-		SELECT cnum, cid, email, password, nickname, cadmin, userregdate, userupdatedate FROM (SELECT rownum rn, consumer.* FROM consumer WHERE cid IN (SELECT following FROM friends WHERE follower = #{follower}) AND (cid LIKE '%'||#{cri.keyword}||'%' OR nickname LIKE '%'||#{cri.keyword}||'%') AND rownum <= #{cri.pageNum} * #{cri.amount} ORDER BY nickname) co WHERE rn > (#{cri.pageNum} - 1) * #{cri.amount}
+		SELECT cnum, cid, email, password, nickname, cadmin, userregdate, userupdatedate FROM 
+		(SELECT rownum rn, consumer.* FROM consumer 
+		WHERE cid IN (SELECT following FROM friends 
+		WHERE follower = #{follower}) AND (cid LIKE '%'||#{cri.keyword}||'%' OR nickname LIKE '%'||#{cri.keyword}||'%') AND rownum <= #{cri.pageNum} * #{cri.amount} 
+		ORDER BY nickname) co WHERE rn > (#{cri.pageNum} - 1) * #{cri.amount}
 	]]>
 	</select>
 	
 	<select id="getCountUser" resultType="int">
-		SELECT count(*) FROM consumer WHERE NOT cid = #{cid} AND cadmin = 0 AND cid LIKE '%'||#{cri.keyword}||'%' OR nickname LIKE '%'||#{cri.keyword}||'%'
+		SELECT count(*) FROM consumer WHERE (NOT cid = #{cid}) AND (cadmin = 0) AND (cid LIKE '%'||#{cri.keyword}||'%' OR nickname LIKE '%'||#{cri.keyword}||'%')
+	</select>
+	
+	<select id="getCountFollower" resultType="int">
+		SELECT count(*) FROM consumer WHERE cid IN (SELECT follower FROM friends WHERE following = #{following}) AND (cid LIKE '%'||#{cri.keyword}||'%' OR nickname LIKE '%'||#{cri.keyword}||'%')
+	</select>
+	
+	<select id="getCountFollowing" resultType="int">
+		SELECT count(*) FROM consumer WHERE cid IN (SELECT following FROM friends WHERE follower = #{follower}) AND (cid LIKE '%'||#{cri.keyword}||'%' OR nickname LIKE '%'||#{cri.keyword}||'%')
 	</select>
 	
 	<delete id="deleteFriend">

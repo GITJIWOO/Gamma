@@ -20,8 +20,14 @@ public interface FriendsMapper {
 	// 나를 follow 하는 친구(로그인 계정=follower) 목록 조회(select)
 	public List<FriendsVO> getFollowing(@Param("follower")String follower, @Param("cri")FriendsSearchCriteria criteria);
 	
-	// 전체 회원 명수 조회
+	// getUser count
 	public int getCountUser(@Param("cri")FriendsSearchCriteria criteria, @Param("cid")String cid);
+	
+	// getFollower count
+	public int getCountFollower(@Param("cri")FriendsSearchCriteria criteria, @Param("following")String following);
+	
+	// getFollowing count
+	public int getCountFollowing(@Param("cri")FriendsSearchCriteria criteria, @Param("follower")String follower);
 	
 	// 친구 삭제(delete)
 	public void deleteFriend(@Param("follower")String follower, @Param("following")String following);
