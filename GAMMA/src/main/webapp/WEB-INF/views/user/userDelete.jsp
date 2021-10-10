@@ -51,11 +51,11 @@
 			// 취소
 			$(".cencle").on("click", function() {
 
-				location.href = "/user/userHome";
+				location.href = "/user/userLogin?cid=${memer.cid}";
 
 			})
 
-			$("#submit").on("click", function() {
+			/* $("#submit").on("click", function() {
 				if ($("#password").val() == "") {
 					alert("비밀번호를 입력해주세요.");
 					$("#password").focus();
@@ -80,7 +80,7 @@
 					}
 				})
 
-			});
+			}); */
 
 		})
 	</script>

@@ -19,7 +19,7 @@
 		<c:if test="${member != null}"><a href="/user/userModify">유저수정</a></c:if>
 		<c:if test="${member != null}"><a href="/user/userDelete">탈퇴</a></c:if>
 		<c:if test="${member != null}"><a href="/user/userGet">상세창</a></c:if>
-		
+		<c:if test="${member != null}"><a href="/user/userPro">프로필</a></c:if>
 	</li>
 	<li>
 		<c:if test="${member != null}">
