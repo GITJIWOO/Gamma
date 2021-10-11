@@ -6,6 +6,7 @@ import javax.servlet.http.HttpSession;
 
 import org.game.user.domain.ConsumerVO;
 import org.game.user.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,27 +28,16 @@ public class UserController {
 	UserService service;
 	// @Inject
 	// BCryptPasswordEncoder pwdEncoder;
-
-	// 아이디 중복 체크
-	@ResponseBody
-	@PostMapping("/idChk")
-	public long idChk(ConsumerVO userVO) throws Exception {
-
-		System.out.println(userVO.getCid());
-		long result = service.idChk(userVO);
-		return result;
+	//@Autowired
+	//private JavaMailSender mailSender;
+	
+	// 유저프로필
+	@GetMapping("/userPro")
+	public String userPro() {
+		return "/user/userPro";
 	}
-
-	// 비밀번호 중복 체크
-	// @ResponseBody
-	// @PostMapping("/passChk")
-	// public boolean passChk(ConsumerVO userVO) throws Exception {
-
-	// ConsumerVO login = service.userLogin(userVO);
-	// boolean pwdChk = pwdEncoder.matches(userVO.getPassword(),
-	// login.getPassword());
-	// return pwdChk;
-	// }
+	
+	
 	@GetMapping("/userGet")
 	public String userGet() {
 		return "/user/userGet";
@@ -78,7 +68,8 @@ public class UserController {
 		// service.userJoin(userVO);
 
 		log.info("poset회원가입실행");
-		int result = service.idChk(userVO);
+		long result = service.idChk(userVO.getCid());
+		log.info("result값: " +result);
 		try {
 			if (result == 1) {
 				return "/user/userJoin";
@@ -88,6 +79,7 @@ public class UserController {
 				// userVO.setPassword(pwd);
 				service.userJoin(userVO);
 			}
+			
 		} catch (Exception e) {
 			throw new RuntimeException();
 		}
@@ -113,7 +105,8 @@ public class UserController {
 
 	@GetMapping("/userLogin")
 	public String userLogin() throws Exception {
-		return "/user/userHome";
+		
+		return "/user/userLogin";
 	}
 
 	@PostMapping("/userLogin")
@@ -131,6 +124,7 @@ public class UserController {
 		// login.getPassword());
 		// System.out.println("비번매칭 : " + pwdMatch);
 		boolean result = login.getPassword().equals(userVO.getPassword());
+		System.out.println("result 값 : "+result);
 		if (result == true) { // 위의 result는 나중에 바꿔야함 복호화와 시큐리티 적용하면 오류생길가능성이 높다 .equls는 단순한 문자열 비교라 그럼
 			session.setAttribute("member", login);
 			session.setAttribute("session_cid", login.getCid());
@@ -148,15 +142,26 @@ public class UserController {
 	}
 
 	// 로그아웃 과 세션 초기화
+	/* 시큐리티 적용 전 얘하나로만 했었음
+	 * @GetMapping("/userLogout") public String userLogout(HttpSession session)
+	 * throws Exception { // security-con~ 에서 세션파기설정이되있음 //session.invalidate();
+	 * 
+	 * return "/user/userLogin"; }
+	 */
+	// 로그아웃 과 세션 초기화 시큐리티적용버전
 	@GetMapping("/userLogout")
-	public String userLogout(HttpSession session) throws Exception {
-
-		session.invalidate();
-
-		return "/user/userHome";
+	public void userLogoutget() {
+		// security-con~ 에서 세션파기설정이되있음
+		//session.invalidate();
+		log.info("로그아웃 폼으로 이동");
+	}
+	@PostMapping("/userLogout")
+	public void userLogout() {
+		log.info("포스트방식으로 로그아웃 처리");
+		
 	}
 
-	// 겟으로 접근하는 수정창
+	// 겟으로 접근하는 수정창  -- ajax쓰기려고 넘김
 	@GetMapping("/userModify")
 	public String userModify() throws Exception {
 		return "user/userModify";
@@ -167,7 +172,7 @@ public class UserController {
 	public String registerUpdate(ConsumerVO vo, HttpSession session) throws Exception {
 		service.userModify(vo);
 		session.invalidate();
-		return "redirect:/user/userLogin";
+		return "/user/userLogin";
 	}
 
 	// 회원 탈퇴 get
@@ -181,7 +186,7 @@ public class UserController {
 	public String memberDelete(ConsumerVO userVO, HttpSession session, RedirectAttributes rttr) throws Exception {
 		service.userDelete(userVO);
 		session.invalidate();
-		return "/user/userHome";
+		return "/user/userLogin";
 	}
 
 }

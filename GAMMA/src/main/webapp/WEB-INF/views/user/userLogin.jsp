@@ -20,6 +20,7 @@
 	$("#logoutBtn").on("click", function(){
 		location.href="user/userLogout";
 	})
+	
 	$("#registerBtn").on("click", function(){
 		location.href="user/userJoin";
 	})
@@ -41,17 +42,20 @@
 		<c:if test="${member == null}">
 			<div>
 				<label for="cid"></label>
-				<input type="text" id="cid" name="cid">
+				<input type="text" id="cid" name="cid"/>
 			</div>
 			<div>
 				<label for="password"></label>
-				<input type="password" id="password" name="password">
-			</div>
-			<div>
-				<button type="submit">로그인</button>
-				<a href="/user/userJoin"><button id=registerBtn type="button">회원가입</button></a>
+				<input type="password" id="password" name="password"/>
 			</div>
 		</c:if>
+			<div>
+				<button type="submit">로그인</button>
+				<!-- 시큐리티적용 교안 11-->
+				<%-- <input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }"/> --%>
+				<a href="/user/userJoin"><button id=registerBtn type="button">회원가입</button></a>
+			</div>
+	</form>
 		<c:if test="${member != null }">
 			<div>
 				<p>${member.cid}님 환영 합니다.</p>
@@ -63,6 +67,5 @@
 		<c:if test="${msg == false}">
 			<p style="color: red;">로그인 실패! 아이디와 비밀번호 확인해주세요.</p>
 		</c:if>
-	</form>
 </body>
 </html>

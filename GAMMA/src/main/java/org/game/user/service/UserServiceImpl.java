@@ -27,8 +27,15 @@ public class UserServiceImpl implements UserService {
 
 	// 아이디 중복 체크
 	@Override
-	public long idChk(ConsumerVO userVO) throws Exception {
-		long result = mapper.idChk(userVO);
+	public long idChk(String cid) throws Exception {
+		long result = mapper.idChk(cid);
+		return result;
+	}
+
+	// 아이디 중복 체크
+	@Override
+	public long emailChk(String email) throws Exception {
+		long result = mapper.emailChk(email);
 		return result;
 	}
 

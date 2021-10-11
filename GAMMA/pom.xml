@@ -174,47 +174,26 @@
 		<!-- jackson -->
 		<!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind -->
 		<dependency>
-		    <groupId>com.fasterxml.jackson.core</groupId>
-		    <artifactId>jackson-databind</artifactId>
-		    <version>2.13.0-rc2</version>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-databind</artifactId>
+			<version>2.13.0-rc2</version>
 		</dependency>
 
 
 		<!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.dataformat/jackson-dataformat-xml -->
 		<dependency>
-		    <groupId>com.fasterxml.jackson.dataformat</groupId>
-		    <artifactId>jackson-dataformat-xml</artifactId>
-		    <version>2.13.0-rc2</version>
-		</dependency>
-		
-		<!-- security 4개 -->
-		<!-- https://mvnrepository.com/artifact/org.springframework.security/spring-security-web -->
-		<dependency>
-			<groupId>org.springframework.security</groupId>
-			<artifactId>spring-security-web</artifactId>
-			<version>5.0.7.RELEASE</version>
+			<groupId>com.fasterxml.jackson.dataformat</groupId>
+			<artifactId>jackson-dataformat-xml</artifactId>
+			<version>2.13.0-rc2</version>
 		</dependency>
 
-		<!-- https://mvnrepository.com/artifact/org.springframework.security/spring-security-config -->
-		<dependency>
-			<groupId>org.springframework.security</groupId>
-			<artifactId>spring-security-config</artifactId>
-			<version>5.0.7.RELEASE</version>
-		</dependency>
+		<!-- mail인증번호관련 2 -->
+		<!-- https://mvnrepository.com/artifact/javax.mail/mail -->
+		<!-- <dependency> <groupId>javax.mail</groupId> <artifactId>mail</artifactId> 
+			<version>1.4.7</version> </dependency> https://mvnrepository.com/artifact/org.springframework/spring-context-support 
+			<dependency> <groupId>org.springframework</groupId> <artifactId>spring-context-support</artifactId> 
+			<version>${org.springframework-version}</version> </dependency> -->
 
-		<!-- https://mvnrepository.com/artifact/org.springframework.security/spring-security-core -->
-		<dependency>
-			<groupId>org.springframework.security</groupId>
-			<artifactId>spring-security-core</artifactId>
-			<version>5.0.7.RELEASE</version>
-		</dependency>
-
-		<!-- https://mvnrepository.com/artifact/org.springframework.security/spring-security-taglibs -->
-		<dependency>
-			<groupId>org.springframework.security</groupId>
-			<artifactId>spring-security-taglibs</artifactId>
-			<version>5.0.7.RELEASE</version>
-		</dependency>
 
 		<!-- websocket 1개 -->
 		<!-- https://mvnrepository.com/artifact/org.springframework/spring-websocket -->
@@ -229,7 +208,27 @@
 		  <artifactId>sockjs-client</artifactId>
 		  <version>1.0.2</version>
 		</dependency>
+		<!-- security 4개 -->
+		<!-- https://mvnrepository.com/artifact/org.springframework.security/spring-security-web -->
+		<!-- <dependency> <groupId>org.springframework.security</groupId> <artifactId>spring-security-web</artifactId> 
+			<version>5.0.7.RELEASE</version> </dependency> https://mvnrepository.com/artifact/org.springframework.security/spring-security-config 
+			<dependency> <groupId>org.springframework.security</groupId> <artifactId>spring-security-config</artifactId> 
+			<version>5.0.7.RELEASE</version> </dependency> https://mvnrepository.com/artifact/org.springframework.security/spring-security-core 
+			<dependency> <groupId>org.springframework.security</groupId> <artifactId>spring-security-core</artifactId> 
+			<version>5.0.7.RELEASE</version> </dependency> https://mvnrepository.com/artifact/org.springframework.security/spring-security-taglibs 
+			<dependency> <groupId>org.springframework.security</groupId> <artifactId>spring-security-taglibs</artifactId> 
+			<version>5.0.7.RELEASE</version> </dependency> -->
+		<!-- 채팅을 위한 웹 소켓(아래 3개) -->
+		<!-- https://mvnrepository.com/artifact/org.springframework/spring-websocket 
+			<dependency> <groupId>org.springframework</groupId> <artifactId>spring-websocket</artifactId> 
+			<version>5.0.7.RELEASE</version> </dependency> -->
 
+		<!-- https://mvnrepository.com/artifact/org.springframework/spring-messaging 
+			<dependency> <groupId>org.springframework</groupId> <artifactId>spring-messaging</artifactId> 
+			<version>5.0.7.RELEASE</version> </dependency> -->
+
+		<!-- https://mvnrepository.com/artifact/org.json/json <dependency> <groupId>org.json</groupId> 
+			<artifactId>json</artifactId> <version>20160810</version> </dependency> -->
 		
 	</dependencies>
 	<build>

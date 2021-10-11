@@ -2,7 +2,6 @@ package org.game.gamelibrary.service;
 
 import java.util.List;
 
-import org.game.gamelibrary.domain.GameLibraryVO;
 import org.game.gamelibrary.domain.ResultLibraryVO;
 
 public interface GameLibraryService {

@@ -1,6 +1,7 @@
 package org.game.user.mapper;
 
 
+import org.apache.ibatis.annotations.Param;
 import org.game.user.domain.ConsumerVO;
 
 public interface UserMapper {
@@ -22,7 +23,10 @@ public interface UserMapper {
 	public void userDelete(ConsumerVO userVO) throws Exception;
 	
 	// 아이디 중복체크
-	public long idChk(ConsumerVO userVO) throws Exception;
+	public long idChk(String cid) throws Exception;
+
+	// email 중복체크
+	public long emailChk(String email) throws Exception;
 
 	//패스워드 체크
 	public long passChk(ConsumerVO userVO) throws Exception;
