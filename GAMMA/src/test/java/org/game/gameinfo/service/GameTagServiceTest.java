@@ -2,6 +2,9 @@ package org.game.gameinfo.service;
 
 import static org.junit.Assert.assertNotNull;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.game.gameinfo.domain.GameInfoVO;
 import org.game.gameinfo.domain.GameTagVO;
 import org.junit.Test;
@@ -30,15 +33,19 @@ public class GameTagServiceTest {
 	}
 
 //	@Test
-	public void testRegister() {
-		GameInfoVO vo = new GameInfoVO();
-		vo.setTagname("zzzzz");
-		vo.setGnum(1);
-		service.registerTag(vo);
+//	public void testRegister() {
+//		String[] tags = new String[] { "aaa", "bbb", "ccc" };
+//		for (int i = 0; i < tags.length; i++) {
+//			GameInfoVO vo = new GameInfoVO();
+//			log.info(tags[i]);
+//			vo.setGnum(542);
+//			vo.setTagname(tags[i]);
+//			service.registerTag(tags, vo);
+//		}
+//
+//	}
 
-	}
-
-	@Test
+//	@Test
 	public void testTagSelect() {
 		service.getTag(1L);
 	}
@@ -47,13 +54,13 @@ public class GameTagServiceTest {
 	public void testTagDelete() {
 		service.removeTag(82L);
 	}
-	
-//	@Test
-	public void testTagUpdate() {
-		GameInfoVO vo = new GameInfoVO();
-		vo.setTagname("수정 qwer");
-		vo.setGtnum(62L);
-		service.modifyTag(vo);
-		
-	}
+
+////	@Test
+//	public void testTagUpdate() {
+//		GameInfoVO vo = new GameInfoVO();
+//		vo.setTagname("수정 qwer");
+//		vo.setGtnum(62L);
+//		service.modifyTag(vo);
+//
+//	}
 }

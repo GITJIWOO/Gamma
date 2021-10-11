@@ -30,10 +30,10 @@
 	}
 
 	function createInput(id, value) {
-		return "<input type='text' id='test " + id
+		return "<input name = 'tagname' type='text' id='test " + id
 				+ "' onChange='javascript:saveValue(" + id
 				+ ",this.value)' value='" +
-
+					
 				value + "'><br>";
 	}
 
@@ -44,7 +44,19 @@
 		}
 		display();
 	}
-</script>
+	/////////////////////////////////////////////////////////
+	/*  $("#checked").click(function() {
+	    var checked = this.checked;
+	    $(this).closest("div").find(":text").prop('name', function() {
+	        if (checked) {
+	            return this.name + "_Dis";
+	        } else {
+	            return this.name.replace("_Dis", "");
+	        }
+	    });
+	}); */
+	
+</script> 
 
 <body>
 
@@ -115,7 +127,7 @@
 			</tr>
 			<tr>
 				<th>게임 태그</th>
-				<td id="parah"><input type="text" name="tagname" required /><br /></td>
+				<td><input type="text" name="tagname" required /><br /></td>
 				<th><input type="button" value="+" onclick="addInput();" /> <input
 					type="button" value="-" onclick="deleteInput();" /></th>
 			</tr>
@@ -131,7 +143,7 @@
 		<input type="hidden" name="gamelist">
 	</form>
 
-
+	<div></div>
 
 
 </body>

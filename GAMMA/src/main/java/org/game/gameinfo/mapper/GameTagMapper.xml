@@ -11,12 +11,18 @@
 	</resultMap>
 	
 	<!-- 게임 태그 조회  -->
+	
 	<select id="selectTag" parameterType="Long" resultMap="gameTagMap">
 		SELECT * FROM gametag where gnum = #{gnum} ORDER BY tagname 
 	</select>
 	
+	<!--  
+	<select id="selectTag" resultType="org.game.gameinfo.domain.GameInfoVO">
+		SELECT * FROM gametag where gnum = #{gnum} ORDER BY tagname 
+	</select>
+	-->
 	<select id="selectOneTag" resultType="org.game.gameinfo.domain.GameInfoVO">
-		SELECT * FROM gametag where gtnum = #{gtnum}  ORDER BY tagname 
+		SELECT * FROM gametag where gnum = #{gnum}   
 	</select>
 	
 	<!-- 게임 태그 추가 -->
@@ -24,8 +30,9 @@
 	<selectKey keyProperty="gtnum" order="BEFORE" resultType="long">
 		SELECT gametag_num.nextval FROM DUAL
 	</selectKey>
-	INSERT INTO gametag (gtnum, tagname, gnum)
-	VALUES (gametag_num.nextval, #{tagname}, #{gnum})
+	INSERT INTO gametag (gtnum, gnum, tagname)
+	VALUES (gametag_num.nextval, #{gnum}, #{tagname})
+
 	</insert>
 	
 	<!-- 게엠 태그 삭제 -->

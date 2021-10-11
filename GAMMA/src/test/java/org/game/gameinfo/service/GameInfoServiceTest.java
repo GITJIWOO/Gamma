@@ -37,7 +37,7 @@ public class GameInfoServiceTest {
 		vo.setGdeveloper("aaa");
 		vo.setGfublisher("aaa");
 		vo.setGgrade(18);
-		vo.setGlaunch("2021-09-27");
+//		vo.setGlaunch("2021-09-27");
 		vo.setGname("aaa");
 		vo.setGprice(11111);
 		vo.setGsite("www.aaaaa.com");
@@ -67,7 +67,7 @@ public class GameInfoServiceTest {
 		vo.setGdeveloper("bli");
 		vo.setGfublisher("bli");
 		vo.setGgrade(18);
-		vo.setGlaunch("2222-02-22");
+//		vo.setGlaunch("2222-02-22");
 		vo.setGname("starcraft");
 		vo.setGprice(10000000);
 		vo.setGsite("www.blizard.com");
