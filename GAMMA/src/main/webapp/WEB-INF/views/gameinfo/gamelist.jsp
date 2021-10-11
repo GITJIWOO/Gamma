@@ -24,6 +24,10 @@ h1>a {
 	<h1>
 		<a href="/gameInfo/gamelist"> 게임 목록</a>
 	</h1>
+	<!--  
+	${gameList }<br/>
+	${btnMaker }<br/>
+	-->
 	<a href="/gameInfo/gameregister"><input type="button" value="게임등록"
 		style="float: right;"></a>
 	<table class="table table-hover">
@@ -78,8 +82,7 @@ h1>a {
 		</ul>
 	</nav>
 
-	<form action="/gameInfo/gamelist" method="get"
-		style="text-align: center;">
+	<form action="/gameInfo/gamelist" method="get" style="text-align: center;">
 		<select name="searchType">
 			<option value="n"
 				<c:out value="${btnMaker.cri.searchType == null ? 'selected' : '' }"/>>
@@ -116,28 +119,23 @@ h1>a {
 			</div>
 		</div>
 	</div>
+	
 
 	<script
 		src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js"
 		integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ"
 		crossorigin="anonymous"></script>
 	<script type="text/javascript">
-		// 컨트롤러에서 success라는 이름으로 날린 자료가 들어오는지 확인
-		// 그냥 list 페이지 접근시는 success를 날려주지 않아서 아무것도 들어오지 않고
-		// remove 로직의 결과로 넘어왔을때만 데이터가 전달됨
 		var result = "${success}";
-		var gnum = "${gnum}";
+		var gname = "${gname}";
 
-		// 모달 사용을 위한 변수 선언
-		// 모달 공식문서의 자바스크립트 관련 실행 코드를 복사합니다
 		var myModal = new bootstrap.Modal(document.getElementById('myModal'),
 				focus)
 		console.log(result);
-		console.log(bno);
+		console.log(gname);
 		if (result === "success") {
-			alert(bno + "번 글이 삭제되었습니다");
+			alert("'" + gname + "'" + "게임이 삭제되었습니다");
 		} else if (result === "register") {
-			// 공식 문서 하단의 myModal.show()
 			myModal.show();
 		}
 		// 		var keyword = "${keyword}";

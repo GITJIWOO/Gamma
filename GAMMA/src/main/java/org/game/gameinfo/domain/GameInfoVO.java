@@ -3,13 +3,14 @@ package org.game.gameinfo.domain;
 import java.sql.Date;
 
 import lombok.Data;
+import oracle.sql.DATE;
 
 @Data
 public class GameInfoVO {
 	
 	private long gnum;
 	private String gname;
-	private String glaunch;
+	private Date glaunch;
 	private String gdeveloper;
 	private String gfublisher;
 	private int gprice; 
@@ -27,5 +28,5 @@ public class GameInfoVO {
 	private String gstore;
 	
 	private long gtnum;
-	private String tagname;
+	private String tagname; 
 }
