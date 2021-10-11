@@ -9,7 +9,10 @@ public interface UserService {
 	public ConsumerVO userGet(String cid);
 
 	// 아이디 중복 체크
-	public long idChk(ConsumerVO userVO) throws Exception;
+	public long idChk(String cid) throws Exception;
+
+	// 아이디 중복 체크
+	public long emailChk(String email) throws Exception;
 
 	// 패스워드 중복 체크
 	public long passChk(ConsumerVO userVO) throws Exception;

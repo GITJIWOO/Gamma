@@ -21,7 +21,7 @@
 		// 취소
 		$(".cencle").on("click", function() {
 
-			location.href = "/";
+			location.href = "/user/userPro";
 
 		})
 
@@ -37,7 +37,7 @@
 				return false;
 			} 
 		 	$.ajax({
-				url : "/user/passChk",
+				url : "/user/userModify",
 				type : "POST",
 				dateType : "json",
 				data : $("#updateForm").serializeArray(),

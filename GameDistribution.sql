@@ -69,7 +69,7 @@ select * from gamerequirement left join game using (gnum);
     nickname = 닉네임
     cadmin = 관리자 여부(0 = 일반 사용자)
 */
-drop table consumer;
+
 CREATE SEQUENCE consumer_num INCREMENT BY 1 START WITH 1;
 CREATE TABLE consumer (
     cnum NUMBER PRIMARY KEY,
@@ -79,7 +79,8 @@ CREATE TABLE consumer (
     nickname VARCHAR(20) NOT NULL UNIQUE,
     cadmin NUMBER(3) DEFAULT 0
    );
-
+commit;   
+ALTER TABLE consumer MODIFY password VARCHAR2(100);
 ALTER TABLE consumer ADD(userregdate DATE Default sysdate NOT NULL,userupdatedate DATE Default sysdate NOT NULL);
 ALTER TABLE consumer ADD UNIQUE(userphone);
 INSERT INTO consumer(cnum, cid, email, password, nickname, cadmin) 
@@ -88,6 +89,24 @@ INSERT INTO consumer(cnum, cid, email, password, nickname, cadmin)
     VALUES(consumer_num.nextval,'cho', 'chocc', 'aaa', 'cho', 0);
 
 SELECT * FROM consumer; 
+CREATE TABLE authorities(
+cnum NUMBER ,
+cid VARCHAR2(20) NOT NULL,
+auth varchar2(50) not null,
+constraint fk_authorities_users foreign key(cnum) references consumer(cnum));
+
+ alter table authorities drop constraint fk_authorities_users;
+create unique index ix_auth_cid on authorities (cid, auth);
+
+insert into consumer (cnum,cid,password,email,nickname,cadmin) values (consumer_num.nextval,'user00','pw00','ssos@sos','scho',0);
+insert into consumer (cnum,cid,password,email,nickname,cadmin) values (consumer_num.nextval,'member00','pw00','m@sos','mcho',0);
+insert into consumer (cnum,cid,password,email,nickname,cadmin) values (consumer_num.nextval,'admin00','pw00','assos@sos','ascho',0);
+insert into authorities (cnum,cid,authority) values(502,'user00','ROLE_USER');
+insert into authorities (cnum,cid,authority) values(503,'member00','ROLE_MANAGER');
+insert into authorities (cnum,cid,authority) values(504,'admin00','ROLE_MANAGER');
+insert into authorities (cnum,cid,authority) values(504,'admin00','ROLE_ADMIN');
+commit;
+
 /* 유저방명록 (각 개인 상태창에 보임)*/
 CREATE table userreply_tbl(
     rno number(10,0),

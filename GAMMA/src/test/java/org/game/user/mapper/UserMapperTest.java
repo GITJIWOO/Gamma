@@ -58,7 +58,7 @@ public class UserMapperTest {
 	
 	
 	
-	@Test
+	//@Test
 	public void testuserJoin() throws Exception {
 		ConsumerVO userVO =new ConsumerVO();
 			userVO.setCid("test");
@@ -67,6 +67,13 @@ public class UserMapperTest {
 			userVO.setPassword("test");
 		    mapper.userJoin(userVO);
 	}
+	
+	//@Test
+	/*public void testLogin() throws Exception {
+		ConsumerVO vo = mapper.userLogin("user00");
+		log.info(vo);
+		vo.getAuthList();
+	}*/
 
 	
 
