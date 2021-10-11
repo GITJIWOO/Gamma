@@ -30,7 +30,7 @@ public class GameInfoMapperTest {
 		vo.setGdeveloper("333");
 		vo.setGfublisher("333");
 		vo.setGgrade(18);
-		vo.setGlaunch("2021-09-25");
+//		vo.setGlaunch("2021-09-25");
 		vo.setGname("333");
 		vo.setGprice(30000);
 		vo.setGsite("www.wqewqqw.com");
@@ -55,7 +55,7 @@ public class GameInfoMapperTest {
 		vo.setGdeveloper("bli");
 		vo.setGfublisher("bli");
 		vo.setGgrade(18);
-		vo.setGlaunch("2222-02-22");
+//		vo.setGlaunch("2222-02-22");
 		vo.setGname("starcraft");
 		vo.setGprice(10000000);
 		vo.setGsite("www.blizard.com");

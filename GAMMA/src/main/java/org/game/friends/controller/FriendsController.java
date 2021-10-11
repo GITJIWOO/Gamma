@@ -2,10 +2,11 @@ package org.game.friends.controller;
 
 import java.util.List;
 
+import org.game.friends.domain.FriendsPageDTO;
+import org.game.friends.domain.FriendsSearchCriteria;
 import org.game.friends.domain.FriendsVO;
 import org.game.friends.service.FriendsService;
 import org.game.user.domain.ConsumerVO;
-import org.game.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -26,7 +27,7 @@ public class FriendsController {
 	private FriendsService service;
 	
 	// 메인화면 
-	@GetMapping("/friendsmain")
+	@GetMapping("/friendsmain")	// 이거 메인화면으로 바꾸기 
 	public String friendsMain(Model model) {
 		// 해당 로그인계정 정보 가져와야 함 - user service에서 세션확인
 		//model.addAttribute("userId", cid);
@@ -35,11 +36,15 @@ public class FriendsController {
 	
 	// 현재 팔로우하는 친구 목록 가져오기
 	@GetMapping("/followerlist")
-	public String followerList(String keyword, Model model) {
-		// 해당 로그인계정 정보 가져와야 함
-//		model.addAttribute("userId", cid);
-//		List<FriendsVO> followerList = service.followerList(cid, keyword);
-//		model.addAttribute("followerList", followerList);
+	public String followerList(String cid, FriendsSearchCriteria criteria, Model model) {
+		log.info("로그인 계정이 팔로우하는 친구 목록 조회");
+		if(criteria.getKeyword() == null) {
+			criteria.setKeyword("");			
+		}
+		List<FriendsVO> followerList = service.followerList(cid, criteria);
+		FriendsPageDTO page = new FriendsPageDTO(criteria, service.countFollower(criteria, cid), 10);
+		model.addAttribute("followerList", followerList);
+		model.addAttribute("page", page);
 		return "/friends/followerlist";
 	}
 	
@@ -47,17 +52,23 @@ public class FriendsController {
 	@PostMapping("/followerremove")
 	public String followerRemove(String cid, String follower, RedirectAttributes rttr) {
 		service.removeFriend(follower, cid);
-		rttr.addFlashAttribute("userId", cid);
+		rttr.addAttribute("cid", cid);
+		rttr.addFlashAttribute("unfollow", "unfollow");
+		rttr.addFlashAttribute("follower", follower);
 		return "redirect:/friends/followerlist";
 	}
 	
 	// 나를 팔로잉하는 친구 목록 가져오기
 	@GetMapping("/followinglist")
-	public String followingList(String keyword, Model model) {
-		// 해당 로그인계정 정보 가져와야 함
-//		model.addAttribute("userId", cid);
-//		List<FriendsVO> followingList = service.followerList(cid, keyword);
-//		model.addAttribute("followingList", followingList);
+	public String followingList(String cid, FriendsSearchCriteria criteria, Model model) {
+		log.info("로그인 계정을 팔로우하는 친구 목록 조회");
+		if(criteria.getKeyword() == null) {
+			criteria.setKeyword("");			
+		}
+		List<FriendsVO> followingList = service.followingList(cid, criteria);
+		FriendsPageDTO page = new FriendsPageDTO(criteria, service.countFollowing(criteria, cid), 10);
+		model.addAttribute("followingList", followingList);
+		model.addAttribute("page", page);
 		return "/friends/followinglist";
 	}
 	
@@ -65,20 +76,33 @@ public class FriendsController {
 	@PostMapping("/followingremove")
 	public String followingRemove(String cid, String following, RedirectAttributes rttr) {
 		service.removeFriend(following, cid);
-		rttr.addFlashAttribute("userId", cid);
+		rttr.addAttribute("cid", cid);
+		rttr.addFlashAttribute("unfollow", "unfollow");
+		rttr.addFlashAttribute("following", following);
 		return "redirect:/friends/followinglist";
 	}
 	
 	// 전체 회원중에서 친구 추가할 회원 검색 
 	@GetMapping("/searchfriends")
-	public String searchFriends(String keyword, Model model) {
+	public String searchFriends(String cid, FriendsSearchCriteria criteria, Model model) {
 		log.info("전체 회원중에서 친구 찾는 로직 실행");
-		if(keyword == null) {
-			keyword = "";
+		if(criteria.getKeyword() == null) {
+			criteria.setKeyword("");			
 		}
-		List<ConsumerVO> userList = service.UserList(keyword);
+		List<ConsumerVO> userList = service.UserList(criteria, cid);
+		FriendsPageDTO page = new FriendsPageDTO(criteria, service.countUser(criteria, cid), 10);
 		model.addAttribute("userList", userList);
-		model.addAttribute("keyword", keyword);
+		model.addAttribute("page", page);
 		return "/friends/searchfriends";
+	}
+	
+	// 전체 회원중에서 친구 추가 
+	@PostMapping("/addfriends")
+	public String addFriends(FriendsVO vo, FriendsSearchCriteria criteria, RedirectAttributes rttr) {
+		log.info("vo 들어오는지 확인: " + vo);
+		service.addFriend(vo);
+		rttr.addAttribute("pageNum", criteria.getPageNum());
+		rttr.addAttribute("keyword", criteria.getKeyword());
+		return "redirect:/friends/searchfriends";
 	}
 }

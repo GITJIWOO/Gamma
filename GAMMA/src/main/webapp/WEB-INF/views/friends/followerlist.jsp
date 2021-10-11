@@ -11,16 +11,24 @@
     <h1>내가 팔로우하는 친구 목록</h1>
     <a href="/friends/followerlist">팔로우한 친구</a>
     <a href="/friends/followinglist">팔로잉한 친구</a>
-    <form action="/friends/followerremove" method="post">
       <table border="1" id="followertbl">
       	<c:forEach items="${followerList }" var="followerList">
 	        <tr>
 	          <td>${followerList.cid }</td>
 	          <!-- 현재 팔로우 상태이기 때문에 '팔로잉(default_white)' -->
 	          <td rowspan="2">
-		          <input type="hidden" name="cid" value=""/><!-- 로그인 계정 -->
+    			<form action="/friends/followerremove" method="post">
+		          <input type="hidden" name="cid" value="${param.cid }"/><!-- 로그인 계정 -->
 		          <input type="hidden" name="follower" value="${followerList.cid }"/><!-- 로그인 계정이 팔로우 하는 계정 -->
-		          <input type="submit" value="팔로잉" id="btnFollower"/>
+		          <input type="submit" value="팔로우 취소" />
+			    </form>
+	          </td>
+	          <td rowspan="2">
+    			<form action="/main" method="post">
+		          <input type="hidden" name="following" value="${param.cid }"/><!-- 로그인 계정 -->
+		          <input type="hidden" name="follower" value="${followerList.cid }"/><!-- 로그인 계정이 팔로우 하는 계정 -->
+		          <input type="submit" value="채팅"/>
+			    </form>
 	          </td>
 	        </tr>
 	        <tr>
@@ -28,6 +36,12 @@
 	        </tr>
       	</c:forEach>
       </table>
-    </form>
+      <script>
+		const result = ${unfollow};
+		const unfollower = ${follower};
+		if(result === "undollow"){
+			alert(unfollower + "님 팔로우를 취소했습니다.");
+		}
+	  </script>
 </body>
 </html>

@@ -36,7 +36,7 @@
 	</select> -->
 	<select id="getQuestionListP" resultType="org.game.user.domain.QuestionVO">
 		<![CDATA[
-			SELECT qnum, qtype, qtitle, qcontent, qwriter, qdate FROM 
+			SELECT qnum, qtype, qtitle, qcontent, qwriter, qdate, aornot  FROM 
 			(SELECT 
 			/*+ INDEX_DESC(question pk_question) */ 
 			rownum rn, question.* FROM question WHERE (qwriter LIKE  #{qwriter}) AND rownum <= #{cri.pageNum} * #{cri.amount}) qu 
@@ -54,7 +54,7 @@
 	</select> -->
 	<select id="getQtypeQuestionP" resultType="org.game.user.domain.QuestionVO">
 		<![CDATA[
-		SELECT qnum, qtype, qtitle, qcontent, qwriter, qdate FROM
+		SELECT qnum, qtype, qtitle, qcontent, qwriter, qdate, aornot FROM
 		(SELECT
 		/*+ INDEX_DESC (question pk_question) */
 		rownum rn, question.* FROM question WHERE qtype LIKE #{qtype}
@@ -70,10 +70,6 @@
 		SELECT * FROM question WHERE qnum = #{qnum}
 	</select>
 	
-	<select id="getAnswerOrNot" resultType="int">
-		SELECT count(a.anum) FROM question q INNER JOIN answer a ON (a.qnum = q.qnum) WHERE q.qnum = #{qnum}
-	</select>
-	
 	<update id="updateQuestion">
 		UPDATE question SET qtype = <include refid="type"></include>, qtitle = #{qtitle}, qcontent = #{qcontent}, qdate = SYSDATE WHERE qnum = #{qnum}
 	</update>
@@ -82,4 +78,7 @@
 		DELETE FROM question WHERE qnum = #{qnum}
 	</delete> 
 
+	<update id="updateAnswerOrNot">
+		UPDATE question SET aornot = aornot + #{amount} WHERE qnum = #{qnum}
+	</update>
 </mapper>

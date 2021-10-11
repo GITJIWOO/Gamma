@@ -7,6 +7,8 @@ public interface AnswerMapper {
 	
 	public AnswerVO getAnswer(int qnum);
 	
+	public int getQnum(int anum);
+	
 	public void updateAnswer(AnswerVO vo);
 	
 	public void deleteAnswer(int anum);

@@ -1,7 +1,9 @@
 package org.game.gamepurchase.controller;
 
+import org.game.user.domain.ConsumerBasketVO;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import lombok.AllArgsConstructor;
@@ -14,8 +16,18 @@ import lombok.extern.log4j.Log4j;
 public class GamePurchaseController {
 	
 	@GetMapping("/paymentscreen")
-	public String patmentScreen() {
+	public String paymentScreen() {
 		
 		return "/payment/paymentScreen";
 	}
+	
+	@PostMapping("/paymentsuccess")
+	public String paymentSuccess(ConsumerBasketVO basket) {
+		
+		System.out.println(basket);
+		log.info("들어온 장바구니 : " + basket);
+		
+		return "/payment/patmentSuccess";
+	}
+	
 }

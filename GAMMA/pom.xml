@@ -195,6 +195,19 @@
 			<version>${org.springframework-version}</version> </dependency> -->
 
 
+		<!-- websocket 1개 -->
+		<!-- https://mvnrepository.com/artifact/org.springframework/spring-websocket -->
+		<dependency>
+		    <groupId>org.springframework</groupId>
+		    <artifactId>spring-websocket</artifactId>
+		    <version>5.0.7.RELEASE</version>
+		</dependency>
+
+		<dependency>
+		  <groupId>org.webjars</groupId>
+		  <artifactId>sockjs-client</artifactId>
+		  <version>1.0.2</version>
+		</dependency>
 		<!-- security 4개 -->
 		<!-- https://mvnrepository.com/artifact/org.springframework.security/spring-security-web -->
 		<!-- <dependency> <groupId>org.springframework.security</groupId> <artifactId>spring-security-web</artifactId> 
@@ -216,7 +229,7 @@
 
 		<!-- https://mvnrepository.com/artifact/org.json/json <dependency> <groupId>org.json</groupId> 
 			<artifactId>json</artifactId> <version>20160810</version> </dependency> -->
-
+		
 	</dependencies>
 	<build>
 		<plugins>

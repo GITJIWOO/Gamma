@@ -259,9 +259,10 @@ CREATE TABLE friends (
     fnum NUMBER,
     follower VARCHAR2(20) NOT NULL,
     following VARCHAR2(20) NOT NULL,/* 로그인 계정 */
-    CONSTRAINT pk_friends PRIMARY KEY(follower, following),
     CONSTRAINT fk_friends FOREIGN KEY(following) REFERENCES consumer(cid)
 );
+ALTER TABLE friends ADD CONSTRAINT pk_friends PRIMARY KEY(follower, following);
+ALTER TABLE friends ADD (fornot NUMBER DEFAULT 1); /* 컬럼 추가 */
 
 /*  상태글 테이블
     상태글 식별 번호(기본키)
@@ -294,7 +295,8 @@ CREATE TABLE question (
     qdate DATE DEFAULT SYSDATE
 );
 ALTER TABLE question ADD CONSTRAINT pk_question PRIMARY KEY(qnum);
-
+ALTER TABLE question ADD (aornot NUMBER DEFAULT 0); /* 컬럼 추가 */
+UPDATE question SET aornot = (SELECT count(anum) FROM answer WHERE answer.qnum = question.qnum); /* 반영 */
 
 /*  Answer 테이블
     글 식별 번호(기본키)
@@ -357,5 +359,3 @@ CREATE TABLE shoppingBasket (
     CONSTRAINT fk_shoppingbasketgnum FOREIGN KEY(gnum)REFERENCES game(gnum)
 
 );
-
-

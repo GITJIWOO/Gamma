@@ -1,5 +1,6 @@
 package org.game.friends.service;
 
+import org.game.friends.domain.FriendsSearchCriteria;
 import org.game.friends.domain.FriendsVO;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -18,7 +19,11 @@ public class FriendsServiceTest {
 	
 	//@Test
 	public void testUserList() {
-		service.UserList("abc");
+		FriendsSearchCriteria cri = new FriendsSearchCriteria();
+		cri.setAmount(10);
+		cri.setPageNum(1);
+		cri.setKeyword("");
+		service.UserList(cri, "asfgd");
 	}
 	
 	//@Test
@@ -31,12 +36,20 @@ public class FriendsServiceTest {
 	
 	//@Test
 	public void testFollowerList() {
-		service.followerList("asfgd", "dv");
+		FriendsSearchCriteria cri = new FriendsSearchCriteria();
+		cri.setAmount(10);
+		cri.setPageNum(1);
+		cri.setKeyword("");
+		service.followerList("htrew", cri);
 	}
 	
-	//@Test
+	@Test
 	public void testFollowingList() {
-		service.followingList("asfgd", "bc");
+		FriendsSearchCriteria cri = new FriendsSearchCriteria();
+		cri.setAmount(10);
+		cri.setPageNum(2);
+		cri.setKeyword("");
+		service.followingList("pegr", cri);
 	}
 	
 	//@Test
