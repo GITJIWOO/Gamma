@@ -22,9 +22,10 @@ public class GamePurchaseController {
 	}
 	
 	@PostMapping("/paymentsuccess")
-	public String paymentSuccess(ConsumerBasketVO basvo) {
+	public String paymentSuccess(ConsumerBasketVO basket) {
 		
-		log.info("들어온 장바구니 : " + basvo);
+		System.out.println(basket);
+		log.info("들어온 장바구니 : " + basket);
 		
 		return "/payment/patmentSuccess";
 	}

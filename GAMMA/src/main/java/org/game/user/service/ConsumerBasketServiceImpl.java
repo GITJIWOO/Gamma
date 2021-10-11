@@ -16,20 +16,20 @@ public class ConsumerBasketServiceImpl implements ConsumerBasketService {
 	// 장바구니 게임 조회
 	@Override
 	public List<ConsumerBasketVO> getConsumerBasketList(String cid) {
-		List<ConsumerBasketVO> basketList = mapper.ConsumerBasketSelect(cid);
+		List<ConsumerBasketVO> basketList = mapper.consumerBasketSelect(cid);
 		return basketList;
 	}
 
 	// 장바구니 게임 추가
 	@Override
 	public void additionConsumerBasket(String cid, long gnum) {
-		mapper.ConsumerBasketInsert(cid, gnum);
+		mapper.consumerBasketInsert(cid, gnum);
 	}
 
 	@Override
 	// 장바구니 게임 삭제
 	public void removeConsumerBasket(String cid, long gnum) {
-		mapper.ConsumerBasketDelete(cid, gnum);
+		mapper.consumerBasketDelete(cid, gnum);
 	}
 
 }
