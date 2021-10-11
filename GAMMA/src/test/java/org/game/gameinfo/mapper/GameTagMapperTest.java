@@ -26,12 +26,12 @@ public class GameTagMapperTest {
 	}
 	
 //	@Test
-	public void testTagUnsert() {
-		GameInfoVO vo = new GameInfoVO();
-		vo.setTagname("qwer");
-		vo.setGnum(1L);
-		mapper.insertTag(vo);
-	}
+//	public void testTagUnsert() {
+//		GameInfoVO vo = new GameInfoVO();
+//		vo.setTagname("qwer");
+//		vo.setGnum(1L);
+//		mapper.insertTag(vo);
+//	}
 	
 //	@Test
 	public void testTagDelete() {
@@ -39,10 +39,10 @@ public class GameTagMapperTest {
 	}
 	
 //	@Test
-	public void testTagUpdate() {
-		GameInfoVO vo = new GameInfoVO();
-		vo.setTagname("asdfasdf");
-		vo.setGtnum(2L);
-		mapper.updateTag(vo);
-	}
+//	public void testTagUpdate() {
+//		GameInfoVO vo = new GameInfoVO();
+//		vo.setTagname("asdfasdf");
+//		vo.setGtnum(2L);
+//		mapper.updateTag(vo);
+//	}
 }
