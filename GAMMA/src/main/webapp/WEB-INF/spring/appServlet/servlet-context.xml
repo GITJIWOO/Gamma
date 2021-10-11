@@ -22,6 +22,7 @@
 		<beans:property name="suffix" value=".jsp" />
 	</beans:bean>
 	
+	
 	<!-- WebSocket 생성시 설정한 url 처리 
 	<websocket:handlers>
 		<websocket:mapping handler="ChattingController" path="/chat" />
