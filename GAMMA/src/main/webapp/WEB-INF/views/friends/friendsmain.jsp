@@ -18,6 +18,6 @@
     <a href="/friends/followerlist">팔로우한 친구</a>
     <a href="/friends/followinglist">팔로잉한 친구</a>
 	<a href="/friends/searchfriends">친구 검색</a>
-	<a href="/friends/chatting">채팅 메세지 보내기</a>
+	<a href="/main">채팅 메세지 보내기</a>
 </body>
 </html>
