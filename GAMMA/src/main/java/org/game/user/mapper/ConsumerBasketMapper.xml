@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.game.user.mapper.ConsumerBasketMapper">
+
+	<!-- 장바구니 게임 조회 -->
+	<select id="ConsumerBasketSelect" resultType="org.game.user.mapper.ConsumerBasketVO">
+		SELECT * FROM shoppingBasket WHERE cid=#{cid}
+	</select>
+
+	<!-- 장바구니 게임 추가 -->
+	<insert id="ConsumerBasketInsert">
+		INSERT INTO shoppingBasket(sbnum, cid, gnum) VALUES (shoppingbasket_num.nextval, #{cid}, #{gnun})
+	</insert>
+
+	<!-- 장바구니 게임 삭제 -->
+	<delete id="ConsumerBasketDelete">
+		DELETE FROM shoppingBasket WHERE cid=#{cid}, gnum=#{gnum}
+	</delete>
+
+</mapper>
