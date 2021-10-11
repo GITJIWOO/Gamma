@@ -52,7 +52,9 @@ public class FriendsController {
 	@PostMapping("/followerremove")
 	public String followerRemove(String cid, String follower, RedirectAttributes rttr) {
 		service.removeFriend(follower, cid);
-		rttr.addFlashAttribute("userId", cid);
+		rttr.addAttribute("cid", cid);
+		rttr.addFlashAttribute("unfollow", "unfollow");
+		rttr.addFlashAttribute("follower", follower);
 		return "redirect:/friends/followerlist";
 	}
 	
@@ -74,7 +76,9 @@ public class FriendsController {
 	@PostMapping("/followingremove")
 	public String followingRemove(String cid, String following, RedirectAttributes rttr) {
 		service.removeFriend(following, cid);
-		rttr.addFlashAttribute("userId", cid);
+		rttr.addAttribute("cid", cid);
+		rttr.addFlashAttribute("unfollow", "unfollow");
+		rttr.addFlashAttribute("following", following);
 		return "redirect:/friends/followinglist";
 	}
 	
