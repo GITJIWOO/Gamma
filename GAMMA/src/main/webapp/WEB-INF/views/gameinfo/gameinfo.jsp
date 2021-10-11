@@ -86,7 +86,7 @@
 		</tr>
 		<tr>
 			<th>게임 태그</th>
-			<td>${tvoList}</td>
+			<td>${tvo.tagname}</td>
 		</tr>
 	</table>
 	<a href="/gameInfo/gamelist?pageNum=${param.pageNum }&searchType=${param.searchType}&keyword=${param.keyword}">

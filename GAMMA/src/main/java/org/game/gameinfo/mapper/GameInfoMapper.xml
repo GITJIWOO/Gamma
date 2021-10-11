@@ -21,7 +21,7 @@
 	<!-- 게임 리스트 -->
 	<select id="gameList" resultType="org.game.gameinfo.domain.GameInfoVO">
 	<![CDATA[
-		SELECT * FROM game WHERE gname LIKE '%'||#{keyword}||'%' ORDER BY gname DESC
+		SELECT DISTINCT * FROM game WHERE gname LIKE '%'||#{keyword}||'%' ORDER BY gname ASC
 	]]>
 	</select>
 	
@@ -31,7 +31,7 @@
 			SELECT game_num.nextval FROM DUAL
 		</selectKey>
 		INSERT INTO game (gnum, gname, glaunch, gfublisher, gdeveloper, gprice, gcontent, ggrade, gsite, gaddress)
-		VALUES (#{gnum}, #{gname}, TO_DATE(#{glaunch}, 'YYYY/MM/DD '), #{gfublisher}, #{gdeveloper}, #{gprice}, #{gcontent}, #{ggrade}, #{gsite}, #{gaddress})
+		VALUES (#{gnum}, #{gname}, TO_DATE(#{glaunch}, 'YY/MM/DD '), #{gfublisher}, #{gdeveloper}, #{gprice}, #{gcontent}, #{ggrade}, #{gsite}, #{gaddress})
 	</insert>
 	
 	<!-- 게임 상세 조회 -->
@@ -46,31 +46,47 @@
 	
 	<!-- 게임 수정 -->
 	<update id="updateGame">
-		UPDATE game SET gname = #{gname}, glaunch = TO_DATE(#{glaunch}, 'YYYY/MM/DD '), gdeveloper = #{gdeveloper}, gfublisher = #{gfublisher}, 
+		UPDATE game SET gname = #{gname}, glaunch = TO_DATE(#{glaunch}, 'YY/MM/DD '), gdeveloper = #{gdeveloper}, gfublisher = #{gfublisher}, 
 		gprice = #{gprice}, gcontent = #{gcontent}, ggrade = #{ggrade}, gsite = #{gsite}, gaddress = #{gaddress}
 		WHERE gnum = #{gnum}
 	</update>
 	
+	
+	
+	<!-- v페이징 -->
 	<select id="getGameListPaging" resultType="org.game.gameinfo.domain.GameInfoVO">
+	
+		<if test="searchType == 't'.toString()">
 		<![CDATA[
-		SELECT * FROM
-		(SELECT
-		/*+ INDEX_DESC(game pk_board) */
-		rownum rn, game.* FROM game
+		SELECT rownum tblrn, tbl.* FROM
+		(SELECT rownum rn, sorttbl.* FROM 
+            (SELECT gametag.tagname, game.* FROM gametag JOIN game on gametag.gnum = game.gnum 
+                ORDER BY gname ASC) sorttbl
 			WHERE
 		]]>
+		</if>
 		
+		<if test="searchType != 't'.toString()">
+		<![CDATA[
+		SELECT rownum tblrn, tbl.* FROM
+		(SELECT rownum rn, sorttbl.* FROM 
+            (SELECT gametag.tagname, game.* FROM gametag JOIN game on gametag.gnum = game.gnum 
+                ORDER BY gname ASC) sorttbl
+			WHERE
+		]]>
+		</if>
 		<include refid="search"></include>
 
 		<![CDATA[	
 			rownum <= #{pageNum} * #{amount}) tbl
 			WHERE rn > (#{pageNum}-1) * #{amount} 
 		]]>
+		
 	</select>
 	
 	<select id="getTotalGame" resultType="int">
 	<if test="searchType == 't'.toString()">
-		SELECT COUNT(*) FROM gametag WHERE
+		SELECT COUNT(gametag.tagname) FROM gametag WHERE
 	</if>
 	<if test="searchType != 't'.toString()">
 		SELECT COUNT(*) FROM game WHERE
@@ -79,5 +95,7 @@
 		<include refid="search"></include>
 		gnum > 0
 	</select>
+	
+	
 
 </mapper>
