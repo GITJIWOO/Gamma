@@ -30,6 +30,10 @@ public class ConsumerBasketController {
 
 		String cid = (String)session.getAttribute("session_cid");
 		
+		if(cid == null) {
+			return "redirect:/main";
+		}
+		
 		List<ConsumerBasketVO> BasketList = service.getConsumerBasketList(cid);
 		
 		model.addAttribute("basket", BasketList);
