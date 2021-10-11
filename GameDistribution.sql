@@ -79,7 +79,7 @@ CREATE TABLE consumer (
     nickname VARCHAR(20) NOT NULL UNIQUE,
     cadmin NUMBER(3) DEFAULT 0
    );
-ALTER TABLE consumer ADD (enabled char(1) default '1');   
+commit;   
 ALTER TABLE consumer MODIFY password VARCHAR2(100);
 ALTER TABLE consumer ADD(userregdate DATE Default sysdate NOT NULL,userupdatedate DATE Default sysdate NOT NULL);
 ALTER TABLE consumer ADD UNIQUE(userphone);
@@ -92,11 +92,11 @@ SELECT * FROM consumer;
 CREATE TABLE authorities(
 cnum NUMBER ,
 cid VARCHAR2(20) NOT NULL,
-authority varchar2(50) not null,
+auth varchar2(50) not null,
 constraint fk_authorities_users foreign key(cnum) references consumer(cnum));
 
  alter table authorities drop constraint fk_authorities_users;
-create unique index ix_auth_cid on authorities (cid, authority);
+create unique index ix_auth_cid on authorities (cid, auth);
 
 insert into consumer (cnum,cid,password,email,nickname,cadmin) values (consumer_num.nextval,'user00','pw00','ssos@sos','scho',0);
 insert into consumer (cnum,cid,password,email,nickname,cadmin) values (consumer_num.nextval,'member00','pw00','m@sos','mcho',0);

@@ -7,6 +7,6 @@ public class AuthVO {
 	// 시큐리티 관련  VO
 	private long cnum;
 	private String cid;
-	private String authority; 
+	private String auth; 
 
 }
