@@ -2,6 +2,7 @@ package org.game.friends.mapper;
 
 import java.util.List;
 
+import org.game.friends.domain.FriendsSearchCriteria;
 import org.game.friends.domain.FriendsVO;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -20,7 +21,16 @@ public class FriendsMapperTest {
 	
 	//@Test
 	public void testGetUser() {
-		log.info(mapper.getUser("abc"));
+		FriendsSearchCriteria cri = new FriendsSearchCriteria();
+		cri.setAmount(10);
+		cri.setPageNum(1);
+		cri.setKeyword("");
+		mapper.getUser(cri, "asfgd");
+	}
+	
+	@Test
+	public void testGetFOrNot() {
+		mapper.getFOrNot("asfgd", "kqrqwr");
 	}
 	
 	//@Test
@@ -33,12 +43,20 @@ public class FriendsMapperTest {
 	
 	//@Test
 	public void testGetFollower() {
-		mapper.getFollower("asfgd", "dv");
+		FriendsSearchCriteria cri = new FriendsSearchCriteria();
+		cri.setAmount(10);
+		cri.setPageNum(1);
+		cri.setKeyword("");
+		mapper.getFollower("htrew", cri);
 	}
 	
 	//@Test
 	public void testGetFollowing() {
-		mapper.getFollowing("asfgd", "bc");
+		FriendsSearchCriteria cri = new FriendsSearchCriteria();
+		cri.setAmount(10);
+		cri.setPageNum(2);
+		cri.setKeyword("");
+		mapper.getFollowing("pegr", cri);
 	}
 	
 	//@Test

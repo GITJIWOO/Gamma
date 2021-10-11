@@ -11,6 +11,10 @@
 		SELECT * FROM answer WHERE qnum = #{qnum} ORDER BY anum
 	</select>
 	
+	<select id="getQnum" resultType="int">
+		SELECT qnum FROM answer WHERE anum = #{anum}
+	</select>
+	
 	<update id="updateAnswer">
 		UPDATE answer SET acontent = #{acontent} WHERE anum = #{anum}
 	</update>

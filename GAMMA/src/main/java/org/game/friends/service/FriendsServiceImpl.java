@@ -2,6 +2,7 @@ package org.game.friends.service;
 
 import java.util.List;
 
+import org.game.friends.domain.FriendsSearchCriteria;
 import org.game.friends.domain.FriendsVO;
 import org.game.friends.mapper.FriendsMapper;
 import org.game.user.domain.ConsumerVO;
@@ -20,28 +21,33 @@ public class FriendsServiceImpl implements FriendsService{
 	private FriendsMapper mapper;
 
 	@Override
-	public List<ConsumerVO> UserList(String keyword) {
+	public List<ConsumerVO> UserList(FriendsSearchCriteria criteria, String cid) {
 		log.info("전체 회원 목록 조회");
-		return mapper.getUser(keyword);
+		return mapper.getUser(criteria, cid);
 	}
 
+	@Override
+	public Integer fOrNot(String follower, String following) {
+		log.info("해당 유저가 팔로워인지 조회");
+		return mapper.getFOrNot(follower, following);
+	}
+	
 	@Override
 	public void addFriend(FriendsVO vo) {
 		log.info("친구 추가 실행");
 		mapper.insertFriend(vo);
-		
 	}
 
 	@Override
-	public List<FriendsVO> followerList(String following, String keyword) {
+	public List<FriendsVO> followerList(String following, FriendsSearchCriteria criteria) {
 		log.info("로그인 계정이 팔로워하는 계정 조회");
-		return mapper.getFollower(following, keyword);
+		return mapper.getFollower(following, criteria);
 	}
 
 	@Override
-	public List<FriendsVO> followingList(String follower, String keyword) {
+	public List<FriendsVO> followingList(String follower, FriendsSearchCriteria criteria) {
 		log.info("로그인 계정을 팔로우하는 계정 조회");
-		return mapper.getFollowing(follower, keyword);
+		return mapper.getFollowing(follower, criteria);
 	}
 
 	@Override
@@ -50,4 +56,21 @@ public class FriendsServiceImpl implements FriendsService{
 		mapper.deleteFriend(follower, following);
 	}
 
+	@Override
+	public int countUser(FriendsSearchCriteria criteria, String cid) {
+		log.info("유저 카운트");
+		return mapper.getCountUser(criteria, cid);
+	}
+
+	@Override
+	public int countFollower(FriendsSearchCriteria criteria, String following) {
+		log.info("내가 팔로우하는 유저 카운트");
+		return mapper.getCountFollower(criteria, following);
+	}
+
+	@Override
+	public int countFollowing(FriendsSearchCriteria criteria, String follower) {
+		log.info("나를 팔로우하는 유저 카운트");
+		return mapper.getCountFollowing(criteria, follower);
+	}
 }
