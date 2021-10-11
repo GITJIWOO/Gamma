@@ -5,7 +5,7 @@
 <mapper namespace="org.game.user.mapper.ConsumerBasketMapper">
 
 	<!-- 장바구니 게임 조회 -->
-	<select id="ConsumerBasketSelect" resultType="org.game.user.mapper.ConsumerBasketVO">
+	<select id="ConsumerBasketSelect" resultType="org.game.user.domain.ConsumerBasketVO">
 		SELECT * FROM shoppingBasket WHERE cid=#{cid}
 	</select>
 
