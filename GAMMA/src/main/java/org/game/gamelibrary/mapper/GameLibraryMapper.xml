@@ -5,8 +5,8 @@
 <mapper namespace="org.game.gamelibrary.mapper.GameLibraryMapper">
 
 	<!-- 라이브러리 조회 -->
-	<select id="librarySelect" resultType="org.game.gamelibrary.domain.GameLibraryVO">
-		SELECT * FROM consumerLibrary c LEFT JOIN game g ON c.gnum = g.gnum WHERE cid=${cid}
+	<select id="librarySelect" resultType="org.game.gamelibrary.domain.ResultLibraryVO">
+		SELECT * FROM consumerLibrary c LEFT JOIN game g ON c.gnum = g.gnum WHERE cid=#{cid}
 	</select>
 	
 	<!-- 라이브러리에 게임 추가 -->
