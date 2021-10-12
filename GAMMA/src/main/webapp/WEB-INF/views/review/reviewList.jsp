@@ -5,7 +5,19 @@
 <html>
 <head>
 <meta charset="EUC-KR">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
+<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
 <title>${game.gname} 리뷰</title>
+<style>
+	.card {
+		background-color: gainsboro;
+		border: 1px solid white;
+		margin: 15px;
+		padding: 1px;
+		width: 732px;
+		height: 430px;
+	}
+</style>
 </head>
 <body>
 	<div class="body">
@@ -22,24 +34,38 @@
 		</form>
 		<div id="review">
 			<c:forEach var="review" items="${review}">
-				<tr>
-					<td>${review.cid}</td>
-					<td>
-						<c:choose>
-							<c:when test="${review.grlike == 1}">추천</c:when>
-							<c:when test="${review.grlike == 0}">비추천</c:when>
-						</c:choose>
-					</td>
-					<td>
-						<a href="/review/reviewDetail/${review.grnum}">${review.grtitle}</a>
-					</td>
-					<td>${review.grcontent}</td>
-					<td>${review.grrecommend}</td>
-					<td>${review.grdate}</td>
-				</tr>
-				<hr/>
+				<div class="card">
+					<div class="card-header">
+						${review.cid}
+					</div>
+					<div class="card-body">
+						<h5 class="card-title">
+							<c:choose>
+								<c:when test="${review.grlike == 1}">추천</c:when>
+								<c:when test="${review.grlike == 0}">비추천</c:when>
+							</c:choose></h5>
+					    <p class="card-text">
+					    	${review.grdate}<br/>
+					    	<strong>${review.grcontent}</strong><br/>
+					    	${review.grrecommend}
+					    </p>
+					</div>
+					<script>
+						$(".card").click(function(){
+							location.href = "/review/reviewDetail/" + ${review.grnum};
+						});
+					</script>
+				</div>
 			</c:forEach>
 		</div>
 	</div>
 </body>
+<script>
+	$(".card").mouseover(function(){
+		$(".card").css("border", "1px solid blue");
+	});
+	$(".card").mouseout(function(){
+		$(".card").css("border", "1px solid white");
+	});
+</script>
 </html>

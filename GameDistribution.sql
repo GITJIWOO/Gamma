@@ -202,7 +202,6 @@ CREATE TABLE gameReview (
     gnum NUMBER NOT NULL,
     cid VARCHAR2(20) NOT NULL,
     grlike NUMBER(3) NOT NULL,
-    grtitle VARCHAR2(100) NOT NULL,
     grcontent VARCHAR2(2000) NOT NULL,
     grrecommend NUMBER DEFAULT 0,
     grdate DATE DEFAULT sysdate,

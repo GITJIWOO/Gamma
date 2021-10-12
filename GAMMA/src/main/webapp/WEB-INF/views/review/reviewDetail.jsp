@@ -7,7 +7,7 @@
 <meta charset="UTF-8">
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
 <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
-<title>${review.grtitle}</title>
+<title>리뷰</title>
 <style>
 	#reviewModify {
 		display: none;
@@ -34,7 +34,6 @@
 							<c:when test="${review.grlike == 1}">추천</c:when>
 							<c:when test="${review.grlike == 0}">비추천</c:when>
 						</c:choose>
-						제목 : ${review.grtitle}
 						내용 : ${review.grcontent}
 						좋아요 : ${review.grrecommend}
 					</div>
@@ -45,7 +44,6 @@
 							<form action="/review/reviewModify" method="post" name="reviewUpdate"onsubmit="return updateCheck()">
 								<input type="hidden" name="cid" value="${cid}">
 								<input type="hidden" name="grnum" value="${review.grnum}">
-								<input type="text" class="form-control form-control-lg" name="grtitle" placeholder="제목" value="${review.grtitle }" required><br/>
 								<textarea class="form-control" id="exampleFormControlTextarea1" name="grcontent" rows="7" cols="70" placeholder="내용" required>${review.grcontent}</textarea><br/>
 								<div id="isLike" class="btn btn-secondary">
 									<input type="radio" class="isLike" name="grlike" value="1">추천
