@@ -51,8 +51,14 @@
 					    </p>
 					</div>
 					<script>
-						$(".card").click(function(){
+						$("#review:nth-child(${review})").click(function(){
 							location.href = "/review/reviewDetail/" + ${review.grnum};
+						});
+						$("#review:nth-child(${review})").mouseover(function(){
+							$(".card").css("border", "1px solid blue");
+						});
+						$("#review:nth-child(${review})").mouseout(function(){
+							$(".card").css("border", "1px solid white");
 						});
 					</script>
 				</div>
@@ -61,11 +67,5 @@
 	</div>
 </body>
 <script>
-	$(".card").mouseover(function(){
-		$(".card").css("border", "1px solid blue");
-	});
-	$(".card").mouseout(function(){
-		$(".card").css("border", "1px solid white");
-	});
 </script>
 </html>
