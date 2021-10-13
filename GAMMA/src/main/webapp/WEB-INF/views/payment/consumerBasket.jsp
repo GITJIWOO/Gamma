@@ -10,7 +10,7 @@
 <body>
 	<c:forEach items="${basket}" var="basket">
 		${basket.gname}
-		${basket.gprice }
+		${basket.gprice}
 		<form action="/gamepayment/basketRemove" method="post">
 			<input type="hidden" name="gnum" value="${basket.gnum}">
 			<input type="submit" value="삭제">

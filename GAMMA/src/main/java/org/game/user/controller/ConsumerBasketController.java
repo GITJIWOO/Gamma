@@ -27,9 +27,9 @@ public class ConsumerBasketController {
 	private ConsumerBasketService service;
 	
 	@GetMapping("/basketList")
-	public String getBasketList(HttpSession session, Model model) {
+	public String getBasketList(String cid, HttpSession session, Model model) {
 
-		String cid = (String)session.getAttribute("session_cid");
+		cid = (String)session.getAttribute("session_cid");
 		
 		if(cid == null) {
 			return "redirect:/main";

@@ -20,12 +20,12 @@ public class ConsumerBasketServiceTest {
 	@Autowired
 	private ConsumerBasketService service;
 	
-	@Test
+	// @Test
 	public void getConsumerBasketListTest() {
 		log.info(service.getConsumerBasketList("kjw011231"));
 	}
 	
-	// @Test
+	@Test
 	public void additionConsumerBasketTest() {
 		service.additionConsumerBasket("kjw011231", 2L);
 	}
