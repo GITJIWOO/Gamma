@@ -4,7 +4,8 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<link rel="stylesheet" href="/resources/css/styles.css" />
+<title>Payment Success</title>
 </head>
 <body>
 	<h1>구매해 주셔서 감사합니다!</h1>

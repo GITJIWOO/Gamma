@@ -16,7 +16,7 @@
 
 	<!-- 장바구니 게임 삭제 -->
 	<delete id="consumerBasketDelete">
-		DELETE FROM shoppingBasket WHERE cid=#{cid}, gnum=#{gnum}
+		DELETE FROM shoppingBasket WHERE cid=#{cid} AND gnum=#{gnum}
 	</delete>
 
 </mapper>
