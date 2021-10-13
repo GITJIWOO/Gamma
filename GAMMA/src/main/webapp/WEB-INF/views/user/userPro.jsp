@@ -41,6 +41,7 @@
 	</div>
 
 
+<<<<<<< HEAD
 
 	<form name="form1" method="post">
 		<table border="1" width="400px">
@@ -48,6 +49,21 @@
 				<td>아이디</td>
 				<td><input id="cid" name="cid" value="${member.cid}"
 					readonly="readonly" /></td>
+=======
+<!-- form 태그 혹시 몰라서 주석처리 해둡니다 -재인- -->
+<!-- <form name="form1" method="post">  -->
+		<table border="1" width="400px">
+			<tr>
+				<td>아이디</td>
+				<td><input id="cid" name="cid" value="${member.cid}" readonly="readonly"/></td>
+				<td rowspan="2">
+					<form action="/friends/addfriends" method="post" >
+						<input type="hidden" name="follower" value="${member.cid}" />
+						<input type="hidden" name="following" value="" /><!-- 시큐리티 완성되면 로그인 계정으로 수정하고 테스트하기 -->
+						<input type="submit" value="친구 추가" />
+					</form>
+				</td>
+>>>>>>> 6643f27c8506345f4d74b8bad0f221e4ac287465
 			</tr>
 			<tr>
 				<td>닉네임</td>
@@ -58,7 +74,7 @@
 
 			</tr>
 		</table>
-	</form>
+<!-- </form>  -->
 
 	<h2>방명록</h2>
 

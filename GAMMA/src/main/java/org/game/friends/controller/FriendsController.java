@@ -98,11 +98,14 @@ public class FriendsController {
 	
 	// 전체 회원중에서 친구 추가 
 	@PostMapping("/addfriends")
-	public String addFriends(FriendsVO vo, FriendsSearchCriteria criteria, RedirectAttributes rttr) {
+	public String addFriends(FriendsVO vo, RedirectAttributes rttr) {
 		log.info("vo 들어오는지 확인: " + vo);
 		service.addFriend(vo);
+		/*
+		 * friends 말고 user 로 리다이렉트
 		rttr.addAttribute("pageNum", criteria.getPageNum());
 		rttr.addAttribute("keyword", criteria.getKeyword());
-		return "redirect:/friends/searchfriends";
+		*/
+		return "redirect:/user/userPro";
 	}
 }

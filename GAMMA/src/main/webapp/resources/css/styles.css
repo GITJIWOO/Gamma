@@ -1,0 +1,14 @@
+@charset "UTF-8";
+@import "reset.css";
+@import "variables.css";
+
+/* component */
+@import "./screen/component/main.css";
+
+/* font */
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap");
+body {
+  font-family: "Noto Sans KR", sans-serif;
+  background-color: var(--backColor);
+  height: 200vh;
+}
