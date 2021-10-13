@@ -5,16 +5,66 @@
 <html>
 <head>
 <meta charset="UTF-8">
-	<title>userHome</title>
+	<title>userLogin</title>
 		<!-- 합쳐지고 최소화된 최신 CSS -->
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
 	<!-- 부가적인 테마 -->
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
 	
 	<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+ <style>
  
+ *{
+ 	margin:0;
+ 	padding:0;
+ 	text-align: center;
+ }
+   form{
+       text-align: center;
+       margin:0 auto;
+       	display: flex;
+  justify-content: center;
+  align-items: center;
+   min-height: 80vh;
+   }
+
+   .border{
+       margin:0 auto;
+       width:400px;
+       height:500px;
+       border:1px solid #000;
+       border-radius: 10%;
+   }
+
+   img{
+       margin-top:20px;
+       margin-bottom:80px;
+   }
+
+   input{
+       width:300px;
+   }
+   #IPvalue{
+    font-family: 'Cafe24Ssurround';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2105_2@1.0/Cafe24Ssurround.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+   }
+   button{
+  width:150px;
+  height:40px;
+  padding:0;
+  display:inline; 
+  border-radius: 4px; 
+  background: #212529;
+  color: #fff;
+  margin-top: 20px;
+  border: solid 2px #212529; 
+  transition: all 0.5s ease-in-out 0s;
+}
+
+	</style>
 </head>
-<a href="#">유저로그인</a><br />
 <script type="text/javascript">
  $(document).ready(function(){
 	$("#logoutBtn").on("click", function(){
@@ -24,8 +74,9 @@
 	$("#registerBtn").on("click", function(){
 		location.href="user/userJoin";
 	})
-	
-	
+	$("#findpwBtn").on("click", function(){
+		location.href="user/findpw";
+	})
 	
 	$("#userUpdateBtn").on("click", function(){
 		location.href="user/userModify";
@@ -40,20 +91,27 @@
 <body>
 	<form name='homeForm' method="post" action="/user/userLogin">
 		<c:if test="${member == null}">
+		<div class="border">
+		<h1 class ="IPvalue">로그인</h1>
+	<img src ="로그인화면 프로필이미지 로그인되잇다면 해당유저 프로필 없으면 기본 프로필나오게 if 걸자"><br>
 			<div>
-				<label for="cid"></label>
+				<label class="IPvalue" for="cid">아이디</label><br/>
 				<input type="text" id="cid" name="cid"/>
 			</div>
+			<br/>
 			<div>
-				<label for="password"></label>
+				<label class="IPvalue" for="password">비밀번호</label><br/>
 				<input type="password" id="password" name="password"/>
 			</div>
+			<br/>
 		</c:if>
 			<div>
 				<button type="submit">로그인</button>
 				<!-- 시큐리티적용 교안 11-->
 				<%-- <input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }"/> --%>
 				<a href="/user/userJoin"><button id=registerBtn type="button">회원가입</button></a>
+				<a href="/user/findpw"><button id=findpwBtn type="button">비밀번호찾기</button></a>
+			</div>
 			</div>
 	</form>
 		<c:if test="${member != null }">

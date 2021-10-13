@@ -1,6 +1,8 @@
 package org.game.user.service;
 
 
+import javax.servlet.http.HttpServletResponse;
+
 import org.game.user.domain.ConsumerVO;
 
 public interface UserService {
@@ -29,4 +31,9 @@ public interface UserService {
 	// 회원탈퇴
 	public void userDelete(ConsumerVO userVO) throws Exception;
 
+	//이메일발송
+	public void sendEmail(ConsumerVO vo, String div) throws Exception;
+
+	//비밀번호찾기
+	public void findPw(HttpServletResponse resp, ConsumerVO vo) throws Exception;
 }

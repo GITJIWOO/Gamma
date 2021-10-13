@@ -96,7 +96,7 @@ var code = "";
 	$(document).ready(function() {
 		// 취소
 		$(".cencle").on("click", function() {
-			location.href = "/user/userJoin";
+			location.href = "/user/userLogin";
 		})
 
 		$("#submit").on("click", function() {
