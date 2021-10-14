@@ -321,10 +321,12 @@ ALTER TABLE answer ADD CONSTRAINT pk_answer PRIMARY KEY(anum);
 CREATE TABLE consumerPayment (
     gname VARCHAR2(100) NOT NULL,
     gprice VARCHAR2(20) NOT NULL,
-    cid VARCHAR2(20) NOT NULL UNIQUE,
+    cid VARCHAR2(20) NOT NULL,
     merchant_uid VARCHAR2(100) PRIMARY KEY,
     CONSTRAINT fk_consumerpayment FOREIGN KEY (cid) REFERENCES consumer(cid)
 );
+drop table consumerpayment;
+commit;
 
 /*  사용자 찜 목록
     찜 식별 번호
