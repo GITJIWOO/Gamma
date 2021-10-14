@@ -27,7 +27,7 @@
 	
 	<!-- 평가 수정 -->
 	<update id="reviewUpdate">
-		UPDATE gameReview SET grlike=#{grlike}, grtitle=#{grtitle}, grcontent=#{grcontent}
+		UPDATE gameReview SET grlike=#{grlike}, grcontent=#{grcontent}
 			WHERE grnum=#{grnum}
 	</update>
 	
