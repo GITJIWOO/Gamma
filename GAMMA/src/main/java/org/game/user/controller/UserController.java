@@ -139,7 +139,7 @@ public class UserController {
 			rttr.addFlashAttribute("msg", false);
 			return "/user/userLogin";
 		}
-		return "/user/nav";
+		return "/main/main";
 	}
 
 	// 로그아웃 과 세션 초기화
@@ -149,7 +149,7 @@ public class UserController {
 		// security-con~ 에서 세션파기설정이되있음
 		session.invalidate();
 
-		return "/user/userLogin";
+		return "/main/main";
 	}
 
 	// 로그아웃 과 세션 초기화 시큐리티적용버전

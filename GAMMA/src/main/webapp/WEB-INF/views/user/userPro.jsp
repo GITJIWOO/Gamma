@@ -7,117 +7,256 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-<link
-	href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css"
-	rel="stylesheet"
-	integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU"
-	crossorigin="anonymous">
+    <link rel="stylesheet" href="/resources/css/styles.css" />
 <style>
-#modDiv {
-	width: 300px;
-	height: 100px;
-	background-color: green;
-	position: absolute;
-	top: 50%;
-	left: 50%;
-	margin-top: -50px;
-	margin-left: -150px;
-	padding: 10px;
-	z-index: 1000;
+* {
+	padding: 5px;
+	margin: 5px;
 }
+.userGet {
+	position: relative;
+	left: 20px;
+}
+
+
+.nick {
+	display: flex;
+	flex-flow: row;
+}
+
+h2 {
+	font-weight: bold;
+	font-size: big;
+}
+
+.cidPro{
+color:orange;
+}
+.table{
+	font-weight: bold;
+}
+
+p {
+	font-weight: bold; 
+	font-size:big;
+}
+
+strong {
+	color: blue;
+}
+
+#modDiv {
+	border-radius: 2px;
+	width: 310px;
+	height: 140px;
+	background-color: black;
+	position: absolute;
+	padding: 10px;
+	top: 40%;
+	left: 30%;
+	z-index: 1000;
+	width: 310px;
+}
+
+modBtn {
+	display: flex;
+	flex-flow: row;
+	background-color: white;
+	color: gray;
+}
+
+#replytext {
+	position: relative;
+	right: 7px;
+}
+
+button {
+	width: 100px;
+	height: 40px;
+	padding: 0;
+	display: inline;
+	border-radius: 4px;
+	background: #212529;
+	color: #fff;
+	margin-top: 5px;
+	border: solid 2px #212529;
+	transition: all 0.5s ease-in-out 0s;
+}
+ .proImg{
+ text-align:center;
+ }
+ .imgPro{
+ width: 350px;
+	height: 350px;
+	padding:0;
+	margin:0;
+ }
+ .uid{
+ 	 position: relative;
+ 	 top:10px;
+	font-weight:bold;
+	color:white;
+ }
 </style>
+<meta charset="UTF-8">
+
 <title>프로필</title>
+
 </head>
 <body>
-	<div class="form_section">
-		<div class="form_section_title">
-			<label>프로필 이미지</label>
+
+	<div class="display">
+		<!-- side-bar -->
+		<div class="side-bar">
+			<!-- logo -->
+			<div class="side-bar__row">
+				<!-- 클릭하면 main화면으로 돌아오도록 a 태그 수정 -->
+				<span><a href="#"><img
+						src="/resources/css/image/logo.png" /></a></span>
+			</div>
+			<!-- search -->
+			<div class="side-bar__row">
+				<form action="#" method="get">
+					<input type="text" placeholder="   Search Game" />
+					<!-- origin처럼 버튼 숨겼음, enter 치면 검색됨 -->
+					<input type="submit" value="" />
+				</form>
+			</div>
+			<!-- category -->
+			<div class="side-bar__row">
+				<span><a href="#">게임 스토어</a></span> <span><a href="#">라이브러리</a></span>
+			</div>
+			<!-- qna -->
+			<div class="side-bar__row">
+				<span><a href="#">Q&A</a></span> &nbsp;&nbsp;|&nbsp;&nbsp; <span><a
+					href="#">자주하는 질문</a></span>
+			</div>
+			<!-- about user -->
+		<div class="proImg">
+          <div>
+          <p class="uId">${member.nickname }(${member.cid  })</p>
+          </div>
+          <img class="imgPro" src="/resources/css/image/chaIcon.png"/>
+          
+          <div>
+   				<a href="/user/userGet">유저정보창</a>
+   				<a href="/user/userDelete">탈퇴창</a>
+   				</div>
+          </div>
 		</div>
-		<div class="form_section_content"></div>
-		<input type="file" id ="fileItem" name='uploadFile' style="height: 30px;">
+		<div class="main">
+			<div class="container">
+				<div class="row">
+					<div class="userGet">
+						<form name="form1" method="post">
+							<div class="row">
+							<div class="row">&nbsp;</div>
+							<h2 class="Title">프로필이미지</h2>
+							</div>
+							<table class="table" width="400px">
+
+								<c:if test="${member eq 'kjw011231' }">
+									<tr >
+										<td>유저고유번호</td>
+										<td><input id="cnum" name="cnum" value="${member.cnum}"
+											readonly="readonly"></td>
+									</tr>
+								</c:if>
+								<tr >
+									<td>아이디</td>
+									<td id="cid" name="cid">${member.cid}
+										</td>
+								</tr>
+								<tr>
+									<td>닉네임</td>
+									<td id="nickname" name="nickname">${member.nickname}</td>
+								</tr>
+								<tr>
+									<td>이메일</td>
+									<td id="email" name="email">${member.email}
+										</td>
+								</tr>
+								<tr>
+									<td>회원가입일자</td>
+									<td><fmt:formatDate value="${member.userregdate}"
+											pattern="yyy-MM-dd" /></td>
+								</tr>
+								
+							</table>
+						</form>
+							<div class="row">&nbsp;</div>
+						<br>
+						<br />
+						
+						<br />
+						<div class="modAub">
+							<div class="row">
+								<div class="col-md-3">
+									<p>${member.nickname } (방명록)</p>
+								</div>
+								<div class="col-md-6">
+									<textarea style="resize: none;" name="reply" id="newReply"
+										rows="2" cols="30"></textarea>
+									<input type="hidden" name="nickname"
+										value="${member.nickname }" id="newReplyWriter" readonly>
+								</div>
+								<div class="col-md-3">
+									<button id="replyAddBtn">방명록 남기기</button>
+									<br />
+								</div>
+							</div>
+
+							<ul id="replies">
+
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+		<div class="footer">
+			<div class="footer-info">
+				<div>CREATORS&nbsp;&nbsp;김영훈, 김지우, 조훈현, 최재인</div>
+				<div>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;</div>
+				<div>
+					CONTACT&nbsp;&nbsp;<a href="https://github.com/GITJIWOO">https://github.com/GITJIWOO</a>
+				</div>
+			</div>
+			<div class="footer-copyright">
+				<div>Copyright © GAMMA All right reserved.</div>
+			</div>
+		</div>
 	</div>
-
-
-<<<<<<< HEAD
-
-	<form name="form1" method="post">
-		<table border="1" width="400px">
-			<tr>
-				<td>아이디</td>
-				<td><input id="cid" name="cid" value="${member.cid}"
-					readonly="readonly" /></td>
-=======
-<!-- form 태그 혹시 몰라서 주석처리 해둡니다 -재인- -->
-<!-- <form name="form1" method="post">  -->
-		<table border="1" width="400px">
-			<tr>
-				<td>아이디</td>
-				<td><input id="cid" name="cid" value="${member.cid}" readonly="readonly"/></td>
-				<td rowspan="2">
-					<form action="/friends/addfriends" method="post" >
-						<input type="hidden" name="follower" value="${member.cid}" />
-						<input type="hidden" name="following" value="" /><!-- 시큐리티 완성되면 로그인 계정으로 수정하고 테스트하기 -->
-						<input type="submit" value="친구 추가" />
-					</form>
-				</td>
->>>>>>> 6643f27c8506345f4d74b8bad0f221e4ac287465
-			</tr>
-			<tr>
-				<td>닉네임</td>
-				<td><input id="nickname" name="nickname"
-					value="${member.nickname}" readonly="readonly" /></td>
-			</tr>
-			<tr>
-
-			</tr>
-		</table>
-<!-- </form>  -->
-
-	<h2>방명록</h2>
-
-	<div>
-		<div>
-			nickname <input type="text" name="nickname"
-				value="${member.nickname }" id="newReplyWriter" readonly>
 		</div>
-		<div>
-			REPLY <input type="text" name="reply" id="newReply">
-		</div>
-		<button id="replyAddBtn">리플추가</button>
-	</div>
-
-	<ul id="replies">
-
-	</ul>
-
-
-	<!-- 모달 요소는 안 보이기 때문에 어디 넣어도 되지만 보통 html요소들 끼리 놨을때
+							<!-- 모달 요소는 안 보이기 때문에 어디 넣어도 되지만 보통 html요소들 끼리 놨을때
 	제일 아래쪽에 작성하는 경우가 많습니다. -->
-	<div id="modDiv" style="display: none;">
-		<div class="modal-title"></div>
-		<div>
-			<input type="text" id="replytext">
-		</div>
-		<div>
-			<button type="button" id="replyModBtn">수정</button>
-			<button type="button" id="replyDelBtn">삭제</button>
-			<button type="button" id="closeBtn">닫기</button>
-		</div>
-	</div>
-	
-
+							<div id="modDiv" style="display: none;">
+								<div class="modal-title" style="color: white"></div>
+								<div>
+									<textarea style="resize: none;" name="reply" id="replytext"
+										rows="2" cols="41"></textarea>
+								</div>
+								<div class="modBtn">
+									<button type="button" id="replyModBtn">수정</button>
+									<button type="button" id="replyDelBtn">삭제</button>
+									<button type="button" id="closeBtn">닫기</button>
+								</div>
+							</div>
 
 	<script>
-		var cnum = $
-		{
-			member.cnum
-		};
+	$(document).ready(function() {
+		// 취소
+		$(".loginA").on("click", function() {
+			location.href = "/user/userLogin";
+		})
+		$(".joinA").on("click", function() {
+			location.href = "/user/userJoin";
+		})
+	});
+		var cnum = ${member.cnum};
 		function getAllList() {
-			$.getJSON(
-							"/userrp/all/" + cnum,
+			$.getJSON("/userrp/all/" + cnum,
 							function(data) {
 								//data 변수가 바로 얻어온 json데이터의 집합
 								console.log(data);
@@ -125,8 +264,7 @@
 								// str 변수 내부에 문자 형태로 html 코드를 작성함
 								var str = "";
 
-								$(data)
-										.each(
+								$(data).each(
 												function() {
 													// $(data).each()는 향상된 for문처럼 내부데이터를 하나하나 반복합니다.
 													// 내부 this는 댓글 하나하나입니다.
@@ -152,15 +290,15 @@
 															+ date.getSeconds() // 초 추출	
 
 													// this.updateDate를 표출하면 시간이 unix시간으로 표시됨  요소분석으로 a태그 찾아서 본거고 http://로 시작해야 앞에 짜잘한거 안붙어요.
-													str += "<div class='replyLi' data-rno='" + this.rno + "'><a href='http://localhost:8181/user/userPro?cid=${member.cid}'><strong>@"
+													str += "<div class='replyLi' data-rno='" + this.rno + "'><br/><a href='http://localhost:8181/user/userPro?cid=${member.cid}'><strong>@"
 															+ this.nickname
 															+ "</strong></a> - "
 															+ formattedTime
 															+ "<br>"
 															+ "<div class='reply'>"
 															+ this.reply
-															+ "</div>"
-															+ "<button type='button' class='btn btn-info'>수정/삭제</button>"
+															+ "</div><br/>"
+															+ "<button type='button' class='btn btn-info'>수정/삭제</button><br/>"
 															+ "</div>";
 												});
 
@@ -275,7 +413,7 @@
 			console.log(rno + ":" + reply);
 
 			// 모달 열리도록 추가
-			$(".modal-title").html(rno);// 모달 상단에 댓글번호 넣기
+			$(".modal-title").html(rno + "번 댓글");// 모달 상단에 댓글번호 넣기
 			$("#replytext").val(reply);// 모달 수정창에 댓글본문 넣기
 			$("#modDiv").show("slow"); // 창에 애니메이션 효과 넣기
 		});
