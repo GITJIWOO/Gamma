@@ -323,7 +323,7 @@ CREATE TABLE consumerPayment (
     gprice VARCHAR2(20) NOT NULL,
     cid VARCHAR2(20) NOT NULL UNIQUE,
     merchant_uid VARCHAR2(100) PRIMARY KEY,
-    CONSTRAINT fk_consumerpayment FOREIGN KEY(cid) REFERENCES consumer(cid)
+    CONSTRAINT fk_consumerpayment FOREIGN KEY (cid) REFERENCES consumer(cid)
 );
 
 /*  사용자 찜 목록

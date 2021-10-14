@@ -30,23 +30,23 @@
 	        buyer_postcode: "01181"
 	    }, function (rsp) { // callback
 	        if (rsp.success) { // 성공시 실행문
+	        	console.log("ajax 이전");
 	        	$.ajax({
 	        		url: "/gamepayment/paymentsuccess",
-	        		type: "POST",
-		        	headers: {
-		        		"Content-Type":"application/json",
-		        		"X-HTTP-Method-Override":"POST"
-		        	},
-	        		data: JSON.stringify ({
-	        			gname : ${basket.gname},
-	        			gprice : ${basket.gprice},
-	        			merchant_uid : ${merchant_uid}
-	        		}),
+	        		type: "post",
+	        		data: {
+	        			gnum : ${basket.gnum},
+	        			gname : '${basket.gname}',
+	        			gprice : '${basket.gprice}',
+	        			merchant_uid : '${merchant_uid}'
+	        		},
 	        		dataType: "text",
 	        		success: function(){
 			        	alert("결제가 완료되었습니다.");
+			        	location.href = "/gamepayment/successjsp";
 	        		}
 	        	});
+	        	console.log("ajax 이후");
 	        } else { // 실패시 실행문
 	        	alert("결제가 취소되었습니다.");
 	    		location.href = "/main/main";

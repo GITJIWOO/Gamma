@@ -12,7 +12,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import lombok.AllArgsConstructor;
@@ -50,19 +52,25 @@ public class GamePurchaseController {
 	
 	@PostMapping("/paymentsuccess")
 	@ResponseBody
-	public String paymentSuccess(GamePurchaseVO gpVO, long gnum, HttpSession session) {
-
+	public String paymentSuccess(GamePurchaseVO gpVO, @RequestParam("gnum") long gnum, HttpSession session) throws Exception {
+		
 		String cid = (String)session.getAttribute("session_cid");
+		
+		gpVO.setCid(cid);
 		
 		if(cid == null) {
 			return "redirect:/user/userLogin";
 		}
-		
 		gamePurchaseService.paymentInputInfo(gpVO);
 		libraryService.additionalLibrary(cid, gnum);
 		basketService.removeConsumerBasket(cid, gnum);
 		
-		return "/payment/patmentSuccess";
+		return "";
+	}
+	
+	@GetMapping("/successjsp")
+	public String successJsp() {
+		return "/payment/paymentSuccess";
 	}
 	
 }
