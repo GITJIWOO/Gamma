@@ -13,6 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j;
@@ -26,13 +27,13 @@ public class ConsumerBasketController {
 	@Autowired
 	private ConsumerBasketService service;
 	
-	@GetMapping("/basketList")
-	public String getBasketList(String cid, HttpSession session, Model model) {
-
+	@PostMapping("/basketList")
+	public String getBasketList(@RequestParam("cid") String cid, HttpSession session, Model model) {
+		
 		cid = (String)session.getAttribute("session_cid");
 		
 		if(cid == null) {
-			return "redirect:/main";
+			return "redirect:/user/userLogin";
 		}
 		
 		List<ConsumerBasketVO> BasketList = service.getConsumerBasketList(cid);
@@ -59,7 +60,7 @@ public class ConsumerBasketController {
 		
 		service.removeConsumerBasket(cid, gnum);
 		
-		return "redirect:/payment/consumerBasket";
+		return "redirect:/gamepayment/basketList";
 	}
 	
 }

@@ -11,40 +11,48 @@
 </head>
 <body>
 <script>
+	if(${merchant_uid ne null}){
+		requestPay();
+	}
+	
 	function requestPay() {
 		IMP.init('imp54386294');
 	    IMP.request_pay({ // param
 	        pg: "html5_inicis",
 	        pay_method: "card",
-	        merchant_uid: "ORD20180131-0000011",
-	        name: ${basket.gname},
-	        amount: ${gprice},
+	        merchant_uid: "${merchant_uid}",
+	        name: "${basket.gname}",
+	        amount: ${basket.gprice},
 	        buyer_email: "gildong@gmail.com",
 	        buyer_name: "홍길동",
 	        buyer_tel: "010-4242-4242",
 	        buyer_addr: "서울특별시 강남구 신사동",
 	        buyer_postcode: "01181"
 	    }, function (rsp) { // callback
-	        if (rsp.success) {
-	        	alert("결제가 완료되었습니다.");
-	        	let form = document.createElement('form');
-	        	form.setAttribute('action', '/gamepayment/paymentsuccess');
-	        	form.setAttribute('method', 'post');
-	        	document.charset = 'utf-8';
-	        	let hidden1 = document.createElement('input');
-	        	hidden1.serAttribute('type', 'hidden');
-	        	hidden1.serAttribute('name', 'gnum');
-	        	hidden1.serAttribute('value', ${gnum});
-	        	form.appendChild(hidden);
-	        	document.body.appendChild(form);
-	        	form.submit();
-	        } else {
+	        if (rsp.success) { // 성공시 실행문
+	        	$.ajax({
+	        		url: "/gamepayment/paymentsuccess",
+	        		type: "POST",
+		        	headers: {
+		        		"Content-Type":"application/json",
+		        		"X-HTTP-Method-Override":"POST"
+		        	},
+	        		data: JSON.stringify ({
+	        			gname : ${basket.gname},
+	        			gprice : ${basket.gprice},
+	        			merchant_uid : ${merchant_uid}
+	        		}),
+	        		dataType: "text",
+	        		success: function(){
+			        	alert("결제가 완료되었습니다.");
+	        		}
+	        	});
+	        } else { // 실패시 실행문
 	        	alert("결제가 취소되었습니다.");
 	    		location.href = "/main/main";
 	        }
 	    });
 	}
-	requestPay();
 </script>
 </body>
 </html>

@@ -3,6 +3,8 @@ package org.game.gamepurchase.controller;
 import javax.servlet.http.HttpSession;
 
 import org.game.gamelibrary.service.GameLibraryService;
+import org.game.gamepurchase.domain.GamePurchaseVO;
+import org.game.gamepurchase.service.GamePurchaseService;
 import org.game.user.domain.ConsumerBasketVO;
 import org.game.user.service.ConsumerBasketService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j;
@@ -27,25 +30,35 @@ public class GamePurchaseController {
 	@Autowired
 	private ConsumerBasketService basketService;
 	
-	@GetMapping("/paymentscreen")
-	public String paymentScreen(ConsumerBasketVO basket, long gnum, int gprice, Model model) {
-		
-		model.addAttribute("gnum", gnum);
-		model.addAttribute("basket", basket);
-		model.addAttribute("gprice", gprice);
-		
-		return "/payment/paymentScreen";
-	}
+	@Autowired
+	private GamePurchaseService gamePurchaseService;
 	
-	@PostMapping("/paymentsuccess")
-	public String paymentSuccess(String cid, long gnum, HttpSession session) {
-
+	@GetMapping("/paymentscreen")
+	public String paymentScreen(ConsumerBasketVO basket, String merchant_uid, String cid, HttpSession session, Model model) {
+		
 		cid = (String)session.getAttribute("session_cid");
 		
 		if(cid == null) {
 			return "redirect:/user/userLogin";
 		}
 		
+		model.addAttribute("basket", basket);
+		model.addAttribute("merchant_uid", merchant_uid);
+		
+		return "/payment/paymentScreen";
+	}
+	
+	@PostMapping("/paymentsuccess")
+	@ResponseBody
+	public String paymentSuccess(GamePurchaseVO gpVO, long gnum, HttpSession session) {
+
+		String cid = (String)session.getAttribute("session_cid");
+		
+		if(cid == null) {
+			return "redirect:/user/userLogin";
+		}
+		
+		gamePurchaseService.paymentInputInfo(gpVO);
 		libraryService.additionalLibrary(cid, gnum);
 		basketService.removeConsumerBasket(cid, gnum);
 		
