@@ -2,6 +2,7 @@ package org.game.gameinfo.service;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
 import org.game.gameinfo.domain.GameInfoVO;
 import org.game.gameinfo.domain.GameSearchCriteria;
 
@@ -16,6 +17,8 @@ public interface GameInfoService {
 	public void removeGame(Long gnum); 	// 게임삭제
 
 	public List<GameInfoVO> gameList(String keyword); // 게임목록
+	
+	public List<GameInfoVO> listByTag(@Param("tagname") String tagname);	// 탸그별
 
 	public List<GameInfoVO> getGameListPaging(GameSearchCriteria cri);
 	

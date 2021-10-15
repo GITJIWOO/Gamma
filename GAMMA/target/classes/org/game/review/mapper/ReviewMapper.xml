@@ -21,13 +21,13 @@
 	
 	<!-- 평가 작성 -->
 	<insert id="reviewInsert">
-		INSERT INTO gameReview(grnum, gnum, cid, grlike, grtitle, grcontent, grdate)
-			VALUES(gamereview_num.nextval, #{gnum}, #{cid}, #{grlike}, #{grtitle}, #{grcontent}, sysdate)
+		INSERT INTO gameReview(grnum, gnum, cid, grlike, grcontent, grdate)
+			VALUES(gamereview_num.nextval, #{gnum}, #{cid}, #{grlike}, #{grcontent}, sysdate)
 	</insert>
 	
 	<!-- 평가 수정 -->
 	<update id="reviewUpdate">
-		UPDATE gameReview SET grlike=#{grlike}, grtitle=#{grtitle}, grcontent=#{grcontent}
+		UPDATE gameReview SET grlike=#{grlike}, grcontent=#{grcontent}
 			WHERE grnum=#{grnum}
 	</update>
 	

@@ -1,9 +1,5 @@
 package org.game.user.service;
 
-import java.util.List;
-
-import org.game.review.service.ReviewServiceTest;
-import org.game.user.domain.ConsumerBasketVO;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,19 +16,19 @@ public class ConsumerBasketServiceTest {
 	@Autowired
 	private ConsumerBasketService service;
 	
-	@Test
+	// @Test
 	public void getConsumerBasketListTest() {
 		log.info(service.getConsumerBasketList("kjw011231"));
 	}
 	
-	// @Test
+	@Test
 	public void additionConsumerBasketTest() {
-		service.additionConsumerBasket("kjw011231", 2L);
+		service.additionConsumerBasket("kjw011231", 121L);
 	}
 	
 	// @Test
 	public void removeConsumerBasketTest() {
-		service.removeConsumerBasket("kjw011231", 1L);
+		service.removeConsumerBasket("kjw011231", 61L);
 	}
 	
 }

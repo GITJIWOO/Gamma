@@ -25,9 +25,13 @@ public class GameLibraryController {
 	private GameLibraryService libraryService;
 	
 	@GetMapping("/conLibrary")
-	public String consumerLibraryList(HttpSession session, Model model) {
+	public String consumerLibraryList(String cid, HttpSession session, Model model) {
 		
-		String cid = (String)session.getAttribute("session_cid");
+		cid = (String)session.getAttribute("session_cid");
+		
+		if(cid == null) {
+			return "redirect:/user/userLogin";
+		}
 		
 		List<ResultLibraryVO> library = libraryService.getAllConsumerLibrary(cid);
 		

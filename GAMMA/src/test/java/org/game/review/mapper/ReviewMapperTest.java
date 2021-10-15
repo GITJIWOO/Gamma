@@ -34,7 +34,6 @@ public class ReviewMapperTest {
 		vo.setGnum(1);
 		vo.setCid("kjw011231");
 		vo.setGrlike(1);
-		vo.setGrtitle("재미있다");
 		vo.setGrcontent("재미재미 있다");
 		vo.setGrrecommend(0);
 		mapper.reviewInsert(vo);
@@ -47,7 +46,6 @@ public class ReviewMapperTest {
 		vo.setGnum(1);
 		vo.setCid("kjw011231");
 		vo.setGrlike(0);
-		vo.setGrtitle("재미없다2");
 		vo.setGrcontent("재미 없어졌다2");
 		vo.setGrrecommend(0);
 		mapper.reviewUpdate(vo);

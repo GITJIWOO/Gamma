@@ -5,6 +5,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.game.friends.service.FriendsService;
 import org.game.user.domain.ConsumerVO;
 import org.game.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,12 +31,23 @@ public class UserController {
 	UserService service;
 	// @Inject
 	// BCryptPasswordEncoder pwdEncoder;
-	// @Autowired
-	// private JavaMailSender mailSender;
-
+	//@Autowired
+	//private JavaMailSender mailSender;
+	
+	@Autowired
+	private FriendsService fservice;
+	
 	// 유저프로필
 	@GetMapping("/userPro")
 	public String userPro() {
+		/*
+		재인 추가
+		service.userGet(null);	// 아마 이거 작성되어야 프로필 조회할 수 있을듯..
+		model.addAttribute("result" ,fservice.fOrNot(null, cid));	// null 에는 해당 로직으로 이동하면 나오는 user 정보 추가 예정, cid는 로그인 계정 
+		log.info(fservice.fOrNot(null, cid);
+		model.addAttribute("follower", null);
+		model.addAttribute("following", cid);
+		*/
 		return "/user/userPro";
 	}
 

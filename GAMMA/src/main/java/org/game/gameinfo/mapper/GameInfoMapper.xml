@@ -51,6 +51,11 @@
 		WHERE gnum = #{gnum}
 	</update>
 	
+	<!-- 태그별 조회 -->
+	<select id="listByTag" resultType="org.game.gameinfo.domain.GameInfoVO">
+		SELECT gametag.tagname, game.* FROM gametag JOIN game on gametag.gnum = game.gnum	
+		WHERE tagname = #{tagname}
+	</select>
 	
 	
 	<!-- v페이징 -->

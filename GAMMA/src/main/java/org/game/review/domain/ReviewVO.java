@@ -11,7 +11,6 @@ public class ReviewVO {
 	private long gnum;
 	private String cid;
 	private int grlike;
-	private String grtitle;
 	private String grcontent;
 	private long grrecommend;
 	private Date grdate;

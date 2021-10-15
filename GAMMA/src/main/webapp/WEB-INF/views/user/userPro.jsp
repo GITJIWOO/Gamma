@@ -109,6 +109,69 @@ button {
 
 </head>
 <body>
+<<<<<<< HEAD
+<div class="profileImg">프로필 이미지위치
+
+</div>
+
+
+<!-- form 태그 혹시 몰라서 주석처리 해둡니다 -재인- -->
+<!-- <form name="form1" method="post">  -->
+		<table border="1" width="400px">
+			<tr>
+				<td>아이디</td>
+				<td><input id="cid" name="cid" value="${member.cid}" readonly="readonly"/></td>
+				<td rowspan="2">
+					<c:if test="${result == null }"><!-- null을 ==으로 비교하는게 맞는지 확인해야됨 -->
+					<form action="/friends/addfriends" method="post" >
+						<input type="hidden" name="follower" value="${member.cid}" />
+						<input type="hidden" name="following" value="" /><!-- 시큐리티 완성되면 로그인 계정으로 수정하고 테스트하기 -->
+						<input type="submit" value="친구 추가" />
+					</form>
+					</c:if>
+					<c:if test="${result == 1 }">
+					<form action="/friends/removefriends" method="post" >
+						<input type="hidden" name="follower" value="${member.cid}" />
+						<input type="hidden" name="following" value="" /><!-- 시큐리티 완성되면 로그인 계정으로 수정하고 테스트하기 -->
+						<input type="submit" value="친구 삭제" />
+					</form>
+					</c:if>
+				</td>
+			</tr>
+			<tr>
+				<td>닉네임</td>
+				<td><input id="nickname" name="nickname" value="${member.nickname}" readonly="readonly"/></td>
+			</tr>
+			<tr>
+
+			</tr>
+		</table>
+<!-- </form>  -->
+
+<h2>방명록</h2>
+	
+	<div>
+		<div>
+			nickname <input type="text" name="nickname" value="${member.nickname }" id="newReplyWriter" readonly>
+		</div>
+		<div>
+			REPLY <input type="text" name="reply" id="newReply">
+		</div>
+		<button id="replyAddBtn">리플추가</button>
+	</div>	
+	
+	<ul id="replies">
+	
+	</ul>
+	
+	
+	<!-- 모달 요소는 안 보이기 때문에 어디 넣어도 되지만 보통 html요소들 끼리 놨을때
+	제일 아래쪽에 작성하는 경우가 많습니다. -->
+	<div id="modDiv" style="display:none;">
+		<div class="modal-title"></div>
+		<div>
+			<input type="text" id="replytext">		
+=======
 
 	<div class="display">
 		<!-- side-bar -->
@@ -148,6 +211,7 @@ button {
    				<a href="/user/userDelete">탈퇴창</a>
    				</div>
           </div>
+>>>>>>> user
 		</div>
 		<div class="main">
 			<div class="container">

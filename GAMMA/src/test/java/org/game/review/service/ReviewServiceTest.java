@@ -45,7 +45,6 @@ public class ReviewServiceTest {
 		review.setGnum(1L);
 		review.setCid("kjw011231");
 		review.setGrlike(1);
-		review.setGrtitle("리뷰 제목");
 		review.setGrcontent("리뷰 내용");
 		service.writeReview(review);
 	}
@@ -56,7 +55,6 @@ public class ReviewServiceTest {
 		review.setGnum(1L);
 		review.setCid("kjw011231");
 		review.setGrlike(0);
-		review.setGrtitle("수정 한 리뷰 제목");
 		review.setGrcontent("수정 한 리뷰 내용");
 		service.modifyReview(review);
 	}

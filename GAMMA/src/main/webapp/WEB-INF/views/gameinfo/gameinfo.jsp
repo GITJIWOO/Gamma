@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -9,102 +10,246 @@
 	rel="stylesheet"
 	integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU"
 	crossorigin="anonymous">
+<link rel="stylesheet" href="/resources/css/styles.css" />
+<style type="text/css">
+* {
+	margin: 0px;
+	padding: 0px;
+}
+
+.container {
+	width: 900px;
+	margin: auto;
+}
+
+.top {
+	margin-top: 20px;
+	width: 900px;
+	height: 40px;
+}
+
+.mid {
+	height: 500px;
+	position: relative;
+}
+
+.midLeft {
+	position: absolute;
+	top: 0px;
+	width: 600px;
+	height: 500px;
+}
+
+.midRight {
+	position: absolute;
+	top: 0px;
+	left: 620px;
+	width: 380px;
+	height: 500px;
+}
+
+.mid1 {
+	outline: 1px solid #9F9F9F;
+	width: 300px;
+	height: 150px;
+}
+
+.mid2 {
+	margin-top: 10px;
+	width: 300px;
+	height: 150px;
+}
+
+.mid3 {
+	margin-top: 10px;
+	width: 300px;
+	height: 180px;
+}
+
+.bottom {
+	margin-top: 20px;
+	margin-bottom: 10px;
+	width: 900px;
+	height: 600px;
+}
+
+.bottom1 {
+	height: 300px;
+}
+
+.bottom2 {
+	height: 300px;
+}
+</style>
 <meta charset="UTF-8">
 <title>Insert title here</title>
 </head>
 <body>
-	<%-- 
-	게임정보: ${gvo }
-	<br> 게임태그: ${tvoList }
-	<br> 시스템 요구사항: ${rvo }
-	<br>
-	<p>페이지번호: ${param.pageNum } 검색조건: ${param.searchType } 키워드:
-		${param.keyword }</p>--%>
-	<h1>게시물 상세 조회</h1>
-	<table border="1">
-		<tr>
-			<th>게임</th>
-			<td>${gvo.gname }</td>
-		</tr>
-		<tr>
-			<th>출시일</th>
-			<td>${gvo.glaunch }</td>
-		</tr>
-		<tr>
-			<th>개발사</th>
-			<td>${gvo.gdeveloper }</td>
-		</tr>
-		<tr>
-			<th>배급사</th>
-			<td>${gvo.gfublisher }</td>
-		</tr>
-		<tr>
-			<th>가격</th>
-			<td>${gvo.gprice }</td>
-		</tr>
-		<tr>
-			<th>게임 소개</th>
-			<td><textarea rows="10" cols="30" name="gcontent"
-					required="required">${gvo.gcontent }</textarea><br /></td>
-		</tr>
-		<tr>
-			<th>개임 등급</th>
-			<td>${gvo.ggrade }</td>
-		</tr>
-		<tr>
-			<th>게임 사이트</th>
-			<td>${gvo.gsite }</td>
-		</tr>
-		<tr>
-			<th>동영상</th>
-			<td>${gvo.gaddress }</td>
-		</tr>
-		<tr>
-			<th>운영체제</th>
-			<td>${rvo.gos }</td>
-		</tr>
-		<tr>
-			<th>프로세서</th>
-			<td>${rvo.gprocessor }</td>
-		</tr>
-		<tr>
-			<th>메모리</th>
-			<td>${rvo.gmemory }</td>
-		</tr>
-		<tr>
-			<th>그래픽</th>
-			<td>${rvo.ggraphic }</td>
-		</tr>
-		<tr>
-			<th>directX</th>
-			<td>${rvo.gdirectx }</td>
-		</tr>
+	<div class="display">
+      <!-- side-bar -->
+      <div class="side-bar">
+        <!-- logo -->
+        <div class="side-bar__row">
+          <!-- 클릭하면 main화면으로 돌아오도록 a 태그 수정 -->
+          <span
+            ><a href="#"><img src="/resources/css/image/logo.png" /></a
+          ></span>
+        </div>
+        <!-- search -->
+        <div class="side-bar__row">
+          <form action="#" method="get">
+            <input type="text" placeholder="   Search Game" />
+            <!-- origin처럼 버튼 숨겼음, enter 치면 검색됨 -->
+            <input type="submit" value="" />
+          </form>
+        </div>
+        <!-- category -->
+        <div class="side-bar__row">
+          <span><a href="#">게임 스토어</a></span>
+          <span><a href="#">라이브러리</a></span>
+        </div>
+        <!-- qna -->
+        <div class="side-bar__row">
+          <span><a href="#">Q&A</a></span>
+          &nbsp;&nbsp;|&nbsp;&nbsp;
+          <span><a href="#">자주하는 질문</a></span>
+        </div>
+        <!-- about user -->
+        <div class="side-bar__row">
+          <!-- c:if로 로그인 전에는 회원가입+로그인 / 로그인 후에는 프로필 -->
+          <span><a href="#">로그인</a></span>
+          <span><a href="#">가입하기</a></span>
+          <!--
+        <span>
+          <a href="#"><button class="profile">Profile</button></a>
+        </span>
+        --></div>
+      </div>
+      <div class="main">
+        <div class="contents">
+          <div class="detail">
 
-		<tr>
-			<th>저장공간</th>
-			<td>${rvo.gstore }</td>
-		</tr>
-		<tr>
-			<th>게임 태그</th>
-			<td>${tvo.tagname}</td>
-		</tr>
-	</table>
-	<a href="/gameInfo/gamelist?pageNum=${param.pageNum }&searchType=${param.searchType}&keyword=${param.keyword}">
-		<input type="button" value="목록으로"></a>
-	
-	
-	<form action="/gameInfo/modifyform" method="post">
-		<input type="hidden" name="gnum" value="${gvo.gnum }"> 
-		<input type="hidden" name="pageNum" value="${param.pageNum }"> 
-		<input type="hidden" name="searchType" value="${param.searchType }">
-		<input type="hidden" name="keyword" value="${param.keyword }">
-		<input type="submit" value="수정하기">
-	</form>
-	
-	<form action="/gameInfo/gameremove" method="post" id="deleteForm">
-		<input type="hidden" name="gnum" value="${gvo.gnum }"> <input
-			type="button" value="삭제하기" onclick="confirm_delete();">
-	</form>
+
+	<div class="container">
+		<!--top-->
+		<div class="top">
+			<span>${gvo.gname }</span>
+		</div>
+
+		<!--middle-->
+		<div class="mid">
+
+			<div class="midLeft">${gvo.gaddress }</div>
+
+			<div class="midRight">
+
+				<div class="mid1">사진</div>
+				<div class="mid2">${gvo.gcontent }</div>
+				<div class="mid3">
+
+					<div class="container">
+						<div class="row">
+							<div class="col-md-2">출시날짜</div>
+							<div class="col-md-2">${gvo.glaunch }</div>
+						</div>
+						<div class="row">
+							<div class="col-md-2">개발사</div>
+							<div class="col-md-2">${gvo.gdeveloper }</div>
+						</div>
+						<div class="row">
+							<div class="col-md-2">배급사</div>
+							<div class="col-md-2">${gvo.gfublisher }</div>
+						</div>
+						<div class="row">
+							<div class="col-md-2">가격</div>
+							<div class="col-md-2">₩${gvo.gprice }</div>
+						</div>
+						<br>
+						<div class="row">
+							<div class="col-md">이 제품의 태그</div>
+
+						</div>
+						<div class="col-md">${tvo.tagname}</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<form action="/gameInfo/modifyform" method="post">
+			<input type="hidden" name="gnum" value="${gvo.gnum }"> <input
+				type="hidden" name="pageNum" value="${param.pageNum }"> <input
+				type="hidden" name="searchType" value="${param.searchType }">
+			<input type="hidden" name="keyword" value="${param.keyword }">
+			<input type="submit" value="수정하기">
+		</form>
+		<a
+			href="/gameInfo/gamelist?pageNum=${param.pageNum }&searchType=${param.searchType}&keyword=${param.keyword}">
+			<input type="button" value="목록으로">
+		</a>
+
+		<form action="/gameInfo/gameremove" method="post" id="deleteForm">
+			<input type="hidden" name="gnum" value="${gvo.gnum }"> <input
+				type="button" value="삭제하기" onclick="confirm_delete();">
+		</form>
+
+		<!--bottom-->
+		<div class="bottom">
+			<div class="bottom1">
+				시스템 요구사항<br>
+				<hr>
+				<div class="container">
+					<div class="row">
+						<div class="col-md-2">OS</div>
+						<div class="col-md-10">${rvo.gos }</div>
+					</div>
+					<div class="row">
+						<div class="col-md-2">프로세서</div>
+						<div class="col-md-10">${rvo.gprocessor }</div>
+					</div>
+					<div class="row">
+						<div class="col-md-2">메모리</div>
+						<div class="col-md-10">${rvo.gmemory }</div>
+					</div>
+					<div class="row">
+						<div class="col-md-2">그래픽</div>
+						<div class="col-md-10">${rvo.ggraphic }</div>
+					</div>
+					<div class="row">
+						<div class="col-md-2">directX</div>
+						<div class="col-md-10">${rvo.gdirectx }</div>
+					</div>
+					<div class="row">
+						<div class="col-md-2">저장공간</div>
+						<div class="col-md-10">${rvo.gstore }</div>
+					</div>
+				</div>
+			</div>
+			<div class="bottom2">
+				비슷한 제품
+				<hr>
+				 gname: ${gvo.gname }
+				<table class="table table-hover">
+					<tr>
+						<th>게임이름</th>
+						<th>가격</th>
+						<th>태그</th>
+					</tr>
+					<c:forEach var="listByTag" items="${listByTag }">
+					<c:if test="${listByTag.gname != gvo.gname }">
+						<tr>
+							<td><a
+								href="/gameInfo/get?gnum=${listByTag.gnum }&keyword=${btnMaker.cri.keyword}">
+									${listByTag.gname }</a></td>
+							<th>${listByTag.gprice }</th>
+							<th>${listByTag.tagname }</th>
+						</tr>
+						</c:if>
+					</c:forEach>
+				</table>
+
+			</div>
+		</div>
+	</div>
 
 	<script type="text/javascript">
 		function confirm_delete() {
@@ -117,6 +262,26 @@
 			}
 		}
 	</script>
-
+	
+	</div>
+        </div>
+        <div class="footer">
+          <div class="footer-info">
+            <div>CREATORS&nbsp;&nbsp;김영훈, 김지우, 조훈현, 최재인</div>
+            <div>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;</div>
+            <div>
+              CONTACT&nbsp;&nbsp;<a href="https://github.com/GITJIWOO"
+                >https://github.com/GITJIWOO</a
+              >
+            </div>
+          </div>
+          <div class="footer-copyright">
+            <div>Copyright © GAMMA All right reserved.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+	
+	
 </body>
 </html>

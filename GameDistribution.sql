@@ -202,7 +202,6 @@ CREATE TABLE gameReview (
     gnum NUMBER NOT NULL,
     cid VARCHAR2(20) NOT NULL,
     grlike NUMBER(3) NOT NULL,
-    grtitle VARCHAR2(100) NOT NULL,
     grcontent VARCHAR2(2000) NOT NULL,
     grrecommend NUMBER DEFAULT 0,
     grdate DATE DEFAULT sysdate,
@@ -315,21 +314,19 @@ CREATE TABLE answer (
 ALTER TABLE answer ADD CONSTRAINT pk_answer PRIMARY KEY(anum);
 
 /*  사용자 결제 내역
-    결제 번호
-    사용자 이메일(외래키)
-    결제 날짜
-    결제 금액
-    결제 방법
-    결제 상태
+    게임 이름
+    게임 가격
+    결제 식별 아이디
 */
 CREATE TABLE consumerPayment (
-    upnum NUMBER PRIMARY KEY,
-    email VARCHAR2(100) PRIMARY KEY,
-    upday DATE DEFAULT sysdate,
-    upprice NUMBER(100) NOT NULL,
-    upmethod ,
-    
+    gname VARCHAR2(100) NOT NULL,
+    gprice VARCHAR2(20) NOT NULL,
+    cid VARCHAR2(20) NOT NULL,
+    merchant_uid VARCHAR2(100) PRIMARY KEY,
+    CONSTRAINT fk_consumerpayment FOREIGN KEY (cid) REFERENCES consumer(cid)
 );
+drop table consumerpayment;
+commit;
 
 /*  사용자 찜 목록
     찜 식별 번호
