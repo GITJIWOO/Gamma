@@ -27,6 +27,10 @@
 		SELECT count(*) FROM consumer WHERE cid=#{cid}
 		
 	</select>
+	<!-- 비밀번호 변경 -->
+<update id="updatePw" >
+	update consumer set password = #{password} where cid = #{cid}
+</update>
 	
 	<!-- email 중복체크 -->
 	<select id="emailChk" resultType="long">
@@ -67,7 +71,7 @@
 	<!-- 회원탈퇴 -->
 	<delete id="userDelete">
 		DELETE FROM consumer
-		WHERE cid=#{cid} ON DELETE CASCADE
+		WHERE cid=#{cid} AND password =#{password}
 	</delete>
 
 

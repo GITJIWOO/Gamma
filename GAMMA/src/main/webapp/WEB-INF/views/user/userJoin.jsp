@@ -7,31 +7,83 @@
 <!-- 합쳐지고 최소화된 최신 CSS -->
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
-<!-- 부가적인 테마 -->
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
 
+<!-- Include all compiled plugins (below), or include individual files as needed -->
 <script
 	src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <meta charset="UTF-8">
 <title>회원가입</title>
 <style>
 * {
-	padding: 10;
+	padding: 5px;
 	margin: 0;
 }
-#mail_check_input_box_false{
-    background-color:#ebebe4;
+label{
+font-weight:bold;
 }
- 
-#mail_check_input_box_true{
-    background-color:white;
+h1{
+ position: relative;
+ top:30px;
+ font-weight:bold;
+ right:15px;
 }
-.correct{
-    color : green;
+button {
+	width: 150px;
+	height: 40px;
+	padding: 0;
+	display: inline;
+	border-radius: 4px;
+	background: #212529;
+	color: #fff;
+	margin-top: 5px;
+	border: solid 2px #212529;
+	transition: all 0.5s ease-in-out 0s;
 }
-.incorrect{
-    color : red;
+
+#mail_check_input_box_false {
+	background-color: #ebebe4;
+}
+input{
+width:300px;}
+
+img {
+	width: 150px;
+	height: 150px;
+	padding:0;
+	margin:0;
+}
+.row{
+display:flex; 
+	flex-flow:row;
+}
+.row1{
+	position:relative;
+	left:20px;
+	bottom:30px;
+}
+.border {
+	margin: 0 auto;
+	width: 380px;
+	height: 720px;
+	border: 1px solid #000;
+	border-radius: 10%;
+}
+
+.btn {
+	padding: 0;
+	margin: 0;
+}
+
+#mail_check_input_box_true {
+	background-color: white;
+}
+
+.correct {
+	color: green;
+}
+
+.incorrect {
+	color: red;
 }
 </style>
 </head>
@@ -96,7 +148,7 @@ var code = "";
 	$(document).ready(function() {
 		// 취소
 		$(".cencle").on("click", function() {
-			location.href = "/user/userJoin";
+			location.href = "/main/main";
 		})
 
 		$("#submit").on("click", function() {
@@ -129,6 +181,7 @@ var code = "";
 			} else if (eChkVal == "Y") {
 				$("#regForm").submit();
 			} 
+			
 		});
 	});
 	// 인증번호 이메일 전송
@@ -194,41 +247,42 @@ var code = "";
 	        }
 	        if(document.getElementById('password').value !='' && document.getElementById('pw2').value!=''){
 	            if(document.getElementById('password').value==document.getElementById('pw2').value){
-	                document.getElementById('check').innerHTML='비밀번호가 일치합니다.'
+	                document.getElementById('check').innerHTML='<br>비밀번호가 일치합니다.'
 	                document.getElementById('check').style.color='blue';
 	            }
 	            else{
-	                document.getElementById('check').innerHTML='비밀번호가 일치하지 않습니다.';
+	                document.getElementById('check').innerHTML='<br>비밀번호가 일치하지 않습니다.';
 	                document.getElementById('check').style.color='red';
 	            }
 	        }
 	    } ;
 </script>
 <body>
-	<section id="container"> <!-- security 로 id pass에 value값 넣음 admin으로 -->
+<div class="container">
+			<div class="border">
+				<div class="row">
+						<img src="/resources/css/image/mainIcon.png" />
+						<h1 style="text-align: left;">회원가입</h1>
+				</div>
+				<div class="row1">
 		<form action="/user/userJoin" method="post" id="regForm">
-			<div class="form-group has-feedback">
-				<label class="control-label" for="cid">아이디</label> <input
-					class="form-control" type="text" id="cid" name="cid" value="admin" />
-				<button class="idChk" type="button" id="idChk" onclick="fn_idChk();"
-					value="N">중복확인</button>
-			</div>
-			<div class="form-group has-feedback">
-				<label class="control-label" for="password">패스워드</label> <input
-					class="form-control" type="password" name="password" id="password" value="admin"
-					onchange="check_pw()" placeholder="!,@,#,$,%중 하나이상을 포함해주세요" />
-			</div>
-			 <div class="form-group has-feedback">
-				<label class="control-label" for="passwordConfirm">패스워드확인</label> <input
-					class="form-control" type="password" name="userPW2" id="pw2"
-					onchange="check_pw()">&nbsp;<span id="check"></span>
-			</div> 
-			<div class="form-group has-feedback">
-				<label class="control-label" for="email">Email</label> <input
-					class="form-control mail_input" type="text" id="email" name="email" />
-					<button class="emailChk" type="button" id="emailChk" onclick="fn_emailChk();"
-					value="N">중복확인</button>
-						<!-- <div class="mail_check_warn">
+					<label class="control-label" for="cid">아이디</label> <br/><input
+						 type="text" id="cid" name="cid" /><br/>
+					<button class="idChk" type="button" id="idChk"
+						onclick="fn_idChk();" value="N">중복확인</button><br/><br/>
+					<label class="control-label" for="password">패스워드</label><br/> <input
+						 type="password" name="password" id="password"
+						onchange="check_pw()" placeholder="!,@,#,$,%중 하나이상을 포함해주세요" /><br/>
+					<label class="control-label" for="passwordConfirm">패스워드확인</label><br/> <input
+						 type="password" name="userPW2" id="pw2"
+						onchange="check_pw()" placeholder="!,@,#,$,%중 하나이상을 포함해주세요"><span
+						id="check"></span><br/><br/>
+					<label class="control-label" for="email">Email</label> <br/><input
+						class="mail_input" type="text" id="email"
+						name="email" /><br/>
+					<button class="emailChk" type="button" id="emailChk"
+						onclick="fn_emailChk();" value="N">중복확인</button><br/><br/>
+					<!-- <div class="mail_check_warn">
 							<div class="mail_check_input_box" id="mail_check_input_box_false">
 								<input class="mail_check_input" disabled="disabled"/>
 							</div>
@@ -238,21 +292,14 @@ var code = "";
 						 <div class="clearfix"></div>
                     <span id="mail_check_input_box_warn"></span>
                 </div>-->
-					
-			</div>
-			
-			<div class="form-group has-feedback">
-				<label class="control-label" for="nickname">닉네임</label> <input
-					class="form-control" type="text" id="nickname" name="nickname" />
-			</div>
-
+					<label class="control-label" for="nickname">닉네임</label><br/> <input
+						 type="text" id="nickname" name="nickname" /><br/><br/>
 		</form>
-			<div class="form-group has-feedback">
-				<button class="btn btn-success" type="button" id="submit">회원가입</button>
-				<button class="cencle btn btn-danger" type="button">취소</button>
+					<button class="btn" type="button" id="submit">회원가입</button>
+					<button class="cencle btn" type="button">취소</button>
+				</div>
 			</div>
-	</section>
-
+</div>
 </body>
 
 </html>
