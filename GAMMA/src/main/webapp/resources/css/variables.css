@@ -1,0 +1,10 @@
+@charset "UTF-8";
+/* border, color, ... */
+:root {
+  --backColor: #edf1f2;
+  --sideColor: #1e262c;
+  --fontColor: #a0a3a7;
+  --mainColor: #f56c2d;
+  --footerColor: #ffffff;
+  --opacity: rgba(255, 255, 255, 0.2);
+}

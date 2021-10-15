@@ -94,12 +94,18 @@ public class GameInfoController {
 //		tvoList.addAll(19, gameTagService.getTag(gnum));
 //		GameInfoVO str = tvoList.get(19);
 		GameInfoVO rvo = requirementService.getRequirement(gnum);
+		
+//		List<GameInfoVO> listByTag = gameInfoService.listByTag(gvo);
+//		List<GameInfoVO> gameList = gameInfoService.getGameListPaging(cri);
+		List<GameInfoVO> listByTag = gameInfoService.listByTag(tvo.getTagname());
 		System.out.println("tvo: " + tvo);
 
 		model.addAttribute("gvo", gvo);
 		model.addAttribute("tvo", tvo);
 		model.addAttribute("rvo", rvo);
+		model.addAttribute("listByTag", listByTag);
 //		model.addAttribute("str", str);
+//		model.addAttribute("gameList", gameList);
 
 		return "/gameinfo/gameinfo";
 	}

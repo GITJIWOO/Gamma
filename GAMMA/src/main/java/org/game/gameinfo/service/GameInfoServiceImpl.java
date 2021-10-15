@@ -65,6 +65,12 @@ public class GameInfoServiceImpl implements GameInfoService {
 	public int getTotalGame(GameSearchCriteria cri) {
 		return mapper.getTotalGame(cri);
 	}
+
+	@Override
+	public List<GameInfoVO> listByTag(String tagname) {
+		List<GameInfoVO> listByTag = mapper.listByTag(tagname);
+		return listByTag;
+	}
 	
 
 }

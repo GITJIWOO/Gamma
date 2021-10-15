@@ -9,6 +9,7 @@ h1>a {
 	text-decoration: none
 }
 </style>
+<link rel="stylesheet" href="/resources/css/styles.css" />
 <link
 	href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css"
 	rel="stylesheet"
@@ -20,7 +21,50 @@ h1>a {
 <title>Insert title here</title>
 </head>
 <body>
-
+	<div class="display">
+      <!-- side-bar -->
+      <div class="side-bar">
+        <!-- logo -->
+        <div class="side-bar__row">
+          <!-- 클릭하면 main화면으로 돌아오도록 a 태그 수정 -->
+          <span
+            ><a href="#"><img src="/resources/css/image/logo.png" /></a
+          ></span>
+        </div>
+        <!-- search -->
+        <div class="side-bar__row">
+          <form action="#" method="get">
+            <input type="text" placeholder="   Search Game" />
+            <!-- origin처럼 버튼 숨겼음, enter 치면 검색됨 -->
+            <input type="submit" value="" />
+          </form>
+        </div>
+        <!-- category -->
+        <div class="side-bar__row">
+          <span><a href="#">게임 스토어</a></span>
+          <span><a href="#">라이브러리</a></span>
+        </div>
+        <!-- qna -->
+        <div class="side-bar__row">
+          <span><a href="#">Q&A</a></span>
+          &nbsp;&nbsp;|&nbsp;&nbsp;
+          <span><a href="#">자주하는 질문</a></span>
+        </div>
+        <!-- about user -->
+        <div class="side-bar__row">
+          <!-- c:if로 로그인 전에는 회원가입+로그인 / 로그인 후에는 프로필 -->
+          <span><a href="#">로그인</a></span>
+          <span><a href="#">가입하기</a></span>
+          <!--
+        <span>
+          <a href="#"><button class="profile">Profile</button></a>
+        </span>
+        --></div>
+      </div>
+      <div class="main">
+        <div class="contents">
+          <div class="detail">
+	
 	<h1>
 		<a href="/gameInfo/gamelist"> 게임 목록</a>
 	</h1>
@@ -48,7 +92,7 @@ h1>a {
 			</tr>
 		</c:forEach>
 	</table>
-
+	
 	<nav aria-label="Page navigation example">
 		<ul class="pagination justify-content-center">
 
@@ -100,6 +144,10 @@ h1>a {
 			value="${btnMaker.cri.keyword }"> <input type="submit"
 			value="검색">
 	</form>
+	
+	
+	
+	
 
 	<div class="modal" id="myModal" tabindex="-1">
 		<div class="modal-dialog">
@@ -120,7 +168,6 @@ h1>a {
 		</div>
 	</div>
 	
-
 	<script
 		src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js"
 		integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ"
@@ -146,6 +193,25 @@ h1>a {
 		// 			location.href = "/gameInfo/list";
 		// 		}
 	</script>
+	
+	  </div>
+        </div>
+        <div class="footer">
+          <div class="footer-info">
+            <div>CREATORS&nbsp;&nbsp;김영훈, 김지우, 조훈현, 최재인</div>
+            <div>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;</div>
+            <div>
+              CONTACT&nbsp;&nbsp;<a href="https://github.com/GITJIWOO"
+                >https://github.com/GITJIWOO</a
+              >
+            </div>
+          </div>
+          <div class="footer-copyright">
+            <div>Copyright © GAMMA All right reserved.</div>
+          </div>
+        </div>
+      </div>
+    </div>
 
 
 </body>
