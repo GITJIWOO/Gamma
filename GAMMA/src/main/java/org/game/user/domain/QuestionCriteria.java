@@ -8,7 +8,7 @@ import lombok.ToString;
 @Setter
 @ToString
 public class QuestionCriteria {
-	private int pageNum;
+	private int pageNum;	// Integer로 바꿈
 	private int amount;
 	
 	public QuestionCriteria() {

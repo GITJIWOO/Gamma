@@ -40,7 +40,7 @@
 
 	
 	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
-		<property name="dataSource" ref="dataSource" />
+		<property name="dataSource" ref="dataSource" />	
 	</bean>
 	
 	<!-- mail관련 빈생성 value는 각컴마다 다른가? 우선 킵 -->

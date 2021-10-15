@@ -22,4 +22,8 @@
 	<delete id="deleteAnswer">
 		DELETE FROM answer WHERE anum = #{anum}
 	</delete>
+	
+	<delete id="deleteQnA">
+		DELETE FROM answer WHERE qnum = #{qnum}
+	</delete>
 </mapper>

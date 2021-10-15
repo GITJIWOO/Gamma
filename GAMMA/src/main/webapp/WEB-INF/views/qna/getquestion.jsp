@@ -89,6 +89,8 @@
 		var qnum = ${param.qnum };
 		var str2 = "<textarea rows='10' cols='50' name='acontent' id='acontent' placeholder='답변 입력창'></textarea><br><button id='addAnswerBtn'>답변 등록</button>";
 		$("#inputAnswer").html(str2);
+		var adminOrNot = ${admin};
+		console.log("admin 인지 아닌지: "+adminOrNot);
 		function getAnswer(){
 			$.getJSON("/qna/answer/" + qnum, function(data){
 				console.log("실행중");
@@ -105,13 +107,26 @@
 													 + " " + date.getHours()
 													 + ":" + date.getMinutes()
 													 + ":" + date.getSeconds();
-					str += "<div data-anum='" 
-						+ this.anum 
-						+ "' class='answerDetail'><strong>@관리자</strong><br>" 
-						+ formattedTime 
-						+ "<br><div class='acontent'>" 
-						+ this.acontent 
-						+ "</div><button class='btn btn-dark'>수정/삭제</button></div>";
+					// 관리자일 경우,  
+					if(adminOrNot === 0){
+						str += "<div data-anum='" 
+							+ this.anum 
+							+ "' class='answerDetail'><strong>@관리자</strong><br>" 
+							+ formattedTime 
+							+ "<br><div class='acontent'>" 
+							+ this.acontent 
+							+ "</div></div>";
+					}
+					// 일반 회원일 경우,
+					else if(adminOrNot === 1){
+						str += "<div data-anum='" 
+							+ this.anum 
+							+ "' class='answerDetail'><strong>@관리자</strong><br>" 
+							+ formattedTime 
+							+ "<br><div class='acontent'>" 
+							+ this.acontent 
+							+ "</div><button class='btn btn-dark'>수정/삭제</button></div>";
+					}
 					if(str != ""){
 						str2 = "";
 						$("#inputAnswer").html(str2);
@@ -121,91 +136,93 @@
 			});
 		}
 		getAnswer();
-		</script>
-		<c:if test="${admin == 1 }">
-		<script>
-		// 답변 등록 버튼
-		$("#addAnswerBtn").on("click", function(){
-			var acontent = $("#acontent").val();
-			$.ajax({
-				type : 'post',
-				url : '/qna/answer/new',
-				headers : {
-					"Content-Type" : "application/json", 
-					"X-HTTP-Method-Override" : "POST"
-				},
-				dataType : 'text',
-				data : JSON.stringify({
-					qnum : qnum,
-					acontent : acontent
-				}),
-				success : function(result){
-					if(result == 'add success'){
-						alert("답변 작성이 완료되었습니다.");
-						getAnswer();
-						
-					}
+	</script>
+	
+	<c:if test="${admin == 1 }">
+	<script>
+	
+	// 답변 등록 버튼
+	$("#addAnswerBtn").on("click", function(){
+		var acontent = $("#acontent").val();
+		$.ajax({
+			type : 'post',
+			url : '/qna/answer/new',
+			headers : {
+				"Content-Type" : "application/json", 
+				"X-HTTP-Method-Override" : "POST"
+			},
+			dataType : 'text',
+			data : JSON.stringify({
+				qnum : qnum,
+				acontent : acontent
+			}),
+			success : function(result){
+				if(result == 'add success'){
+					alert("답변 작성이 완료되었습니다.");
+					getAnswer();
+					
 				}
-			});
+			}
 		});
-		
-		// 수정/삭제 버튼
-		$("#regiAnswer").on("click", ".answerDetail button", function(){
-			var answerDetail = $(this).parent();
-			var anum = answerDetail.attr("data-anum");
-			var acontent = $(this).siblings(".acontent").text();
-			console.log(anum + ":" + acontent);
-			$(".modal-title").html(anum);
-			$("#answertext").val(acontent);
-			$("#modDiv").show("slow");
-		});
-		
-		// modal - 답변 수정 버튼
-		$("#answerModBtn").on("click", function(){
-			var anum = $(".modal-title").html();
-			var acontent = $("#answertext").val();
-			$.ajax({
-				type : 'patch',
-				url : '/qna/answer/'+ anum,
-				headers : {
-					"Content-Type" : "application/json", 
-					"X-HTTP-Method-Override" : "PATCH"
-				},
-				dataType : 'text',
-				data : JSON.stringify({
-					acontent : acontent
-				}),
-				success : function(result){
-					if(result == 'modify success'){
-						alert("답변 수정이 완료되었습니다.");
-						$("#modDiv").hide("slow");	
-						getAnswer();
-					}
+	});
+	
+	// 수정/삭제 버튼
+	$("#regiAnswer").on("click", ".answerDetail button", function(){
+		var answerDetail = $(this).parent();
+		var anum = answerDetail.attr("data-anum");
+		var acontent = $(this).siblings(".acontent").text();
+		console.log(anum + ":" + acontent);
+		$(".modal-title").html(anum);
+		$("#answertext").val(acontent);
+		$("#modDiv").show("slow");
+	});
+	
+	// modal - 답변 수정 버튼
+	$("#answerModBtn").on("click", function(){
+		var anum = $(".modal-title").html();
+		var acontent = $("#answertext").val();
+		$.ajax({
+			type : 'patch',
+			url : '/qna/answer/'+ anum,
+			headers : {
+				"Content-Type" : "application/json", 
+				"X-HTTP-Method-Override" : "PATCH"
+			},
+			dataType : 'text',
+			data : JSON.stringify({
+				acontent : acontent
+			}),
+			success : function(result){
+				if(result == 'modify success'){
+					alert("답변 수정이 완료되었습니다.");
+					$("#modDiv").hide("slow");	
+					getAnswer();
 				}
-			});
+			}
 		});
-		
-		// modal - 답변 삭제 버튼
-		$("#answerDelBtn").on("click", function(){
-			var anum = $(".modal-title").html();
-			$.ajax({
-				type : 'delete',
-				url : '/qna/answer/'+ anum,
-				success : function(result){
-					if(result == 'remove success'){
-						alert("답변 삭제가 완료되었습니다.");
-						$("#modDiv").hide("slow");
-						// 새로고침을 해야함 - 왜..?
-						getAnswer();
-					}
+	});
+	
+	// modal - 답변 삭제 버튼
+	$("#answerDelBtn").on("click", function(){
+		var anum = $(".modal-title").html();
+		$.ajax({
+			type : 'delete',
+			url : '/qna/answer/'+ anum,
+			success : function(result){
+				if(result == 'remove success'){
+					alert("답변 삭제가 완료되었습니다.");
+					$("#modDiv").hide("slow");
+					// 새로고침을 해야함 - 왜..?
+					getAnswer();
 				}
-			});
+			}
 		});
-		
-		// modal - 닫기 버튼 
-		$("#closeBtn").on("click", function(){
-			$("#modDiv").hide("slow");			
-		});
+	});
+	
+	// modal - 닫기 버튼 
+	$("#closeBtn").on("click", function(){
+		$("#modDiv").hide("slow");			
+	});
 	</script>
 	</c:if>
 	<a href="/qna/questionlist?qwriter=${param.qwriter }&pageNum=${param.pageNum }"><button>질문 목록</button></a>

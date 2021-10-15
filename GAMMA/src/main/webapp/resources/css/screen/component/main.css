@@ -38,11 +38,13 @@
   display: none;
 }
 .side-bar__row:nth-child(3) {
-  margin: 15px 0;
+  margin: 20px 0;
   font-size: 25px;
   display: flex;
   flex-direction: column;
   align-items: center;
+  padding-bottom: 30px;
+  border-bottom: 1px solid var(--opacity);
 }
 .side-bar__row:nth-child(3) span {
   padding: 15px 0;
@@ -131,3 +133,4 @@
   font-weight: 300;
   font-size: 13px;
 }
+
