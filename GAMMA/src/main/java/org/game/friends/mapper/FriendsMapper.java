@@ -35,4 +35,8 @@ public interface FriendsMapper {
 	
 	// 친구 삭제(delete)
 	public void deleteFriend(@Param("follower")String follower, @Param("following")String following);
+	
+	// 친구의 프로필 사진 가져오기 - 로그인 계정이 팔로우하는 유저(cid에 follower) / 로그인 계정을 팔로우하는 유저(cid에 following)
+//	public ConsumerPictureVO getProfile(String cid);	// 사진 업로드 기능 끝나면 테스트해야됨
+
 }

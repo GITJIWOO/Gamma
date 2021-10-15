@@ -2,14 +2,17 @@ package org.game.user.controller;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.game.friends.service.FriendsService;
 import org.game.user.domain.ConsumerVO;
 import org.game.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -31,13 +34,23 @@ public class UserController {
 	//@Autowired
 	//private JavaMailSender mailSender;
 	
+	@Autowired
+	private FriendsService fservice;
+	
 	// 유저프로필
 	@GetMapping("/userPro")
 	public String userPro() {
+		/*
+		재인 추가
+		service.userGet(null);	// 아마 이거 작성되어야 프로필 조회할 수 있을듯..
+		model.addAttribute("result" ,fservice.fOrNot(null, cid));	// null 에는 해당 로직으로 이동하면 나오는 user 정보 추가 예정, cid는 로그인 계정 
+		log.info(fservice.fOrNot(null, cid);
+		model.addAttribute("follower", null);
+		model.addAttribute("following", cid);
+		*/
 		return "/user/userPro";
 	}
-	
-	
+
 	@GetMapping("/userGet")
 	public String userGet() {
 		return "/user/userGet";
@@ -69,7 +82,7 @@ public class UserController {
 
 		log.info("poset회원가입실행");
 		long result = service.idChk(userVO.getCid());
-		log.info("result값: " +result);
+		log.info("result값: " + result);
 		try {
 			if (result == 1) {
 				return "/user/userJoin";
@@ -79,7 +92,7 @@ public class UserController {
 				// userVO.setPassword(pwd);
 				service.userJoin(userVO);
 			}
-			
+
 		} catch (Exception e) {
 			throw new RuntimeException();
 		}
@@ -105,7 +118,7 @@ public class UserController {
 
 	@GetMapping("/userLogin")
 	public String userLogin() throws Exception {
-		
+
 		return "/user/userLogin";
 	}
 
@@ -124,7 +137,7 @@ public class UserController {
 		// login.getPassword());
 		// System.out.println("비번매칭 : " + pwdMatch);
 		boolean result = login.getPassword().equals(userVO.getPassword());
-		System.out.println("result 값 : "+result);
+		System.out.println("result 값 : " + result);
 		if (result == true) { // 위의 result는 나중에 바꿔야함 복호화와 시큐리티 적용하면 오류생길가능성이 높다 .equls는 단순한 문자열 비교라 그럼
 			session.setAttribute("member", login);
 			session.setAttribute("session_cid", login.getCid());
@@ -138,30 +151,31 @@ public class UserController {
 			rttr.addFlashAttribute("msg", false);
 			return "/user/userLogin";
 		}
-		return "/user/nav";
+		return "/main/main";
 	}
 
 	// 로그아웃 과 세션 초기화
-	/* 시큐리티 적용 전 얘하나로만 했었음
-	 * @GetMapping("/userLogout") public String userLogout(HttpSession session)
-	 * throws Exception { // security-con~ 에서 세션파기설정이되있음 //session.invalidate();
-	 * 
-	 * return "/user/userLogin"; }
-	 */
-	// 로그아웃 과 세션 초기화 시큐리티적용버전
+	// 시큐리티 적용 전 얘하나로만 했었음
 	@GetMapping("/userLogout")
-	public void userLogoutget() {
+	public String userLogout(HttpSession session) throws Exception { 
 		// security-con~ 에서 세션파기설정이되있음
-		//session.invalidate();
-		log.info("로그아웃 폼으로 이동");
-	}
-	@PostMapping("/userLogout")
-	public void userLogout() {
-		log.info("포스트방식으로 로그아웃 처리");
-		
+		session.invalidate();
+
+		return "/main/main";
 	}
 
-	// 겟으로 접근하는 수정창  -- ajax쓰기려고 넘김
+	// 로그아웃 과 세션 초기화 시큐리티적용버전
+	/*
+	 * @GetMapping("/userLogout") public void userLogoutget() { // security-con~ 에서
+	 * 세션파기설정이되있음 session.invalidate(); log.info("로그아웃 폼으로 이동"); }
+	 * 
+	 * @PostMapping("/userLogout") public void userLogout() {
+	 * log.info("포스트방식으로 로그아웃 처리");
+	 * 
+	 * }
+	 */
+
+	// 겟으로 접근하는 수정창 -- ajax쓰기려고 넘김
 	@GetMapping("/userModify")
 	public String userModify() throws Exception {
 		return "user/userModify";
@@ -188,5 +202,17 @@ public class UserController {
 		session.invalidate();
 		return "/user/userLogin";
 	}
+	
+	// 비밀번호찾기 이메일발송
+	@GetMapping("/findpw")
+	public String findPwGet() throws Exception{
+		return "/user/findpw";
+	}
+	
+	@PostMapping("/findpw")
+	public String findPwPost() throws Exception{
+		return "/user/findpw";
+	}
+	
 
 }

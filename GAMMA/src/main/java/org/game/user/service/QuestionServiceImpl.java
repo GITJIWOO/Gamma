@@ -4,9 +4,11 @@ import java.util.List;
 
 import org.game.user.domain.QuestionSearchCriteria;
 import org.game.user.domain.QuestionVO;
+import org.game.user.mapper.AnswerMapper;
 import org.game.user.mapper.QuestionMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j;
@@ -19,6 +21,9 @@ public class QuestionServiceImpl implements QuestionService{
 	@Autowired
 	private QuestionMapper mapper;
 
+	@Autowired
+	private AnswerMapper amapper;
+	
 	@Override
 	public int adminOrNot(String cid) {
 		log.info("관리자 여부 확인");
@@ -77,6 +82,8 @@ public class QuestionServiceImpl implements QuestionService{
 	@Override
 	public void removeQuestion(int qnum) {
 		log.info("질문글 삭제");
+		// 답변을 먼저 삭제해야 부모인 질문글을 삭제할 수 있음 
+		amapper.deleteQnA(qnum);
 		mapper.deleteQuestion(qnum);
 	}
 

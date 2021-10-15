@@ -187,14 +187,40 @@
 			<version>2.13.0-rc2</version>
 		</dependency>
 
-		<!-- mail인증번호관련 2 -->
+		<!-- mail인증번호관련 3 -->
 		<!-- https://mvnrepository.com/artifact/javax.mail/mail -->
-		<!-- <dependency> <groupId>javax.mail</groupId> <artifactId>mail</artifactId> 
-			<version>1.4.7</version> </dependency> https://mvnrepository.com/artifact/org.springframework/spring-context-support 
-			<dependency> <groupId>org.springframework</groupId> <artifactId>spring-context-support</artifactId> 
-			<version>${org.springframework-version}</version> </dependency> -->
+		<dependency>
+			<groupId>javax.mail</groupId>
+			<artifactId>mail</artifactId>
+			<version>1.4.7</version>
+		</dependency>
+		<!--  https://mvnrepository.com/artifact/org.springframework/spring-context-support-->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context-support</artifactId>
+			<version>${org.springframework-version}</version>
+		</dependency>
+		<!-- 메일 api -->
+<dependency>
+	<groupId>org.apache.commons</groupId>
+	<artifactId>commons-email</artifactId>
+	<version>1.2</version>
+</dependency>
 
 
+		<!-- websocket 1개 -->
+		<!-- https://mvnrepository.com/artifact/org.springframework/spring-websocket -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-websocket</artifactId>
+			<version>5.0.7.RELEASE</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.webjars</groupId>
+			<artifactId>sockjs-client</artifactId>
+			<version>1.0.2</version>
+		</dependency>
 		<!-- security 4개 -->
 		<!-- https://mvnrepository.com/artifact/org.springframework.security/spring-security-web -->
 		<!-- <dependency> <groupId>org.springframework.security</groupId> <artifactId>spring-security-web</artifactId> 
