@@ -10,6 +10,10 @@ public interface UserMapper {
 	// 유저정보 상세조회
 	public ConsumerVO userGet(String cid);
 	
+	// 비밀번호 변경
+	public int updatePw(ConsumerVO vo) throws Exception;
+
+	
 	// 회원가입 
 	public void userJoin(ConsumerVO userVO) throws Exception;
 	

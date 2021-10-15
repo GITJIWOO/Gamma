@@ -2,6 +2,7 @@ package org.game.gameinfo.mapper;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
 import org.game.gameinfo.domain.GameInfoVO;
 import org.game.gameinfo.domain.GameSearchCriteria;
 
@@ -21,6 +22,9 @@ public interface GameInfoMapper {
 	
 	// 게임 수정
 	public void updateGame(GameInfoVO vo);
+	
+	// 태그별 게임 조회
+	public List<GameInfoVO> listByTag(@Param("tagname") String tagname);
 	
 	// 페이징 
 	public List<GameInfoVO> getGameListPaging(GameSearchCriteria cri);
