@@ -26,6 +26,7 @@ public class FriendsController {
 	@Autowired
 	private FriendsService service;
 	
+	
 	// 메인화면 
 	@GetMapping("/friendsmain")	// 이거 메인화면으로 바꾸기 
 	public String friendsMain(Model model) {
@@ -96,7 +97,7 @@ public class FriendsController {
 		return "/friends/searchfriends";
 	}
 	
-	// 전체 회원중에서 친구 추가 
+	// 전체 회원중에서 친구 추가 - userPro와 연결 
 	@PostMapping("/addfriends")
 	public String addFriends(FriendsVO vo, RedirectAttributes rttr) {
 		log.info("vo 들어오는지 확인: " + vo);
@@ -106,6 +107,15 @@ public class FriendsController {
 		rttr.addAttribute("pageNum", criteria.getPageNum());
 		rttr.addAttribute("keyword", criteria.getKeyword());
 		*/
+		return "redirect:/user/userPro";
+	}
+	
+	// 전체 회원중에서 친구 삭제 - userPro와 연결 
+	@PostMapping("/removefriends")
+	public String removeFriends(String follower, String following, RedirectAttributes rttr) {
+		log.info("follower, 로그인계정이 언팔로우할 상대: " + follower);
+		log.info("following, 로그인계정: " + following);
+		service.removeFriend(follower, following);
 		return "redirect:/user/userPro";
 	}
 }

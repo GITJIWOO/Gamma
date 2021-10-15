@@ -39,11 +39,20 @@
 				<td>아이디</td>
 				<td><input id="cid" name="cid" value="${member.cid}" readonly="readonly"/></td>
 				<td rowspan="2">
+					<c:if test="${result == null }"><!-- null을 ==으로 비교하는게 맞는지 확인해야됨 -->
 					<form action="/friends/addfriends" method="post" >
 						<input type="hidden" name="follower" value="${member.cid}" />
 						<input type="hidden" name="following" value="" /><!-- 시큐리티 완성되면 로그인 계정으로 수정하고 테스트하기 -->
 						<input type="submit" value="친구 추가" />
 					</form>
+					</c:if>
+					<c:if test="${result == 1 }">
+					<form action="/friends/removefriends" method="post" >
+						<input type="hidden" name="follower" value="${member.cid}" />
+						<input type="hidden" name="following" value="" /><!-- 시큐리티 완성되면 로그인 계정으로 수정하고 테스트하기 -->
+						<input type="submit" value="친구 삭제" />
+					</form>
+					</c:if>
 				</td>
 			</tr>
 			<tr>
