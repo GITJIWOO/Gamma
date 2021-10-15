@@ -91,8 +91,11 @@ button {
  text-align:center;
  }
  .imgPro{
- width: 350px;
-	height:350px;
+ width: 150px;
+	height: 150px;}
+ .imgProA{
+ width: 250px;
+	height: 250px;
 	padding:0;
 	margin:0;
  }
@@ -157,7 +160,7 @@ button {
 						<form name="form1" method="post">
 							<div class="img">							
 							<div class="row">&nbsp;</div>
-							<img class="imgPro" src="/resources/css/image/chaIcon.png"/>
+							<img class="imgProA" src="/resources/css/image/chaIcon.png"/>
 							</div>
 							<table class="table" width="400px">
 

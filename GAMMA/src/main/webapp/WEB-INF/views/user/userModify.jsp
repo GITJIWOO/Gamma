@@ -74,7 +74,7 @@ h1{
 		// 취소
 		$(".cencle").on("click", function() {
 
-			location.href = "/user/userPro";
+			location.href = "/user/userGet";
 
 		})
 
