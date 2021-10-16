@@ -30,7 +30,7 @@ public class QuestionController {
 	// 질문글 작성하는 폼 
 	@PostMapping("/questionform")
 	public String addQuestion(HttpSession session, Model model) {
-		String cid = (String)session.getAttribute("member");
+		String cid = String.valueOf(session.getAttribute("session_cid"));
 		model.addAttribute("qwriter", cid);
 		return "/qna/registerquestion";
 	}
@@ -49,7 +49,8 @@ public class QuestionController {
 	
 	// 질문글 목록 조회
 	@GetMapping("/questionlist")
-	public String questionList(String qwriter, QuestionSearchCriteria cri, Model model) {
+	public String questionList(HttpSession session, QuestionSearchCriteria cri, Model model) {
+		String qwriter = String.valueOf(session.getAttribute("session_cid"));
 		int admin = service.adminOrNot(qwriter);
 		List<QuestionVO> vo;
 		QuestionPageDTO btnMaker;
@@ -95,7 +96,8 @@ public class QuestionController {
 	
 	// 질문글 상세 조회
 	@GetMapping("/getquestion")
-	public String getQuestion(String qwriter, int qnum, Model model) {
+	public String getQuestion(HttpSession session, int qnum, Model model) {
+		String qwriter = String.valueOf(session.getAttribute("session_cid"));
 		int admin = service.adminOrNot(qwriter);
 		QuestionVO vo = service.ownQuestion(qnum);
 		model.addAttribute("admin", admin);
@@ -105,11 +107,18 @@ public class QuestionController {
 	
 	// 질문글 삭제
 	@PostMapping("/removequestion")
-	public String removeQuestion(String qwriter, int qnum, RedirectAttributes rttr) {
+	public String removeQuestion(HttpSession session, int qnum, RedirectAttributes rttr) {
+		String qwriter = String.valueOf(session.getAttribute("session_cid"));
 		service.removeQuestion(qnum);
 		rttr.addFlashAttribute("success", "remove");
 		rttr.addFlashAttribute("qnum", qnum);
 		rttr.addAttribute("qwriter", qwriter);
 		return "redirect:/qna/questionlist";
+	}
+	
+	// 자주하는 질문 
+	@GetMapping("/commonquestion")
+	public String commonQuestion() {
+		return "/qna/commonquestion";
 	}
 }
