@@ -15,6 +15,7 @@ import org.game.gameinfo.service.RequirementService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -52,8 +53,18 @@ public class GameInfoController {
 		model.addAttribute("gameList", gameList);
 		return "gameinfo/gamelist";
 	}
+	@GetMapping("/totallistbytag")
+	public String listbytag(Model model, GameInfoVO vo) {
+		List<GameInfoVO> tagList = gameInfoService.totalListByTag(vo.getTagname());
+		
+		model.addAttribute("tagList", tagList);
+		
+		return "gameinfo/taglist";
+	}
+	
 
 	// 게임 등록 폼
+	@Transactional
 	@PostMapping("/gameregister")
 	public String register(GameInfoVO gvo, RedirectAttributes rttr) {
 		// 배열, 리스트 만들고
@@ -111,6 +122,7 @@ public class GameInfoController {
 	}
 
 	// 게임삭제
+	@Transactional
 	@PostMapping("/gameremove")
 	public String remove(Long gnum, String gname,
 			RedirectAttributes rttr) {

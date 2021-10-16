@@ -73,7 +73,9 @@
 		DELETE FROM friends WHERE follower = #{follower} AND following = #{following}
 	</delete>
 	
+	<!-- 
 	<select id="getProfile" resultType="org.game.domain.ConsumerPictureVO">
 		SELECT * FROM consumerpicture WHERE cid = #{cid}
 	</select>
+	 -->
 </mapper>
