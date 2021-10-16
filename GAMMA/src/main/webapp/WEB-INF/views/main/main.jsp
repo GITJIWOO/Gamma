@@ -13,18 +13,15 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
 
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>Gamma</title>
 <link rel="stylesheet" href="/resources/css/styles.css" />
 <style>
-	.display {
-		position: relative;
-	}
 	.consumer {
 		width: 18%;
-		height: 110px;
 		position: relative;
 		text-align: center;
 		height: 10%;
+		buttom: 100;
 	}
 	.consumer__imgPro {
 		float: left;
@@ -32,12 +29,12 @@
 		margin: 0;
 	}
 	.conimg {
-		width: 110px;
-		height: 110px;
+		width: 100px;
+		height: 100px;
 	}
 	.consumer__nickname {
 		float: right;
-		font-size: 45px;
+		font-size: 25px;
 		font-weight: bold;
 		color: white;
 	}
@@ -84,8 +81,12 @@
         <div class="side-bar__row">
           <!-- c:if로 로그인 전에는 회원가입+로그인 / 로그인 후에는 프로필 -->
           <c:if test="${cid eq null}">
-	          <span><a href="/user/userLogin" class="loginA"  onclick="openLogin">로그인</a></span>
-	          <span><a href="/user/userJoin" class="joinA"  onclick="openJoin">가입하기</a></span>
+            <div class="loginBtn">
+		        <span><a href="/user/userLogin" class="loginA">로그인</a></span>
+            </div>
+            <div class="joinBtn">
+		        <span><a href="/user/userJoin" class="joinA">가입하기</a></span>
+            </div>
           </c:if>
           <c:if test="${cid ne null}">
 	          <div class="consumer">
@@ -128,10 +129,10 @@
     <script>
 		$(document).ready(function() {
 			// 취소
-			$(".loginA").on("click", function() {
+			$(".loginBtn").on("click", function() {
 				location.href = "/user/userLogin";
 			})
-			$(".joinA").on("click", function() {
+			$(".joinBtn").on("click", function() {
 				location.href = "/user/userJoin";
 			})
 			
