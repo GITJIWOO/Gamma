@@ -21,25 +21,30 @@
 	}
 	.consumer {
 		width: 18%;
-		position: fixed;
+		height: 110px;
+		position: relative;
 		text-align: center;
 		height: 10%;
 	}
-	.imgPro {
+	.consumer__imgPro {
 		float: left;
-		width: 110px;
-		height: 110px;
 		padding: 0;
 		margin: 0;
 	}
-	.nickname {
+	.conimg {
+		width: 110px;
+		height: 110px;
+	}
+	.consumer__nickname {
 		float: right;
 		font-size: 45px;
 		font-weight: bold;
 		color: white;
 	}
-	.consumerInfo {
+	.consumer__info {
 		display: none;
+		position: absolute;
+		left: 100%;
 	}
 </style>
 </head>
@@ -66,7 +71,7 @@
         <div class="side-bar__row">
           <span><a href="/gameInfo/gamelist">게임 스토어</a></span>
           <c:if test="${cid ne null}">
-          	<span><a href="/library/conlibrary?cid=${cid}">라이브러리</a></span>
+          	<span><a href="/library/conLibrary?cid=${cid}">라이브러리</a></span>
           </c:if>
         </div>
         <!-- qna -->
@@ -84,12 +89,15 @@
           </c:if>
           <c:if test="${cid ne null}">
 	          <div class="consumer">
-		          <img class="imgPro" src="/resources/css/image/chaIcon.png"/>
-		          <div class="nickname">
+	          	  <div class="consumer__imgPro">
+			        <img class="conimg" src="/resources/css/image/chaIcon.png"/>
+	          	  </div>
+		          <div class="consumer__nickname">
 		          	<p>${consumer.nickname}</p>
 		          </div>
-		          <div class="consumerInfo">
+		          <div class="consumer__info">
 	   				<a href="/user/userGet">유저정보창</a>
+	   				<a href="/user/userLogout">로그아웃</a>
 		   		  </div>
 	          </div>
           </c:if>
@@ -117,16 +125,25 @@
         </div>
       </div>
     </div>
-    <script type="text/javascript">
-	$(document).ready(function() {
-		// 취소
-		$(".loginA").on("click", function() {
-			location.href = "/user/userLogin";
-		})
-		$(".joinA").on("click", function() {
-			location.href = "/user/userJoin";
-		})
-	});
+    <script>
+		$(document).ready(function() {
+			// 취소
+			$(".loginA").on("click", function() {
+				location.href = "/user/userLogin";
+			})
+			$(".joinA").on("click", function() {
+				location.href = "/user/userJoin";
+			})
+			
+			$(".consumer").mouseover(function(){
+				$(".consumer__info").show();
+			});
+
+			$(".consumer").mouseout(function(){
+				$(".consumer__info").hide();
+			});
+			
+		});
     </script>
 </body>
 </html>
