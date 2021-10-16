@@ -15,18 +15,18 @@
       <table id="followingtbl">
       	<c:forEach items="${followingList }" var="followingList">
 	        <tr>
-	          <td>${followingList.cid }</td>
+	          <td><a href="/user/userPro?cid=${followingList.cid }">${followingList.cid }</a></td>
 	          <!-- 현재 팔로잉된 상태이기 때문에 '삭제(default_white)'버튼만 있고 삭제되면 친구목록에서 삭제 -->
 	          <td rowspan="2">
 			    <form action="/friends/followingremove" method="post">
-	          	  <input type="hidden" name="cid" value="${param.cid }"/><!-- 로그인 계정 -->
+			      <input type="hidden" name="follower" value="${cid }"/><!-- 로그인 계정 -->
 		          <input type="hidden" name="following" value="${followingList.cid }"/><!-- 로그인 계정이 팔로우 하는 계정 -->
 	          	  <input type="submit" value="팔로워 삭제" />
 			    </form>
 	          </td>
 	          <td rowspan="2">
 			    <form action="/main" method="post">
-	          	  <input type="hidden" name="follower" value="${param.cid }"/><!-- 로그인 계정 -->
+	          	  <input type="hidden" name="follower" value="${cid }"/><!-- 로그인 계정 -->
 		          <input type="hidden" name="following" value="${followingList.cid }"/><!-- 로그인 계정이 팔로우 하는 계정 -->
 	          	  <input type="submit" value="채팅" />
 			    </form>
@@ -37,12 +37,26 @@
 	        </tr>
 	     </c:forEach>
       </table>
-      <script>
-		const result = ${unfollow};
-		const unfollowing = ${following};
-		if(result === "undollow"){
-			alert("팔로워 " + unfollower + "님을 삭제했습니다.");
-		}
-	  </script>
+      <!-- 페이징 처리 -->
+      ${page }
+      <nav aria-label="...">
+	  <ul class="pagination justify-content-center">
+	  	<c:if test="${page.prev }">
+		    <li class="page-item">
+		      <a class="page-link" href="/friends/followinglist?pageNum=${page.startPage - 1 }">Previous</a>
+		    </li>
+		</c:if>
+		<c:forEach var="pageNum" begin="${page.startPage }" end="${page.endPage }">
+		    <li class="page-item ${page.cri.pageNum == pageNum ? 'active' : '' }">
+		    	<a class="page-link"href="/friends/followinglist?pageNum=${pageNum }">${pageNum }</a>
+		    </li>
+		</c:forEach>
+		<c:if test="${page.next }">
+		    <li class="page-item">
+		      <a class="page-link" href="/friends/followinglist?pageNum=${page.endPage + 1 }">Next</a>
+		    </li>
+		</c:if>
+	  </ul>	
+      </nav>
 </body>
 </html>
