@@ -2,6 +2,7 @@ package org.game.gameinfo.service;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
 import org.game.gameinfo.domain.GameInfoVO;
 import org.game.gameinfo.domain.GameSearchCriteria;
 import org.game.gameinfo.mapper.GameInfoMapper;
@@ -70,6 +71,24 @@ public class GameInfoServiceImpl implements GameInfoService {
 	public List<GameInfoVO> listByTag(String tagname) {
 		List<GameInfoVO> listByTag = mapper.listByTag(tagname);
 		return listByTag;
+	}
+
+	@Override
+	public List<GameInfoVO> totalListByTag(String tagname) {
+		List<GameInfoVO> totalListByTag = mapper.totalListByTag(tagname);
+		return totalListByTag;
+	}
+
+	@Override
+	public List<GameInfoVO> randomList() {
+		List<GameInfoVO> randomList = mapper.randomList();
+		return randomList;
+	}
+
+	@Override
+	public List<GameInfoVO> latestGame() {
+		List<GameInfoVO> latestGame = mapper.latestGame();
+		return latestGame;
 	}
 	
 

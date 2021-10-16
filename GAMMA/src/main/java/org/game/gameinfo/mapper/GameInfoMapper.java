@@ -23,8 +23,17 @@ public interface GameInfoMapper {
 	// 게임 수정
 	public void updateGame(GameInfoVO vo);
 	
-	// 태그별 게임 조회
+	// 태그별 게임 조회 5개
 	public List<GameInfoVO> listByTag(@Param("tagname") String tagname);
+	
+	// 태그별 게임 조회
+	public List<GameInfoVO> totalListByTag(@Param("tagname") String tagname);
+	
+	// 랜덤 4개 게임 조회
+	public List<GameInfoVO> randomList();
+	
+	// 출시날짜 최신순 3개
+	public List<GameInfoVO> latestGame();
 	
 	// 페이징 
 	public List<GameInfoVO> getGameListPaging(GameSearchCriteria cri);

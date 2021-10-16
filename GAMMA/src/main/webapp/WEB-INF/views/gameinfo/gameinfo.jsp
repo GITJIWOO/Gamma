@@ -5,12 +5,12 @@
 <!DOCTYPE html>
 <html>
 <head>
+<link rel="stylesheet" href="/resources/css/styles.css" />
 <link
 	href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css"
 	rel="stylesheet"
 	integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU"
 	crossorigin="anonymous">
-<link rel="stylesheet" href="/resources/css/styles.css" />
 <style type="text/css">
 * {
 	margin: 0px;
@@ -97,8 +97,13 @@
         </div>
         <!-- search -->
         <div class="side-bar__row">
-          <form action="#" method="get">
-            <input type="text" placeholder="   Search Game" />
+          <form action="/gameInfo/gamelist" method="get">
+          <select name="searchType" style="display:none">
+          	<option  value="n"
+				<c:out value="${btnMaker.cri.searchType eq 'n' ? 'selected' : '' }"/>>
+				</option>
+            </select>
+            <input type="text" name="keyword" placeholder="Search Game"value="${btnMaker.cri.keyword }" />
             <!-- origin처럼 버튼 숨겼음, enter 치면 검색됨 -->
             <input type="submit" value="" />
           </form>
@@ -143,7 +148,7 @@
 
 			<div class="midRight">
 
-				<div class="mid1">사진</div>
+				<div class="mid1">${gvo.gpicture }</div>
 				<div class="mid2">${gvo.gcontent }</div>
 				<div class="mid3">
 
@@ -169,7 +174,7 @@
 							<div class="col-md">이 제품의 태그</div>
 
 						</div>
-						<div class="col-md">${tvo.tagname}</div>
+						<div class="col-md"><a href="/gameInfo/totallistbytag?pageNum=${param.pageNum }&searchType=${param.searchType}&keyword=${param.keyword}&tagname=${tvo.tagname}">${tvo.tagname}</a></div>
 					</div>
 				</div>
 			</div>
@@ -227,7 +232,10 @@
 			<div class="bottom2">
 				비슷한 제품
 				<hr>
-				 gname: ${gvo.gname }
+				<div align="right">
+				<a href="/gameInfo/totallistbytag?pageNum=${param.pageNum }&searchType=${param.searchType}&keyword=${param.keyword}&tagname=${tvo.tagname}">
+			<input type="button" value="전체보기"></a>
+			</div>
 				<table class="table table-hover">
 					<tr>
 						<th>게임이름</th>
