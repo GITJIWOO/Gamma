@@ -37,6 +37,12 @@ public class ReviewServiceImpl implements ReviewService {
 	}
 
 	@Override
+	public ReviewVO getUserReviewDetail(String cid, long gnum) {
+		mapper.UserReviewSelect(cid, gnum);
+		return null;
+	}
+
+	@Override
 	public void writeReview(ReviewVO review) {
 		mapper.reviewInsert(review);
 	}
