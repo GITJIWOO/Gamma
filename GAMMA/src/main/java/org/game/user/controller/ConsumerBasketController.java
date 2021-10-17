@@ -28,9 +28,9 @@ public class ConsumerBasketController {
 	private ConsumerBasketService service;
 	
 	@PostMapping("/basketList")
-	public String getBasketList(@RequestParam("cid") String cid, HttpSession session, Model model) {
+	public String getBasketList(HttpSession session, Model model) {
 		
-		cid = (String)session.getAttribute("session_cid");
+		String cid = (String)session.getAttribute("session_cid");
 		
 		if(cid == null) {
 			return "redirect:/user/userLogin";
@@ -47,6 +47,10 @@ public class ConsumerBasketController {
 	public String additionConsumerBasket(long gnum, HttpSession session, Model model) {
 
 		String cid = (String)session.getAttribute("session_cid");
+
+		if(cid == null) {
+			return "redirect:/user/userLogin";
+		}
 		
 		service.additionConsumerBasket(cid, gnum);
 		
@@ -57,10 +61,14 @@ public class ConsumerBasketController {
 	public String removeConsumerBasket(long gnum, HttpSession session, Model model) {
 		
 		String cid = (String)session.getAttribute("session_cid");
+
+		if(cid == null) {
+			return "redirect:/user/userLogin";
+		}
 		
 		service.removeConsumerBasket(cid, gnum);
 		
-		return "redirect:/gamepayment/basketList";
+		return "redirect:/gamepayment/basketList?cid=" + cid;
 	}
 	
 }
