@@ -116,7 +116,7 @@
             <!-- 여기에 각자 content 붙여넣기 -->
             
             <!-- carousel를 구성할 영역 설정 -->
-  <div style="width: 100%; height: 600px;">
+  <div style="width: 1370px; height: 500px; margin-left: 10px;" >
     <div id="carousel-example-generic" class="carousel slide" >
       <ol class="carousel-indicators">
         <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
@@ -125,23 +125,27 @@
       </ol>
       <div class="carousel-inner" role="listbox">
         <div class="item active">
-        <a href="">
-          <img src="https://pds.joongang.co.kr/news/component/htmlphoto_mmdata/202101/01/66594a94-6e3b-4b83-9162-4eee14da5b34.jpg" style="width:100%; height: 400px;">
+        <a href="/gameInfo/get?gnum=${latestGame[0].gnum }">
+          <img src="${latestGame[0].gpicture }" style="width:100%; height: 400px;">
           </a>
-          <div class="carousel-caption" style="color:black;">
-           농민1
+          <div class="carousel-caption" style="color:red;">
+           ${latestGame[0].gname }
           </div>
         </div>
         <div class="item">
-          <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQqxpwxySw6Td49VrMdhEegUWDBx2sEc7H-tg&usqp=CAU" style="width:100%; height: 400px;">
-          <div class="carousel-caption" style="color:black;">
-          농민2
+        <a href="/gameInfo/get?gnum=${latestGame[1].gnum }">
+          <img src="${latestGame[1].gpicture }" style="width:100%; height: 400px;">
+          </a>
+          <div class="carousel-caption" style="color:red;">
+          ${latestGame[1].gname }
           </div>
         </div>
         <div class="item">
-          <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTO6RXOmZRvfrjLBK_lxksB5gFjzQd6fl6a-A&usqp=CAU" style="width:100%; height: 400px;">
-          <div class="carousel-caption" style="color:black;">
-          농민3
+        <a href="/gameInfo/get?gnum=${latestGame[2].gnum }">
+          <img src="${latestGame[2].gpicture }" style="width:100%; height: 400px;">
+          </a>
+          <div class="carousel-caption" style="color:red;">
+          ${latestGame[2].gname }
           </div>
         </div>
       </div>
@@ -168,20 +172,17 @@
 	  });
 	});
   </script>
-  <h2>최신순</h2>
-  <table>
-  <tr>
-  <c:forEach var="latestGame" items="${latestGame }">
-    <td>${latestGame.gpicture }</td>
-  </c:forEach>
-  <tr>
-</table>
+  
 
-  <h2>랜덤 리스트</h2>
+  <h2>오늘의 게임</h2>
   <table>
   <tr>
   <c:forEach var="randomList" items="${randomList }">
-    <td>${randomList.gpicture }</td>
+    <td>
+    <a href="/gameInfo/get?gnum=${randomList.gnum }">	
+    <img src="${randomList.gpicture }" width="300px" height="300px"/>
+    </a>
+    </td>
   </c:forEach>
   <tr>
 </table>
