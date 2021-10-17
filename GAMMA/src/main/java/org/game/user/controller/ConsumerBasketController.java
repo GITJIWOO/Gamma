@@ -54,7 +54,7 @@ public class ConsumerBasketController {
 		
 		service.additionConsumerBasket(cid, gnum);
 		
-		return "/gamepayment/basketList";
+		return "redirect:/gamepayment/basketList";
 	}
 	
 	@PostMapping("/basketRemove")
