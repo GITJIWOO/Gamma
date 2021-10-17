@@ -2,7 +2,7 @@
 .display {
   display: flex;
   flex-direction: row;
-  height: auto;
+  height: 200vh;
 }
 .side-bar {
   z-index: 99;
