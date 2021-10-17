@@ -144,11 +144,15 @@
 		<!--middle-->
 		<div class="mid">
 
-			<div class="midLeft">${gvo.gaddress }</div>
-
+			<div class="midLeft">
+			<script>
+					var address = "${gvo.gaddress }";
+					document.write("<iframe width='600' height='500' src='" + address + "' title='YouTube video player' frameborder='0' allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture' allowfullscreen></iframe>");
+				</script>
+			</div>
 			<div class="midRight">
 
-				<div class="mid1">${gvo.gpicture }</div>
+				<div class="mid1"><img src="${gvo.gpicture }" width="300px" height="150px"/></div>
 				<div class="mid2">${gvo.gcontent }</div>
 				<div class="mid3">
 
@@ -167,14 +171,13 @@
 						</div>
 						<div class="row">
 							<div class="col-md-2">가격</div>
-							<div class="col-md-2">₩${gvo.gprice }</div>
+							<div class="col-md-2">₩&nbsp;${gvo.gprice }</div>
 						</div>
 						<br>
-						<div class="row">
+						<div class="row" >
 							<div class="col-md">이 제품의 태그</div>
-
 						</div>
-						<div class="col-md"><a href="/gameInfo/totallistbytag?pageNum=${param.pageNum }&searchType=${param.searchType}&keyword=${param.keyword}&tagname=${tvo.tagname}">${tvo.tagname}</a></div>
+						<div class="col-md" style="text-decoration: none;"><a href="/gameInfo/totallistbytag?pageNum=${param.pageNum }&searchType=${param.searchType}&keyword=${param.keyword}&tagname=${tvo.tagname}">${tvo.tagname}</a></div>
 					</div>
 				</div>
 			</div>
@@ -187,11 +190,12 @@
 			<input type="hidden" name="keyword" value="${param.keyword }">
 			<input type="submit" value="수정하기">
 		</form>
+		<!--  
 		<a
 			href="/gameInfo/gamelist?pageNum=${param.pageNum }&searchType=${param.searchType}&keyword=${param.keyword}">
 			<input type="button" value="목록으로">
 		</a>
-
+		-->
 		<form action="/gameInfo/gameremove" method="post" id="deleteForm">
 			<input type="hidden" name="gnum" value="${gvo.gnum }"> <input
 				type="button" value="삭제하기" onclick="confirm_delete();">

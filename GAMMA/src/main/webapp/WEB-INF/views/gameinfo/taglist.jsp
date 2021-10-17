@@ -64,7 +64,7 @@
         <div class="contents">
           <div class="detail">
 
-	<h1>태그 게임목록</h1>
+	<h1>태그별 게임목록</h1>
 	<table class="table table-hover">
 		<tr>
 			<th>게임이름</th>
