@@ -28,6 +28,9 @@ public interface GameInfoService {
 	
 	// 출시 날짜 최신순 3개
 	public List<GameInfoVO> latestGame();
+	
+	// 액션 태그 4개 조회
+	public List<GameInfoVO> actionList();
 
 	public List<GameInfoVO> getGameListPaging(GameSearchCriteria cri);
 	

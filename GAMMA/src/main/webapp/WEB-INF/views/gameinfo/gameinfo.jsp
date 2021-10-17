@@ -11,7 +11,38 @@
 	rel="stylesheet"
 	integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU"
 	crossorigin="anonymous">
+	<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <style type="text/css">
+input[type="radio"] {
+		visibility:hidden;
+	}
+.consumer {
+		width: 18%;
+		position: relative;
+		text-align: center;
+		height: 10%;
+		buttom: 100;
+	}
+	.consumer__imgPro {
+		float: left;
+		padding: 0;
+		margin: 0;
+	}
+	.conimg {
+		width: 100px;
+		height: 100px;
+	}
+	.consumer__nickname {
+		float: right;
+		font-size: 25px;
+		font-weight: bold;
+		color: white;
+	}
+	.consumer__info {
+		display: none;
+		position: absolute;
+		left: 100%;
+	}
 * {
 	margin: 0px;
 	padding: 0px;
@@ -70,7 +101,7 @@
 	margin-top: 20px;
 	margin-bottom: 10px;
 	width: 900px;
-	height: 600px;
+	height: 1000px;
 }
 
 .bottom1 {
@@ -79,6 +110,9 @@
 
 .bottom2 {
 	height: 300px;
+}
+.bottom3{
+	height: 400px;
 }
 </style>
 <meta charset="UTF-8">
@@ -92,7 +126,7 @@
         <div class="side-bar__row">
           <!-- 클릭하면 main화면으로 돌아오도록 a 태그 수정 -->
           <span
-            ><a href="#"><img src="/resources/css/image/logo.png" /></a
+            ><a href="/main/main"><img src="/resources/css/image/logo.png" /></a
           ></span>
         </div>
         <!-- search -->
@@ -103,36 +137,55 @@
 				<c:out value="${btnMaker.cri.searchType eq 'n' ? 'selected' : '' }"/>>
 				</option>
             </select>
-            <input type="text" name="keyword" placeholder="Search Game"value="${btnMaker.cri.keyword }" />
+            <input type="text" placeholder="Search Game" name="keyword" value="${btnMaker.cri.keyword }"/>
             <!-- origin처럼 버튼 숨겼음, enter 치면 검색됨 -->
             <input type="submit" value="" />
           </form>
         </div>
         <!-- category -->
         <div class="side-bar__row">
-          <span><a href="#">게임 스토어</a></span>
-          <span><a href="#">라이브러리</a></span>
+          <span><a href="/gameInfo/gamelist">게임 스토어</a></span>
+          <c:if test="${cid ne null}">
+          	<span><a href="/library/conLibrary?cid=${cid}">라이브러리</a></span>
+          </c:if>
         </div>
         <!-- qna -->
         <div class="side-bar__row">
-          <span><a href="#">Q&A</a></span>
+          <span><a href="/qna/questionlist">Q&A</a></span>
           &nbsp;&nbsp;|&nbsp;&nbsp;
-          <span><a href="#">자주하는 질문</a></span>
+          <span><a href="/qna/commonquestion">자주하는 질문</a></span>
         </div>
         <!-- about user -->
         <div class="side-bar__row">
           <!-- c:if로 로그인 전에는 회원가입+로그인 / 로그인 후에는 프로필 -->
-          <span><a href="#">로그인</a></span>
-          <span><a href="#">가입하기</a></span>
-          <!--
-        <span>
-          <a href="#"><button class="profile">Profile</button></a>
-        </span>
-        --></div>
+          <c:if test="${cid eq null}">
+            <div class="loginBtn">
+		        <span><a href="/user/userLogin" class="loginA">로그인</a></span>
+            </div>
+            <div class="joinBtn">
+		        <span><a href="/user/userJoin" class="joinA">가입하기</a></span>
+            </div>
+          </c:if>
+          <c:if test="${cid ne null}">
+	          <div class="consumer">
+	          	  <div class="consumer__imgPro">
+			        <img class="conimg" src="/resources/css/image/chaIcon.png"/>
+	          	  </div>
+		          <div class="consumer__nickname">
+		          	<p>${consumer.nickname}</p>
+		          </div>
+		          <div class="consumer__info">
+	   				<a href="/user/userGet">유저정보창</a>
+	   				<a href="/user/userLogout">로그아웃</a>
+		   		  </div>
+	          </div>
+          </c:if>
+        </div>
       </div>
       <div class="main">
         <div class="contents">
           <div class="detail">
+            <!-- 여기에 각자 content 붙여넣기 -->
 
 
 	<div class="container">
@@ -182,7 +235,7 @@
 				</div>
 			</div>
 		</div>
-
+		<c:if test="${cadmin ne null}">
 		<form action="/gameInfo/modifyform" method="post">
 			<input type="hidden" name="gnum" value="${gvo.gnum }"> <input
 				type="hidden" name="pageNum" value="${param.pageNum }"> <input
@@ -200,7 +253,7 @@
 			<input type="hidden" name="gnum" value="${gvo.gnum }"> <input
 				type="button" value="삭제하기" onclick="confirm_delete();">
 		</form>
-
+		</c:if>
 		<!--bottom-->
 		<div class="bottom">
 			<div class="bottom1">
@@ -260,7 +313,44 @@
 				</table>
 
 			</div>
-		</div>
+			
+			<div class="bottom3">
+				<%-- <c:if test="${lvo ne null}"> --%>
+		<form action="/review/reviewWrite" method="post">
+			<input type="hidden" name="cid" value="${cid}">
+			<textarea class="form-control" id="exampleFormControlTextarea1" name="grcontent" rows="7" cols="70" placeholder="내용" required></textarea><br/>
+			<div id="isLike" class="btn btn-secondary">
+				<input type="radio" class="isLike" name="grlike" value="1"><i class="far fa-thumbs-up fa-lg"> 추천</i>
+			</div>
+			<div id="notLike" class="btn btn-secondary">
+				<input type="radio" class="notLike" name="grlike" value="0"><i class="far fa-thumbs-down fa-lg"> 비추천</i>
+			</div>
+			<input type="submit" class="btn btn-success" id="reviewWrite" value="작성">
+		</form>
+	<%-- </c:if> --%>
+	
+	
+	<a  href="/reviewList/{gnum}">
+			<input  type="button" value="리뷰보기" style="float: right;"></a>
+	<table class="table table-hover">
+		<tr>
+			<th>리뷰번호</th>
+			<th>글쓴이</th>
+			<th>등록일</th>
+		</tr>
+		<c:forEach var="reviewList" items="${reviewList }" begin="1" end="5">
+		<tr>
+			<td>${reviewList.grnum }</td>
+			<th>${reviewList.cid }</th>
+			<th>${reviewList.grdate }</th>
+		</tr>
+		</c:forEach>
+	</table>				
+	${reviewList }
+	<script src="https://kit.fontawesome.com/6478f529f2.js" crossorigin="anonymous"></script>
+	
+			</div><!-- end bottom3 -->
+		</div><!-- end bottom -->
 	</div>
 
 	<script type="text/javascript">
@@ -274,6 +364,46 @@
 			}
 		}
 	</script>
+	
+	<script>
+
+	$("div#notLike").click(function() {
+		let isCheck = $(".isLike").is(":checked");
+		$(".notLike").prop("checked", true);
+		$("#notLike").toggleClass().addClass("btn btn-danger");
+		$(".fa-thumbs-down").toggleClass().addClass("fas fa-thumbs-down fa-lg");
+		if(isCheck === true) {
+			$(".isLike").prop("checked", false);
+			$("#isLike").toggleClass().addClass("btn btn-secondary");
+			$(".fa-thumbs-up").toggleClass().addClass("far fa-thumbs-up fa-lg");
+		}
+	});
+	
+	$("div#isLike").click(function() {
+		let notCheck = $(".notLike").is(":checked");
+		$(".isLike").prop("checked", true);
+		$("#isLike").toggleClass().addClass("btn btn-success");
+		$(".fa-thumbs-up").toggleClass().addClass("fas fa-thumbs-up fa-lg");
+		if(notCheck === true) {
+			$(".notLike").prop("checked", false);
+			$("#notLike").toggleClass().addClass("btn btn-secondary");
+			$(".fa-thumbs-down").toggleClass().addClass("far fa-thumbs-down fa-lg");
+		}
+	});
+
+	$("#reviewWrite").click(function updateCheck(){
+		let isCheck = $(".isLike").is(":checked");
+		let notCheck = $(".notLike").is(":checked");
+		
+		if(isCheck === false && notCheck === false) {
+			alert("평가를 선택하십시오.");
+			return false;
+		} else {
+			return true;
+		}
+	});
+
+</script>
 	
 	</div>
         </div>

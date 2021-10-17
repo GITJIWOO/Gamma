@@ -173,14 +173,31 @@
 	});
   </script>
   
-
+	<hr>
   <h2>오늘의 게임</h2>
+  <hr>
   <table>
   <tr>
   <c:forEach var="randomList" items="${randomList }">
     <td>
     <a href="/gameInfo/get?gnum=${randomList.gnum }">	
     <img src="${randomList.gpicture }" width="300px" height="300px"/>
+    </a>
+    </td>
+  </c:forEach>
+  <tr>
+</table>
+
+<hr>
+  <h2>추천게임</h2>
+  <h3>action</h3>	  
+  <hr>
+  <table>
+  <tr>
+  <c:forEach var="actionList" items="${actionList }">
+    <td>
+    <a href="/gameInfo/get?gnum=${actionList.gnum }">	
+    <img src="${actionList.gpicture }" width="300px" height="300px"/>
     </a>
     </td>
   </c:forEach>

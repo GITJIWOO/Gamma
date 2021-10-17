@@ -79,6 +79,14 @@
 		]]>
 	</select>
 	
+	<!-- 액션 태그 4개 조회 -->
+	<select id="actionList" resultType="org.game.gameinfo.domain.GameInfoVO">
+	<![CDATA[
+		SELECT gametag.tagname, game.* FROM gametag JOIN game on gametag.gnum = game.gnum	
+		WHERE tagname = 'action' and ROWNUM <=4
+		]]>
+	</select>
+	
 	<!-- v페이징 -->
 	<select id="getGameListPaging" resultType="org.game.gameinfo.domain.GameInfoVO"  >
 	

@@ -35,6 +35,9 @@ public interface GameInfoMapper {
 	// 출시날짜 최신순 3개
 	public List<GameInfoVO> latestGame();
 	
+	// 액션 태그 4개 조회
+	public List<GameInfoVO> actionList();
+	
 	// 페이징 
 	public List<GameInfoVO> getGameListPaging(GameSearchCriteria cri);
 	
