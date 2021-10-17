@@ -1,12 +1,15 @@
 package org.game.user.service;
 
 import java.io.PrintWriter;
+import java.util.List;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.mail.HtmlEmail;
 import org.game.user.domain.ConsumerVO;
+import org.game.user.domain.UserAttachVO;
+import org.game.user.mapper.UserAttachMapper;
 import org.game.user.mapper.UserMapper;
 import org.springframework.stereotype.Service;
 
@@ -20,7 +23,8 @@ public class UserServiceImpl implements UserService {
 
 	@Inject
 	private UserMapper mapper;
-
+	@Inject
+	private UserAttachMapper attachMapper;
 	// 회원정보상세조회
 	@Override
 	public ConsumerVO userGet(String cid) {
@@ -151,5 +155,10 @@ public class UserServiceImpl implements UserService {
 			out.print("이메일로 임시 비밀번호를 발송하였습니다.");
 			out.close();
 		}
+	}
+	// 이미지 업러드 관련
+	@Override
+	public List<UserAttachVO> getAttachList(Long cnum) {
+		return attachMapper.findByCnum(cnum);
 	}
 }

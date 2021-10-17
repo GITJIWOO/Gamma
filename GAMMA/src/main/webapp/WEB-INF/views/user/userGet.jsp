@@ -9,17 +9,29 @@
 <head>
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <link rel="stylesheet" href="/resources/css/styles.css" />
+<link rel="stylesheet" href="/resources/css/styles.css" />
 <style>
 * {
 	padding: 5px;
 	margin: 5px;
 }
-.userGet {
-	position: relative;
-	left: 20px;
+.detail{
+	display: flex;
+	flex-flow: row;
 }
-
+.modAub{
+	position:relative;
+	left:50px;
+}
+.Mbtn{position:relative;
+	left:50px;}
+.table1{position:relative;
+	left:50px;}
+.rowB{
+text-align: center;
+position:relative;
+top:50px;
+}
 
 .nick {
 	display: flex;
@@ -30,20 +42,24 @@ h2 {
 	font-weight: bold;
 	font-size: big;
 }
-.img{display:flex; 
-	flex-flow:row;
-	padding:10px;
+
+.img {
+	display: flex;
+	flex-flow: row;
+	padding: 10px;
 }
-.cidPro{
-color:orange;
+
+.cidPro {
+	color: orange;
 }
-.table{
+
+.table {
 	font-weight: bold;
 }
 
 p {
-	font-weight: bold; 
-	font-size:big;
+	font-weight: bold;
+	font-size: big;
 }
 
 strong {
@@ -87,24 +103,31 @@ button {
 	border: solid 2px #212529;
 	transition: all 0.5s ease-in-out 0s;
 }
- .proImg{
- text-align:center;
- }
- .imgPro{
- width: 150px;
-	height: 150px;}
- .imgProA{
- width: 250px;
+
+.proImg {
+position:relative;
+	bottom:200px;
+	text-align: center;
+}
+
+.imgPro {
+	width: 150px;
+	height: 150px;
+}
+
+.imgProA {
+	width: 250px;
 	height: 250px;
-	padding:0;
-	margin:0;
- }
- .uid{
- 	 position: relative;
- 	 top:10px;
-	font-weight:bold;
-	color:white;
- }
+	padding: 0;
+	margin: 0;
+}
+
+.uid {
+	position: relative;
+	top: 10px;
+	font-weight: bold;
+	color: white;
+}
 </style>
 <meta charset="UTF-8">
 
@@ -139,54 +162,53 @@ button {
 				<span><a href="#">Q&A</a></span> &nbsp;&nbsp;|&nbsp;&nbsp; <span><a
 					href="#">자주하는 질문</a></span>
 			</div>
-			<!-- about user -->
-			
-		<div class="proImg">
-          <div>
-          <p class="uId">${member.nickname }(${member.cid  })</p>
-          </div>
-          <img class="imgPro" src="/resources/css/image/chaIcon.png"/>
-          	<h2>프로필이미지</h2>
-	<div class="uploadDiv">
-		<input type="file" name="uploadFile" multiple>
-	</div>
-	
-	<div class="uploadResult">
-		<ul>
-			<!-- 업로드된 파일이 들어갈 자리 -->
-		</ul>
-	</div>
-				<button id="uploadBtn">upload</button>
-		
-	
-          <div>
-   				<a href="/user/userGet">유저정보창</a>
-   				<a href="/user/userDelete">탈퇴창</a>
-   				</div>
-          </div>
+				<div class="proImg side-bar__row">
+					<div>
+						<p class="uId">${member.nickname }(${member.cid  })</p>
+					</div>
+					<img class="imgPro" src="/resources/css/image/chaIcon.png" />
+					<div>
+						<a href="/user/userGet">유저정보창</a> <a href="/user/userDelete">탈퇴창</a>
+					</div>
+				</div>
 		</div>
-		<div class="main">
-			<div class="container">
-				<div class="row">
-					<div class="userGet">
+			<!-- about user -->
+			<div class="main">
+				<div class="container">
+					<div class="detail">
+					<div class="rowA">
 						<form name="form1" method="post">
-							<div class="img">							
-							<div class="row">&nbsp;</div>
-							<img class="imgProA" src="/resources/css/image/chaIcon.png"/>
+							<div class="img">
+								<div class="row">&nbsp;</div>
+								<img class="imgProA" src="/resources/css/image/chaIcon.png" />
+									<div>
+									<br> <br> <br>
+									<h2>[[프로필이미지]]</h2>
+										<div class="uploadDiv">
+											<input type="file" name="uploadFile" multiple>
+										</div>
+
+										<div class="uploadResult">
+											<ul>
+												<!-- 업로드된 파일이 들어갈 자리 -->
+											</ul>
+										</div>
+										<button id="uploadBtn">upload</button>
+
+									</div>
 							</div>
-							<table class="table" width="400px">
+							<table class="table table1" width="400px">
 
 								<c:if test="${member eq 'kjw011231' }">
-									<tr >
+									<tr>
 										<td>유저고유번호</td>
 										<td><input id="cnum" name="cnum" value="${member.cnum}"
 											readonly="readonly"></td>
 									</tr>
 								</c:if>
-								<tr >
+								<tr>
 									<td>아이디</td>
-									<td id="cid" name="cid">${member.cid}
-										</td>
+									<td id="cid" name="cid">${member.cid}</td>
 								</tr>
 								<tr>
 									<td>닉네임</td>
@@ -194,8 +216,7 @@ button {
 								</tr>
 								<tr>
 									<td>이메일</td>
-									<td id="email" name="email">${member.email}
-										</td>
+									<td id="email" name="email">${member.email}</td>
 								</tr>
 								<tr>
 									<td>회원가입일자</td>
@@ -209,23 +230,20 @@ button {
 								</tr>
 							</table>
 						</form>
-							<div class="row">&nbsp;</div>
+						<div class="row">&nbsp;</div>
 						<div class="Mbtn">
-						<c:if test="${member != null}">
-							<a href="/user/userLogin"><button>로그인</button></a>
-							<a href="/user/userLogout"><button>로그아웃</button></a>
-							<a href="/user/userModify"><button>유저수정</button></a>
-							<a href="/user/userDelete"><button>탈퇴</button></a>
-						</c:if>
+							<c:if test="${member != null}">
+								<a href="/user/userLogin"><button>로그인</button></a>
+								<a href="/user/userLogout"><button>로그아웃</button></a>
+								<a href="/user/userModify"><button>유저수정</button></a>
+								<a href="/user/userDelete"><button>탈퇴</button></a>
+							</c:if>
 						</div>
-						<br>
-						<br />
-						
-						<br />
+						<br> <br /> <br />
 						<div class="modAub">
 							<div class="row">
 								<div class="col-md-3">
-									<p>${member.nickname } (방명록)</p>
+									<p>${member.nickname }(방명록)</p>
 								</div>
 								<div class="col-md-6">
 									<textarea style="resize: none;" name="reply" id="newReply"
@@ -243,37 +261,61 @@ button {
 
 							</ul>
 						</div>
+						</div>
+				<div class="rowB">
+				<table class="table table-hover">
+					<tr>
+						<th>게임식별번호</th>
+						<th>게임제목</th>
+						<th>게임설명</th>
+						<th>태그</th>
+						<th>구매일자</th>
+					</tr>
+					<c:forEach var="library" items="${library }">
+						<tr>
+							<td>${library.gnum }</td>
+							<td><a href="gname">${gname}</a></td>
+							<td>${gcontent}</td>
+							<td>${tagname }</td>
+							<td>${board.regdate }</td>
+						</tr>
+					</c:forEach>
+
+				</table>
+				</div>
+					</div>
+				
+				</div>
+			</div>
+			<!--  row main-->
+
+			<div class="footer">
+				<div class="footer-info">
+					<div>CREATORS&nbsp;&nbsp;김영훈, 김지우, 조훈현, 최재인</div>
+					<div>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;</div>
+					<div>
+						CONTACT&nbsp;&nbsp;<a href="https://github.com/GITJIWOO">https://github.com/GITJIWOO</a>
 					</div>
 				</div>
-			</div>
-		<div class="footer">
-			<div class="footer-info">
-				<div>CREATORS&nbsp;&nbsp;김영훈, 김지우, 조훈현, 최재인</div>
-				<div>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;</div>
-				<div>
-					CONTACT&nbsp;&nbsp;<a href="https://github.com/GITJIWOO">https://github.com/GITJIWOO</a>
+				<div class="footer-copyright">
+					<div>Copyright © GAMMA All right reserved.</div>
 				</div>
 			</div>
-			<div class="footer-copyright">
-				<div>Copyright © GAMMA All right reserved.</div>
-			</div>
+	</div>
+	<!-- 모달 요소는 안 보이기 때문에 어디 넣어도 되지만 보통 html요소들 끼리 놨을때
+	제일 아래쪽에 작성하는 경우가 많습니다. -->
+	<div id="modDiv" style="display: none;">
+		<div class="modal-title" style="color: white"></div>
+		<div>
+			<textarea style="resize: none;" name="reply" id="replytext" rows="2"
+				cols="41"></textarea>
+		</div>
+		<div class="modBtn">
+			<button type="button" id="replyModBtn">수정</button>
+			<button type="button" id="replyDelBtn">삭제</button>
+			<button type="button" id="closeBtn">닫기</button>
 		</div>
 	</div>
-		</div>
-							<!-- 모달 요소는 안 보이기 때문에 어디 넣어도 되지만 보통 html요소들 끼리 놨을때
-	제일 아래쪽에 작성하는 경우가 많습니다. -->
-							<div id="modDiv" style="display: none;">
-								<div class="modal-title" style="color: white"></div>
-								<div>
-									<textarea style="resize: none;" name="reply" id="replytext"
-										rows="2" cols="41"></textarea>
-								</div>
-								<div class="modBtn">
-									<button type="button" id="replyModBtn">수정</button>
-									<button type="button" id="replyDelBtn">삭제</button>
-									<button type="button" id="closeBtn">닫기</button>
-								</div>
-							</div>
 
 	<script>
 	$(document).ready(function() {
@@ -493,12 +535,14 @@ button {
 			
 			$("#uploadBtn").on("click", function(e){
 				
+				
+				var cnum =$(".cnum").val();
 				// ajax는 제출버튼을 눌렀을때 목적지가 없기 때문에
 				// 빈 폼을 만들고 거기에 정보를 채워나갑니다.
 				var formData = new FormData();
 				
 				var inputFile = $("input[name='uploadFile']");
-				
+				console.log(cnum);
 				console.log(inputFile);
 				var files= inputFile[0].files;
 				
@@ -520,7 +564,7 @@ button {
 					url: '/uploadAjaxAction',
 					processData : false,
 					contentType : false,
-					data : formData,
+					data : formData,cnum
 					type : 'POST',
 					dataType:'json', // 입력시 json으로 콘솔에, 안입력하면 xml로 콘솔에찍힘.
 					success : function(result){
@@ -549,11 +593,11 @@ button {
 							
 							var fileCallPath = encodeURIComponent(
 									obj.uploadPath + "/"
-								+ obj.uuid + "_" + obj.fileName);
+								+ obj.uuuid + "_" + obj.fileName);
 							
 							// 그림이 아니면 썸네일대신 resources폴더 내 이미지를 대체로 보여줌
 							str += "<li "
-								+"data-path='" + obj.uploadPath + "' data-uuid='" + obj.uuid
+								+"data-path='" + obj.uploadPath + "' data-uuuid='" + obj.uuuid
 								+ "' data-filename='" + obj.fileName + "' data-type='" + obj.image
 								+ "'><a href='/download?fileName=" + fileCallPath
 								+ "'><img src='/resources/file.png'>"
@@ -564,13 +608,13 @@ button {
 							//str += "<li>" + obj.fileName + "</li>";
 							// 파일이름 + 썸네일을 보여주기 위해 썸네일 주소 요청하게 만들기
 							var fileCallPath = encodeURIComponent(obj.uploadPath
-										+ "/s_" + obj.uuid + "_" + obj.fileName);
+										+ "/s_" + obj.uuuid + "_" + obj.fileName);
 							var fileCallPath2 = encodeURIComponent(obj.uploadPath
-									+ "/" + obj.uuid + "_" + obj.fileName);
+									+ "/" + obj.uuuid + "_" + obj.fileName);
 							
 							// 원래 그냥 fileCallPath를 조립해서
 							str += "<li "
-								+"data-path='" + obj.uploadPath + "' data-uuid='" + obj.uuid
+								+"data-path='" + obj.uploadPath + "' data-uuuid='" + obj.uuuid
 								+ "' data-filename='" + obj.fileName + "' data-type='" + obj.image
 								+ "'><a href='/download?fileName=" + fileCallPath2
 								+ "'><img src='/display?fileName=" 
@@ -583,6 +627,8 @@ button {
 				}//showUploadedFile
 			
 			$(".uploadResult").on("click", "span", function(e){
+				
+				
 				
 				console.log($(e));
 				
@@ -630,7 +676,7 @@ button {
 					// BoardVO 내부의 List<BoardAttachVO>를 처리하기 위해 변수명 attachList로 전달 
 					str += "<input type='hidden' name='attachList[" + i + "].fileName'"
 						+ " value='"+ imgInfo.data("filename") +"'>"
-						+ "<input type='hidden' name='attachList[" + i + "].uuid'"
+						+ "<input type='hidden' name='attachList[" + i + "].uuuid'"
 						+ " value='"+ imgInfo.data("uuid") +"'>"
 						+ "<input type='hidden' name='attachList[" + i + "].uploadPath'"
 						+ " value='"+ imgInfo.data("path") +"'>"
