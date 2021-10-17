@@ -36,14 +36,10 @@ h1>a {
 		left: 100%;
 	}
 </style>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
 <link rel="stylesheet" href="/resources/css/styles.css" />
-<link
-	href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css"
-	rel="stylesheet"
-	integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We"
-	crossorigin="anonymous">
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<link rel="icon" type="image/png" href="http://example.com/myicon.png">
 <meta charset="UTF-8">
 <title>Insert title here</title>
 </head>
@@ -101,7 +97,7 @@ h1>a {
 			        <img class="conimg" src="/resources/css/image/chaIcon.png"/>
 	          	  </div>
 		          <div class="consumer__nickname">
-		          	<p>${consumer.nickname}</p>
+		          	<p>${cid}</p>
 		          </div>
 		          <div class="consumer__info">
 	   				<a href="/user/userGet">유저정보창</a>
@@ -245,6 +241,8 @@ h1>a {
 		// 		}
 	</script>
 	
+	
+	
 	  </div>
         </div>
         <div class="footer">
@@ -264,6 +262,26 @@ h1>a {
       </div>
     </div>
 
+	<script>
+		$(document).ready(function() {
+			// 취소
+			$(".loginBtn").on("click", function() {
+				location.href = "/user/userLogin";
+			})
+			$(".joinBtn").on("click", function() {
+				location.href = "/user/userJoin";
+			})
+			
+			$(".consumer").mouseover(function(){
+				$(".consumer__info").show();
+			});
 
+			$(".consumer").mouseout(function(){
+				$(".consumer__info").hide();
+			});
+			
+		});
+    </script>
+	
 </body>
 </html>

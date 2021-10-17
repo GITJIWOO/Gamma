@@ -18,6 +18,8 @@ import org.game.gamelibrary.domain.GameLibraryVO;
 import org.game.gamelibrary.service.GameLibraryService;
 import org.game.review.domain.ReviewVO;
 import org.game.review.service.ReviewService;
+import org.game.user.domain.ConsumerBasketVO;
+import org.game.user.service.ConsumerBasketService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -52,13 +54,16 @@ public class GameInfoController {
 	
 	@Autowired
 	private ReviewService reviewService;
+	
+	@Autowired
+	private ConsumerBasketService basketService; 
 
 	// 게임 목록
 	@GetMapping("/gamelist")
 	public String gameList(GameSearchCriteria cri, Model model,HttpSession session) {
 		
 		// 세션 아이디, 어드민
-		String cid = String.valueOf(session.getAttribute("session_cid"));
+		String cid = (String)session.getAttribute("session_cid");
 		String cadmin = String.valueOf(session.getAttribute("session_cadmin"));
 		
 		List<GameInfoVO> gameList = gameInfoService.getGameListPaging(cri);
@@ -68,14 +73,21 @@ public class GameInfoController {
 
 		model.addAttribute("btnMaker", btnMaker);
 		model.addAttribute("gameList", gameList);
+		model.addAttribute("cid", cid);
+		model.addAttribute("cadmin", cadmin);
 		return "gameinfo/gamelist";
 	}
 
 	@GetMapping("/totallistbytag")
 	public String listbytag(Model model, GameInfoVO vo, HttpSession session) {
+		// 세션 아이디, 어드민
+		String cid = (String)session.getAttribute("session_cid");
+		String cadmin = String.valueOf(session.getAttribute("session_cadmin"));
 		List<GameInfoVO> tagList = gameInfoService.totalListByTag(vo.getTagname());
 
 		model.addAttribute("tagList", tagList);
+		model.addAttribute("cid", cid);
+		model.addAttribute("cadmin", cadmin);
 
 		return "gameinfo/taglist";
 	}
@@ -106,10 +118,13 @@ public class GameInfoController {
 
 	// get 방식 접속 /gameinfo/gameRegister
 	@GetMapping("/gameregister")
-	public String register(HttpSession session) {
+	public String register(HttpSession session, Model model) {
 		// 세션 아이디, 어드민
 		String cid = String.valueOf(session.getAttribute("session_cid"));
 		String cadmin = String.valueOf(session.getAttribute("session_cadmin"));
+		
+		model.addAttribute("cid", cid);
+		model.addAttribute("cadmin", cadmin);
 		return "/gameinfo/gameregister";
 	}
 
@@ -122,20 +137,30 @@ public class GameInfoController {
 		System.out.println("컨트롤러 조회로직 진입");
 
 		// 세션 아이디, 어드민
-		String cid = String.valueOf(session.getAttribute("session_cid"));
+		String cid = (String)session.getAttribute("session_cid");
 		String cadmin = String.valueOf(session.getAttribute("session_cadmin"));
 
 		GameInfoVO gvo = gameInfoService.getGame(gnum);
 		GameInfoVO tvo = gameTagService.getTag(gnum);
 		GameInfoVO rvo = requirementService.getRequirement(gnum);
 		
-		List<ReviewVO> reviewList = reviewService.getFamousReview(gnum);
 		
+		System.out.println("cid" + cid);
+		System.out.println("gnum" + gnum);
 		
 		if (cid != null) {
+			ReviewVO getReview = reviewService.getUserReviewDetail(cid, gnum);
 			GameLibraryVO lvo = libraryService.getOneConsumerLibrary(cid, gnum);
+			List<ReviewVO> reviewList = reviewService.getFamousReview(gnum);
+			System.out.println("reviewList: " + reviewList);
+			ConsumerBasketVO basket = basketService.getOneConsumerBasket(cid, gnum);
+			model.addAttribute("getReview",getReview);
+			System.out.println("getreview: " + getReview);
 			model.addAttribute("lvo", lvo);
+			model.addAttribute("reviewList", reviewList);
+			model.addAttribute("basket", basket);
 		}
+		
 
 //		List<GameInfoVO> listByTag = gameInfoService.listByTag(gvo);
 //		List<GameInfoVO> gameList = gameInfoService.getGameListPaging(cri);
@@ -150,7 +175,6 @@ public class GameInfoController {
 //		model.addAttribute("gameList", gameList);
 		model.addAttribute("cid", cid);
 		model.addAttribute("cadmin", cadmin);
-		model.addAttribute("reviewList", reviewList);
 
 		return "/gameinfo/gameinfo";
 	}
@@ -161,7 +185,7 @@ public class GameInfoController {
 	public String remove(Long gnum, String gname, RedirectAttributes rttr, HttpSession session) {
 		
 		// 세션 아이디, 어드민
-		String cid = String.valueOf(session.getAttribute("session_cid"));
+		String cid = (String)session.getAttribute("session_cid");
 		String cadmin = String.valueOf(session.getAttribute("session_cadmin"));
 		
 //		System.out.println("게임 삭제로직: " + gnum + "번");
@@ -183,7 +207,7 @@ public class GameInfoController {
 //		log.info("게임수정 로직: " + vo);
 
 		// 세션 아이디, 어드민
-		String cid = String.valueOf(session.getAttribute("session_cid"));
+		String cid = (String)session.getAttribute("session_cid");
 		String cadmin = String.valueOf(session.getAttribute("session_cadmin"));
 		
 		gameTagService.modifyTag(gvo);
@@ -205,7 +229,7 @@ public class GameInfoController {
 	public String modifyForm(@RequestParam("gnum") Long gnum, Model model, HttpSession session) {
 
 		// 세션 아이디, 어드민
-		String cid = String.valueOf(session.getAttribute("session_cid"));
+		String cid = (String)session.getAttribute("session_cid");
 		String cadmin = String.valueOf(session.getAttribute("session_cadmin"));
 		
 		GameInfoVO tvo = gameTagService.getTag(gnum);
@@ -217,6 +241,8 @@ public class GameInfoController {
 		model.addAttribute("rvo", rvo);
 		model.addAttribute("gvo", vo);
 //		model.addAttribute("tagname", tagname);
+		model.addAttribute("cid", cid);
+		model.addAttribute("cadmin", cadmin);
 
 		return "/gameinfo/gamemodify";
 	}

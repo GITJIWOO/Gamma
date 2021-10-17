@@ -129,4 +129,5 @@
 		<include refid="search"></include>
 		gnum > 0
 	</select>
+	
 </mapper>

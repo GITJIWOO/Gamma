@@ -6,12 +6,9 @@
 <html>
 <head>
 <link rel="stylesheet" href="/resources/css/styles.css" />
-<link
-	href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css"
-	rel="stylesheet"
-	integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU"
-	crossorigin="anonymous">
-	<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<link rel="icon" type="image/png" href="http://example.com/myicon.png">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
 <style type="text/css">
 input[type="radio"] {
 		visibility:hidden;
@@ -101,7 +98,7 @@ input[type="radio"] {
 	margin-top: 20px;
 	margin-bottom: 10px;
 	width: 900px;
-	height: 1000px;
+	height: 1500px;
 }
 
 .bottom1 {
@@ -112,7 +109,7 @@ input[type="radio"] {
 	height: 300px;
 }
 .bottom3{
-	height: 400px;
+	height: 200px;
 }
 </style>
 <meta charset="UTF-8">
@@ -172,7 +169,7 @@ input[type="radio"] {
 			        <img class="conimg" src="/resources/css/image/chaIcon.png"/>
 	          	  </div>
 		          <div class="consumer__nickname">
-		          	<p>${consumer.nickname}</p>
+		          	<p>${cid}</p>
 		          </div>
 		          <div class="consumer__info">
 	   				<a href="/user/userGet">유저정보창</a>
@@ -243,6 +240,7 @@ input[type="radio"] {
 			<input type="hidden" name="keyword" value="${param.keyword }">
 			<input type="submit" value="수정하기">
 		</form>
+		
 		<!--  
 		<a
 			href="/gameInfo/gamelist?pageNum=${param.pageNum }&searchType=${param.searchType}&keyword=${param.keyword}">
@@ -253,6 +251,19 @@ input[type="radio"] {
 			<input type="hidden" name="gnum" value="${gvo.gnum }"> <input
 				type="button" value="삭제하기" onclick="confirm_delete();">
 		</form>
+		</c:if>
+		<c:if test="${cid ne null }">
+			<c:if test="${lvo eq null && basket eq null }">
+				<form action="/gamepayment/basketAdd" method="post">
+					<input type="hidden" name="gnum" value="${gvo.gnum }">
+					<input type="submit" value="장바구니 추가">
+				</form>
+			</c:if>
+			<c:if test="${lvo eq null && basket ne null }">
+				<form action="/gamepayment/basketList" method="get">
+					<input type="submit" value="장바구니 가기">
+				</form>
+			</c:if>
 		</c:if>
 		<!--bottom-->
 		<div class="bottom">
@@ -315,30 +326,42 @@ input[type="radio"] {
 			</div>
 			
 			<div class="bottom3">
-				<%-- <c:if test="${lvo ne null}"> --%>
-		<form action="/review/reviewWrite" method="post">
-			<input type="hidden" name="cid" value="${cid}">
-			<textarea class="form-control" id="exampleFormControlTextarea1" name="grcontent" rows="7" cols="70" placeholder="내용" required></textarea><br/>
-			<div id="isLike" class="btn btn-secondary">
-				<input type="radio" class="isLike" name="grlike" value="1"><i class="far fa-thumbs-up fa-lg"> 추천</i>
-			</div>
-			<div id="notLike" class="btn btn-secondary">
-				<input type="radio" class="notLike" name="grlike" value="0"><i class="far fa-thumbs-down fa-lg"> 비추천</i>
-			</div>
-			<input type="submit" class="btn btn-success" id="reviewWrite" value="작성">
-		</form>
-	<%-- </c:if> --%>
+				<c:if test="${cid ne null && lvo ne null}">
+                     <c:choose>
+                         <c:when test="${getReview ne null}">
+							${getReview }	
+                         </c:when>
+                         <c:when test="${getReview eq null}">
+							<form action="/review/reviewWrite" method="post">
+								<input type="hidden" name="cid" value="${cid}">
+								<input type="hidden" name="gnum" value="${gvo.gnum}">
+								<textarea class="form-control" id="exampleFormControlTextarea1" name="grcontent" rows="7" cols="70" placeholder="내용" required></textarea><br/>
+								<div id="isLike" class="btn btn-secondary">
+									<input type="radio" class="isLike" name="grlike" value="1"><i class="far fa-thumbs-up fa-lg"> 추천</i>
+								</div>
+								<div id="notLike" class="btn btn-secondary">
+									<input type="radio" class="notLike" name="grlike" value="0"><i class="far fa-thumbs-down fa-lg"> 비추천</i>
+								</div>
+								<input type="submit" class="btn btn-success" id="reviewWrite" value="작성">
+							</form>
+                         </c:when>
+                     </c:choose>
+                 </c:if>
+		<br>
+		<br>
+		<br>
+		<br>
 	
 	
-	<a  href="/reviewList/{gnum}">
-			<input  type="button" value="리뷰보기" style="float: right;"></a>
+	<a  href="/review/reviewList/${gvo.gnum }">
+			<input  type="button" value="리뷰전체보기" style="float: right;"></a>
 	<table class="table table-hover">
 		<tr>
 			<th>리뷰번호</th>
 			<th>글쓴이</th>
 			<th>등록일</th>
 		</tr>
-		<c:forEach var="reviewList" items="${reviewList }" begin="1" end="5">
+		<c:forEach var="reviewList" items="${reviewList }" end="4">
 		<tr>
 			<td>${reviewList.grnum }</td>
 			<th>${reviewList.cid }</th>
@@ -346,7 +369,6 @@ input[type="radio"] {
 		</tr>
 		</c:forEach>
 	</table>				
-	${reviewList }
 	<script src="https://kit.fontawesome.com/6478f529f2.js" crossorigin="anonymous"></script>
 	
 			</div><!-- end bottom3 -->
@@ -423,6 +445,26 @@ input[type="radio"] {
         </div>
       </div>
     </div>
+    <script>
+		$(document).ready(function() {
+			// 취소
+			$(".loginBtn").on("click", function() {
+				location.href = "/user/userLogin";
+			})
+			$(".joinBtn").on("click", function() {
+				location.href = "/user/userJoin";
+			})
+			
+			$(".consumer").mouseover(function(){
+				$(".consumer__info").show();
+			});
+
+			$(".consumer").mouseout(function(){
+				$(".consumer__info").hide();
+			});
+			
+		});
+    </script>
 	
 	
 </body>
