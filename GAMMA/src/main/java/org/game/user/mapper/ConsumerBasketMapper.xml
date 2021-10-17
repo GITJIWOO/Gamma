@@ -8,6 +8,10 @@
 	<select id="consumerBasketSelect" resultType="org.game.user.domain.ConsumerBasketVO">
 		SELECT * FROM shoppingBasket s LEFT JOIN game g ON s.gnum=g.gnum WHERE cid=#{cid}
 	</select>
+	
+	<select id="consumerGameBasketSelect" resultType="org.game.user.domain.ConsumerBasketVO">
+		SELECT * FROM shoppingBasket WHERE cid=#{cid} AND gnum=#{gnum}
+	</select>
 
 	<!-- 장바구니 게임 추가 -->
 	<insert id="consumerBasketInsert">
