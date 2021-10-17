@@ -58,9 +58,13 @@ public class UserController {
 
 	// 유저 상제정보창
 	@PostMapping("/userGet")
-	public String userGet(String cid, Model model) {
-		model.addAttribute("dto", service.userGet(cid));
-		log.info("클릭한유저번호" + cid);
+	public String userGet(ConsumerVO userVO, Model model) {
+		model.addAttribute("dto", service.userGet(userVO.getCid()));
+		log.info("클릭한유저번호" + userVO);
+		if(userVO.getAttachList() != null) {
+			userVO.getAttachList().forEach(attach -> log.info(attach));
+		}
+		
 		return "/user/userGet";
 	}
 

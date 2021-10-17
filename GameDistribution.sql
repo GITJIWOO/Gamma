@@ -127,6 +127,21 @@ CREATE table userreply_tbl(
     foreign key (nickname) references consumer(nickname);
     ALTER TABLE userreply_tbl RENAME COLUMN replyDate to ureplydate;
     ALTER TABLE userreply_tbl RENAME COLUMN updateDate to uupdatedate;
+  
+  
+    /*프로필 전용 db*/
+CREATE TABLE img_tbl(
+uuuid varchar2(100) not null,
+uploadPath varchar2(200) not null,
+fileName varchar2(100) not null,
+filetype char(1) default'I',
+cnum number(10,0)
+);
+
+alter table img_tbl add constraint pk_img primary key ( uuuid);
+alter table img_tbl add constraint fk_user_img foreign key (cnum)
+references consumer(cnum);
+    
     
     
 /*  사진 테이블
