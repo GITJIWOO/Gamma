@@ -8,13 +8,33 @@
 <link rel="stylesheet" href="/resources/css/styles.css" />
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
 <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
-<title>리뷰</title>
+<title>${review.cid}의 리뷰</title>
 <style>
+	body {
+		padding: 30px;
+	}
+	#reviewInfo {
+		border: 1px solid black;
+	}
 	#reviewModify {
 		display: none;
 	}
 	input[type="radio"] {
 		visibility:hidden;
+	}
+	.gameTitle {
+		font-size: 180%;
+		color: black;
+	}
+	.reviewLink {
+		font-size: 120%;
+		color: black;
+	}
+	.fa-thumbs-up {
+		margin-right: 10px;
+	}
+	.fa-thumbs-down {
+		margin-right: 10px;
 	}
 </style>
 </head>
@@ -23,17 +43,19 @@
 		<div id="content">
 			<div id="review">
 				<div id="reviewContent">
-					<form action="/review/reviewList/${review.gnum}">
-						<input type="submit" value="돌아가기">
-					</form>
+					<a href="/gameInfo/get/${game.gnum}" class="gameTitle">${game.gname}</a>
+					> <a href="/review/reviewList/${game.gnum}" class="reviewLink">리뷰</a>
+					> <a href="/user/getUser">${review.cid}</a>
 					
 					<div id="reviewInfo">
+						<div class="reviewNickname">
+							${reviewWriter.nickname}
+						</div>
 						리뷰 번호 : ${review.grnum}
-						아이디 : ${review.cid}
 						작성일 : ${review.grdate}
 						<c:choose>
-							<c:when test="${review.grlike == 1}">추천</c:when>
-							<c:when test="${review.grlike == 0}">비추천</c:when>
+							<c:when test="${review.grlike == 1}"><i class="fas fa-thumbs-up fa-2x"></i> 추천</c:when>
+							<c:when test="${review.grlike == 0}"><i class="fas fa-thumbs-down fa-2x"></i> 비추천</c:when>
 						</c:choose>
 						내용 : ${review.grcontent}
 						좋아요 : ${review.grrecommend}
@@ -47,40 +69,44 @@
 								<input type="hidden" name="grnum" value="${review.grnum}">
 								<textarea class="form-control" id="exampleFormControlTextarea1" name="grcontent" rows="7" cols="70" placeholder="내용" required>${review.grcontent}</textarea><br/>
 								<div id="isLike" class="btn btn-secondary">
-									<input type="radio" class="isLike" name="grlike" value="1">추천
+									<input type="radio" class="isLike" name="grlike" value="1"><i class="far fa-thumbs-up fa-lg"> 추천</i>
 								</div>
 								<div id="notLike" class="btn btn-secondary">
-									<input type="radio" class="notLike" name="grlike" value="0">비추천
+									<input type="radio" class="notLike" name="grlike" value="0"><i class="far fa-thumbs-down fa-lg"> 비추천</i>
 								</div>
 								<button type="button" id="modifyCancel" class="btn btn-secondary">취소</button>
 								<input type="submit" class="btn btn-success" id="reviewUpdate" value="작성">
 							</form>
 						</c:if>
 					</div>
-					
+					<hr>
 					<!-- 리뷰 좋아요 버튼(로그인 검사) -->
 					<c:choose>
 						<c:when test="${cid ne 'null' && rlvo.cid ne cid}">
-							<form action="/review/reviewLike" method="post" id="reviewLike">
-								<input type="hidden" name="cid" value="${cid}">
-								<input type="hidden" name="gnum" value="${review.gnum}">
-								<input type="hidden" name="grnum" value="${review.grnum}">
-								<input type="submit" value="좋아요">
-							</form>
+							<c:if test="${cid ne review.cid}">
+								<form action="/review/reviewLike" method="post" id="reviewLike">
+									<input type="hidden" name="cid" value="${cid}">
+									<input type="hidden" name="gnum" value="${review.gnum}">
+									<input type="hidden" name="grnum" value="${review.grnum}">
+									<input type="submit" value="좋아요">
+								</form>
+							</c:if>
 						</c:when>
 						<c:when test="${rlvo.cid eq cid}">
-							<form action="/review/reviewLikeCancel" method="post" id="reviewLikeCancel">
-								<input type="hidden" name="cid" value="${cid}">
-								<input type="hidden" name="gnum" value="${review.gnum}">
-								<input type="hidden" name="grnum" value="${review.grnum}">
-								<input type="submit" value="좋아요 취소">
-							</form>
+							<c:if test="${cid ne review.cid}">
+								<form action="/review/reviewLikeCancel" method="post" id="reviewLikeCancel">
+									<input type="hidden" name="cid" value="${cid}">
+									<input type="hidden" name="gnum" value="${review.gnum}">
+									<input type="hidden" name="grnum" value="${review.grnum}">
+									<input type="submit" value="좋아요 취소">
+								</form>
+							</c:if>
 						</c:when>
 					</c:choose>
 					
 					<!-- 리뷰 수정 버튼(아이디 검사) -->
 					<c:if test="${cid eq review.cid}">
-						<button id="modifyBtn">수정하기</button>
+						<button id="modifyBtn" class="btn btn-secondary">수정하기</button>
 					</c:if>
 					
 					<!-- 리뷰 삭제 버튼(아이디 검사) -->
@@ -89,7 +115,7 @@
 							<form action="/review/reviewRemove" method="post" id="removeReview">
 								<input type="hidden" name="grnum" value="${review.grnum}">
 							</form>
-							<button onclick="removeReview()">리뷰 삭제</button>
+							<button onclick="removeReview()" class="btn btn-secondary">리뷰 삭제</button>
 						</c:if>
 					</div>
 					<hr/>
@@ -151,6 +177,8 @@
 			</div>
 		</div>
 	</div>
+	<!-- font-awesome code kit -->
+	<script src="https://kit.fontawesome.com/6478f529f2.js" crossorigin="anonymous"></script>
 </body>
 <script>
 
@@ -172,9 +200,11 @@
 		let isCheck = $(".isLike").is(":checked");
 		$(".notLike").prop("checked", true);
 		$("#notLike").toggleClass().addClass("btn btn-danger");
+		$(".fa-thumbs-down").toggleClass().addClass("fas fa-thumbs-down fa-lg");
 		if(isCheck === true) {
 			$(".isLike").prop("checked", false);
 			$("#isLike").toggleClass().addClass("btn btn-secondary");
+			$(".fa-thumbs-up").toggleClass().addClass("far fa-thumbs-up fa-lg");
 		}
 	});
 	
@@ -182,9 +212,11 @@
 		let notCheck = $(".notLike").is(":checked");
 		$(".isLike").prop("checked", true);
 		$("#isLike").toggleClass().addClass("btn btn-success");
+		$(".fa-thumbs-up").toggleClass().addClass("fas fa-thumbs-up fa-lg");
 		if(notCheck === true) {
 			$(".notLike").prop("checked", false);
 			$("#notLike").toggleClass().addClass("btn btn-secondary");
+			$(".fa-thumbs-down").toggleClass().addClass("far fa-thumbs-down fa-lg");
 		}
 	});
 
