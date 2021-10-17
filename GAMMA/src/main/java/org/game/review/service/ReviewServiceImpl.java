@@ -32,14 +32,14 @@ public class ReviewServiceImpl implements ReviewService {
 
 	@Override
 	public ReviewVO getReviewDetail(long grnum) {
-		ReviewVO ReviewDetail = mapper.reviewSelect(grnum);
-		return ReviewDetail;
+		ReviewVO reviewDetail = mapper.reviewSelect(grnum);
+		return reviewDetail;
 	}
 
 	@Override
 	public ReviewVO getUserReviewDetail(String cid, long gnum) {
-		mapper.UserReviewSelect(cid, gnum);
-		return null;
+		ReviewVO review = mapper.UserReviewSelect(cid, gnum);
+		return review;
 	}
 
 	@Override

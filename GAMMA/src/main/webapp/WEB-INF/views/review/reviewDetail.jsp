@@ -5,12 +5,42 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<link rel="stylesheet" href="/resources/css/styles.css" />
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
 <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
+<link rel="stylesheet" href="/resources/css/styles.css" />
+<link rel="icon" type="image/png" href="http://example.com/myicon.png">
 <title>${review.cid}의 리뷰</title>
 <style>
-	body {
+	.consumer {
+		width: 18%;
+		position: relative;
+		text-align: center;
+		height: 10%;
+		buttom: 100;
+	}
+	.consumer__imgPro {
+		float: left;
+		padding: 0;
+		margin: 0;
+	}
+	.conimg {
+		width: 100px;
+		height: 100px;
+	}
+	.consumer__nickname {
+		float: right;
+		font-size: 25px;
+		font-weight: bold;
+		color: white;
+	}
+	.consumer__info {
+		display: none;
+		position: absolute;
+		left: 100%;
+	}
+</style>
+<style>
+	.detail {
 		padding: 30px;
 	}
 	#reviewInfo {
@@ -39,13 +69,78 @@
 </style>
 </head>
 <body>
-	<div id="body">
-		<div id="content">
+    <div class="display">
+      <!-- side-bar -->
+      <div class="side-bar">
+        <!-- logo -->
+        <div class="side-bar__row">
+          <!-- 클릭하면 main화면으로 돌아오도록 a 태그 수정 -->
+          <span
+            ><a href="/main/main"><img src="/resources/css/image/logo.png" /></a
+          ></span>
+        </div>
+        <!-- search -->
+        <div class="side-bar__row">
+          <form action="/gameInfo/gamelist" method="get">
+          <select name="searchType" style="display:none">
+          	<option  value="n"
+				<c:out value="${btnMaker.cri.searchType eq 'n' ? 'selected' : '' }"/>>
+				</option>
+            </select>
+            <input type="text" placeholder="Search Game" name="keyword" value="${btnMaker.cri.keyword }"/>
+            <!-- origin처럼 버튼 숨겼음, enter 치면 검색됨 -->
+            <input type="submit" value="" />
+          </form>
+        </div>
+        <!-- category -->
+        <div class="side-bar__row">
+          <span><a href="/gameInfo/gamelist">게임 스토어</a></span>
+          <c:if test="${cid ne null}">
+          	<span><a href="/library/conLibrary?cid=${cid}">라이브러리</a></span>
+          </c:if>
+        </div>
+        <!-- qna -->
+        <div class="side-bar__row">
+          <span><a href="/qna/questionlist">Q&A</a></span>
+          &nbsp;&nbsp;|&nbsp;&nbsp;
+          <span><a href="/qna/commonquestion">자주하는 질문</a></span>
+        </div>
+        <!-- about user -->
+        <div class="side-bar__row">
+          <!-- c:if로 로그인 전에는 회원가입+로그인 / 로그인 후에는 프로필 -->
+          <c:if test="${cid eq null}">
+            <div class="loginBtn">
+		        <span><a href="/user/userLogin" class="loginA">로그인</a></span>
+            </div>
+            <div class="joinBtn">
+		        <span><a href="/user/userJoin" class="joinA">가입하기</a></span>
+            </div>
+          </c:if>
+          <c:if test="${cid ne null}">
+	          <div class="consumer">
+	          	  <div class="consumer__imgPro">
+			        <img class="conimg" src="/resources/css/image/chaIcon.png"/>
+	          	  </div>
+		          <div class="consumer__nickname">
+		          	<p>${cid}</p>
+		          </div>
+		          <div class="consumer__info">
+	   				<a href="/user/userGet">유저정보창</a>
+	   				<a href="/user/userLogout">로그아웃</a>
+		   		  </div>
+	          </div>
+          </c:if>
+        </div>
+      </div>
+      <div class="main">
+        <div class="contents">
+          <div class="detail">
+            <!-- 여기에 각자 content 붙여넣기 -->
 			<div id="review">
+				<a href="/gameInfo/get?gnum=${game.gnum}" class="gameTitle">${game.gname}</a>
+				> <a href="/review/reviewList/${game.gnum}" class="reviewLink">리뷰</a>
+				> <a href="/user/getUser">${review.cid}</a>
 				<div id="reviewContent">
-					<a href="/gameInfo/get/${game.gnum}" class="gameTitle">${game.gname}</a>
-					> <a href="/review/reviewList/${game.gnum}" class="reviewLink">리뷰</a>
-					> <a href="/user/getUser">${review.cid}</a>
 					
 					<div id="reviewInfo">
 						<div class="reviewNickname">
@@ -77,12 +172,12 @@
 								<button type="button" id="modifyCancel" class="btn btn-secondary">취소</button>
 								<input type="submit" class="btn btn-success" id="reviewUpdate" value="작성">
 							</form>
+							<hr>
 						</c:if>
 					</div>
-					<hr>
 					<!-- 리뷰 좋아요 버튼(로그인 검사) -->
 					<c:choose>
-						<c:when test="${cid ne 'null' && rlvo.cid ne cid}">
+						<c:when test="${cid ne null && rlvo.cid ne cid}">
 							<c:if test="${cid ne review.cid}">
 								<form action="/review/reviewLike" method="post" id="reviewLike">
 									<input type="hidden" name="cid" value="${cid}">
@@ -92,7 +187,7 @@
 								</form>
 							</c:if>
 						</c:when>
-						<c:when test="${rlvo.cid eq cid}">
+						<c:when test="${cid ne null && rlvo.cid eq cid}">
 							<c:if test="${cid ne review.cid}">
 								<form action="/review/reviewLikeCancel" method="post" id="reviewLikeCancel">
 									<input type="hidden" name="cid" value="${cid}">
@@ -174,11 +269,47 @@
 					  </ul>
 					</nav>
 				</div>
-			</div>
-		</div>
-	</div>
+			</div>     
+          </div>
+        </div>
+        <div class="footer">
+          <div class="footer-info">
+            <div>CREATORS&nbsp;&nbsp;김영훈, 김지우, 조훈현, 최재인</div>
+            <div>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;</div>
+            <div>
+              CONTACT&nbsp;&nbsp;<a href="https://github.com/GITJIWOO/Game-Project"
+                >https://github.com/GITJIWOO/Game-Project</a
+              >
+            </div>
+          </div>
+          <div class="footer-copyright">
+            <div>Copyright © GAMMA All right reserved.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script>
+		$(document).ready(function() {
+			// 취소
+			$(".loginBtn").on("click", function() {
+				location.href = "/user/userLogin";
+			})
+			$(".joinBtn").on("click", function() {
+				location.href = "/user/userJoin";
+			})
+			
+			$(".consumer").mouseover(function(){
+				$(".consumer__info").show();
+			});
+
+			$(".consumer").mouseout(function(){
+				$(".consumer__info").hide();
+			});
+			
+		});
+    </script>
 	<!-- font-awesome code kit -->
-	<script src="https://kit.fontawesome.com/6478f529f2.js" crossorigin="anonymous"></script>
+	<script src="https://kit.fontawesome.com/6478f529f2.js" crossorigin="anonymous"></script>       
 </body>
 <script>
 
