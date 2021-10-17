@@ -44,9 +44,6 @@
 <body>
 	<div class="body">
 		<div class="link">
-			<form action="/gamepayment/basketList?cid=kjw011231" method="post">
-				<input type="submit" value="장바구니">
-			</form>
 			<a href="/gameInfo/get?gnum=${game.gnum}" class="gameTitle">${game.gname}</a>
 			> <a href="/review/reviewList/${game.gnum}" class="reviewLink">리뷰</a>
 		</div>

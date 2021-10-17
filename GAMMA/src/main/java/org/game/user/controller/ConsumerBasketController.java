@@ -27,7 +27,7 @@ public class ConsumerBasketController {
 	@Autowired
 	private ConsumerBasketService service;
 	
-	@PostMapping("/basketList")
+	@GetMapping("/basketList")
 	public String getBasketList(HttpSession session, Model model) {
 		
 		String cid = (String)session.getAttribute("session_cid");
