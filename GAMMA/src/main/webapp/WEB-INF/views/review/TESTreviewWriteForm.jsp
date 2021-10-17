@@ -13,20 +13,54 @@
 	<c:if test="${라이브러리에 게임 보유 여부 확인}">
 		<form action="/review/reviewWrite" method="post">
 			<input type="hidden" name="cid" value="${cid}">
-			<input type="text" class="form-control form-control-lg" name="grtitle" placeholder="제목" required><br/>
-			<textarea class="form-control" id="exampleFormControlTextarea1" name="grcontent" rows="10" cols="15" placeholder="내용" required></textarea><br/>
-			<button type="button" id="reviewLike" name="grlike" value="1" class="btn btn-primary">추천</button>
-			<button type="button" id="reviewLike" name="grlike" value="0" class="btn btn-danger">비추천</button>
-			<input type="submit" class="btn btn-secondary" id="reviewWrite" value="작성">
+			<textarea class="form-control" id="exampleFormControlTextarea1" name="grcontent" rows="7" cols="70" placeholder="내용" required></textarea><br/>
+			<div id="isLike" class="btn btn-secondary">
+				<input type="radio" class="isLike" name="grlike" value="1"><i class="far fa-thumbs-up fa-lg"> 추천</i>
+			</div>
+			<div id="notLike" class="btn btn-secondary">
+				<input type="radio" class="notLike" name="grlike" value="0"><i class="far fa-thumbs-down fa-lg"> 비추천</i>
+			</div>
+			<input type="submit" class="btn btn-success" id="reviewWrite" value="작성">
 		</form>
 	</c:if>
 </body>
 <script>
-	$("#reviewWrite").click(function(){
-		if($("#reviewLike") === null) {
-			alert("평가를 선택하십시오");
-			return false;
+
+	$("div#notLike").click(function() {
+		let isCheck = $(".isLike").is(":checked");
+		$(".notLike").prop("checked", true);
+		$("#notLike").toggleClass().addClass("btn btn-danger");
+		$(".fa-thumbs-down").toggleClass().addClass("fas fa-thumbs-down fa-lg");
+		if(isCheck === true) {
+			$(".isLike").prop("checked", false);
+			$("#isLike").toggleClass().addClass("btn btn-secondary");
+			$(".fa-thumbs-up").toggleClass().addClass("far fa-thumbs-up fa-lg");
 		}
 	});
+	
+	$("div#isLike").click(function() {
+		let notCheck = $(".notLike").is(":checked");
+		$(".isLike").prop("checked", true);
+		$("#isLike").toggleClass().addClass("btn btn-success");
+		$(".fa-thumbs-up").toggleClass().addClass("fas fa-thumbs-up fa-lg");
+		if(notCheck === true) {
+			$(".notLike").prop("checked", false);
+			$("#notLike").toggleClass().addClass("btn btn-secondary");
+			$(".fa-thumbs-down").toggleClass().addClass("far fa-thumbs-down fa-lg");
+		}
+	});
+
+	$("#reviewWrite").click(function updateCheck(){
+		let isCheck = $(".isLike").is(":checked");
+		let notCheck = $(".notLike").is(":checked");
+		
+		if(isCheck === false && notCheck === false) {
+			alert("평가를 선택하십시오.");
+			return false;
+		} else {
+			return true;
+		}
+	});
+
 </script>
 </html>
