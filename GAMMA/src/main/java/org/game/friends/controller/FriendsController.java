@@ -2,6 +2,8 @@ package org.game.friends.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.game.friends.domain.FriendsPageDTO;
 import org.game.friends.domain.FriendsSearchCriteria;
 import org.game.friends.domain.FriendsVO;
@@ -30,15 +32,18 @@ public class FriendsController {
 	// 메인화면 
 	@GetMapping("/friendsmain")	// 이거 메인화면으로 바꾸기 
 	public String friendsMain(Model model) {
-		// 해당 로그인계정 정보 가져와야 함 - user service에서 세션확인
-		//model.addAttribute("userId", cid);
 		return "/friends/friendsmain";
 	}
 	
 	// 현재 팔로우하는 친구 목록 가져오기
 	@GetMapping("/followerlist")
-	public String followerList(String cid, FriendsSearchCriteria criteria, Model model) {
+	public String followerList(HttpSession session, FriendsSearchCriteria criteria, Model model) {
 		log.info("로그인 계정이 팔로우하는 친구 목록 조회");
+		// 로그인 세션 확인 
+		String cid = String.valueOf(session.getAttribute("session_cid"));
+		//String cadmin = String.valueOf(session.getAttribute("session_cadmin"));
+		log.info("cid session: " + cid);
+		//log.info("cadmin session: " + cadmin);
 		if(criteria.getKeyword() == null) {
 			criteria.setKeyword("");			
 		}
@@ -51,9 +56,9 @@ public class FriendsController {
 	
 	// 언팔로우 
 	@PostMapping("/followerremove")
-	public String followerRemove(String cid, String follower, RedirectAttributes rttr) {
-		service.removeFriend(follower, cid);
-		rttr.addAttribute("cid", cid);
+	public String followerRemove(String following, String follower, RedirectAttributes rttr) {
+		service.removeFriend(follower, following);
+		rttr.addAttribute("cid", following);
 		rttr.addFlashAttribute("unfollow", "unfollow");
 		rttr.addFlashAttribute("follower", follower);
 		return "redirect:/friends/followerlist";
@@ -61,13 +66,17 @@ public class FriendsController {
 	
 	// 나를 팔로잉하는 친구 목록 가져오기
 	@GetMapping("/followinglist")
-	public String followingList(String cid, FriendsSearchCriteria criteria, Model model) {
+	public String followingList(HttpSession session, FriendsSearchCriteria criteria, Model model) {
 		log.info("로그인 계정을 팔로우하는 친구 목록 조회");
+		// 로그인 세션 확인 
+		String cid = String.valueOf(session.getAttribute("session_cid"));
+		//String cadmin = String.valueOf(session.getAttribute("session_cadmin"));
 		if(criteria.getKeyword() == null) {
 			criteria.setKeyword("");			
 		}
 		List<FriendsVO> followingList = service.followingList(cid, criteria);
 		FriendsPageDTO page = new FriendsPageDTO(criteria, service.countFollowing(criteria, cid), 10);
+		model.addAttribute("cid", cid);
 		model.addAttribute("followingList", followingList);
 		model.addAttribute("page", page);
 		return "/friends/followinglist";
@@ -75,18 +84,21 @@ public class FriendsController {
 	
 	// 언팔로우
 	@PostMapping("/followingremove")
-	public String followingRemove(String cid, String following, RedirectAttributes rttr) {
-		service.removeFriend(following, cid);
-		rttr.addAttribute("cid", cid);
+	public String followingRemove(String follower, String following, RedirectAttributes rttr) {
+		System.out.println("로그인 계정 : " + follower);
+		System.out.println("상대방 : " + following);
+		service.removeFriend(follower, following);
+		rttr.addAttribute("cid", follower);
 		rttr.addFlashAttribute("unfollow", "unfollow");
 		rttr.addFlashAttribute("following", following);
 		return "redirect:/friends/followinglist";
 	}
-	
+
 	// 전체 회원중에서 친구 추가할 회원 검색 
 	@GetMapping("/searchfriends")
-	public String searchFriends(String cid, FriendsSearchCriteria criteria, Model model) {
+	public String searchFriends(HttpSession session, FriendsSearchCriteria criteria, Model model) {
 		log.info("전체 회원중에서 친구 찾는 로직 실행");
+		String cid = String.valueOf(session.getAttribute("session_cid"));
 		if(criteria.getKeyword() == null) {
 			criteria.setKeyword("");			
 		}

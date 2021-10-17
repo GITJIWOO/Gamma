@@ -5,6 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
 <title>Insert title here</title>
 </head>
 <body>
@@ -14,11 +15,11 @@
       <table border="1" id="followertbl">
       	<c:forEach items="${followerList }" var="followerList">
 	        <tr>
-	          <td>${followerList.cid }</td>
+	          <td><a href="/user/userPro?cid=${followerList.cid }">${followerList.cid }</a></td>
 	          <!-- 현재 팔로우 상태이기 때문에 '팔로잉(default_white)' -->
 	          <td rowspan="2">
-    			<form action="/friends/followerremove" method="post">
-		          <input type="hidden" name="cid" value="${param.cid }"/><!-- 로그인 계정 -->
+    			<form action="/friends/followerremove" method="post">    				
+		          <input type="hidden" name="following" value="${cid }"/><!-- 로그인 계정이 팔로우 하는 계정 -->
 		          <input type="hidden" name="follower" value="${followerList.cid }"/><!-- 로그인 계정이 팔로우 하는 계정 -->
 		          <input type="submit" value="팔로우 취소" />
 			    </form>
@@ -36,12 +37,26 @@
 	        </tr>
       	</c:forEach>
       </table>
-      <script>
-		const result = ${unfollow};
-		const unfollower = ${follower};
-		if(result === "undollow"){
-			alert(unfollower + "님 팔로우를 취소했습니다.");
-		}
-	  </script>
+      <!-- 페이징 처리 -->
+      ${page }
+      <nav aria-label="...">
+	  <ul class="pagination justify-content-center">
+	  	<c:if test="${page.prev }">
+		    <li class="page-item">
+		      <a class="page-link" href="/friends/followerlist?pageNum=${page.startPage - 1 }">Previous</a>
+		    </li>
+		</c:if>
+		<c:forEach var="pageNum" begin="${page.startPage }" end="${page.endPage }">
+		    <li class="page-item ${page.cri.pageNum == pageNum ? 'active' : '' }">
+		    	<a class="page-link"href="/friends/followerlist?pageNum=${pageNum }">${pageNum }</a>
+		    </li>
+		</c:forEach>
+		<c:if test="${page.next }">
+		    <li class="page-item">
+		      <a class="page-link" href="/friends/followerlist?pageNum=${page.endPage + 1 }">Next</a>
+		    </li>
+		</c:if>
+	  </ul>	
+      </nav>
 </body>
 </html>

@@ -102,7 +102,6 @@ public class ReviewController {
 			return "redirect:/review/reviewList/" + gnum;
 		}
 		
-		
 		reviewService.writeReview(review);
 		
 		rttr.addFlashAttribute("reviewNumber", review.getGrnum());
@@ -120,7 +119,6 @@ public class ReviewController {
 		if(cid == null) {
 			return "redirect:/review/reviewDetail/" + grnum;
 		}
-		
 		
 		reviewService.modifyReview(review);
 		
@@ -141,7 +139,6 @@ public class ReviewController {
 		if(cid == null) {
 			return "redirect:/review/reviewDetail/" + grnum;
 		}
-		
 		
 		commentService.removeAllReviewComment(grnum);
 		reviewService.removeReview(grnum);
@@ -164,11 +161,9 @@ public class ReviewController {
 		
 		reviewLikeService.reviewLike(vo);
 		reviewService.likeReview(vo.getGrnum());
-		
 
 		rttr.addFlashAttribute("grnum", vo.getGrnum());
 		rttr.addFlashAttribute("cid", cid);
-		
 		
 		return "redirect:/review/reviewDetail/" + grnum;
 	}
@@ -212,7 +207,6 @@ public class ReviewController {
 		if(cid == null) {
 			return "redirect:/review/reviewDetail/" + grnum;
 		}
-		
 		
 		commentService.removeReviewComment(rc);
 		
