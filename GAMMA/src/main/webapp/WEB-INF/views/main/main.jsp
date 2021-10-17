@@ -15,21 +15,31 @@
     <link rel="stylesheet" href="/resources/css/styles.css" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
 <style>
- .proImg{
- text-align:center;
- }
- .imgPro{
- width: 150px;
-	height: 150px;
-	padding:0;
-	margin:0;
- }
- .uid{
- 	 position: relative;
- 	 top:10px;
-	font-weight:bold;
-	color:white;
- }
+	.display {
+		position: relative;
+	}
+	.consumer {
+		width: 18%;
+		position: fixed;
+		text-align: center;
+		height: 10%;
+	}
+	.imgPro {
+		float: left;
+		width: 110px;
+		height: 110px;
+		padding: 0;
+		margin: 0;
+	}
+	.nickname {
+		float: right;
+		font-size: 45px;
+		font-weight: bold;
+		color: white;
+	}
+	.consumerInfo {
+		display: none;
+	}
 </style>
 </head>
 <body>
@@ -40,50 +50,48 @@
         <div class="side-bar__row">
           <!-- 클릭하면 main화면으로 돌아오도록 a 태그 수정 -->
           <span
-            ><a href="#"><img src="/resources/css/image/logo.png" /></a
+            ><a href="/main/main"><img src="/resources/css/image/logo.png" /></a
           ></span>
         </div>
         <!-- search -->
         <div class="side-bar__row">
-          <form action="#" method="get">
-            <input type="text" placeholder="   Search Game" />
+          <form action="/gameInfo/gamelist" method="get">
+            <input type="text" placeholder="Search Game" />
             <!-- origin처럼 버튼 숨겼음, enter 치면 검색됨 -->
             <input type="submit" value="" />
           </form>
         </div>
         <!-- category -->
         <div class="side-bar__row">
-          <span><a href="#">게임 스토어</a></span>
-          <span><a href="#">라이브러리</a></span>
+          <span><a href="/gameInfo/gamelist">게임 스토어</a></span>
+          <c:if test="${cid ne null}">
+          	<span><a href="/library/conlibrary?cid=${cid}">라이브러리</a></span>
+          </c:if>
         </div>
         <!-- qna -->
         <div class="side-bar__row">
-          <span><a href="#">Q&A</a></span>
+          <span><a href="/qna/questionlist">Q&A</a></span>
           &nbsp;&nbsp;|&nbsp;&nbsp;
-          <span><a href="#">자주하는 질문</a></span>
+          <span><a href="/qna/commonquestion">자주하는 질문</a></span>
         </div>
         <!-- about user -->
         <div class="side-bar__row">
           <!-- c:if로 로그인 전에는 회원가입+로그인 / 로그인 후에는 프로필 -->
-         <c:if test="${member == null }">
-          <span><a href="#" class="loginA"  onclick="openLogin">로그인</a></span>
-          <span><a href="#" class="joinA"  onclick="openJoin">가입하기</a></span>
-          
+          <c:if test="${cid eq null}">
+	          <span><a href="/user/userLogin" class="loginA"  onclick="openLogin">로그인</a></span>
+	          <span><a href="/user/userJoin" class="joinA"  onclick="openJoin">가입하기</a></span>
           </c:if>
-          <c:if test="${member != null }">
-          <div class="proImg">
-          <div>
-          <p class="uId">${member.nickname }(${member.cid  })</p>
-          </div>
-          <img class="imgPro" src="/resources/css/image/chaIcon.png"/>
-          
-          <div>
-   				<a href="/user/userGet">유저정보창</a>
-   				<a href="/user/userDelete">탈퇴창</a>
-   				</div>
-          </div>
-   				
-        </c:if>
+          <c:if test="${cid ne null}">
+	          <div class="consumer">
+		          <img class="imgPro" src="/resources/css/image/chaIcon.png"/>
+		          <div class="nickname">
+		          	<p>${consumer.nickname}</p>
+		          </div>
+		          <div class="consumerInfo">
+	   				<a href="/user/userGet">유저정보창</a>
+		   		  </div>
+	          </div>
+          </c:if>
         </div>
       </div>
       <div class="main">
@@ -97,8 +105,8 @@
             <div>CREATORS&nbsp;&nbsp;김영훈, 김지우, 조훈현, 최재인</div>
             <div>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;</div>
             <div>
-              CONTACT&nbsp;&nbsp;<a href="https://github.com/GITJIWOO"
-                >https://github.com/GITJIWOO</a
+              CONTACT&nbsp;&nbsp;<a href="https://github.com/GITJIWOO/Game-Project"
+                >https://github.com/GITJIWOO/Game-Project</a
               >
             </div>
           </div>
@@ -118,7 +126,6 @@
 			location.href = "/user/userJoin";
 		})
 	});
-    
     </script>
 </body>
 </html>
