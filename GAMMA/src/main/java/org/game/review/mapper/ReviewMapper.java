@@ -2,8 +2,8 @@ package org.game.review.mapper;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
 import org.game.review.domain.ReviewVO;
-import org.springframework.web.bind.annotation.RequestParam;
 
 public interface ReviewMapper {
 	
@@ -17,7 +17,7 @@ public interface ReviewMapper {
 	public ReviewVO reviewSelect(long grnum);
 	
 	// 평가 유저 조회
-	public ReviewVO UserReviewSelect(@RequestParam("cid") String cid, @RequestParam("gnum") long gnum);
+	public ReviewVO UserReviewSelect(@Param("cid") String cid, @Param("gnum") long gnum);
 	
 	// 평가 작성
 	public void reviewInsert(ReviewVO vo); 
