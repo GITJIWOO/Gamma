@@ -137,6 +137,7 @@
       <div class="main">
         <div class="contents">
           <div class="detail">
+          
             <h1 class="form-header">1:1 문의 작성</h1>
             <form action="/qna/registerquestion" method="post">
               <table class="register-table">
@@ -193,7 +194,7 @@
                 </tr>
               </table>
               <div class="submitBtn">
-                <input type="submit" value="질문 등록" /><br />
+                <input type="submit" value="문의 등록" /><br />
                 <button class="cancelBtn">취소</button>
               </div>
             </form>
