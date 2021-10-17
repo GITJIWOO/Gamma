@@ -100,7 +100,7 @@
 			        <img class="conimg" src="/resources/css/image/chaIcon.png"/>
 	          	  </div>
 		          <div class="consumer__nickname">
-		          	<p>${consumer.nickname}</p>
+		          	<p>${cid}</p>
 		          </div>
 		          <div class="consumer__info">
 	   				<a href="/user/userGet">유저정보창</a>
