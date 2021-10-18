@@ -5,9 +5,25 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
-<title>Insert title here</title>
+<link rel="stylesheet" href="/resources/css/styles.css" /><title>Insert title here</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <style>
+	.detail {
+	  font-size: 17px;
+	  width: 90%;
+	  margin: 0 auto;
+	}
+	.form-header {
+	  color: rgba(0, 0, 0, 0.8);
+	  font-size: 27px;
+	  font-weight: 600;
+	  padding: 20px 0 30px 0;
+	  border-bottom: 3px solid rgba(0, 0, 0, 0.8);
+	  margin-bottom: 30px;
+	}
+	.register-table {
+	  margin: 0 auto;
+	}
 	#modDiv{
 		width: 480px;
 		height: 340px;
@@ -21,38 +37,83 @@
 		z-index: 1000;
 	}
 </style>
-<!-- jQuery -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 </head>
 <body>
-	<h2>질문 상세</h2>
+	<!-- 
 	질문 번호: ${param.qnum }
 	로그인 계정: ${param.qwriter }
 	질문 페이지번호: ${param.pageNum }
+	 -->
 	<!-- 질문 -->
-	<table class="table">
-		<tr>
-			<th>번호</th>
+    <div class="display">
+      <!-- side-bar -->
+      <div class="side-bar">
+        <!-- logo -->
+        <div class="side-bar__row">
+          <!-- 클릭하면 main화면으로 돌아오도록 a 태그 수정 -->
+          <span
+            ><a href="#"><img src="/resources/css/image/logo.png" /></a
+          ></span>
+        </div>
+        <!-- search -->
+        <div class="side-bar__row">
+          <form action="#" method="get">
+            <input type="text" placeholder="   Search Game" />
+            <!-- origin처럼 버튼 숨겼음, enter 치면 검색됨 -->
+            <input type="submit" value="" />
+          </form>
+        </div>
+        <!-- category -->
+        <div class="side-bar__row">
+          <span><a href="#">게임 스토어</a></span>
+          <span><a href="#">라이브러리</a></span>
+        </div>
+        <!-- qna -->
+        <div class="side-bar__row">
+          <span><a href="#">Q&A</a></span>
+          &nbsp;&nbsp;|&nbsp;&nbsp;
+          <span><a href="#">자주하는 질문</a></span>
+        </div>
+        <!-- about user -->
+        <div class="side-bar__row">
+          <!-- c:if로 로그인 전에는 회원가입+로그인 / 로그인 후에는 프로필 -->
+          <span><a href="#">로그인</a></span>
+          <span><a href="#">가입하기</a></span>
+          <!--
+          <span>
+            <a href="#"><button class="profile">Profile</button></a>
+          </span>
+          -->
+        </div>
+      </div>
+      <div class="main">
+        <div class="contents">
+          <div class="detail">
+            <h1 class="form-header">문의 상세</h1>
+              <table class="register-table">
+                <tr>
+			<th>문의 번호</th>
 			<td>${vo.qnum }</td>
 		</tr>
 		<tr>
-			<th>유형</th>
+			<th>문의 유형</th>
 			<td>${vo.qtype }</td>
-		</tr>
-		<tr>
-			<th>제목</th>
-			<td>${vo.qtitle }</td>
-		</tr>
-		<tr>
-			<th>본문</th>
-			<td>${vo.qcontent }</td>
 		</tr>
 		<tr>
 			<th>작성자</th>
 			<td>${vo.qwriter }</td>
 		</tr>
 		<tr>
-			<th>작성일</th>
+			<th>문의 제목</th>
+			<td>${vo.qtitle }</td>
+		</tr>
+		<tr>
+			<th>문의 내용</th>
+			<td>${vo.qcontent }</td>
+		</tr>
+
+		<tr>
+			<th>문의 작성일</th>
 			<td>${vo.qdate }</td>
 		</tr>
 	</table>
@@ -239,5 +300,24 @@
 			<input type="submit" value="질문 삭제"/>
 		</form>
 	</c:if>
+              </div>
+          </div>
+        </div>
+        <div class="footer">
+          <div class="footer-info">
+            <div>CREATORS&nbsp;&nbsp;김영훈, 김지우, 조훈현, 최재인</div>
+            <div>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;</div>
+            <div>
+              CONTACT&nbsp;&nbsp;<a href="https://github.com/GITJIWOO"
+                >https://github.com/GITJIWOO</a
+              >
+            </div>
+          </div>
+          <div class="footer-copyright">
+            <div>Copyright © GAMMA All right reserved.</div>
+          </div>
+        </div>
+      </div>
+    </div>
 </body>
 </html>

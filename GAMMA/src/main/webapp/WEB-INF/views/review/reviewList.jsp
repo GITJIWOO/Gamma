@@ -47,7 +47,7 @@
 			<form action="/gamepayment/basketList?cid=kjw011231" method="post">
 				<input type="submit" value="장바구니">
 			</form>
-			<a href="/gameInfo/get/${game.gnum}" class="gameTitle">${game.gname}</a>
+			<a href="/gameInfo/get?gnum=${game.gnum}" class="gameTitle">${game.gname}</a>
 			> <a href="/review/reviewList/${game.gnum}" class="reviewLink">리뷰</a>
 		</div>
 		<div class="option">
@@ -70,8 +70,8 @@
 						<div class="card-body">
 							<h5 class="card-title">
 								<c:choose>
-									<c:when test="${review.grlike == 1}">추천</c:when>
-									<c:when test="${review.grlike == 0}">비추천</c:when>
+									<c:when test="${review.grlike == 1}"><i class="fas fa-thumbs-up fa-2x"></i> 추천</c:when>
+									<c:when test="${review.grlike == 0}"><i class="fas fa-thumbs-down fa-2x"></i> 비추천</c:when>
 								</c:choose></h5>
 						    <p class="card-text">
 						    	${review.grdate}<br/>
@@ -84,6 +84,8 @@
 			</c:forEach>
 		</div>
 	</div>
+	<!-- font-awesome code kit -->
+	<script src="https://kit.fontawesome.com/6478f529f2.js" crossorigin="anonymous"></script>
 </body>
 <script>
 	$(".reviewCard").on("click", ".card", function(e){

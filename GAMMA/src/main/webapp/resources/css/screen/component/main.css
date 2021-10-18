@@ -2,7 +2,7 @@
 .display {
   display: flex;
   flex-direction: row;
-  height: 200vh;
+  height: auto;
 }
 .side-bar {
   z-index: 99;
@@ -18,12 +18,10 @@
   width: 170px;
 }
 .side-bar__row:nth-child(2) input[type="text"] {
-  display: block;
-  margin: 50px auto;
-  width: 80%;
   padding: 15px;
   font-size: large;
-  margin: 10px;
+  width: 90%;
+  margin-left: 5%;
   border-radius: 50px;
   border: none;
   transition: border 0.4s ease-in-out;
@@ -69,7 +67,7 @@
 }
 
 .side-bar__row:last-child {
-  margin-top: 250px;
+  /* margin-top: 500px; */
 }
 .side-bar__row:last-child span {
   display: flex;
@@ -100,8 +98,11 @@
   border-color: var(--fontColor);
   color: var(--fontColor);
 }
+.side-bar a:hover {
+  color: white;
+}
 .main {
-  width: 82%;
+  width: 100%;
   padding-left: 18%;
   height: 100%;
   position: relative;
@@ -133,4 +134,3 @@
   font-weight: 300;
   font-size: 13px;
 }
-

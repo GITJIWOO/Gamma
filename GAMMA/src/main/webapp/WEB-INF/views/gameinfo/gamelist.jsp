@@ -33,8 +33,13 @@ h1>a {
         </div>
         <!-- search -->
         <div class="side-bar__row">
-          <form action="#" method="get">
-            <input type="text" placeholder="   Search Game" />
+          <form action="/gameInfo/gamelist" method="get">
+          <select name="searchType" style="display:none">
+          	<option  value="n"
+				<c:out value="${btnMaker.cri.searchType eq 'n' ? 'selected' : '' }"/>>
+				</option>
+            </select>
+            <input type="text" placeholder="Search Game" name="keyword" value="${btnMaker.cri.keyword }"/>
             <!-- origin처럼 버튼 숨겼음, enter 치면 검색됨 -->
             <input type="submit" value="" />
           </form>
@@ -79,7 +84,7 @@ h1>a {
 			<th>게임이름</th>
 			<th>출시일</th>
 			<th>가격</th>
-			<th>등급</th>
+			<th>태그</th>
 		</tr>
 		<c:forEach var="gameList" items="${gameList }">
 			<tr>
@@ -88,7 +93,7 @@ h1>a {
 						${gameList.gname }</a></td>
 				<td>${gameList.glaunch }</td>
 				<td>${gameList.gprice }</td>
-				<td>${gameList.ggrade }</td>
+				<td>${gameList.tagname }</td>
 			</tr>
 		</c:forEach>
 	</table>
@@ -167,17 +172,17 @@ h1>a {
 			</div>
 		</div>
 	</div>
-	
+	  
 	<script
 		src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js"
 		integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ"
 		crossorigin="anonymous"></script>
+		
 	<script type="text/javascript">
 		var result = "${success}";
 		var gname = "${gname}";
 
-		var myModal = new bootstrap.Modal(document.getElementById('myModal'),
-				focus)
+		var myModal = new bootstrap.Modal(document.getElementById('myModal'), focus)
 		console.log(result);
 		console.log(gname);
 		if (result === "success") {

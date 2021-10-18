@@ -14,6 +14,8 @@ import org.game.review.domain.ReviewVO;
 import org.game.review.service.ReviewCommentService;
 import org.game.review.service.ReviewLikeService;
 import org.game.review.service.ReviewService;
+import org.game.user.domain.ConsumerVO;
+import org.game.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -44,6 +46,9 @@ public class ReviewController {
 	@Autowired
 	private GameInfoService gameService;
 	
+	@Autowired
+	private UserService userService;
+	
 	// 모든 평가 조회
 	@GetMapping("/reviewList/{gnum}")
 	public String getReviewList(@PathVariable("gnum") long gnum, String listKind, Model model) {
@@ -64,8 +69,14 @@ public class ReviewController {
 	@GetMapping("/reviewDetail/{grnum}")
 	public String getReviewDetail(@PathVariable("grnum") long grnum, ReviewCommentCriteria rccri, HttpSession session, Model model) {
 		
-		// 리뷰 디테일
+		// 리뷰 디테일 정보
 		ReviewVO review = reviewService.getReviewDetail(grnum);
+		
+		// 게임 디테일 정보
+		GameInfoVO game = gameService.getGame(review.getGnum());
+		
+		// 리뷰 작성 유저
+		ConsumerVO reviewWriter = userService.userGet(review.getCid());
 		
 		// 리뷰 댓글
 		List<ReviewCommentVO> reviewComment = commentService.getReviewComment(grnum, rccri);
@@ -83,9 +94,11 @@ public class ReviewController {
 		
 		model.addAttribute("cid", cid);
 		model.addAttribute("rlvo", rlvo);
+		model.addAttribute("game", game);
 		model.addAttribute("cadmin", cadmin);
 		model.addAttribute("review", review);
 		model.addAttribute("pageBtn", pageBtn);
+		model.addAttribute("reviewWriter", reviewWriter);
 		model.addAttribute("reviewComment", reviewComment);
 		
 		return "/review/reviewDetail";
@@ -101,7 +114,6 @@ public class ReviewController {
 		if(cid == null) {
 			return "redirect:/review/reviewList/" + gnum;
 		}
-		
 		
 		reviewService.writeReview(review);
 		
@@ -120,7 +132,6 @@ public class ReviewController {
 		if(cid == null) {
 			return "redirect:/review/reviewDetail/" + grnum;
 		}
-		
 		
 		reviewService.modifyReview(review);
 		
@@ -141,7 +152,6 @@ public class ReviewController {
 		if(cid == null) {
 			return "redirect:/review/reviewDetail/" + grnum;
 		}
-		
 		
 		commentService.removeAllReviewComment(grnum);
 		reviewService.removeReview(grnum);
@@ -164,11 +174,9 @@ public class ReviewController {
 		
 		reviewLikeService.reviewLike(vo);
 		reviewService.likeReview(vo.getGrnum());
-		
 
 		rttr.addFlashAttribute("grnum", vo.getGrnum());
 		rttr.addFlashAttribute("cid", cid);
-		
 		
 		return "redirect:/review/reviewDetail/" + grnum;
 	}
@@ -212,7 +220,6 @@ public class ReviewController {
 		if(cid == null) {
 			return "redirect:/review/reviewDetail/" + grnum;
 		}
-		
 		
 		commentService.removeReviewComment(rc);
 		
