@@ -102,9 +102,11 @@
 .notyet {
   display: none;
 }
+/*
 .pageList{
   margin-top: 1000px;
 }
+*/
 .page-item.active .page-link {
   background-color: var(--mainColor);
   border-color: var(--mainColor);
@@ -270,7 +272,7 @@
 				<div class="userList__proBack"><img src="/resources/css/image/friends.png" width="700" height="250"/></div>
 				<div class="userList__cid">${userList.cid }(${userList.nickname })</div>
 				<!-- 해당 유저 프로필로 이동하고 거기서 친구 추가 혹은 삭제 로직 진행, url 바꾸면서 아래 hidden 삭제 예정 -->
-				<form action="/user/userGet" method="get">
+				<form action="/user/userPro" method="post">
 					<input type="hidden" name="following" value="${param.cid }" />
 					<input type="hidden" name="follower" value="${userList.cid }" />
 					<input class="profileBtn notyet" type="submit" value="프로필 보기" />
@@ -321,7 +323,7 @@
 	const input = document.querySelector(".searchfriendsinput");
 	const searchtotal = document.querySelector(".searchtotal");
 	let keyword = input.getAttribute("value");
-	const detail = document.quetySelector(".detail");
+	//const detail = document.querySelector(".detail");
 	console.log(keyword);
 	if(keyword != ""){
 		const infinite = document.querySelector(".infinite");
@@ -350,7 +352,7 @@
       showBtn.classList.toggle("notyet");
       backGround.classList.toggle("notyet");
     }
-    const detail = document.querySelector(".detail");
+    //  const detail = document.querySelector(".detail");
     //	userList[num].addEventListener("mouseover", showProfile);
     //	userList[num].addEventListener("mouseout", showProfile);
   </script>
