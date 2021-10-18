@@ -41,9 +41,7 @@ public class FriendsController {
 		log.info("로그인 계정이 팔로우하는 친구 목록 조회");
 		// 로그인 세션 확인 
 		String cid = String.valueOf(session.getAttribute("session_cid"));
-		//String cadmin = String.valueOf(session.getAttribute("session_cadmin"));
 		log.info("cid session: " + cid);
-		//log.info("cadmin session: " + cadmin);
 		if(criteria.getKeyword() == null) {
 			criteria.setKeyword("");			
 		}
@@ -129,5 +127,14 @@ public class FriendsController {
 		log.info("following, 로그인계정: " + following);
 		service.removeFriend(follower, following);
 		return "redirect:/user/userPro";
+	}
+	
+	// 채팅
+	@GetMapping("/chat")
+	public String chatroom(HttpSession session, Model model) {
+		String cid = String.valueOf(session.getAttribute("session_cid"));
+		model.addAttribute("cid", cid);
+		log.info("cid 확인: " + cid);
+		return "/friends/chat";
 	}
 }
