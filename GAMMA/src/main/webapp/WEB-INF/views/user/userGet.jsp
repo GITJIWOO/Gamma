@@ -198,7 +198,7 @@ position:relative;
         <!-- category -->
         <div class="side-bar__row">
           <span><a href="/gameInfo/gamelist">게임 스토어</a></span>
-          <c:if test="${cid ne null}">
+          <c:if test="${member.cid ne null}">
           	<span><a href="/library/conLibrary?cid=${cid}">라이브러리</a></span>
           </c:if>
         </div>
@@ -211,7 +211,7 @@ position:relative;
         <!-- about user -->
         <div class="side-bar__row">
           <!-- c:if로 로그인 전에는 회원가입+로그인 / 로그인 후에는 프로필 -->
-          <c:if test="${cid eq null}">
+          <c:if test="${member.cid eq null}">
             <div class="loginBtn">
 		        <span><a href="/user/userLogin" class="loginA">로그인</a></span>
             </div>
@@ -219,20 +219,17 @@ position:relative;
 		        <span><a href="/user/userJoin" class="joinA">가입하기</a></span>
             </div>
           </c:if>
-          <c:if test="${cid ne null}">
+          <c:if test="${member.cid ne null}">
 	          <div class="consumer">
 	          	  <div class="consumer__imgPro">
 			        <img class="conimg" src="/resources/css/image/chaIcon.png"/>
 	          	  </div>
 		          <div class="consumer__nickname">
-		          	<p>${cid}</p>
+		          	<p>${member.cid}</p>
 		          </div>
 		          <div class="consumer__info">
-<<<<<<< HEAD
 	   					<a href="/user/userGet">* 유저정보창</a><br/>
-=======
-	   				<a href="/user/userGet">* 유저정보창</a><br/>
->>>>>>> master
+
 	   				<a href="/user/userPro">* 유저프로필창</a><br/>
 	   				<a href="/user/userLogout">* 로그아웃</a><br/>
 	   				<a href="/friends/followerlist">* 팔로워리스트</a><br/>

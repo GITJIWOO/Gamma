@@ -380,11 +380,8 @@ position:relative;
 		          	<p>${member.cid}</p>
 		          </div>
 		          <div class="consumer__info">
-<<<<<<< HEAD
-	   					<a href="/user/userGet">* 유저정보창</a><br/>
-=======
+
 	   				<a href="/user/userGet">* 유저정보창</a><br/>
->>>>>>> master
 	   				<a href="/user/userPro">* 유저프로필창</a><br/>
 	   				<a href="/user/userLogout">* 로그아웃</a><br/>
 	   				<a href="/friends/followerlist">* 팔로워리스트</a><br/>
