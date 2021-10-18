@@ -89,9 +89,10 @@
 		          </div>
 		          <div class="consumer__info">
 	   				<a href="/user/userGet">* 유저정보창</a><br/>
-	   				<a href="/user/userpro">* 유저프로필창</a><br/>
+	   				<a href="/user/userPro">* 유저프로필창</a><br/>
 	   				<a href="/user/userLogout">* 로그아웃</a><br/>
-	   				<a href="/user/userDelete">* 회원탈퇴</a><br/>
+	   				<a href="/friends/followerlist">* 팔로워리스트</a><br/>
+	   				<a href="/friends/followinglist">* 팔로윙리스트</a><br/>
 		   		  </div>
 	          </div>
           </c:if>
@@ -104,7 +105,7 @@
             <div class="library">
 				<c:forEach var="library" items="${library}">
 					<div class="card" style="width: 200px;">
-						<img src="..." class="card-img-top" alt="...">
+						<img src="${library.gpicture}" class="card-img-top">
 						<div class="card-body">
 							<h5 class="card-title">${library.gname}</h5>
 							<a href="/gameInfo/get?gnum=${library.gnum}" class="btn btn-primary">상점 페이지</a>
