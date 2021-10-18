@@ -90,6 +90,16 @@
 			alert("질문글이 등록되었습니다.");
 		</script>
 	</c:if>
+	<c:if test="${success eq 'modify'}">
+		<script>
+			alert("질문글이 수정되었습니다.");
+		</script>
+	</c:if>
+	<c:if test="${success eq 'remove'}">
+		<script>
+			alert("질문글이 삭제되었습니다.");
+		</script>
+	</c:if>
     <div class="display">
       <!-- side-bar -->
       <div class="side-bar">
@@ -121,7 +131,7 @@
         </div>
         <!-- about user -->
         <div class="side-bar__row">
-          <!-- c:if로 로그인 전에는 회원가입+로그인 / 로그인 후에는 프로필 -->
+          <!-- 해당 페이지는 항상 로그인 후, 프로필만 표시 -->
           <span><a href="#">로그인</a></span>
           <span><a href="#">가입하기</a></span>
           <!--
