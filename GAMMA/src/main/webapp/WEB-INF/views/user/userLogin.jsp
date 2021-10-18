@@ -102,6 +102,9 @@ button {
 					<div>
 						<label class="IPvalue" for="password">비밀번호</label><br /> <input
 							type="password" id="password" name="password" />
+				<c:if test="${msg == false}">
+					<p style="color: red;">로그인 실패! 아이디와 비밀번호 확인해주세요.</p>
+				</c:if>
 					</div>
 					<br />
 				<div>
@@ -121,9 +124,6 @@ button {
 								<a href="/main/main"><button id="mainBtn" type="button">메인으로</button></a>
 								<a href="/user/userLogout"><button id="logoutBtn" type="button">로그아웃</button></a>
 					</div>
-				</c:if>
-				<c:if test="${msg == false}">
-					<p style="color: red;">로그인 실패! 아이디와 비밀번호 확인해주세요.</p>
 				</c:if>
 	</form>
 	
