@@ -135,12 +135,12 @@
   font-size: 13px;
 }
 .consumer {
-	width: 25%;
 	position: relative;
 	text-align: center;
-	height: 20%;
-	buttom: 100;
-	left:25%;
+	display: flex;
+	flex-flow: row;
+	align-items: center;
+	margin: 10px;
 }
 .consumer__imgPro {
 	float: left;
@@ -156,17 +156,21 @@
 	font-size: 25px;
 	font-weight: bold;
 	color: white;
-	
+	height: 100px;
+	display: flex;
+	flex-flow: row;
+	align-items: center;
+	width: 250px;
 }
 .consumer__info {
-	background-color:gray;
-	color:white;
+	background-color: white;
+	border: 1px solid black;
+	font-size: 120%;
 	display: none;
 	position: absolute;
-	top:50px;
-	left: 150%;
-	width:120px;
-	margin:5px;
+	top: 50px;
+	left: 100%;
+	width: 120px;
 	border-radius: 10%;
 	text-align:left;
-}
+ }

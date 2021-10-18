@@ -7,38 +7,10 @@
 <meta charset="UTF-8">
 <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
+<script src="<c:url value="/resources/js/main.js"/>"></script>
 <link rel="stylesheet" href="/resources/css/styles.css" />
 <link rel="icon" type="image/png" href="http://example.com/myicon.png">
 <title>${game.gname} 리뷰</title>
-<style>
-	.consumer {
-		width: 18%;
-		position: relative;
-		text-align: center;
-		height: 10%;
-		buttom: 100;
-	}
-	.consumer__imgPro {
-		float: left;
-		padding: 0;
-		margin: 0;
-	}
-	.conimg {
-		width: 100px;
-		height: 100px;
-	}
-	.consumer__nickname {
-		float: right;
-		font-size: 25px;
-		font-weight: bold;
-		color: white;
-	}
-	.consumer__info {
-		display: none;
-		position: absolute;
-		left: 100%;
-	}
-</style>
 <style>
 	.detail {
 		padding: 30px;
@@ -56,7 +28,7 @@
 		color: dimgray;
 	}
 	.link {
-		margin-bottom: 10px;
+		margin-bottom: 20px;
 	}
 	.gameTitle {
 		font-size: 180%;
@@ -68,6 +40,24 @@
 	}
 	.option {
 		background-color: darkgray;
+		margin-bottom: 10px;
+	}
+	.card-header {
+		font-size: 110%;
+	}
+	.card-title {
+		font-size: 130%;
+		font-weight: bold;
+	}
+	.grdate {
+		opacity: 0.7;
+		margin-bottom: 3px;
+	}
+	.grcontent {
+		font-size: 120%;
+	}
+	.grrecommend {
+	
 	}
 </style>
 </head>
@@ -128,8 +118,11 @@
 		          	<p>${cid}</p>
 		          </div>
 		          <div class="consumer__info">
-	   				<a href="/user/userGet">유저정보창</a>
-	   				<a href="/user/userLogout">로그아웃</a>
+	   				<a href="/user/userGet">* 유저정보창</a><br/>
+	   				<a href="/user/userPro">* 유저프로필창</a><br/>
+	   				<a href="/user/userLogout">* 로그아웃</a><br/>
+	   				<a href="/friends/followerlist">* 팔로워리스트</a><br/>
+	   				<a href="/friends/followinglist">* 팔로윙리스트</a><br/>
 		   		  </div>
 	          </div>
           </c:if>
@@ -153,9 +146,9 @@
 					<input type="submit" value="적용">
 				</form>
 			</div>
-			<div id="review row">
+			<div id="review">
 				<c:forEach var="review" items="${review}">
-					<div class="reviewCard col-md-5">
+					<div class="reviewCard">
 						<div class="card" data-grnum="${review.grnum}">
 							<div class="card-header">
 								${review.cid}
@@ -166,11 +159,13 @@
 										<c:when test="${review.grlike == 1}"><i class="fas fa-thumbs-up fa-2x"></i> 추천</c:when>
 										<c:when test="${review.grlike == 0}"><i class="fas fa-thumbs-down fa-2x"></i> 비추천</c:when>
 									</c:choose></h5>
-							    <p class="card-text">
-							    	${review.grdate}<br/>
-							    	<strong>${review.grcontent}</strong><br/>
-							    	${review.grrecommend}
-							    </p>
+							    <div class="card-text">
+							    	<p class="grdate">${review.grdate}</p>
+							    	<br/>
+							    	<p class="grcontent">${review.grcontent}</p>
+							    	<br/>
+							    	<p class="grrecommend">${review.grrecommend}</p>
+							    </div>
 							</div>
 						</div>
 					</div>
@@ -194,26 +189,6 @@
         </div>
       </div>
     </div>
-    <script>
-		$(document).ready(function() {
-			// 취소
-			$(".loginBtn").on("click", function() {
-				location.href = "/user/userLogin";
-			})
-			$(".joinBtn").on("click", function() {
-				location.href = "/user/userJoin";
-			})
-			
-			$(".consumer").mouseover(function(){
-				$(".consumer__info").show();
-			});
-
-			$(".consumer").mouseout(function(){
-				$(".consumer__info").hide();
-			});
-			
-		});
-    </script>
 	<!-- font-awesome code kit -->
 	<script src="https://kit.fontawesome.com/6478f529f2.js" crossorigin="anonymous"></script>
 </body>

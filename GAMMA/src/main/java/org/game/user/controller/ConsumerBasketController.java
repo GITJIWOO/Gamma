@@ -39,6 +39,7 @@ public class ConsumerBasketController {
 		List<ConsumerBasketVO> BasketList = service.getConsumerBasketList(cid);
 		
 		model.addAttribute("basket", BasketList);
+		model.addAttribute("cid", cid);
 		
 		return "/payment/consumerBasket";
 	}

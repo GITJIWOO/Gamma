@@ -55,7 +55,6 @@ public class ReviewControllerTest {
 						.param("gnum", "1")
 						.param("cid", "kjw011231")
 						.param("grlike", "1")
-						.param("grtitle", "테스트제목제목")
 						.param("grcontent", "테스트내용내용"))
 						.andReturn().getModelAndView().getViewName();
 		log.info(resultPage);
@@ -69,7 +68,6 @@ public class ReviewControllerTest {
 						.param("gnum", "1")
 						.param("cid", "kjw011231")
 						.param("grlike", "0")
-						.param("grtitle", "테스트제목제목수정")
 						.param("grcontent", "테스트내용내용수정"))
 						.andReturn().getModelAndView().getViewName();
 		log.info(resultPage);

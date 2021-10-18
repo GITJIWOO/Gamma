@@ -1,11 +1,15 @@
 package org.game.user.controller;
 
+import java.util.List;
+
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.game.friends.service.FriendsService;
+import org.game.gamelibrary.domain.ResultLibraryVO;
+import org.game.gamelibrary.service.GameLibraryService;
 import org.game.user.domain.ConsumerVO;
 import org.game.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,11 +41,18 @@ public class UserController {
 
 	@Autowired
 	private FriendsService fservice;
-
+	
+	@Autowired
+	private GameLibraryService libraryService;
+	
 	// 유저프로필
 	@GetMapping("/userPro")
-	public String userPro() {
-
+	public String userPro(HttpSession session, Model model) {		
+		// 세션 아이디, 어드민
+		String cid = (String)session.getAttribute("session_cid");
+		String cadmin = String.valueOf(session.getAttribute("session_cadmin"));
+		model.addAttribute("cid", cid);
+		model.addAttribute("cadmin", cadmin);
 		return "/user/userPro";
 	}
 
@@ -59,11 +70,21 @@ public class UserController {
 		if (userVO.getAttachList() != null) {
 			userVO.getAttachList().forEach(attach -> log.info(attach));
 		}
+		
+		List<ResultLibraryVO> libraryList = libraryService.getAllConsumerLibrary(userVO.getCid());
+		
+		model.addAttribute("libraryList", libraryList);
+		
 		return "/user/userPro";
 	}
 
 	@GetMapping("/userGet")
-	public String userGet() {
+	public String userGet(HttpSession session, Model model) {
+		// 세션 아이디, 어드민
+		String cid = (String)session.getAttribute("session_cid");
+		String cadmin = String.valueOf(session.getAttribute("session_cadmin"));
+		model.addAttribute("cid", cid);
+		model.addAttribute("cadmin", cadmin);
 		return "/user/userGet";
 	}
 
@@ -186,7 +207,7 @@ public class UserController {
 		// security-con~ 에서 세션파기설정이되있음
 		session.invalidate();
 
-		return "/main/main";
+		return "redirect:/main/main";
 	}
 
 	// 로그아웃 과 세션 초기화 시큐리티적용버전

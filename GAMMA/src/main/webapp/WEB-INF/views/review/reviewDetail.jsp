@@ -7,44 +7,16 @@
 <meta charset="UTF-8">
 <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
+<script src="<c:url value="/resources/js/main.js"/>"></script>
 <link rel="stylesheet" href="/resources/css/styles.css" />
 <link rel="icon" type="image/png" href="http://example.com/myicon.png">
 <title>${review.cid}의 리뷰</title>
-<style>
-	.consumer {
-		width: 18%;
-		position: relative;
-		text-align: center;
-		height: 10%;
-		buttom: 100;
-	}
-	.consumer__imgPro {
-		float: left;
-		padding: 0;
-		margin: 0;
-	}
-	.conimg {
-		width: 100px;
-		height: 100px;
-	}
-	.consumer__nickname {
-		float: right;
-		font-size: 25px;
-		font-weight: bold;
-		color: white;
-	}
-	.consumer__info {
-		display: none;
-		position: absolute;
-		left: 100%;
-	}
-</style>
 <style>
 	.detail {
 		padding: 30px;
 	}
 	#reviewInfo {
-		border: 1px solid black;
+		margin-top: 20px;
 	}
 	#reviewModify {
 		display: none;
@@ -65,6 +37,32 @@
 	}
 	.fa-thumbs-down {
 		margin-right: 10px;
+	}
+	#reviewContent {
+		margin-top: 10px;
+	}
+	.reviewBtns {
+	}
+	.reviewNickname {
+		margin-bottom: 15px;
+		font-size: 170%;
+		font-weight: bold;
+	}
+	.reviewGrlike {
+		margin-bottom: 5px;
+		font-size: 150%;
+		font-weight: bold;
+	}
+	.reviewGrdate {
+		margin-bottom: 15px;
+		opacity: 0.7;
+	}
+	.reviewGrcontent {
+		margin-bottom: 20px;
+		font-size: 150%;
+	}
+	.reviewGrrecommend {
+		font-size: 110%;
 	}
 </style>
 </head>
@@ -125,8 +123,12 @@
 		          	<p>${cid}</p>
 		          </div>
 		          <div class="consumer__info">
-	   				<a href="/user/userGet">유저정보창</a>
-	   				<a href="/user/userLogout">로그아웃</a>
+	   				<a href="/user/userGet">* 유저정보창</a><br/>
+	   				<a href="/user/userPro">* 유저프로필창</a><br/>
+	   				<a href="/user/userLogout">* 로그아웃</a><br/>
+	   				<a href="/friends/followerlist">* 팔로워리스트</a><br/>
+	   				<a href="/friends/followinglist">* 팔로윙리스트</a><br/>
+	   				<a href="/friends/searchfriends">* 친구 검색</a><br/>
 		   		  </div>
 	          </div>
           </c:if>
@@ -146,16 +148,22 @@
 						<div class="reviewNickname">
 							${reviewWriter.nickname}
 						</div>
-						리뷰 번호 : ${review.grnum}
-						작성일 : ${review.grdate}
-						<c:choose>
-							<c:when test="${review.grlike == 1}"><i class="fas fa-thumbs-up fa-2x"></i> 추천</c:when>
-							<c:when test="${review.grlike == 0}"><i class="fas fa-thumbs-down fa-2x"></i> 비추천</c:when>
-						</c:choose>
-						내용 : ${review.grcontent}
-						좋아요 : ${review.grrecommend}
+						<div class="reviewGrlike">
+							<c:choose>
+								<c:when test="${review.grlike == 1}"><i class="fas fa-thumbs-up fa-2x"></i> 추천</c:when>
+								<c:when test="${review.grlike == 0}"><i class="fas fa-thumbs-down fa-2x"></i> 비추천</c:when>
+							</c:choose>
+						</div>
+						<div class="reviewGrdate">
+							게시 일시 : ${review.grdate}
+						</div>
+						<div class="reviewGrcontent">
+							${review.grcontent}
+						</div>
+						<div class="reviewGrrecommend">
+							좋아요 : ${review.grrecommend}
+						</div>
 					</div>
-					
 					<!-- 리뷰 수정 폼(아이디 검사) -->
 					<div id="reviewModify">
 						<c:if test="${cid eq review.cid}">
@@ -172,74 +180,85 @@
 								<button type="button" id="modifyCancel" class="btn btn-secondary">취소</button>
 								<input type="submit" class="btn btn-success" id="reviewUpdate" value="작성">
 							</form>
-							<hr>
 						</c:if>
 					</div>
-					<!-- 리뷰 좋아요 버튼(로그인 검사) -->
-					<c:choose>
-						<c:when test="${cid ne null && rlvo.cid ne cid}">
-							<c:if test="${cid ne review.cid}">
-								<form action="/review/reviewLike" method="post" id="reviewLike">
-									<input type="hidden" name="cid" value="${cid}">
-									<input type="hidden" name="gnum" value="${review.gnum}">
-									<input type="hidden" name="grnum" value="${review.grnum}">
-									<input type="submit" value="좋아요">
-								</form>
+					<hr>
+					<div class="reviewBtns">
+						<!-- 리뷰 좋아요 버튼(로그인 검사) -->
+						<div class="reviewLikeBtn">
+							<c:choose>
+								<c:when test="${cid ne null && rlvo.cid ne cid}">
+									<c:if test="${cid ne review.cid}">
+										<form action="/review/reviewLike" method="post" id="reviewLike">
+											<input type="hidden" name="cid" value="${cid}">
+											<input type="hidden" name="gnum" value="${review.gnum}">
+											<input type="hidden" name="grnum" value="${review.grnum}">
+											<input type="submit" value="좋아요">
+										</form>
+									</c:if>
+								</c:when>
+								<c:when test="${cid ne null && rlvo.cid eq cid}">
+									<c:if test="${cid ne review.cid}">
+										<form action="/review/reviewLikeCancel" method="post" id="reviewLikeCancel">
+											<input type="hidden" name="cid" value="${cid}">
+											<input type="hidden" name="gnum" value="${review.gnum}">
+											<input type="hidden" name="grnum" value="${review.grnum}">
+											<input type="submit" value="좋아요 취소">
+										</form>
+									</c:if>
+								</c:when>
+							</c:choose>
+						</div>
+						
+						<!-- 리뷰 수정 버튼(아이디 검사) -->
+						<div class="reviewModifyBtn">
+							<c:if test="${cid eq review.cid}">
+								<button id="modifyBtn" class="btn btn-secondary">수정하기</button>
 							</c:if>
-						</c:when>
-						<c:when test="${cid ne null && rlvo.cid eq cid}">
-							<c:if test="${cid ne review.cid}">
-								<form action="/review/reviewLikeCancel" method="post" id="reviewLikeCancel">
-									<input type="hidden" name="cid" value="${cid}">
-									<input type="hidden" name="gnum" value="${review.gnum}">
+						</div>
+						
+						<!-- 리뷰 삭제 버튼(아이디 검사) -->
+						<div id="removeReviewButton">
+							<c:if test="${cid eq review.cid}">
+								<form action="/review/reviewRemove" method="post" id="removeReview">
 									<input type="hidden" name="grnum" value="${review.grnum}">
-									<input type="submit" value="좋아요 취소">
 								</form>
+								<button onclick="removeReview()" class="btn btn-secondary">리뷰 삭제</button>
 							</c:if>
-						</c:when>
-					</c:choose>
-					
-					<!-- 리뷰 수정 버튼(아이디 검사) -->
-					<c:if test="${cid eq review.cid}">
-						<button id="modifyBtn" class="btn btn-secondary">수정하기</button>
-					</c:if>
-					
-					<!-- 리뷰 삭제 버튼(아이디 검사) -->
-					<div id="removeReviewButton">
-						<c:if test="${cid eq review.cid}">
-							<form action="/review/reviewRemove" method="post" id="removeReview">
-								<input type="hidden" name="grnum" value="${review.grnum}">
-							</form>
-							<button onclick="removeReview()" class="btn btn-secondary">리뷰 삭제</button>
-						</c:if>
+						</div>
+						<hr/>
 					</div>
-					<hr/>
 				</div>
 				<div id="reviewComment">
-				
+					
 					<!-- 리뷰 댓글 작성(로그인 여부) -->
 					<c:if test="${cid ne 'null'}">
 						<form action="/review/reviewCommentWrite" method="post">
 							<input type="hidden" name="cid" value="${cid}">
 							<input type="hidden" name="grnum" value="${review.grnum}">
-							<textarea name="rccontent" rows="3" cols="70" required></textarea>
-							<input type="submit" value="작성">
+							<textarea name="rccontent" rows="5" cols="60" required></textarea>
+							<input type="submit" value="작성" class="btn btn-success">
 						</form>
 						<hr/>
 					</c:if>
 					
-					<!-- 리뷰 댓글 삭제는 hidden으로 grnum 과 rcnum을 보내야 한다. -->
 					<c:forEach var="reviewComment" items="${reviewComment}">
-						${reviewComment.cid}
-						${reviewComment.rcdate}
-						${reviewComment.rccontent}
+						<div class="commentCid">
+							${reviewComment.cid}
+						</div>
+						<div class="commentRcdate">
+							${reviewComment.rcdate}
+						</div>
+						<div class="commentRccontent">
+							${reviewComment.rccontent}
+						</div>
 						<!-- 리뷰 댓글 삭제 버튼(아이디 검사) -->
 						<c:if test="${reviewComment.cid == cid}">
 							<form action="/review/reviewCommentRemove" method="post" id="removeReviewComment">
 								<input type="hidden" name="grnum" value="${reviewComment.grnum}">
 								<input type="hidden" name="rcnum" value="${reviewComment.rcnum}">
 							</form>
-							<button onclick="removeReviewComment()">삭제</button>
+							<button onclick="removeReviewComment()" class="btn btn-danger">삭제</button>
 						</c:if>
 						<hr/>
 					</c:forEach>
@@ -288,26 +307,6 @@
         </div>
       </div>
     </div>
-    <script>
-		$(document).ready(function() {
-			// 취소
-			$(".loginBtn").on("click", function() {
-				location.href = "/user/userLogin";
-			})
-			$(".joinBtn").on("click", function() {
-				location.href = "/user/userJoin";
-			})
-			
-			$(".consumer").mouseover(function(){
-				$(".consumer__info").show();
-			});
-
-			$(".consumer").mouseout(function(){
-				$(".consumer__info").hide();
-			});
-			
-		});
-    </script>
 	<!-- font-awesome code kit -->
 	<script src="https://kit.fontawesome.com/6478f529f2.js" crossorigin="anonymous"></script>       
 </body>

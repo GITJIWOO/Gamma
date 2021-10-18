@@ -47,6 +47,7 @@ public class FriendsController {
 		}
 		List<FriendsVO> followerList = service.followerList(cid, criteria);
 		FriendsPageDTO page = new FriendsPageDTO(criteria, service.countFollower(criteria, cid), 10);
+		model.addAttribute("cid", cid);
 		model.addAttribute("followerList", followerList);
 		model.addAttribute("page", page);
 		return "/friends/followerlist";

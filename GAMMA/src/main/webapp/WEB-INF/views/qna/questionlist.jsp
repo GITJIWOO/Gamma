@@ -6,7 +6,9 @@
 <head>
 <meta charset="UTF-8">
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
+<script src="<c:url value="/resources/js/main.js"/>"></script>
 <link rel="stylesheet" href="/resources/css/styles.css" />
+<link rel="icon" type="image/png" href="http://example.com/myicon.png">
 <title>Insert title here</title>
 <style>
 .detail {
@@ -107,43 +109,58 @@
         <div class="side-bar__row">
           <!-- 클릭하면 main화면으로 돌아오도록 a 태그 수정 -->
           <span
-            ><a href="#"><img src="/resources/css/image/logo.png" /></a
+            ><a href="/main/main"><img src="/resources/css/image/logo.png" /></a
           ></span>
         </div>
         <!-- search -->
         <div class="side-bar__row">
-          <form action="#" method="get">
-            <input type="text" placeholder="   Search Game" />
+          <form action="/gameInfo/gamelist" method="get">
+          <select name="searchType" style="display:none">
+            </select>
+            <input type="text" placeholder="Search Game" name="keyword" value="${btnMaker.cri.keyword }"/>
             <!-- origin처럼 버튼 숨겼음, enter 치면 검색됨 -->
             <input type="submit" value="" />
           </form>
         </div>
         <!-- category -->
         <div class="side-bar__row">
-          <span><a href="#">게임 스토어</a></span>
-          <span><a href="#">라이브러리</a></span>
+          <span><a href="/gameInfo/gamelist">게임 스토어</a></span>
+          <c:if test="${qwriter ne null}">
+          	<span><a href="/library/conLibrary?cid=${qwriter}">라이브러리</a></span>
+          </c:if>
         </div>
         <!-- qna -->
         <div class="side-bar__row">
-          <span><a href="#">Q&A</a></span>
+          <span><a href="/qna/questionlist">Q&A</a></span>
           &nbsp;&nbsp;|&nbsp;&nbsp;
-          <span><a href="#">자주하는 질문</a></span>
+          <span><a href="/qna/commonquestion">자주하는 질문</a></span>
         </div>
         <!-- about user -->
         <div class="side-bar__row">
-          <!-- 해당 페이지는 항상 로그인 후, 프로필만 표시 -->
-          <span><a href="#">로그인</a></span>
-          <span><a href="#">가입하기</a></span>
-          <!--
-          <span>
-            <a href="#"><button class="profile">Profile</button></a>
-          </span>
-          -->
+          <!-- c:if로 로그인 전에는 회원가입+로그인 / 로그인 후에는 프로필 -->
+          <c:if test="${qwriter ne null}">
+	          <div class="consumer">
+	          	  <div class="consumer__imgPro">
+			        <img class="conimg" src="/resources/css/image/chaIcon.png"/>
+	          	  </div>
+		          <div class="consumer__nickname">
+		          	<p>${qwriter}</p>
+		          </div>
+		          <div class="consumer__info">
+	   				<a href="/user/userGet">* 유저정보창</a><br/>
+	   				<a href="/user/userPro">* 유저프로필창</a><br/>
+	   				<a href="/user/userLogout">* 로그아웃</a><br/>
+	   				<a href="/friends/followerlist">* 팔로워리스트</a><br/>
+	   				<a href="/friends/followinglist">* 팔로윙리스트</a><br/>
+		   		  </div>
+	          </div>
+          </c:if>
         </div>
       </div>
       <div class="main">
         <div class="contents">
           <div class="detail">
+          <!-- start -->
             <h2 class="table-header">1:1 문의</h2>
   			<c:if test="${!empty vo}">
             <table class="table table-hover questiontable">
@@ -260,8 +277,8 @@
             <div>CREATORS&nbsp;&nbsp;김영훈, 김지우, 조훈현, 최재인</div>
             <div>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;</div>
             <div>
-              CONTACT&nbsp;&nbsp;<a href="https://github.com/GITJIWOO"
-                >https://github.com/GITJIWOO</a
+              CONTACT&nbsp;&nbsp;<a href="https://github.com/GITJIWOO/Game-Project"
+                >https://github.com/GITJIWOO/Game-Project</a
               >
             </div>
           </div>
