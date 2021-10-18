@@ -16,7 +16,7 @@
 		padding: 30px;
 	}
 	#reviewInfo {
-		border: 1px solid black;
+		margin-top: 20px;
 	}
 	#reviewModify {
 		display: none;
@@ -37,6 +37,32 @@
 	}
 	.fa-thumbs-down {
 		margin-right: 10px;
+	}
+	#reviewContent {
+		margin-top: 10px;
+	}
+	.reviewBtns {
+	}
+	.reviewNickname {
+		margin-bottom: 15px;
+		font-size: 170%;
+		font-weight: bold;
+	}
+	.reviewGrlike {
+		margin-bottom: 5px;
+		font-size: 150%;
+		font-weight: bold;
+	}
+	.reviewGrdate {
+		margin-bottom: 15px;
+		opacity: 0.7;
+	}
+	.reviewGrcontent {
+		margin-bottom: 20px;
+		font-size: 150%;
+	}
+	.reviewGrrecommend {
+		font-size: 110%;
 	}
 </style>
 </head>
@@ -118,16 +144,22 @@
 						<div class="reviewNickname">
 							${reviewWriter.nickname}
 						</div>
-						리뷰 번호 : ${review.grnum}
-						작성일 : ${review.grdate}
-						<c:choose>
-							<c:when test="${review.grlike == 1}"><i class="fas fa-thumbs-up fa-2x"></i> 추천</c:when>
-							<c:when test="${review.grlike == 0}"><i class="fas fa-thumbs-down fa-2x"></i> 비추천</c:when>
-						</c:choose>
-						내용 : ${review.grcontent}
-						좋아요 : ${review.grrecommend}
+						<div class="reviewGrlike">
+							<c:choose>
+								<c:when test="${review.grlike == 1}"><i class="fas fa-thumbs-up fa-2x"></i> 추천</c:when>
+								<c:when test="${review.grlike == 0}"><i class="fas fa-thumbs-down fa-2x"></i> 비추천</c:when>
+							</c:choose>
+						</div>
+						<div class="reviewGrdate">
+							게시 일시 : ${review.grdate}
+						</div>
+						<div class="reviewGrcontent">
+							${review.grcontent}
+						</div>
+						<div class="reviewGrrecommend">
+							좋아요 : ${review.grrecommend}
+						</div>
 					</div>
-					
 					<!-- 리뷰 수정 폼(아이디 검사) -->
 					<div id="reviewModify">
 						<c:if test="${cid eq review.cid}">
@@ -144,74 +176,85 @@
 								<button type="button" id="modifyCancel" class="btn btn-secondary">취소</button>
 								<input type="submit" class="btn btn-success" id="reviewUpdate" value="작성">
 							</form>
-							<hr>
 						</c:if>
 					</div>
-					<!-- 리뷰 좋아요 버튼(로그인 검사) -->
-					<c:choose>
-						<c:when test="${cid ne null && rlvo.cid ne cid}">
-							<c:if test="${cid ne review.cid}">
-								<form action="/review/reviewLike" method="post" id="reviewLike">
-									<input type="hidden" name="cid" value="${cid}">
-									<input type="hidden" name="gnum" value="${review.gnum}">
-									<input type="hidden" name="grnum" value="${review.grnum}">
-									<input type="submit" value="좋아요">
-								</form>
+					<hr>
+					<div class="reviewBtns">
+						<!-- 리뷰 좋아요 버튼(로그인 검사) -->
+						<div class="reviewLikeBtn">
+							<c:choose>
+								<c:when test="${cid ne null && rlvo.cid ne cid}">
+									<c:if test="${cid ne review.cid}">
+										<form action="/review/reviewLike" method="post" id="reviewLike">
+											<input type="hidden" name="cid" value="${cid}">
+											<input type="hidden" name="gnum" value="${review.gnum}">
+											<input type="hidden" name="grnum" value="${review.grnum}">
+											<input type="submit" value="좋아요">
+										</form>
+									</c:if>
+								</c:when>
+								<c:when test="${cid ne null && rlvo.cid eq cid}">
+									<c:if test="${cid ne review.cid}">
+										<form action="/review/reviewLikeCancel" method="post" id="reviewLikeCancel">
+											<input type="hidden" name="cid" value="${cid}">
+											<input type="hidden" name="gnum" value="${review.gnum}">
+											<input type="hidden" name="grnum" value="${review.grnum}">
+											<input type="submit" value="좋아요 취소">
+										</form>
+									</c:if>
+								</c:when>
+							</c:choose>
+						</div>
+						
+						<!-- 리뷰 수정 버튼(아이디 검사) -->
+						<div class="reviewModifyBtn">
+							<c:if test="${cid eq review.cid}">
+								<button id="modifyBtn" class="btn btn-secondary">수정하기</button>
 							</c:if>
-						</c:when>
-						<c:when test="${cid ne null && rlvo.cid eq cid}">
-							<c:if test="${cid ne review.cid}">
-								<form action="/review/reviewLikeCancel" method="post" id="reviewLikeCancel">
-									<input type="hidden" name="cid" value="${cid}">
-									<input type="hidden" name="gnum" value="${review.gnum}">
+						</div>
+						
+						<!-- 리뷰 삭제 버튼(아이디 검사) -->
+						<div id="removeReviewButton">
+							<c:if test="${cid eq review.cid}">
+								<form action="/review/reviewRemove" method="post" id="removeReview">
 									<input type="hidden" name="grnum" value="${review.grnum}">
-									<input type="submit" value="좋아요 취소">
 								</form>
+								<button onclick="removeReview()" class="btn btn-secondary">리뷰 삭제</button>
 							</c:if>
-						</c:when>
-					</c:choose>
-					
-					<!-- 리뷰 수정 버튼(아이디 검사) -->
-					<c:if test="${cid eq review.cid}">
-						<button id="modifyBtn" class="btn btn-secondary">수정하기</button>
-					</c:if>
-					
-					<!-- 리뷰 삭제 버튼(아이디 검사) -->
-					<div id="removeReviewButton">
-						<c:if test="${cid eq review.cid}">
-							<form action="/review/reviewRemove" method="post" id="removeReview">
-								<input type="hidden" name="grnum" value="${review.grnum}">
-							</form>
-							<button onclick="removeReview()" class="btn btn-secondary">리뷰 삭제</button>
-						</c:if>
+						</div>
+						<hr/>
 					</div>
-					<hr/>
 				</div>
 				<div id="reviewComment">
-				
+					
 					<!-- 리뷰 댓글 작성(로그인 여부) -->
 					<c:if test="${cid ne 'null'}">
 						<form action="/review/reviewCommentWrite" method="post">
 							<input type="hidden" name="cid" value="${cid}">
 							<input type="hidden" name="grnum" value="${review.grnum}">
-							<textarea name="rccontent" rows="3" cols="70" required></textarea>
-							<input type="submit" value="작성">
+							<textarea name="rccontent" rows="5" cols="60" required></textarea>
+							<input type="submit" value="작성" class="btn btn-success">
 						</form>
 						<hr/>
 					</c:if>
 					
-					<!-- 리뷰 댓글 삭제는 hidden으로 grnum 과 rcnum을 보내야 한다. -->
 					<c:forEach var="reviewComment" items="${reviewComment}">
-						${reviewComment.cid}
-						${reviewComment.rcdate}
-						${reviewComment.rccontent}
+						<div class="commentCid">
+							${reviewComment.cid}
+						</div>
+						<div class="commentRcdate">
+							${reviewComment.rcdate}
+						</div>
+						<div class="commentRccontent">
+							${reviewComment.rccontent}
+						</div>
 						<!-- 리뷰 댓글 삭제 버튼(아이디 검사) -->
 						<c:if test="${reviewComment.cid == cid}">
 							<form action="/review/reviewCommentRemove" method="post" id="removeReviewComment">
 								<input type="hidden" name="grnum" value="${reviewComment.grnum}">
 								<input type="hidden" name="rcnum" value="${reviewComment.rcnum}">
 							</form>
-							<button onclick="removeReviewComment()">삭제</button>
+							<button onclick="removeReviewComment()" class="btn btn-danger">삭제</button>
 						</c:if>
 						<hr/>
 					</c:forEach>

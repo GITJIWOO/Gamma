@@ -162,6 +162,10 @@ position:relative;
 	font-weight: bold;
 	color: white;
 }
+.gameImg {
+	height: 100px;
+	width: 100px;
+}
 </style>
 <meta charset="UTF-8">
 
@@ -272,25 +276,16 @@ position:relative;
 						</div>
 						</div>
 				<div class="rowB">
-				<table class="table table-hover">
-					<tr>
-						<th>게임식별번호</th>
-						<th>게임제목</th>
-						<th>게임설명</th>
-						<th>태그</th>
-						<th>구매일자</th>
-					</tr>
-					<c:forEach var="library" items="${library }">
-						<tr>
-							<td>${library.gnum }</td>
-							<td><a href="gname">${gname}</a></td>
-							<td>${gcontent}</td>
-							<td>${tagname }</td>
-							<td>${board.regdate }</td>
-						</tr>
-					</c:forEach>
-
-				</table>
+					<p>보유중인 게임</p>
+					<table class="table table-hover">
+						<c:forEach var="library" items="${libraryList}">
+							<tr>
+								<td>이미지</td>
+								<td><img alt="" src="${library.gpicture}" class="gameImg"></td>
+								<td>${library.gname}</td>
+							</tr>
+						</c:forEach>
+					</table>
 				</div>
 					</div>
 				

@@ -23,6 +23,12 @@
 		margin-right: 30px;
 		margin-bottom: 30px;
 	}
+	.card-title {
+		padding-top: 10px;
+		padding-bottom: 10px;
+		font-size: 150%;
+		font-weight: bold;
+	}
 </style>
 </head>
 <body>
@@ -101,7 +107,6 @@
 						<img src="..." class="card-img-top" alt="...">
 						<div class="card-body">
 							<h5 class="card-title">${library.gname}</h5>
-							<p class="card-text">${library.gcontent}</p>
 							<a href="/gameInfo/get?gnum=${library.gnum}" class="btn btn-primary">상점 페이지</a>
 						</div>
 					</div>

@@ -1,11 +1,15 @@
 package org.game.user.controller;
 
+import java.util.List;
+
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.game.friends.service.FriendsService;
+import org.game.gamelibrary.domain.ResultLibraryVO;
+import org.game.gamelibrary.service.GameLibraryService;
 import org.game.user.domain.ConsumerVO;
 import org.game.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,6 +42,9 @@ public class UserController {
 	@Autowired
 	private FriendsService fservice;
 	
+	@Autowired
+	private GameLibraryService libraryService;
+	
 	// 유저프로필
 	@GetMapping("/userPro")
 	public String userPro() {
@@ -59,6 +66,11 @@ public class UserController {
 		if(userVO.getAttachList() != null) {
 			userVO.getAttachList().forEach(attach -> log.info(attach));
 		}
+		
+		List<ResultLibraryVO> libraryList = libraryService.getAllConsumerLibrary(userVO.getCid());
+		
+		model.addAttribute("libraryList", libraryList);
+		
 		return "/user/userPro";
 	}
 
