@@ -102,9 +102,11 @@
 .notyet {
   display: none;
 }
+/*
 .pageList{
   margin-top: 1000px;
 }
+*/
 .page-item.active .page-link {
   background-color: var(--mainColor);
   border-color: var(--mainColor);
@@ -213,43 +215,68 @@
         <div class="side-bar__row">
           <!-- 클릭하면 main화면으로 돌아오도록 a 태그 수정 -->
           <span
-            ><a href="#"><img src="/resources/css/image/logo.png" /></a
+            ><a href="/main/main"><img src="/resources/css/image/logo.png" /></a
           ></span>
         </div>
         <!-- search -->
         <div class="side-bar__row">
-          <form action="#" method="get">
-            <input type="text" placeholder="   Search Game" />
+          <form action="/gameInfo/gamelist" method="get">
+          <select name="searchType" style="display:none">
+          	<option  value="n"
+				<c:out value="${btnMaker.cri.searchType eq 'n' ? 'selected' : '' }"/>>
+				</option>
+            </select>
+            <input type="text" placeholder="Search Game" name="keyword" value="${btnMaker.cri.keyword }"/>
             <!-- origin처럼 버튼 숨겼음, enter 치면 검색됨 -->
             <input type="submit" value="" />
           </form>
         </div>
         <!-- category -->
         <div class="side-bar__row">
-          <span><a href="#">게임 스토어</a></span>
-          <span><a href="#">라이브러리</a></span>
+          <span><a href="/gameInfo/gamelist">게임 스토어</a></span>
+          <c:if test="${cid ne null}">
+          	<span><a href="/library/conLibrary?cid=${cid}">라이브러리</a></span>
+          </c:if>
         </div>
         <!-- qna -->
         <div class="side-bar__row">
-          <span><a href="#">Q&A</a></span>
+          <span><a href="/qna/questionlist">Q&A</a></span>
           &nbsp;&nbsp;|&nbsp;&nbsp;
-          <span><a href="#">자주하는 질문</a></span>
+          <span><a href="/qna/commonquestion">자주하는 질문</a></span>
         </div>
         <!-- about user -->
         <div class="side-bar__row">
           <!-- c:if로 로그인 전에는 회원가입+로그인 / 로그인 후에는 프로필 -->
-          <span><a href="#">로그인</a></span>
-          <span><a href="#">가입하기</a></span>
-          <!--
-          <span>
-            <a href="#"><button class="profile">Profile</button></a>
-          </span>
-          -->
+          <c:if test="${cid eq null}">
+            <div class="loginBtn">
+		        <span><a href="/user/userLogin" class="loginA">로그인</a></span>
+            </div>
+            <div class="joinBtn">
+		        <span><a href="/user/userJoin" class="joinA">가입하기</a></span>
+            </div>
+          </c:if>
+          <c:if test="${cid ne null}">
+	          <div class="consumer">
+	          	  <div class="consumer__imgPro">
+			        <img class="conimg" src="/resources/css/image/chaIcon.png"/>
+	          	  </div>
+		          <div class="consumer__nickname">
+		          	<p>${cid}</p>
+		          </div>
+		          <div class="consumer__info">
+	   				<a href="/user/userGet">* 유저정보창</a><br/>
+	   				<a href="/user/userpro">* 유저프로필창</a><br/>
+	   				<a href="/user/userLogout">* 로그아웃</a><br/>
+	   				<a href="/user/userDelete">* 회원탈퇴</a><br/>
+		   		  </div>
+	          </div>
+          </c:if>
         </div>
       </div>
       <div class="main">
         <div class="contents">
           <div class="detail">
+          <!-- start -->
 	<div class="searchresult">
 	<h1>검색</h1>	
 	<h2 class="searchtotal hidden">(${page.total })</h2>
@@ -270,7 +297,7 @@
 				<div class="userList__proBack"><img src="/resources/css/image/friends.png" width="700" height="250"/></div>
 				<div class="userList__cid">${userList.cid }(${userList.nickname })</div>
 				<!-- 해당 유저 프로필로 이동하고 거기서 친구 추가 혹은 삭제 로직 진행, url 바꾸면서 아래 hidden 삭제 예정 -->
-				<form action="/user/userGet" method="get">
+				<form action="/user/userPro" method="post">
 					<input type="hidden" name="following" value="${param.cid }" />
 					<input type="hidden" name="follower" value="${userList.cid }" />
 					<input class="profileBtn notyet" type="submit" value="프로필 보기" />
@@ -297,31 +324,14 @@
 	 </c:if>
 	</div>
 	</nav>
-          </div>
-        </div>
-        <div class="footer">
-          <div class="footer-info">
-            <div>CREATORS&nbsp;&nbsp;김영훈, 김지우, 조훈현, 최재인</div>
-            <div>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;</div>
-            <div>
-              CONTACT&nbsp;&nbsp;<a href="https://github.com/GITJIWOO"
-                >https://github.com/GITJIWOO</a
-              >
-            </div>
-          </div>
-          <div class="footer-copyright">
-            <div>Copyright © GAMMA All right reserved.</div>
-          </div>
-        </div>
-      </div>
-    </div>
+
     <script>
 
 	// 처음에는 안보이다가 검색하면 나타나도록 작성
 	const input = document.querySelector(".searchfriendsinput");
 	const searchtotal = document.querySelector(".searchtotal");
 	let keyword = input.getAttribute("value");
-	const detail = document.quetySelector(".detail");
+	//const detail = document.querySelector(".detail");
 	console.log(keyword);
 	if(keyword != ""){
 		const infinite = document.querySelector(".infinite");
@@ -350,9 +360,27 @@
       showBtn.classList.toggle("notyet");
       backGround.classList.toggle("notyet");
     }
-    const detail = document.querySelector(".detail");
+    //  const detail = document.querySelector(".detail");
     //	userList[num].addEventListener("mouseover", showProfile);
     //	userList[num].addEventListener("mouseout", showProfile);
   </script>
+            </div>
+        </div>
+        <div class="footer">
+          <div class="footer-info">
+            <div>CREATORS&nbsp;&nbsp;김영훈, 김지우, 조훈현, 최재인</div>
+            <div>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;</div>
+            <div>
+              CONTACT&nbsp;&nbsp;<a href="https://github.com/GITJIWOO/Game-Project"
+                >https://github.com/GITJIWOO/Game-Project</a
+              >
+            </div>
+          </div>
+          <div class="footer-copyright">
+            <div>Copyright © GAMMA All right reserved.</div>
+          </div>
+        </div>
+      </div>
+    </div>
 </body>
 </html>
