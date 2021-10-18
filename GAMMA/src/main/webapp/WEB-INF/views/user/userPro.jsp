@@ -486,7 +486,7 @@ position:relative;
 			console.log(rno + ":" + reply);
 
 			// 모달 열리도록 추가
-			$(".modal-title").html(rno + "번 댓글");// 모달 상단에 댓글번호 넣기
+			$(".modal-title").html(rno);// 모달 상단에 댓글번호 넣기
 			$("#replytext").val(reply);// 모달 수정창에 댓글본문 넣기
 			$("#modDiv").show("slow"); // 창에 애니메이션 효과 넣기
 		});

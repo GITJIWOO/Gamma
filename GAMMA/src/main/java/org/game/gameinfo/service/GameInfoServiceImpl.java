@@ -90,6 +90,12 @@ public class GameInfoServiceImpl implements GameInfoService {
 		List<GameInfoVO> latestGame = mapper.latestGame();
 		return latestGame;
 	}
+
+	@Override
+	public List<GameInfoVO> actionList() {
+		List<GameInfoVO> actionList = mapper.actionList();
+		return actionList;
+	}
 	
 
 }

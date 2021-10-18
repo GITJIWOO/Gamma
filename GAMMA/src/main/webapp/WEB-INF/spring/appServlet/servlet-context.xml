@@ -7,7 +7,8 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/websocket http://www.springframework.org/schema/websocket/spring-websocket-4.3.xsd
 		http://www.springframework.org/schema/mvc https://www.springframework.org/schema/mvc/spring-mvc.xsd
 		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
-		http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
+		http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"><!-- 웹소켓때문에 추가함 -->
 
 	<!-- DispatcherServlet Context: defines this servlet's request-processing infrastructure -->
 	
@@ -24,7 +25,11 @@
 		<beans:property name="suffix" value=".jsp" />
 	</beans:bean>
 
+
 	<!-- WebSocket 생성시 설정한 url 처리 -->
+	<mvc:annotation-driven></mvc:annotation-driven>
+	<mvc:default-servlet-handler />
+	<mvc:view-controller path="/friends/chat" view-name="/friends/chat" />
 	<beans:bean id="echoHandler" class="org.game.websocket.EchoHandler"/>
 
 	<websocket:handlers>

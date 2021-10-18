@@ -5,13 +5,113 @@
 <html>
 <head>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
+<link rel="stylesheet" href="/resources/css/styles.css" />
 <meta charset="UTF-8">
 <title>Insert title here</title>
 </head>
 <style>
-	.hidden{
-		display: none;
-	}
+.detail{
+  height: 300vh;
+  width: 90%;
+  margin: 0 auto;
+}
+.hidden {
+  display: none;
+}
+.searchresult {
+  display: flex;
+  align-items: flex-end;
+  margin-top: 20px;
+}
+.searchresult h1 {
+  font-size: 30px;
+}
+.searchresult h2 {
+  font-size: 19px;
+}
+.searchfriendsdiv input[type="text"] {
+  margin: 20px 0;
+  padding: 15px;
+  font-size: large;
+  border-radius: 50px;
+  border: none;
+  width: 400px;
+}
+.searchfriendsdiv input:not([type="text"]) {
+  display: none;
+}
+.userList {
+  position: relative;
+  z-index: 9;
+  border-radius: 1px solid black;
+  width: 700px;
+}
+.background {
+  position: absolute;
+  width: 100%;
+  height: 77%;
+  opacity: 70%;
+  z-index: 11;
+  background-color: black;
+}
+.userList{
+  margin: 20px 0;
+}
+.userList:nth-child(odd) {
+  float: left;
+}
+.userList:nth-child(even) {
+  float: right;
+}
+.userList__pro {
+  position: absolute;
+  z-index: 10;
+  top: 25px;
+  left: 240px;
+}
+.userList__pro img {
+  border-radius: 50%;
+}
+.userList__proBack {
+  filter: brightness(40%) opacity(50%) blur(1px);
+  border: 1px solid black;
+}
+.userList__proBack img {
+  z-index: -1;
+}
+.userList__cid {
+  padding: 30px 10px;
+  background-color: white;
+}
+.profileBtn {
+  position: absolute;
+  border: none;
+  font-size: 17px;
+  padding: 13px 70px;
+  border-radius: 5px;
+  background-color: var(--mainColor);
+  color: white;
+  top: 100px;
+  left: 230px;
+  z-index: 12;
+}
+.profileBtn:hover{
+  background-color: rgba(245, 109, 46, 0.8);
+  cursor: pointer;
+}
+.notyet {
+  display: none;
+}
+.pageList{
+  margin-top: 1000px;
+}
+.page-item.active .page-link {
+  background-color: var(--mainColor);
+  border-color: var(--mainColor);
+}
+.page-link {
+  color: black;
+}
 </style>
 <script>
 /*
@@ -98,29 +198,82 @@
 */
 </script>
 <body>
-	<h1>친구 검색</h1>
+<!-- 
 		criteria 정보 확인: ${page }<br>
 		page 확인: ${page.cri.pageNum }<br>
 		시작페이지: ${page.startPage }<br>
 		끝페이지: ${page.endPage }<br>
 		keyword 확인: ${page.cri.keyword }<br>
 		parameter로 넘어온 cid 확인: ${param.cid }<br>
+ -->
+    <div class="display">
+      <!-- side-bar -->
+      <div class="side-bar">
+        <!-- logo -->
+        <div class="side-bar__row">
+          <!-- 클릭하면 main화면으로 돌아오도록 a 태그 수정 -->
+          <span
+            ><a href="#"><img src="/resources/css/image/logo.png" /></a
+          ></span>
+        </div>
+        <!-- search -->
+        <div class="side-bar__row">
+          <form action="#" method="get">
+            <input type="text" placeholder="   Search Game" />
+            <!-- origin처럼 버튼 숨겼음, enter 치면 검색됨 -->
+            <input type="submit" value="" />
+          </form>
+        </div>
+        <!-- category -->
+        <div class="side-bar__row">
+          <span><a href="#">게임 스토어</a></span>
+          <span><a href="#">라이브러리</a></span>
+        </div>
+        <!-- qna -->
+        <div class="side-bar__row">
+          <span><a href="#">Q&A</a></span>
+          &nbsp;&nbsp;|&nbsp;&nbsp;
+          <span><a href="#">자주하는 질문</a></span>
+        </div>
+        <!-- about user -->
+        <div class="side-bar__row">
+          <!-- c:if로 로그인 전에는 회원가입+로그인 / 로그인 후에는 프로필 -->
+          <span><a href="#">로그인</a></span>
+          <span><a href="#">가입하기</a></span>
+          <!--
+          <span>
+            <a href="#"><button class="profile">Profile</button></a>
+          </span>
+          -->
+        </div>
+      </div>
+      <div class="main">
+        <div class="contents">
+          <div class="detail">
+	<div class="searchresult">
+	<h1>검색</h1>	
+	<h2 class="searchtotal hidden">(${page.total })</h2>
+	</div>
+	<div class="searchfriendsdiv">
 	<form action="/friends/searchfriends?cid=${param.cid }&keyword=${page.cri.keyword }">
-		<input class="input" type="text" name="keyword" value="${page.cri.keyword }" placeholder="닉네임 또는 아이디로 친구 검색"/>
+		<input class="searchfriendsinput" type="text" name="keyword" value="${page.cri.keyword }" placeholder="닉네임 또는 아이디로 친구 검색"/>
 		<input type="hidden" name="cid" value="${param.cid }" />
 		<input type="submit" value="검색"/>
 	</form>
+	</div>
 	<!-- 처음에는 비어있다가 검색하면 나타나도록 작성 -->
 	<div class="infinite hidden">
 		<c:forEach items="${userList }" var="userList">
-			<div class="userList">
-				<div class="userList__cid">${userList.cid }</div>
-				<div class="userList__nick">${userList.nickname }</div>
+			<div class="userList" onmouseover="showProfile()" onmouseout="showProfile()">
+				<div class="background notyet"></div>
+				<div class="userList__pro"><img src="/resources/css/image/friends.png" width="200"/></div>
+				<div class="userList__proBack"><img src="/resources/css/image/friends.png" width="700" height="250"/></div>
+				<div class="userList__cid">${userList.cid }(${userList.nickname })</div>
 				<!-- 해당 유저 프로필로 이동하고 거기서 친구 추가 혹은 삭제 로직 진행, url 바꾸면서 아래 hidden 삭제 예정 -->
-				<form action="/user/userPro" method="get">
+				<form action="/user/userGet" method="get">
 					<input type="hidden" name="following" value="${param.cid }" />
 					<input type="hidden" name="follower" value="${userList.cid }" />
-					<input type="submit" value="프로필 보기" />
+					<input class="profileBtn notyet" type="submit" value="프로필 보기" />
 				</form>
 			</div>
 		</c:forEach>
@@ -144,18 +297,62 @@
 	 </c:if>
 	</div>
 	</nav>
-	<script>
-		// 처음에는 안보이다가 검색하면 나타나도록 작성
-		const input = document.querySelector(".input");
-		let keyword = input.getAttribute("value");
-		console.log(keyword);
-		if(keyword != ""){
-			const infinite = document.querySelector(".infinite");
-			const pageList = document.querySelector("nav .pageList");
-			console.log("pageList 확인: " + pageList);
-			infinite.classList.remove("hidden");
-			pageList.classList.remove("hidden");
+          </div>
+        </div>
+        <div class="footer">
+          <div class="footer-info">
+            <div>CREATORS&nbsp;&nbsp;김영훈, 김지우, 조훈현, 최재인</div>
+            <div>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;</div>
+            <div>
+              CONTACT&nbsp;&nbsp;<a href="https://github.com/GITJIWOO"
+                >https://github.com/GITJIWOO</a
+              >
+            </div>
+          </div>
+          <div class="footer-copyright">
+            <div>Copyright © GAMMA All right reserved.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script>
+
+	// 처음에는 안보이다가 검색하면 나타나도록 작성
+	const input = document.querySelector(".searchfriendsinput");
+	const searchtotal = document.querySelector(".searchtotal");
+	let keyword = input.getAttribute("value");
+	const detail = document.quetySelector(".detail");
+	console.log(keyword);
+	if(keyword != ""){
+		const infinite = document.querySelector(".infinite");
+		const pageList = document.querySelector(".pageList");
+		console.log("pageList 확인: " + pageList);
+		infinite.classList.remove("hidden");
+		pageList.classList.remove("hidden");
+		searchtotal.classList.remove("hidden");
+	}
+	
+    let num;
+    const total = ${page.total };
+	const userList = document.querySelectorAll(".userList");
+	console.log(userList[0])
+    for(num = 0; num < total; num++){
+		if(userList[num]){
+			//userList.setAttribute("onmouseover", "showProfile(num)")
+			//userList.setAttribute("onmouseout", "showProfile(num)")
 		}
-	</script>
+    }
+    const showBtn = document.querySelector(".profileBtn");
+    const backGround = document.querySelector(".background");
+    console.log(showBtn);
+    console.log(backGround);
+    function showProfile(num) {
+      showBtn.classList.toggle("notyet");
+      backGround.classList.toggle("notyet");
+    }
+    const detail = document.querySelector(".detail");
+    //	userList[num].addEventListener("mouseover", showProfile);
+    //	userList[num].addEventListener("mouseout", showProfile);
+  </script>
 </body>
 </html>
