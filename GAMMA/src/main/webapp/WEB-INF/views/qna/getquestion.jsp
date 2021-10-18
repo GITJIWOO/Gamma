@@ -8,6 +8,33 @@
 <link rel="stylesheet" href="/resources/css/styles.css" /><title>Insert title here</title>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <style>
+	#modDiv{
+		width: 430px;
+		height: 230px;
+		background-color: white;
+		position: relative;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19),
+                    0 6px 6px rgba(0, 0, 0, 0.23);
+		border-radius: 10px;
+		top: 50%;
+		left: 50%;
+		margin-top: -5px;
+		margin-left: -150px;
+		padding: 10px;
+		z-index: 1000;
+	}
+	#modDiv button{
+		margin-top: 5px;
+	    padding: 5px;
+	    color: white;
+	    background-color: black;
+	    border-radius: 5px;
+	    cursor: pointer;
+	}
+	.modal-title{
+		margin: 10px 0;
+		font-size: 18px;
+	}
 	.detail {
 	  font-size: 17px;
 	  width: 90%;
@@ -24,18 +51,113 @@
 	.register-table {
 	  margin: 0 auto;
 	}
-	#modDiv{
-		width: 480px;
-		height: 340px;
-		background-color: lightgray;
-		position: absolute;
-		top: 50%;
-		left: 50%;
-		margin-top: -5px;
-		margin-left: -150px;
-		padding: 10px;
-		z-index: 1000;
-	}
+     .regi-header,
+      .regi-content {
+        border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+      }
+      .regi-header {
+        color: black;
+        text-align: start;
+        padding-right: 80px;
+      }
+      .regi-content {
+        width: 75%;
+        padding: 20px 30px;
+      }
+      .adminAnswer {
+        color: rgba(0, 0, 0, 0.8);
+        font-size: 23px;
+        font-weight: 600;
+        padding: 70px 0 30px 0;
+        border-bottom: 2px solid rgba(0, 0, 0, 0.8);
+        margin-bottom: 30px;
+      }
+      .answerDetail {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      .answerDetail .answerWho {
+        color: black;
+        font-size: 17px;
+        font-weight: bold;
+      }
+      .answerDetail .answerWhen {
+        color: rgba(0, 0, 0, 0.7);
+        margin: 10px 0;
+      }
+      .answerDetail .acontent {
+        margin: 10px 0;
+      }
+      .answerDetail .answerDetailBtn {
+        margin: 20px 0;
+        border: none;
+        font-size: 17px;
+        padding: 0;
+        background-color: rgba(0, 0, 0, 0.5);
+        color: white;
+        padding: 8px 10px;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+      #addAnswerBtn{
+        margin: 20px 0;
+        border: none;
+        font-size: 17px;
+        padding: 0;
+        background-color: rgba(0, 0, 0, 0.5);
+        color: white;
+        padding: 8px 10px;
+        border-radius: 5px;
+        cursor: pointer;      
+      }
+      #addAnswerBtn:hover{
+      background-color: rgba(0, 0, 0, 0.2);
+      color:black;
+      }
+      .answerDetail .answerDetailBtn:hover {
+        background-color: rgba(0, 0, 0, 0.2);
+        color:black;
+      }
+      .allAboutBtn {
+        margin-top: 60px;
+        display: flex;
+        justify-content: center;
+      }
+      .golist button,
+      .goregister {
+        background-color: black;
+        color: white;
+        padding: 10px 15px;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+      .goregister {
+        margin: 0 30px;
+        padding: 8px 15px;
+      }
+      .goregister,
+      .godelete {
+        font-size: 17px;
+        border: none;
+        font-weight: bold;
+      }
+      .godelete {
+        padding: 8px 15px;
+        cursor: pointer;
+        background-color: rgba(0, 0, 0, 0.1);
+        color: black;
+        border-radius: 5px;
+      }
+      .golist button:hover,
+      .goregister:hover {
+        background-color: rgba(0, 0, 0, 0.7);
+      }
+      .godelete:hover {
+        background-color: rgba(0, 0, 0, 0.4);
+        color: white;
+        font-weight: 400;
+      }
 </style>
 </head>
 <body>
@@ -45,7 +167,7 @@
 	질문 페이지번호: ${param.pageNum }
 	 -->
 	<!-- 질문 -->
-    <div class="display">
+   <div class="display">
       <!-- side-bar -->
       <div class="side-bar">
         <!-- logo -->
@@ -89,38 +211,38 @@
       <div class="main">
         <div class="contents">
           <div class="detail">
-            <h1 class="form-header">문의 상세</h1>
+            <h1 class="form-header">1:1 문의 상세</h1>
               <table class="register-table">
                 <tr>
-			<th>문의 번호</th>
-			<td>${vo.qnum }</td>
+			<th class="regi-header">문의 번호</th>
+			<td class="regi-content">${vo.qnum }</td>
 		</tr>
 		<tr>
-			<th>문의 유형</th>
-			<td>${vo.qtype }</td>
+			<th class="regi-header">문의 유형</th>
+			<td class="regi-content">${vo.qtype }</td>
 		</tr>
 		<tr>
-			<th>작성자</th>
-			<td>${vo.qwriter }</td>
+			<th class="regi-header">작성자</th>
+			<td class="regi-content">${vo.qwriter }</td>
 		</tr>
 		<tr>
-			<th>문의 제목</th>
-			<td>${vo.qtitle }</td>
+			<th class="regi-header">문의 제목</th>
+			<td class="regi-content">${vo.qtitle }</td>
 		</tr>
 		<tr>
-			<th>문의 내용</th>
-			<td>${vo.qcontent }</td>
+			<th class="regi-header">문의 내용</th>
+			<td class="regi-content">${vo.qcontent }</td>
 		</tr>
 
 		<tr>
-			<th>문의 작성일</th>
-			<td>${vo.qdate }</td>
+			<th class="regi-header">문의 작성일</th>
+			<td class="regi-content">${vo.qdate }</td>
 		</tr>
 	</table>
 	
 	<!-- 답변 -->
 	<c:if test="${admin == 1 }">
-	<h2>답변</h2>
+	<h2 class="adminAnswer">1:1 문의 답변</h2>
 	
 	<!-- 입력 -->
 	<div>
@@ -131,6 +253,7 @@
 
 	<!-- modal -->
 	<div id="modDiv" style="display:none;">
+
 		<div class="modal-title"></div>
 		<div>
 			<textarea rows='10' cols='50' id="answertext"></textarea>
@@ -142,13 +265,14 @@
 		</div>
 	</div>
 	</c:if>
+	
 	<!-- 조회 -->
 	<div id="regiAnswer">
 	</div>
 
 	<script type="text/javascript">
 		var qnum = ${param.qnum };
-		var str2 = "<textarea rows='10' cols='50' name='acontent' id='acontent' placeholder='답변 입력창'></textarea><br><button id='addAnswerBtn'>답변 등록</button>";
+		var str2 = "<textarea rows='10' cols='50' name='acontent' id='acontent' placeholder='답변을 입력해주세요.'></textarea><br><button id='addAnswerBtn'>답변 등록</button>";
 		$("#inputAnswer").html(str2);
 		var adminOrNot = ${admin};
 		console.log("admin 인지 아닌지: "+adminOrNot);
@@ -162,31 +286,32 @@
 				$(data).each(function(){	
 					var timestamp = this.adate;
 					var date = new Date(timestamp);
-					var formattedTime = "답변 게시일: " + date.getFullYear() 
+					var formattedTime = "<span class='answerWhen'>답변 게시일: " + date.getFullYear() 
 													 + "/" + (date.getMonth() + 1) 
 													 + "/" + date.getDate()
 													 + " " + date.getHours()
 													 + ":" + date.getMinutes()
 													 + ":" + date.getSeconds();
-					// 관리자일 경우,  
+													 + "</span>"
+					// 일반 회원일 경우,  
 					if(adminOrNot === 0){
 						str += "<div data-anum='" 
 							+ this.anum 
-							+ "' class='answerDetail'><strong>@관리자</strong><br>" 
+							+ "' class='answerDetail'><span class='answerWho'>@관리자</span>" 
 							+ formattedTime 
-							+ "<br><div class='acontent'>" 
+							+ "<div class='acontent'>" 
 							+ this.acontent 
 							+ "</div></div>";
 					}
-					// 일반 회원일 경우,
+					// 관리자일 경우,
 					else if(adminOrNot === 1){
 						str += "<div data-anum='" 
 							+ this.anum 
-							+ "' class='answerDetail'><strong>@관리자</strong><br>" 
+							+ "' class='answerDetail'><span class='answerWho'>@관리자</span>" 
 							+ formattedTime 
-							+ "<br><div class='acontent'>" 
+							+ "<div class='acontent'>" 
 							+ this.acontent 
-							+ "</div><button class='btn btn-dark'>수정/삭제</button></div>";
+							+ "</div><button class='answerDetailBtn'>수정/삭제</button></div>";
 					}
 					if(str != ""){
 						str2 = "";
@@ -229,7 +354,7 @@
 	
 	// 수정/삭제 버튼
 	$("#regiAnswer").on("click", ".answerDetail button", function(){
-		var answerDetail = $(this).parent();
+		var answerDetail = $(this).parent().parent();
 		var anum = answerDetail.attr("data-anum");
 		var acontent = $(this).siblings(".acontent").text();
 		console.log(anum + ":" + acontent);
@@ -241,6 +366,7 @@
 	// modal - 답변 수정 버튼
 	$("#answerModBtn").on("click", function(){
 		var anum = $(".modal-title").html();
+		console.log(anum);
 		var acontent = $("#answertext").val();
 		$.ajax({
 			type : 'patch',
@@ -286,22 +412,23 @@
 	});
 	</script>
 	</c:if>
-	<a href="/qna/questionlist?qwriter=${param.qwriter }&pageNum=${param.pageNum }"><button>질문 목록</button></a>
+	<div class="allAboutBtn">
+	<a class="golist" href="/qna/questionlist?qwriter=${param.qwriter }&pageNum=${param.pageNum }"><button>문의 목록</button></a>
 	<c:if test="${admin == 0 }">
 	<form action="/qna/modifyquestion" method="post">
 		<input type="hidden" name="qnum" value="${vo.qnum }"/>
 		<input type="hidden" name="qwriter" value="${param.qwriter }"/>
 		<input type="hidden" name="pageNum" value="${param.pageNum }"/>
-		<input type="submit" value="질문 수정"/>
+		<input class="goregister" type="submit" value="문의 수정"/>
 	</form>
 		<form action="/qna/removequestion" method="post">
 			<input type="hidden" name="qnum" value="${vo.qnum }"/>
 			<input type="hidden" name="qwriter" value="${param.qwriter }"/>
-			<input type="submit" value="질문 삭제"/>
+			<input class="godelete" type="submit" value="문의 삭제"/>
 		</form>
 	</c:if>
-              </div>
-          </div>
+	</div>
+         </div>
         </div>
         <div class="footer">
           <div class="footer-info">
