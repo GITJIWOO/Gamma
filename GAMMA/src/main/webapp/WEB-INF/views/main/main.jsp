@@ -5,47 +5,45 @@
 <!DOCTYPE html>
 <html>
 <head>
-<link rel="icon" type="image/png" href="http://example.com/myicon.png">
-
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <link rel="stylesheet" href="/resources/css/styles.css" />
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
-
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>Gamma</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
 <link rel="stylesheet" href="/resources/css/styles.css" />
+<link rel="icon" type="image/png" href="http://example.com/myicon.png">
 <!-- Bootstrap cdn 설정 -->	
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">	
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap-theme.min.css">	
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">	
-  <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>	
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">	
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap-theme.min.css">	
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>	
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 <style>
-	.display {
-		position: relative;
-	}
 	.consumer {
 		width: 18%;
-		position: fixed;
+		position: relative;
 		text-align: center;
 		height: 10%;
+		buttom: 100;
 	}
-	.imgPro {
+	.consumer__imgPro {
 		float: left;
-		width: 110px;
-		height: 110px;
 		padding: 0;
 		margin: 0;
 	}
-	.nickname {
+	.conimg {
+		width: 100px;
+		height: 100px;
+	}
+	.consumer__nickname {
 		float: right;
-		font-size: 45px;
+		font-size: 25px;
 		font-weight: bold;
 		color: white;
 	}
-	.consumerInfo {
+	.consumer__info {
 		display: none;
+		position: absolute;
+		left: 100%;
 	}
 </style>
 </head>
@@ -77,7 +75,7 @@
         <div class="side-bar__row">
           <span><a href="/gameInfo/gamelist">게임 스토어</a></span>
           <c:if test="${cid ne null}">
-          	<span><a href="/library/conlibrary?cid=${cid}">라이브러리</a></span>
+          	<span><a href="/library/conLibrary?cid=${cid}">라이브러리</a></span>
           </c:if>
         </div>
         <!-- qna -->
@@ -90,17 +88,24 @@
         <div class="side-bar__row">
           <!-- c:if로 로그인 전에는 회원가입+로그인 / 로그인 후에는 프로필 -->
           <c:if test="${cid eq null}">
-	          <span><a href="/user/userLogin" class="loginA"  onclick="openLogin">로그인</a></span>
-	          <span><a href="/user/userJoin" class="joinA"  onclick="openJoin">가입하기</a></span>
+            <div class="loginBtn">
+		        <span><a href="/user/userLogin" class="loginA">로그인</a></span>
+            </div>
+            <div class="joinBtn">
+		        <span><a href="/user/userJoin" class="joinA">가입하기</a></span>
+            </div>
           </c:if>
           <c:if test="${cid ne null}">
 	          <div class="consumer">
-		          <img class="imgPro" src="/resources/css/image/chaIcon.png"/>
-		          <div class="nickname">
-		          	<p>${consumer.nickname}</p>
+	          	  <div class="consumer__imgPro">
+			        <img class="conimg" src="/resources/css/image/chaIcon.png"/>
+	          	  </div>
+		          <div class="consumer__nickname">
+		          	<p>${cid}</p>
 		          </div>
-		          <div class="consumerInfo">
+		          <div class="consumer__info">
 	   				<a href="/user/userGet">유저정보창</a>
+	   				<a href="/user/userLogout">로그아웃</a>
 		   		  </div>
 	          </div>
           </c:if>
@@ -169,14 +174,31 @@
 	});
   </script>
   
-
+	<hr>
   <h2>오늘의 게임</h2>
+  <hr>
   <table>
   <tr>
   <c:forEach var="randomList" items="${randomList }">
     <td>
     <a href="/gameInfo/get?gnum=${randomList.gnum }">	
     <img src="${randomList.gpicture }" width="300px" height="300px"/>
+    </a>
+    </td>
+ </c:forEach>
+  <tr>
+</table>
+
+<hr>
+  <h2>추천게임</h2>
+  <h3>action</h3>	  
+  <hr>
+  <table>
+  <tr>
+  <c:forEach var="actionList" items="${actionList }">
+    <td>
+    <a href="/gameInfo/get?gnum=${actionList.gnum }">	
+    <img src="${actionList.gpicture }" width="300px" height="300px"/>
     </a>
     </td>
   </c:forEach>
@@ -201,16 +223,25 @@
         </div>
       </div>
     </div>
-    <script type="text/javascript">
-	$(document).ready(function() {
-		// 취소
-		$(".loginA").on("click", function() {
-			location.href = "/user/userLogin";
-		})
-		$(".joinA").on("click", function() {
-			location.href = "/user/userJoin";
-		})
-	});
+    <script>
+		$(document).ready(function() {
+			// 취소
+			$(".loginBtn").on("click", function() {
+				location.href = "/user/userLogin";
+			})
+			$(".joinBtn").on("click", function() {
+				location.href = "/user/userJoin";
+			})
+			
+			$(".consumer").mouseover(function(){
+				$(".consumer__info").show();
+			});
+
+			$(".consumer").mouseout(function(){
+				$(".consumer__info").hide();
+			});
+			
+		});
     </script>
 </body>
 </html>

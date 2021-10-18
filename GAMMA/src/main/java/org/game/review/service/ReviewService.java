@@ -15,6 +15,9 @@ public interface ReviewService {
 	// 평가 상세 조회
 	public ReviewVO getReviewDetail(long grnum);
 	
+	// 평가 유저 조회
+	public ReviewVO getUserReviewDetail(String cid, long gnum);
+	
 	// 평가 작성
 	public void writeReview(ReviewVO review);
 	

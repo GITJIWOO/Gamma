@@ -4,12 +4,39 @@
 <!DOCTYPE html>
 <html>
 <head>
+<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
 <link rel="stylesheet" href="/resources/css/styles.css" />
-<link
-	href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css"
-	rel="stylesheet"
-	integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We"
-	crossorigin="anonymous">
+<link rel="icon" type="image/png" href="http://example.com/myicon.png">
+<style>
+	.consumer {
+		width: 18%;
+		position: relative;
+		text-align: center;
+		height: 10%;
+		buttom: 100;
+	}
+	.consumer__imgPro {
+		float: left;
+		padding: 0;
+		margin: 0;
+	}
+	.conimg {
+		width: 100px;
+		height: 100px;
+	}
+	.consumer__nickname {
+		float: right;
+		font-size: 25px;
+		font-weight: bold;
+		color: white;
+	}
+	.consumer__info {
+		display: none;
+		position: absolute;
+		left: 100%;
+	}
+</style>
 <meta charset="UTF-8">
 <title>Insert title here</title>
 </head>

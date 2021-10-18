@@ -17,5 +17,6 @@ public class ConsumerVO {
 	private Date userregdate;
 	private Date userupdatedate;
 	//private boolean enabled;
-	//private List<AuthVO> authList;
+	
+	private List<UserAttachVO> attachList;
 }
