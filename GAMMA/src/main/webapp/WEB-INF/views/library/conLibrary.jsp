@@ -19,10 +19,9 @@
 	.card {
 		width: 200px;
 		height: 310px;
-	}
-	.library {
-		width: 70%;
 		float: left;
+		margin-right: 30px;
+		margin-bottom: 30px;
 	}
 </style>
 </head>
