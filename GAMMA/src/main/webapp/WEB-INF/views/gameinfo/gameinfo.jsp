@@ -152,6 +152,7 @@ input[type="radio"] {
 	   				<a href="/user/userLogout">* 로그아웃</a><br/>
 	   				<a href="/friends/followerlist">* 팔로워리스트</a><br/>
 	   				<a href="/friends/followinglist">* 팔로윙리스트</a><br/>
+	   				<a href="/friends/searchfriends">* 친구 검색</a><br/>
 		   		  </div>
 	          </div>
           </c:if>
