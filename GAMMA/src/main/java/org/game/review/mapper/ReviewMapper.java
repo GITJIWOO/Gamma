@@ -2,6 +2,7 @@ package org.game.review.mapper;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
 import org.game.review.domain.ReviewVO;
 
 public interface ReviewMapper {
@@ -14,6 +15,9 @@ public interface ReviewMapper {
 	
 	// 평가 상세 조회
 	public ReviewVO reviewSelect(long grnum);
+	
+	// 평가 유저 조회
+	public ReviewVO UserReviewSelect(@Param("cid") String cid, @Param("gnum") long gnum);
 	
 	// 평가 작성
 	public void reviewInsert(ReviewVO vo); 

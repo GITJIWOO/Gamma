@@ -19,6 +19,13 @@ public class ConsumerBasketServiceImpl implements ConsumerBasketService {
 		List<ConsumerBasketVO> basketList = mapper.consumerBasketSelect(cid);
 		return basketList;
 	}
+	
+	// 장바구니 게임 하나 조회
+
+	public ConsumerBasketVO getOneConsumerBasket(String cid, long gnum) {
+		ConsumerBasketVO basket = mapper.consumerGameBasketSelect(cid, gnum);
+		return basket;
+	}
 
 	// 장바구니 게임 추가
 	@Override
@@ -31,5 +38,6 @@ public class ConsumerBasketServiceImpl implements ConsumerBasketService {
 	public void removeConsumerBasket(String cid, long gnum) {
 		mapper.consumerBasketDelete(cid, gnum);
 	}
+
 
 }

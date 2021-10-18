@@ -1,9 +1,12 @@
 package org.game.user.service;
 
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletResponse;
 
 import org.game.user.domain.ConsumerVO;
+import org.game.user.domain.UserAttachVO;
 
 public interface UserService {
 
@@ -36,4 +39,7 @@ public interface UserService {
 
 	//비밀번호찾기
 	public void findPw(HttpServletResponse resp, ConsumerVO vo) throws Exception;
+	
+	// 유저 상세창에 같이 딸려오는거
+		public List<UserAttachVO> getAttachList(Long cnum);
 }

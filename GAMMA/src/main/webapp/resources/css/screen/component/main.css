@@ -67,7 +67,7 @@
 }
 
 .side-bar__row:last-child {
-  margin-top: 250px;
+  /* margin-top: 500px; */
 }
 .side-bar__row:last-child span {
   display: flex;
@@ -98,7 +98,6 @@
   border-color: var(--fontColor);
   color: var(--fontColor);
 }
-/* 여기 변경 */
 .side-bar a:hover {
   color: white;
 }
