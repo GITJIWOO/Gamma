@@ -57,7 +57,7 @@
 	<select id="userLogin" resultType="org.game.user.domain.ConsumerVO">
 		SELECT *
 		FROM consumer
-		WHERE cid = #{cid} AND password=#{password}
+		WHERE cid = #{cid}
 
 	</select>
 	
