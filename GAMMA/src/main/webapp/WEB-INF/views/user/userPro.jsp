@@ -14,45 +14,7 @@
 	padding: 5px;
 	margin: 5px;
 }
-<<<<<<< HEAD
-	.consumer {
-		width: 25%;
-		position: relative;
-		text-align: center;
-		height: 20%;
-		buttom: 100;
-		left:10px;
-	}
-	.consumer__imgPro {
-		float: left;
-		padding: 0;
-		margin: 0;
-	}
-	.conimg {
-		width: 100px;
-		height: 100px;
-	}
-	.consumer__nickname {
-		float: right;
-		font-size: 25px;
-		font-weight: bold;
-		color: white;
-		
-	}
-	.consumer__info {
-		background-color:gray;
-		color:white;
-		display: none;
-		position: absolute;
-		top:50px;
-		left: 150%;
-		width:120px;
-		margin:5px;
-		border-radius: 10%;
-		text-align:left;
-	}
-=======
->>>>>>> master
+
 .detail{
 	display: flex;
 	flex-flow: row;
