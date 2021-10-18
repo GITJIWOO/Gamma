@@ -12,6 +12,7 @@
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">	
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap-theme.min.css">	
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<script src="<c:url value="/resources/js/main.js"/>"></script>
 <link rel="stylesheet" href="/resources/css/styles.css" />
 <link rel="icon" type="image/png" href="http://example.com/myicon.png">
 </head>
