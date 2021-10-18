@@ -17,5 +17,6 @@ public class ResultLibraryVO {
 	private int ggrade;
 	private String gsite;
 	private String gaddress;
+	private String gpicture;
 	
 }

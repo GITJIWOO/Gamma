@@ -26,6 +26,7 @@ CREATE TABLE game (
     gdeveloper VARCHAR2(20) NOT NULL,
     gfublisher VARCHAR2(20) NOT NULL,
     gprice VARCHAR2(20) NOT NULL,
+    gpicture VARCHAR2(100) NOT NULL,
     gcontent VARCHAR2(1000) NOT NULL,
     ggrade NUMBER(4) NOT NULL,
     gsite VARCHAR2(100) NOT NULL,
@@ -127,7 +128,6 @@ CREATE table userreply_tbl(
     foreign key (nickname) references consumer(nickname);
     ALTER TABLE userreply_tbl RENAME COLUMN replyDate to ureplydate;
     ALTER TABLE userreply_tbl RENAME COLUMN updateDate to uupdatedate;
-  
   
     /*프로필 전용 db*/
 CREATE TABLE img_tbl(
