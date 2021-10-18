@@ -19,6 +19,11 @@
 		SELECT * FROM gameReview WHERE grnum=#{grnum}
 	</select>
 	
+	<!-- 평가 유저 조회 -->
+	<select id="UserReviewSelect" resultType="org.game.review.domain.ReviewVO">
+		SELECT * FROM gameReview WHERE cid=#{cid} AND gnum=#{gnum}
+	</select>
+	
 	<!-- 평가 작성 -->
 	<insert id="reviewInsert">
 		INSERT INTO gameReview(grnum, gnum, cid, grlike, grcontent, grdate)

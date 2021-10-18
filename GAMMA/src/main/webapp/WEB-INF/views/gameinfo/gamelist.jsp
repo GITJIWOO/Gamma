@@ -8,15 +8,38 @@
 h1>a {
 	text-decoration: none
 }
+.consumer {
+		width: 18%;
+		position: relative;
+		text-align: center;
+		height: 10%;
+		buttom: 100;
+	}
+	.consumer__imgPro {
+		float: left;
+		padding: 0;
+		margin: 0;
+	}
+	.conimg {
+		width: 100px;
+		height: 100px;
+	}
+	.consumer__nickname {
+		float: right;
+		font-size: 25px;
+		font-weight: bold;
+		color: white;
+	}
+	.consumer__info {
+		display: none;
+		position: absolute;
+		left: 100%;
+	}
 </style>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
 <link rel="stylesheet" href="/resources/css/styles.css" />
-<link
-	href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css"
-	rel="stylesheet"
-	integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We"
-	crossorigin="anonymous">
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<link rel="icon" type="image/png" href="http://example.com/myicon.png">
 <meta charset="UTF-8">
 <title>Insert title here</title>
 </head>
@@ -28,42 +51,66 @@ h1>a {
         <div class="side-bar__row">
           <!-- 클릭하면 main화면으로 돌아오도록 a 태그 수정 -->
           <span
-            ><a href="#"><img src="/resources/css/image/logo.png" /></a
+            ><a href="/main/main"><img src="/resources/css/image/logo.png" /></a
           ></span>
         </div>
         <!-- search -->
         <div class="side-bar__row">
-          <form action="#" method="get">
-            <input type="text" placeholder="   Search Game" />
+          <form action="/gameInfo/gamelist" method="get">
+          <select name="searchType" style="display:none">
+          	<option  value="n"
+				<c:out value="${btnMaker.cri.searchType eq 'n' ? 'selected' : '' }"/>>
+				</option>
+            </select>
+            <input type="text" placeholder="Search Game" name="keyword" value="${btnMaker.cri.keyword }"/>
             <!-- origin처럼 버튼 숨겼음, enter 치면 검색됨 -->
             <input type="submit" value="" />
           </form>
         </div>
         <!-- category -->
         <div class="side-bar__row">
-          <span><a href="#">게임 스토어</a></span>
-          <span><a href="#">라이브러리</a></span>
+          <span><a href="/gameInfo/gamelist">게임 스토어</a></span>
+          <c:if test="${cid ne null}">
+          	<span><a href="/library/conLibrary?cid=${cid}">라이브러리</a></span>
+          </c:if>
         </div>
         <!-- qna -->
         <div class="side-bar__row">
-          <span><a href="#">Q&A</a></span>
+          <span><a href="/qna/questionlist">Q&A</a></span>
           &nbsp;&nbsp;|&nbsp;&nbsp;
-          <span><a href="#">자주하는 질문</a></span>
+          <span><a href="/qna/commonquestion">자주하는 질문</a></span>
         </div>
         <!-- about user -->
         <div class="side-bar__row">
           <!-- c:if로 로그인 전에는 회원가입+로그인 / 로그인 후에는 프로필 -->
-          <span><a href="#">로그인</a></span>
-          <span><a href="#">가입하기</a></span>
-          <!--
-        <span>
-          <a href="#"><button class="profile">Profile</button></a>
-        </span>
-        --></div>
+          <c:if test="${cid eq null}">
+            <div class="loginBtn">
+		        <span><a href="/user/userLogin" class="loginA">로그인</a></span>
+            </div>
+            <div class="joinBtn">
+		        <span><a href="/user/userJoin" class="joinA">가입하기</a></span>
+            </div>
+          </c:if>
+          <c:if test="${cid ne null}">
+	          <div class="consumer">
+	          	  <div class="consumer__imgPro">
+			        <img class="conimg" src="/resources/css/image/chaIcon.png"/>
+	          	  </div>
+		          <div class="consumer__nickname">
+		          	<p>${cid}</p>
+		          </div>
+		          <div class="consumer__info">
+	   				<a href="/user/userGet">유저정보창</a>
+	   				<a href="/user/userLogout">로그아웃</a>
+		   		  </div>
+	          </div>
+          </c:if>
+        </div>
       </div>
       <div class="main">
         <div class="contents">
           <div class="detail">
+            <!-- 여기에 각자 content 붙여넣기 -->
 	
 	<h1>
 		<a href="/gameInfo/gamelist"> 게임 목록</a>
@@ -79,7 +126,7 @@ h1>a {
 			<th>게임이름</th>
 			<th>출시일</th>
 			<th>가격</th>
-			<th>등급</th>
+			<th>태그</th>
 		</tr>
 		<c:forEach var="gameList" items="${gameList }">
 			<tr>
@@ -88,7 +135,7 @@ h1>a {
 						${gameList.gname }</a></td>
 				<td>${gameList.glaunch }</td>
 				<td>${gameList.gprice }</td>
-				<td>${gameList.ggrade }</td>
+				<td>${gameList.tagname }</td>
 			</tr>
 		</c:forEach>
 	</table>
@@ -167,17 +214,17 @@ h1>a {
 			</div>
 		</div>
 	</div>
-	
+	  
 	<script
 		src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js"
 		integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ"
 		crossorigin="anonymous"></script>
+		
 	<script type="text/javascript">
 		var result = "${success}";
 		var gname = "${gname}";
 
-		var myModal = new bootstrap.Modal(document.getElementById('myModal'),
-				focus)
+		var myModal = new bootstrap.Modal(document.getElementById('myModal'), focus)
 		console.log(result);
 		console.log(gname);
 		if (result === "success") {
@@ -193,6 +240,8 @@ h1>a {
 		// 			location.href = "/gameInfo/list";
 		// 		}
 	</script>
+	
+	
 	
 	  </div>
         </div>
@@ -213,6 +262,26 @@ h1>a {
       </div>
     </div>
 
+	<script>
+		$(document).ready(function() {
+			// 취소
+			$(".loginBtn").on("click", function() {
+				location.href = "/user/userLogin";
+			})
+			$(".joinBtn").on("click", function() {
+				location.href = "/user/userJoin";
+			})
+			
+			$(".consumer").mouseover(function(){
+				$(".consumer__info").show();
+			});
 
+			$(".consumer").mouseout(function(){
+				$(".consumer__info").hide();
+			});
+			
+		});
+    </script>
+	
 </body>
 </html>

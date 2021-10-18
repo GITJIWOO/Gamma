@@ -6,20 +6,66 @@
 
 <!DOCTYPE html>
 <html>
-<head>
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <link rel="stylesheet" href="/resources/css/styles.css" />
+<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+<link rel="icon" type="image/png" href="http://example.com/myicon.png">
+<link rel="stylesheet" href="/resources/css/styles.css" />
 <style>
 * {
 	padding: 5px;
 	margin: 5px;
 }
-.userGet {
-	position: relative;
-	left: 20px;
+	.consumer {
+		width: 25%;
+		position: relative;
+		text-align: center;
+		height: 20%;
+		buttom: 100;
+		left:50px;
+	}
+	.consumer__imgPro {
+		float: left;
+		padding: 0;
+		margin: 0;
+	}
+	.conimg {
+		width: 100px;
+		height: 100px;
+	}
+	.consumer__nickname {
+		float: right;
+		font-size: 25px;
+		font-weight: bold;
+		color: white;
+		
+	}
+	.consumer__info {
+		background-color:gray;
+		color:white;
+		display: none;
+		position: absolute;
+		top:50px;
+		left: 150%;
+		width:120px;
+		margin:5px;
+		border-radius: 10%;
+		text-align:left;
+	}
+.detail{
+	display: flex;
+	flex-flow: row;
+}
+.modAub{
+	position:relative;
+	left:50px;
 }
 
+.table1{position:relative;
+	left:50px;}
+.rowB{
+text-align: center;
+position:relative;
+top:50px;
+}
 
 .nick {
 	display: flex;
@@ -31,16 +77,23 @@ h2 {
 	font-size: big;
 }
 
-.cidPro{
-color:orange;
+.img {
+	display: flex;
+	flex-flow: row;
+	padding: 10px;
 }
-.table{
+
+.cidPro {
+	color: orange;
+}
+
+.table {
 	font-weight: bold;
 }
 
 p {
-	font-weight: bold; 
-	font-size:big;
+	font-weight: bold;
+	font-size: big;
 }
 
 strong {
@@ -84,94 +137,38 @@ button {
 	border: solid 2px #212529;
 	transition: all 0.5s ease-in-out 0s;
 }
- .proImg{
- text-align:center;
- }
- .imgPro{
- width: 150px;
-	height: 150px;}
- .imgProA{
- width: 250px;
+
+.proImg {
+position:relative;
+	bottom:200px;
+	text-align: center;
+}
+
+.imgPro {
+	width: 150px;
+	height: 150px;
+}
+
+.imgProA {
+	width: 250px;
 	height: 250px;
-	padding:0;
-	margin:0;
- }
- .uid{
- 	 position: relative;
- 	 top:10px;
-	font-weight:bold;
-	color:white;
- }
+	padding: 0;
+	margin: 0;
+}
+
+.uid {
+	position: relative;
+	top: 10px;
+	font-weight: bold;
+	color: white;
+}
 </style>
 <meta charset="UTF-8">
 
-<title>프로필</title>
+<title>회원정보 상세 페이지</title>
 
 </head>
 <body>
-<<<<<<< HEAD
-<div class="profileImg">프로필 이미지위치
-
-</div>
-
-
-<!-- form 태그 혹시 몰라서 주석처리 해둡니다 -재인- -->
-<!-- <form name="form1" method="post">  -->
-		<table border="1" width="400px">
-			<tr>
-				<td>아이디</td>
-				<td><input id="cid" name="cid" value="${member.cid}" readonly="readonly"/></td>
-				<td rowspan="2">
-					<c:if test="${result == null }"><!-- null을 ==으로 비교하는게 맞는지 확인해야됨 -->
-					<form action="/friends/addfriends" method="post" >
-						<input type="hidden" name="follower" value="${member.cid}" />
-						<input type="hidden" name="following" value="" /><!-- 시큐리티 완성되면 로그인 계정으로 수정하고 테스트하기 -->
-						<input type="submit" value="친구 추가" />
-					</form>
-					</c:if>
-					<c:if test="${result == 1 }">
-					<form action="/friends/removefriends" method="post" >
-						<input type="hidden" name="follower" value="${member.cid}" />
-						<input type="hidden" name="following" value="" /><!-- 시큐리티 완성되면 로그인 계정으로 수정하고 테스트하기 -->
-						<input type="submit" value="친구 삭제" />
-					</form>
-					</c:if>
-				</td>
-			</tr>
-			<tr>
-				<td>닉네임</td>
-				<td><input id="nickname" name="nickname" value="${member.nickname}" readonly="readonly"/></td>
-			</tr>
-			<tr>
-
-			</tr>
-		</table>
-<!-- </form>  -->
-
-<h2>방명록</h2>
-	
-	<div>
-		<div>
-			nickname <input type="text" name="nickname" value="${member.nickname }" id="newReplyWriter" readonly>
-		</div>
-		<div>
-			REPLY <input type="text" name="reply" id="newReply">
-		</div>
-		<button id="replyAddBtn">리플추가</button>
-	</div>	
-	
-	<ul id="replies">
-	
-	</ul>
-	
-	
-	<!-- 모달 요소는 안 보이기 때문에 어디 넣어도 되지만 보통 html요소들 끼리 놨을때
-	제일 아래쪽에 작성하는 경우가 많습니다. -->
-	<div id="modDiv" style="display:none;">
-		<div class="modal-title"></div>
-		<div>
-			<input type="text" id="replytext">		
-=======
 
 	<div class="display">
 		<!-- side-bar -->
@@ -199,69 +196,64 @@ button {
 				<span><a href="#">Q&A</a></span> &nbsp;&nbsp;|&nbsp;&nbsp; <span><a
 					href="#">자주하는 질문</a></span>
 			</div>
+				<div class="side-bar__row">
+					<c:if test="${member == null }">
+            <div class="loginBtn">
+		        <span><a href="/user/userLogin" class="loginA">로그인</a></span>
+            </div>
+            <div class="joinBtn">
+		        <span><a href="/user/userJoin" class="joinA">가입하기</a></span>
+            </div>
+          </c:if>
+          <c:if test="${member != null }">
+	          <div class="consumer">
+	          	  <div class="consumer__imgPro">
+			        <img class="conimg" src="/resources/css/image/chaIcon.png"/>
+	          	  </div>
+		          <div class="consumer__nickname">
+		          	<p>${member.cid}</p>
+		          </div>
+		          <div class="consumer__info">
+	   					<a href="/user/userGet">* 유저정보창</a><br/>
+	   				<a href="/user/userpro">* 유저프로필창</a><br/>
+	   				<a href="/user/userLogout">* 로그아웃</a><br/>
+	   				<a href="/user/userDelete">* 회원탈퇴</a><br/>
+		   		  </div>
+	          </div>
+          </c:if>
+        </div>
+      </div>
 			<!-- about user -->
-		<div class="proImg">
-          <div>
-          <p class="uId">${member.nickname }(${member.cid  })</p>
-          </div>
-          <img class="imgPro" src="/resources/css/image/chaIcon.png"/>
-          
-          <div>
-   				<a href="/user/userGet">유저정보창</a>
-   				<a href="/user/userDelete">탈퇴창</a>
-   				</div>
-          </div>
->>>>>>> user
-		</div>
-		<div class="main">
-			<div class="container">
-				<div class="row">
-					<div class="userGet">
+			<div class="main">
+				<div class="container">
+					<div class="detail">
+					<div class="rowA">
 						<form name="form1" method="post">
-							<div class="row">
-							<div class="row">&nbsp;</div>
-							 <img class="imgProA" src="/resources/css/image/chaIcon.png"/>
+							<div class="img">
+								<div class="row">&nbsp;</div>
+								<img class="imgProA" src="/resources/css/image/chaIcon.png" />
 							</div>
-							<table class="table" width="400px">
-
+							<table class="table table1" width="400px">
 								<c:if test="${member eq 'kjw011231' }">
-									<tr >
+									<tr>
 										<td>유저고유번호</td>
 										<td><input id="cnum" name="cnum" value="${member.cnum}"
 											readonly="readonly"></td>
 									</tr>
+							<tr>
+							<td>닉네임</td>
+								<td id="nickname" name="nickname">${member.nickname}</td>
+							</tr>
 								</c:if>
-								<tr >
-									<td>아이디</td>
-									<td id="cid" name="cid">${member.cid}
-										</td>
-								</tr>
-								<tr>
-									<td>닉네임</td>
-									<td id="nickname" name="nickname">${member.nickname}</td>
-								</tr>
-								<tr>
-									<td>이메일</td>
-									<td id="email" name="email">${member.email}
-										</td>
-								</tr>
-								<tr>
-									<td>회원가입일자</td>
-									<td><fmt:formatDate value="${member.userregdate}"
-											pattern="yyy-MM-dd" /></td>
-								</tr>
 								
 							</table>
 						</form>
-							<div class="row">&nbsp;</div>
-						<br>
-						<br />
-						
-						<br />
+					
+						<br> <br /> <br />
 						<div class="modAub">
 							<div class="row">
 								<div class="col-md-3">
-									<p>${member.nickname } (방명록)</p>
+									<p>${member.nickname }(방명록)</p>
 								</div>
 								<div class="col-md-6">
 									<textarea style="resize: none;" name="reply" id="newReply"
@@ -274,65 +266,78 @@ button {
 									<br />
 								</div>
 							</div>
-
 							<ul id="replies">
 
-							</ul>
+							</ul><br/>
 						</div>
+						</div>
+				<div class="rowB">
+				<table class="table table-hover">
+					<tr>
+						<th>게임식별번호</th>
+						<th>게임제목</th>
+						<th>게임설명</th>
+						<th>태그</th>
+						<th>구매일자</th>
+					</tr>
+					<c:forEach var="library" items="${library }">
+						<tr>
+							<td>${library.gnum }</td>
+							<td><a href="gname">${gname}</a></td>
+							<td>${gcontent}</td>
+							<td>${tagname }</td>
+							<td>${board.regdate }</td>
+						</tr>
+					</c:forEach>
+
+				</table>
+				</div>
 					</div>
+				
 				</div>
 			</div>
-		<div class="footer">
-			<div class="footer-info">
-				<div>CREATORS&nbsp;&nbsp;김영훈, 김지우, 조훈현, 최재인</div>
-				<div>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;</div>
-				<div>
-					CONTACT&nbsp;&nbsp;<a href="https://github.com/GITJIWOO">https://github.com/GITJIWOO</a>
-				</div>
-			</div>
-			<div class="footer-copyright">
-				<div>Copyright © GAMMA All right reserved.</div>
-			</div>
+			<!--  row main-->
+	<!-- 모달 요소는 안 보이기 때문에 어디 넣어도 되지만 보통 html요소들 끼리 놨을때
+	제일 아래쪽에 작성하는 경우가 많습니다. -->
+	<div id="modDiv" style="display: none;">
+		<div class="modal-title" style="color: white"></div>
+		<div>
+			<textarea style="resize: none;" name="reply" id="replytext" rows="2"
+				cols="41"></textarea>
+		</div>
+		<div class="modBtn">
+			<button type="button" id="replyModBtn">수정</button>
+			<button type="button" id="replyDelBtn">삭제</button>
+			<button type="button" id="closeBtn">닫기</button>
 		</div>
 	</div>
-		</div>
-							<!-- 모달 요소는 안 보이기 때문에 어디 넣어도 되지만 보통 html요소들 끼리 놨을때
-	제일 아래쪽에 작성하는 경우가 많습니다. -->
-							<div id="modDiv" style="display: none;">
-								<div class="modal-title" style="color: white"></div>
-								<div>
-									<textarea style="resize: none;" name="reply" id="replytext"
-										rows="2" cols="41"></textarea>
-								</div>
-								<div class="modBtn">
-									<button type="button" id="replyModBtn">수정</button>
-									<button type="button" id="replyDelBtn">삭제</button>
-									<button type="button" id="closeBtn">닫기</button>
-								</div>
-							</div>
+
+			<div class="footer">
+				<div class="footer-info">
+					<div>CREATORS&nbsp;&nbsp;김영훈, 김지우, 조훈현, 최재인</div>
+					<div>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;</div>
+					<div>
+						CONTACT&nbsp;&nbsp;<a href="https://github.com/GITJIWOO">https://github.com/GITJIWOO</a>
+					</div>
+				</div>
+				<div class="footer-copyright">
+					<div>Copyright © GAMMA All right reserved.</div>
+				</div>
+			</div>
+	</div>
 
 	<script>
-	$(document).ready(function() {
-		// 취소
-		$(".loginA").on("click", function() {
-			location.href = "/user/userLogin";
-		})
-		$(".joinA").on("click", function() {
-			location.href = "/user/userJoin";
-		})
-	});
+	
 		var cnum = ${member.cnum};
 		function getAllList() {
-			$.getJSON("/userrp/all/" + cnum,
-							function(data) {
+			$.getJSON("/userrp/all/" + cnum,function(data) {
 								//data 변수가 바로 얻어온 json데이터의 집합
 								console.log(data);
 
 								// str 변수 내부에 문자 형태로 html 코드를 작성함
 								var str = "";
 
-								$(data).each(
-												function() {
+								$(data).each(function() {
 													// $(data).each()는 향상된 for문처럼 내부데이터를 하나하나 반복합니다.
 													// 내부 this는 댓글 하나하나입니다.
 													// 시간 형식을 우리가 쓰는 형식으로 변경
@@ -343,8 +348,7 @@ button {
 													console.log(date);
 													// date 내부의 시간을 형식(format)화 해서 출력
 													var formattedTime = "게시일 : "
-															+ date
-																	.getFullYear() // 년도 추출
+															+ date.getFullYear() // 년도 추출
 															+ "/"
 															+ (date.getMonth() + 1) // month는 0월부터시작
 															+ "/"
@@ -414,7 +418,7 @@ button {
 		$("#replyDelBtn").on("click", function() {
 			// 삭제에 필요한 댓글번호를 모달 타이틀 부분에서 얻기
 			var rno = $(".modal-title").html();
-
+			console.log("rno얻어왓니?딜리트"+rno)
 			$.ajax({
 				type : 'delete',
 				url : '/userrp/' + rno,
@@ -437,7 +441,9 @@ button {
 			var rno = $(".modal-title").html();
 			// 수정에 필요한 본문내역을 #replytext의 value값으로 얻기
 			var reply = $("#replytext").val();
-
+			console.log("rno?? :"+rno);
+			console.log("reply?? :"+reply);
+			
 			$.ajax({
 				type : 'put',
 				url : '/userrp/' + rno,
@@ -489,25 +495,17 @@ button {
 		$("#closeBtn").on("click", function() {
 			$("#modDiv").hide("slow");
 		});
+		
+		$(".consumer").mouseover(function(){
+			$(".consumer__info").show();
+		});
 
-		$(document).ready(function() {
-			$("#btnUpdate").click(function() {
-				// 확인 대화상자
-				if (confirm("수정하시겠습니까?")) {
-					document.form1.action = "localhost:8181/user/userModify";
-					document.form1.submit();
-				}
-			});
+		$(".consumer").mouseout(function(){
+			$(".consumer__info").hide();
 		});
-		$(document).ready(function() {
-			$("#btnDelete").click(function() {
-				//확인 대화 상자
-				if (confirm("삭제하시겠습니까?")) {
-					document.form1.action = "localhost:8181/user/userDelete"
-					document.form1.submit();
-				}
-			});
-		});
+		
+
+		
 	</script>
 </body>
 </html>

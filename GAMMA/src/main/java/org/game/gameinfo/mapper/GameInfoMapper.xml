@@ -30,8 +30,8 @@
 		<selectKey keyProperty="gnum" order="BEFORE" resultType="long">
 			SELECT game_num.nextval FROM DUAL
 		</selectKey>
-		INSERT INTO game (gnum, gname, glaunch, gfublisher, gdeveloper, gprice, gcontent, ggrade, gsite, gaddress)
-		VALUES (#{gnum}, #{gname}, TO_DATE(#{glaunch}, 'YY/MM/DD '), #{gfublisher}, #{gdeveloper}, #{gprice}, #{gcontent}, #{ggrade}, #{gsite}, #{gaddress})
+		INSERT INTO game (gnum, gname, glaunch, gfublisher, gdeveloper, gprice, gcontent, ggrade, gsite, gaddress, gpicture)
+		VALUES (#{gnum}, #{gname}, TO_DATE(#{glaunch}, 'YY/MM/DD '), #{gfublisher}, #{gdeveloper}, #{gprice}, #{gcontent}, #{ggrade}, #{gsite}, #{gaddress}, #{gpicture})
 	</insert>
 	
 	<!-- 게임 상세 조회 -->
@@ -47,19 +47,48 @@
 	<!-- 게임 수정 -->
 	<update id="updateGame">
 		UPDATE game SET gname = #{gname}, glaunch = TO_DATE(#{glaunch}, 'YY/MM/DD '), gdeveloper = #{gdeveloper}, gfublisher = #{gfublisher}, 
-		gprice = #{gprice}, gcontent = #{gcontent}, ggrade = #{ggrade}, gsite = #{gsite}, gaddress = #{gaddress}
+		gprice = #{gprice}, gcontent = #{gcontent}, ggrade = #{ggrade}, gsite = #{gsite}, gaddress = #{gaddress}, gpicture = #{gpicture}
 		WHERE gnum = #{gnum}
 	</update>
 	
-	<!-- 태그별 조회 -->
+	<!-- 태그별 조회 5개만-->
 	<select id="listByTag" resultType="org.game.gameinfo.domain.GameInfoVO">
+		<![CDATA[
 		SELECT gametag.tagname, game.* FROM gametag JOIN game on gametag.gnum = game.gnum	
-		WHERE tagname = #{tagname}
+		WHERE tagname = #{tagname} AND ROWNUM <= 5
+		]]>
 	</select>
 	
+	<!-- 태그별 조회 전체 -->
+	<select id="totalListByTag" resultType="org.game.gameinfo.domain.GameInfoVO">
+		SELECT gametag.tagname, game.* FROM gametag JOIN game on gametag.gnum = game.gnum	
+		WHERE tagname = #{tagname} 
+	</select>
+	
+	<!-- 게임 랜덤 4개 -->
+	<select id="randomList" resultType="org.game.gameinfo.domain.GameInfoVO">
+	<![CDATA[
+		select * from(select * from game order by DBMS_RANDOM.RANDOM ) where rownum <= 4
+		]]>
+	</select>
+	
+	<!-- 게임 출시 최신 순 -->
+	<select id="latestGame" resultType="org.game.gameinfo.domain.GameInfoVO">
+	<![CDATA[
+		select *from (select * from game order by glaunch desc) where ROWNUM <= 3 
+		]]>
+	</select>
+	
+	<!-- 액션 태그 4개 조회 -->
+	<select id="actionList" resultType="org.game.gameinfo.domain.GameInfoVO">
+	<![CDATA[
+		SELECT gametag.tagname, game.* FROM gametag JOIN game on gametag.gnum = game.gnum	
+		WHERE tagname = 'action' and ROWNUM <=4
+		]]>
+	</select>
 	
 	<!-- v페이징 -->
-	<select id="getGameListPaging" resultType="org.game.gameinfo.domain.GameInfoVO">
+	<select id="getGameListPaging" resultType="org.game.gameinfo.domain.GameInfoVO"  >
 	
 		<if test="searchType == 't'.toString()">
 		<![CDATA[
@@ -101,6 +130,4 @@
 		gnum > 0
 	</select>
 	
-	
-
 </mapper>

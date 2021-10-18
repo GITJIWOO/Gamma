@@ -1,7 +1,11 @@
 package org.game.controller;
 
+import java.util.List;
+
 import javax.servlet.http.HttpSession;
 
+import org.game.gameinfo.domain.GameInfoVO;
+import org.game.gameinfo.service.GameInfoService;
 import org.game.user.domain.ConsumerVO;
 import org.game.user.mapper.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,10 +26,17 @@ public class MainController {
 	@Autowired
 	private UserMapper userMapper;
 	
+	@Autowired
+	private GameInfoService gameInfoService;
+	
 	@GetMapping("/main")
 	public String gammaMain(HttpSession session, Model model) {
 		
 		String cid = (String)session.getAttribute("session_cid");
+		
+		List<GameInfoVO> latestGame = gameInfoService.latestGame();
+		List<GameInfoVO> randomList = gameInfoService.randomList();
+		List<GameInfoVO> actionList = gameInfoService.actionList();
 		
 		if(cid != null) {
 			ConsumerVO consumer = userMapper.userGet(cid);
@@ -33,6 +44,9 @@ public class MainController {
 		}
 		
 		model.addAttribute("cid", cid);
+		model.addAttribute("latestGame", latestGame);
+		model.addAttribute("randomList", randomList);
+		model.addAttribute("actionList", actionList);
 		
 		return "/main/main";
 	}

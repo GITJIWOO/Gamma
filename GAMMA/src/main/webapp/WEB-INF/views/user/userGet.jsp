@@ -7,19 +7,27 @@
 <!DOCTYPE html>
 <html>
 <head>
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <link rel="stylesheet" href="/resources/css/styles.css" />
+<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+<link rel="icon" type="image/png" href="http://example.com/myicon.png">
+<link rel="stylesheet" href="/resources/css/styles.css" />
 <style>
 * {
 	padding: 5px;
 	margin: 5px;
 }
-.userGet {
-	position: relative;
-	left: 20px;
+.detail{
+	display: flex;
+	flex-flow: row;
 }
-
+.Mbtn{position:relative;
+	left:50px;}
+.table1{position:relative;
+	left:50px;}
+.rowB{
+text-align: center;
+position:relative;
+top:50px;
+}
 
 .nick {
 	display: flex;
@@ -30,20 +38,24 @@ h2 {
 	font-weight: bold;
 	font-size: big;
 }
-.img{display:flex; 
-	flex-flow:row;
-	padding:10px;
+
+.img {
+	display: flex;
+	flex-flow: row;
+	padding: 10px;
 }
-.cidPro{
-color:orange;
+
+.cidPro {
+	color: orange;
 }
-.table{
+
+.table {
 	font-weight: bold;
 }
 
 p {
-	font-weight: bold; 
-	font-size:big;
+	font-weight: bold;
+	font-size: big;
 }
 
 strong {
@@ -62,7 +74,42 @@ strong {
 	z-index: 1000;
 	width: 310px;
 }
-
+	.consumer {
+		width: 25%;
+		position: relative;
+		text-align: center;
+		height: 20%;
+		buttom: 100;
+		left:50px;
+	}
+	.consumer__imgPro {
+		float: left;
+		padding: 0;
+		margin: 0;
+	}
+	.conimg {
+		width: 100px;
+		height: 100px;
+	}
+	.consumer__nickname {
+		float: right;
+		font-size: 25px;
+		font-weight: bold;
+		color: white;
+		
+	}
+	.consumer__info {
+		background-color:gray;
+		color:white;
+		display: none;
+		position: absolute;
+		top:50px;
+		left: 150%;
+		width:120px;
+		margin:5px;
+		border-radius: 10%;
+		text-align:left;
+	}
 modBtn {
 	display: flex;
 	flex-flow: row;
@@ -87,24 +134,31 @@ button {
 	border: solid 2px #212529;
 	transition: all 0.5s ease-in-out 0s;
 }
- .proImg{
- text-align:center;
- }
- .imgPro{
- width: 150px;
-	height: 150px;}
- .imgProA{
- width: 250px;
+
+.proImg {
+position:relative;
+	bottom:200px;
+	text-align: center;
+}
+
+.imgPro {
+	width: 150px;
+	height: 150px;
+}
+
+.imgProA {
+	width: 250px;
 	height: 250px;
-	padding:0;
-	margin:0;
- }
- .uid{
- 	 position: relative;
- 	 top:10px;
-	font-weight:bold;
-	color:white;
- }
+	padding: 0;
+	margin: 0;
+}
+
+.uid {
+	position: relative;
+	top: 10px;
+	font-weight: bold;
+	color: white;
+}
 </style>
 <meta charset="UTF-8">
 
@@ -119,7 +173,7 @@ button {
 			<!-- logo -->
 			<div class="side-bar__row">
 				<!-- 클릭하면 main화면으로 돌아오도록 a 태그 수정 -->
-				<span><a href="#"><img
+				<span><a href="/main/main"><img
 						src="/resources/css/image/logo.png" /></a></span>
 			</div>
 			<!-- search -->
@@ -139,42 +193,70 @@ button {
 				<span><a href="#">Q&A</a></span> &nbsp;&nbsp;|&nbsp;&nbsp; <span><a
 					href="#">자주하는 질문</a></span>
 			</div>
+				<div class="side-bar__row">
+				<c:if test="${member == null }">
+            <div class="loginBtn">
+		        <span><a href="/user/userLogin" class="loginA">로그인</a></span>
+            </div>
+            <div class="joinBtn">
+		        <span><a href="/user/userJoin" class="joinA">가입하기</a></span>
+            </div>
+          </c:if>
+          <c:if test="${member != null }">
+	          <div class="consumer">
+	          	  <div class="consumer__imgPro">
+			        <img class="conimg" src="/resources/css/image/chaIcon.png"/>
+	          	  </div>
+		          <div class="consumer__nickname">
+		          	<p>${member.cid}</p>
+		          </div>
+		          <div class="consumer__info">
+	   					<a href="/user/userGet">* 유저정보창</a><br/>
+	   				<a href="/user/userpro">* 유저프로필창</a><br/>
+	   				<a href="/user/userLogout">* 로그아웃</a><br/>
+	   				<a href="/user/userDelete">* 회원탈퇴</a><br/>
+		   		  </div>
+	          </div>
+          </c:if>
+        </div>
+      </div>
 			<!-- about user -->
-			
-		<div class="proImg">
-          <div>
-          <p class="uId">${member.nickname }(${member.cid  })</p>
-          </div>
-          <img class="imgPro" src="/resources/css/image/chaIcon.png"/>
-          
-          <div>
-   				<a href="/user/userGet">유저정보창</a>
-   				<a href="/user/userDelete">탈퇴창</a>
-   				</div>
-          </div>
-		</div>
-		<div class="main">
-			<div class="container">
-				<div class="row">
-					<div class="userGet">
+			<div class="main">
+				<div class="container">
+					<div class="detail">
+					<div class="rowA">
 						<form name="form1" method="post">
-							<div class="img">							
-							<div class="row">&nbsp;</div>
-							<img class="imgProA" src="/resources/css/image/chaIcon.png"/>
+							<div class="img">
+								<div class="row">&nbsp;</div>
+								<img class="imgProA" src="/resources/css/image/chaIcon.png" />
+									<div>
+									<br> <br> <br>
+									<h2>[[프로필이미지]]</h2>
+										<div class="uploadDiv">
+											<input type="file" name="uploadFile" multiple>
+										</div>
+
+										<div class="uploadResult">
+											<ul>
+												<!-- 업로드된 파일이 들어갈 자리 -->
+											</ul>
+										</div>
+										<button id="uploadBtn">upload</button>
+
+									</div>
 							</div>
-							<table class="table" width="400px">
+							<table class="table table1" width="400px">
 
 								<c:if test="${member eq 'kjw011231' }">
-									<tr >
+									<tr>
 										<td>유저고유번호</td>
 										<td><input id="cnum" name="cnum" value="${member.cnum}"
 											readonly="readonly"></td>
 									</tr>
 								</c:if>
-								<tr >
+								<tr>
 									<td>아이디</td>
-									<td id="cid" name="cid">${member.cid}
-										</td>
+									<td id="cid" name="cid">${member.cid}</td>
 								</tr>
 								<tr>
 									<td>닉네임</td>
@@ -182,8 +264,7 @@ button {
 								</tr>
 								<tr>
 									<td>이메일</td>
-									<td id="email" name="email">${member.email}
-										</td>
+									<td id="email" name="email">${member.email}</td>
 								</tr>
 								<tr>
 									<td>회원가입일자</td>
@@ -197,82 +278,90 @@ button {
 								</tr>
 							</table>
 						</form>
-							<div class="row">&nbsp;</div>
+						<div class="row">&nbsp;</div>
 						<div class="Mbtn">
-						<c:if test="${member != null}">
-							<a href="/user/userLogin"><button>로그인</button></a>
-							<a href="/user/userLogout"><button>로그아웃</button></a>
-							<a href="/user/userModify"><button>유저수정</button></a>
-							<a href="/user/userDelete"><button>탈퇴</button></a>
-						</c:if>
+							<c:if test="${member != null}">
+								<a href="/user/userLogin"><button>로그인</button></a>
+								<a href="/user/userLogout"><button>로그아웃</button></a>
+								<a href="/user/userModify"><button>유저수정</button></a>
+								<a href="/user/userDelete"><button>탈퇴</button></a>
+								<a href="/user/userPro"><button>프로필창</button></a>
+							</c:if>
 						</div>
-						<br>
-						<br />
-						
-						<br />
-						<div class="modAub">
-							<div class="row">
-								<div class="col-md-3">
-									<p>${member.nickname } (방명록)</p>
-								</div>
-								<div class="col-md-6">
-									<textarea style="resize: none;" name="reply" id="newReply"
-										rows="2" cols="30"></textarea>
-									<input type="hidden" name="nickname"
-										value="${member.nickname }" id="newReplyWriter" readonly>
-								</div>
-								<div class="col-md-3">
-									<button id="replyAddBtn">방명록 남기기</button>
-									<br />
-								</div>
-							</div>
-
-							<ul id="replies">
-
-							</ul>
 						</div>
+				<div class="rowB">
+				<table class="table table-hover">
+					<tr>
+						<th>게임식별번호</th>
+						<th>게임제목</th>
+						<th>게임설명</th>
+						<th>태그</th>
+						<th>구매일자</th>
+					</tr>
+					<c:forEach var="library" items="${library }">
+						<tr>
+							<td>${library.gnum }</td>
+							<td><a href="gname">${gname}</a></td>
+							<td>${gcontent}</td>
+							<td>${tagname }</td>
+							<td>${board.regdate }</td>
+						</tr>
+					</c:forEach>
+
+				</table>
+				</div>
+					</div>
+				
+				</div>
+			</div>
+			<!--  row main-->
+
+			<div class="footer">
+				<div class="footer-info">
+					<div>CREATORS&nbsp;&nbsp;김영훈, 김지우, 조훈현, 최재인</div>
+					<div>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;</div>
+					<div>
+						CONTACT&nbsp;&nbsp;<a href="https://github.com/GITJIWOO">https://github.com/GITJIWOO</a>
 					</div>
 				</div>
-			</div>
-		<div class="footer">
-			<div class="footer-info">
-				<div>CREATORS&nbsp;&nbsp;김영훈, 김지우, 조훈현, 최재인</div>
-				<div>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;</div>
-				<div>
-					CONTACT&nbsp;&nbsp;<a href="https://github.com/GITJIWOO">https://github.com/GITJIWOO</a>
+				<div class="footer-copyright">
+					<div>Copyright © GAMMA All right reserved.</div>
 				</div>
 			</div>
-			<div class="footer-copyright">
-				<div>Copyright © GAMMA All right reserved.</div>
-			</div>
+	</div>
+	<!-- 모달 요소는 안 보이기 때문에 어디 넣어도 되지만 보통 html요소들 끼리 놨을때
+	제일 아래쪽에 작성하는 경우가 많습니다. -->
+	<div id="modDiv" style="display: none;">
+		<div class="modal-title" style="color: white"></div>
+		<div>
+			<textarea style="resize: none;" name="reply" id="replytext" rows="2"
+				cols="41"></textarea>
+		</div>
+		<div class="modBtn">
+			<button type="button" id="replyModBtn">수정</button>
+			<button type="button" id="replyDelBtn">삭제</button>
+			<button type="button" id="closeBtn">닫기</button>
 		</div>
 	</div>
-		</div>
-							<!-- 모달 요소는 안 보이기 때문에 어디 넣어도 되지만 보통 html요소들 끼리 놨을때
-	제일 아래쪽에 작성하는 경우가 많습니다. -->
-							<div id="modDiv" style="display: none;">
-								<div class="modal-title" style="color: white"></div>
-								<div>
-									<textarea style="resize: none;" name="reply" id="replytext"
-										rows="2" cols="41"></textarea>
-								</div>
-								<div class="modBtn">
-									<button type="button" id="replyModBtn">수정</button>
-									<button type="button" id="replyDelBtn">삭제</button>
-									<button type="button" id="closeBtn">닫기</button>
-								</div>
-							</div>
 
 	<script>
 	$(document).ready(function() {
-		// 취소
+		
 		$(".loginA").on("click", function() {
 			location.href = "/user/userLogin";
-		})
+		});
 		$(".joinA").on("click", function() {
 			location.href = "/user/userJoin";
-		})
-	});
+		});
+		$(".consumer").mouseover(function(){
+				$(".consumer__info").show();
+			});
+
+			$(".consumer").mouseout(function(){
+				$(".consumer__info").hide();
+			});
+			
+	
 		var cnum = ${member.cnum};
 		function getAllList() {
 			$.getJSON("/userrp/all/" + cnum,
@@ -283,8 +372,7 @@ button {
 								// str 변수 내부에 문자 형태로 html 코드를 작성함
 								var str = "";
 
-								$(data).each(
-												function() {
+								$(data).each(function() {
 													// $(data).each()는 향상된 for문처럼 내부데이터를 하나하나 반복합니다.
 													// 내부 this는 댓글 하나하나입니다.
 													// 시간 형식을 우리가 쓰는 형식으로 변경
@@ -442,7 +530,6 @@ button {
 			$("#modDiv").hide("slow");
 		});
 
-		$(document).ready(function() {
 			$("#btnUpdate").click(function() {
 				// 확인 대화상자
 				if (confirm("수정하시겠습니까?")) {
@@ -450,8 +537,6 @@ button {
 					document.form1.submit();
 				}
 			});
-		});
-		$(document).ready(function() {
 			$("#btnDelete").click(function() {
 				//확인 대화 상자
 				if (confirm("삭제하시겠습니까?")) {
@@ -459,7 +544,188 @@ button {
 					document.form1.submit();
 				}
 			});
-		});
+			// 정규표현식으로 파일 확장자, 용량 거르기
+			var regex = new RegExp("(.*?)\.(exe|sh|zip|az)$");
+			
+			var maxSize = 5242880; //5mb
+			
+			function checkExtension(fileName, fileSize){
+				if(fileSize >= maxSize){
+					alert("파일 사이즈 초과");
+					return false;
+				}
+				
+				// 아까 만든 형식에 파일 이름이 해당하는지 아닌지 검사
+				if(regex.test(fileName)){
+					alert("해당 종류의 파일은 업로드할 수 없습니다.");					
+					return false;
+				}
+				return true;
+			}			
+			
+			// 업로드시 파일 선택을 초기화시키기 위해 미리 비어있는
+			// .uploadDiv를 깊은복사로 복사해둠
+			var cloneObj = $('.uploadDiv').clone();
+			
+			
+			$("#uploadBtn").on("click", function(e){
+				
+				
+				var cnum =$(".cnum").val();
+				// ajax는 제출버튼을 눌렀을때 목적지가 없기 때문에
+				// 빈 폼을 만들고 거기에 정보를 채워나갑니다.
+				var formData = new FormData();
+				
+				var inputFile = $("input[name='uploadFile']");
+				console.log(cnum);
+				console.log(inputFile);
+				var files= inputFile[0].files;
+				
+				console.log(files);
+				
+				// 파일데이터를 폼에 넣기
+				for(var i = 0; i < files.length; i++){
+					// 폼에 넣기 전에 검사부터
+					if(!checkExtension(files[i].name, files[i].size)){
+						return false;
+					}
+					
+					formData.append("uploadFile", files[i]);
+				}
+				
+				console.log(formData);
+				
+				$.ajax({
+					url: '/uploadAjaxAction',
+					processData : false,
+					contentType : false,
+					data : formData,cnum
+					type : 'POST',
+					dataType:'json', // 입력시 json으로 콘솔에, 안입력하면 xml로 콘솔에찍힘.
+					success : function(result){
+						console.log(result);// 내가 업로드한 파일 내역이 콘솔에 찍히나 디버깅
+
+						// 업로드된 그림파일 목록을 ul내부에 리스트로 입력
+						showUploadedFile(result);
+						
+						// 세팅되어있던 파일이 업로드되면서 목록에서 사라지게 처리.
+						$(".uploadDiv").html(cloneObj.html());
+					}
+				});
+			});// onclick uploadBtn
+			
+
+			
+			var uploadResult = $(".uploadResult ul");
+			
+			function showUploadedFile(uploadResultArr){
+				var str = "";
+				
+				// i는 인덱스번호(0, 1, 2....) obj 그림파일 정보가 담긴 json
+				$(uploadResultArr).each(function(i, obj){
+					
+						if(!obj.image){
+							
+							var fileCallPath = encodeURIComponent(
+									obj.uploadPath + "/"
+								+ obj.uuuid + "_" + obj.fileName);
+							
+							// 그림이 아니면 썸네일대신 resources폴더 내 이미지를 대체로 보여줌
+							str += "<li "
+								+"data-path='" + obj.uploadPath + "' data-uuuid='" + obj.uuuid
+								+ "' data-filename='" + obj.fileName + "' data-type='" + obj.image
+								+ "'><a href='/download?fileName=" + fileCallPath
+								+ "'><img src='/resources/file.png'>"
+								+ obj.fileName + "</a>"
+								+ "<span data-file=\'" + fileCallPath + "\' data-type='file'>X</span>"
+								+ "</li>";
+						} else {
+							//str += "<li>" + obj.fileName + "</li>";
+							// 파일이름 + 썸네일을 보여주기 위해 썸네일 주소 요청하게 만들기
+							var fileCallPath = encodeURIComponent(obj.uploadPath
+										+ "/s_" + obj.uuuid + "_" + obj.fileName);
+							var fileCallPath2 = encodeURIComponent(obj.uploadPath
+									+ "/" + obj.uuuid + "_" + obj.fileName);
+							
+							// 원래 그냥 fileCallPath를 조립해서
+							str += "<li "
+								+"data-path='" + obj.uploadPath + "' data-uuuid='" + obj.uuuid
+								+ "' data-filename='" + obj.fileName + "' data-type='" + obj.image
+								+ "'><a href='/download?fileName=" + fileCallPath2
+								+ "'><img src='/display?fileName=" 
+								+ fileCallPath +"'>" + obj.fileName + "</a>"
+								+ "<span data-file=\'" + fileCallPath + "\' data-type='image'>X</span>"	
+								+ "</li>";
+						}
+					});
+					uploadResult.append(str);
+				}//showUploadedFile
+			
+			$(".uploadResult").on("click", "span", function(e){
+				
+				
+				
+				console.log($(e));
+				
+				console.log($(this));
+				var targetFile = $(this).data("file");
+				var type = $(this).data("type");
+				console.log(targetFile + "///" + type);
+				
+				var targetLi  = $(this).closest("li");
+				
+				$.ajax({
+					url : '/deleteFile',
+					data : {fileName : targetFile, type:type},
+					dataType : 'text',
+					type : 'post',
+					success : function(result){
+						alert(result);
+						targetLi.remove();
+					}
+				})
+			});// .uploadResult click
+			
+			
+			$("#submitBtn").on("click", function(e){
+				// 클릭된 요소의 동작 중지(제출버튼인경우 버튼을 눌러도 제출이 되지 않음)
+				// 글쓰기를 했을때, 그림이 몇 장 추가될지는 글을 써봐야 알 수 있음
+				// 제출을 바로 하지 못하도록 막습니다.
+				e.preventDefault();
+				
+				// 위의 form에 업로드된 그림요소들에 대한 정보를 추가합니다.
+				// 1. form 태그 정보 얻어오기
+				// 상단 form태그에 이미지 관련 정보를 hidden으로 추가하기 위해 얻어옴
+				var formObj = $('form');
+				
+				// 2. 추가내용을 먼저 받기 위해 빈 문자열 생성
+				var str = "";
+				
+				// 3. .uploadResult 내부에 들어간 그림정보를 얻어와서
+				// formObj내부에 넣어주기
+				// .uploadResult내부 ul 내부의 li가 그림정보를 담고있으므로
+				// 반복문으로 처리
+				$(".uploadResult ul li").each(function(i, obj){
+					
+					var imgInfo = $(obj);
+					// BoardVO 내부의 List<BoardAttachVO>를 처리하기 위해 변수명 attachList로 전달 
+					str += "<input type='hidden' name='attachList[" + i + "].fileName'"
+						+ " value='"+ imgInfo.data("filename") +"'>"
+						+ "<input type='hidden' name='attachList[" + i + "].uuuid'"
+						+ " value='"+ imgInfo.data("uuid") +"'>"
+						+ "<input type='hidden' name='attachList[" + i + "].uploadPath'"
+						+ " value='"+ imgInfo.data("path") +"'>"
+						+ "<input type='hidden' name='attachList[" + i + "].image'"
+						+ " value='"+ imgInfo.data("type") +"'>"
+				});
+				// 반복이 끝나면, formObj에 위 태그들을 추가한 다음 제출합니다.
+				formObj.append(str).submit();
+				// 그림정보가 잘 추가되는지 디버깅
+				//console.log($(formObj));
+			});// #submitBtn onclick
+						
+	});
+	
 	</script>
 </body>
 </html>

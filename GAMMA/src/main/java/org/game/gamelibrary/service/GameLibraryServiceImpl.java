@@ -2,6 +2,7 @@ package org.game.gamelibrary.service;
 
 import java.util.List;
 
+import org.game.gamelibrary.domain.GameLibraryVO;
 import org.game.gamelibrary.domain.ResultLibraryVO;
 import org.game.gamelibrary.mapper.GameLibraryMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,11 +25,18 @@ public class GameLibraryServiceImpl implements GameLibraryService {
 		List<ResultLibraryVO> library = mapper.librarySelect(cid);
 		return library;
 	}
+	
+	// 라이브러리 게임 하나 조회
+	@Override
+	public GameLibraryVO getOneConsumerLibrary(String cid, long gnum) {
+		GameLibraryVO library = mapper.librarySelectOne(cid, gnum);
+		return library;
+	}
 
 	// 라이브러리 게임 추가
 	@Override
 	public void additionalLibrary(String cid, long gnum) {
 		mapper.libraryInsert(cid, gnum);
 	}
-	
+
 }

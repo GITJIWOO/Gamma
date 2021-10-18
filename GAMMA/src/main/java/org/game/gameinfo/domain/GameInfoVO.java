@@ -18,6 +18,7 @@ public class GameInfoVO {
 	private int ggrade;
 	private String gsite;
 	private String gaddress;
+	private String gpicture;	// 사진
 	
 	private long grnum;
 	private String gos;

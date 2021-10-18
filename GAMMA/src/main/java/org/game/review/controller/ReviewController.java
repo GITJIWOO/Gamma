@@ -14,6 +14,8 @@ import org.game.review.domain.ReviewVO;
 import org.game.review.service.ReviewCommentService;
 import org.game.review.service.ReviewLikeService;
 import org.game.review.service.ReviewService;
+import org.game.user.domain.ConsumerVO;
+import org.game.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -44,18 +46,26 @@ public class ReviewController {
 	@Autowired
 	private GameInfoService gameService;
 	
+	@Autowired
+	private UserService userService;
+	
 	// 모든 평가 조회
 	@GetMapping("/reviewList/{gnum}")
-	public String getReviewList(@PathVariable("gnum") long gnum, String listKind, Model model) {
+	public String getReviewList(@PathVariable("gnum") long gnum, String listKind, HttpSession session, Model model) {
+
+		String cid = (String)session.getAttribute("session_cid");
+		
 		GameInfoVO game = gameService.getGame(gnum);
 		if(listKind == null || listKind.equals("") || listKind.equals("famous")) {
 			List<ReviewVO> famousReview = reviewService.getFamousReview(gnum);
 			model.addAttribute("review", famousReview);
 			model.addAttribute("game", game);
+			model.addAttribute("cid", cid);
 		} else if(listKind.equals("new")) {
 			List<ReviewVO> newReview = reviewService.getNewReview(gnum);
 			model.addAttribute("review", newReview);
 			model.addAttribute("game", game);
+			model.addAttribute("cid", cid);
 		}
 		return "/review/reviewList";
 	}
@@ -64,8 +74,14 @@ public class ReviewController {
 	@GetMapping("/reviewDetail/{grnum}")
 	public String getReviewDetail(@PathVariable("grnum") long grnum, ReviewCommentCriteria rccri, HttpSession session, Model model) {
 		
-		// 리뷰 디테일
+		// 리뷰 디테일 정보
 		ReviewVO review = reviewService.getReviewDetail(grnum);
+		
+		// 게임 디테일 정보
+		GameInfoVO game = gameService.getGame(review.getGnum());
+		
+		// 리뷰 작성 유저
+		ConsumerVO reviewWriter = userService.userGet(review.getCid());
 		
 		// 리뷰 댓글
 		List<ReviewCommentVO> reviewComment = commentService.getReviewComment(grnum, rccri);
@@ -75,17 +91,21 @@ public class ReviewController {
 		ReviewCommentDTO pageBtn = new ReviewCommentDTO(rccri, total, 10);
 		
 		// 세션 아이디, 어드민
-		String cid = String.valueOf(session.getAttribute("session_cid"));
+		String cid = (String)session.getAttribute("session_cid");
 		String cadmin = String.valueOf(session.getAttribute("session_cadmin"));
 		
 		// 좋아요 여부
-		ReviewLikeVO rlvo = reviewLikeService.getReviewLike(grnum, cid);
+		if(cid != null) {
+			ReviewLikeVO rlvo = reviewLikeService.getReviewLike(grnum, cid);
+			model.addAttribute("rlvo", rlvo);
+		}
 		
 		model.addAttribute("cid", cid);
-		model.addAttribute("rlvo", rlvo);
+		model.addAttribute("game", game);
 		model.addAttribute("cadmin", cadmin);
 		model.addAttribute("review", review);
 		model.addAttribute("pageBtn", pageBtn);
+		model.addAttribute("reviewWriter", reviewWriter);
 		model.addAttribute("reviewComment", reviewComment);
 		
 		return "/review/reviewDetail";
@@ -96,7 +116,7 @@ public class ReviewController {
 	public String writeReview(ReviewVO review, HttpSession session, RedirectAttributes rttr) {
 		
 		long gnum = review.getGnum();
-		String cid = String.valueOf(session.getAttribute("session_cid"));
+		String cid = (String)session.getAttribute("session_cid");
 		
 		if(cid == null) {
 			return "redirect:/review/reviewList/" + gnum;
@@ -114,7 +134,7 @@ public class ReviewController {
 	public String modifyReview(ReviewVO review, HttpSession session, RedirectAttributes rttr) {
 		
 		long grnum = review.getGrnum();
-		String cid = String.valueOf(session.getAttribute("session_cid"));
+		String cid = (String)session.getAttribute("session_cid");
 		
 		if(cid == null) {
 			return "redirect:/review/reviewDetail/" + grnum;
@@ -134,7 +154,7 @@ public class ReviewController {
 		ReviewVO grvo = reviewService.getReviewDetail(grnum);
 		
 		long gnum = grvo.getGnum();
-		String cid = String.valueOf(session.getAttribute("session_cid"));
+		String cid = (String)session.getAttribute("session_cid");
 		
 		if(cid == null) {
 			return "redirect:/review/reviewDetail/" + grnum;
@@ -153,7 +173,7 @@ public class ReviewController {
 	public String likeReview(ReviewLikeVO vo, HttpSession session, RedirectAttributes rttr) {
 		
 		long grnum = vo.getGrnum();
-		String cid = String.valueOf(session.getAttribute("session_cid"));
+		String cid = (String)session.getAttribute("session_cid");
 		
 		if(cid == null) {
 			return "redirect:/review/reviewDetail/" + grnum;
@@ -186,7 +206,7 @@ public class ReviewController {
 	public String writeReviewComment(ReviewCommentVO rc, HttpSession session) {
 		
 		long grnum = rc.getGrnum();
-		String cid = String.valueOf(session.getAttribute("session_cid"));
+		String cid = (String)session.getAttribute("session_cid");
 		
 		if(cid == null) {
 			return "redirect:/review/reviewDetail/" + grnum;
@@ -202,7 +222,7 @@ public class ReviewController {
 	public String removeReviewComment(ReviewCommentVO rc, HttpSession session) {
 		
 		long grnum = rc.getGrnum();
-		String cid = String.valueOf(session.getAttribute("session_cid"));
+		String cid = (String)session.getAttribute("session_cid");
 		
 		if(cid == null) {
 			return "redirect:/review/reviewDetail/" + grnum;
