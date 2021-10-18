@@ -1,11 +1,15 @@
 package org.game.user.controller;
 
+import java.util.List;
+
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.game.friends.service.FriendsService;
+import org.game.gamelibrary.domain.ResultLibraryVO;
+import org.game.gamelibrary.service.GameLibraryService;
 import org.game.user.domain.ConsumerVO;
 import org.game.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,19 +36,22 @@ public class UserController {
 	UserService service;
 	// @Inject
 	// BCryptPasswordEncoder pwdEncoder;
-	//@Autowired
-	//private JavaMailSender mailSender;
-	
+	// @Autowired
+	// private JavaMailSender mailSender;
+
 	@Autowired
 	private FriendsService fservice;
+	
+	@Autowired
+	private GameLibraryService libraryService;
 	
 	// 유저프로필
 	@GetMapping("/userPro")
 	public String userPro() {
-		
-		
+
 		return "/user/userPro";
 	}
+
 	@PostMapping("/userPro")
 	public String userPro(ConsumerVO userVO, Model model) {
 		/*
@@ -56,9 +63,14 @@ public class UserController {
 		 */
 		model.addAttribute("dto", service.userGet(userVO.getCid()));
 		log.info("클릭한유저번호" + userVO);
-		if(userVO.getAttachList() != null) {
+		if (userVO.getAttachList() != null) {
 			userVO.getAttachList().forEach(attach -> log.info(attach));
 		}
+		
+		List<ResultLibraryVO> libraryList = libraryService.getAllConsumerLibrary(userVO.getCid());
+		
+		model.addAttribute("libraryList", libraryList);
+		
 		return "/user/userPro";
 	}
 
@@ -66,17 +78,16 @@ public class UserController {
 	public String userGet() {
 		return "/user/userGet";
 	}
-	
 
 	// 유저 상제정보창
 	@PostMapping("/userGet")
 	public String userGet(ConsumerVO userVO, Model model) {
 		model.addAttribute("dto", service.userGet(userVO.getCid()));
 		log.info("클릭한유저번호" + userVO);
-		if(userVO.getAttachList() != null) {
+		if (userVO.getAttachList() != null) {
 			userVO.getAttachList().forEach(attach -> log.info(attach));
 		}
-		
+
 		return "/user/userGet";
 	}
 
@@ -85,6 +96,7 @@ public class UserController {
 	@GetMapping("/userJoin")
 	public String userJoin() throws Exception {
 		log.info("get방식회원가입접속");
+
 		return "/user/userJoin";
 
 	}
@@ -138,6 +150,7 @@ public class UserController {
 		return "/user/userLogin";
 	}
 
+	@SuppressWarnings("unused")
 	@PostMapping("/userLogin")
 	public String userLogin(ConsumerVO userVO, HttpServletRequest req, RedirectAttributes rttr) throws Exception {
 		log.info("로그인컨트롤실행");
@@ -145,29 +158,35 @@ public class UserController {
 		String memberSession = String.valueOf(session.getAttribute("member"));
 		System.out.println("멤버세션값 : " + memberSession);
 		ConsumerVO login = service.userLogin(userVO);
-		System.out.println("VO" + userVO);
-		System.out.println("DB" + login);
-		System.out.println("VO의 비번 " + userVO.getPassword());
-		System.out.println("DB의 비번 " + login.getPassword());
-		// boolean pwdMatch = pwdEncoder.matches(userVO.getPassword(),
+		/*
+		 * System.out.println("UserVO : " + userVO); System.out.println("DB : " +
+		 * login); System.out.println("UserVO의 비번 : " + userVO.getPassword());
+		 * System.out.println("DB의 비번 : " + login.getPassword());
+		 */		// boolean pwdMatch = pwdEncoder.matches(userVO.getPassword(),
 		// login.getPassword());
 		// System.out.println("비번매칭 : " + pwdMatch);
+		if (login == null) {
+			session.setAttribute("member", null);
+			memberSession = String.valueOf(session.getAttribute("member"));
+			System.out.println("멤버세션값 else : " + memberSession);
+			rttr.addFlashAttribute("msg", false);
+
+			return "redirect:/user/userLogin";
+		} 
 		boolean result = login.getPassword().equals(userVO.getPassword());
-		System.out.println("result 값 : " + result);
-		if (result == true) { // 위의 result는 나중에 바꿔야함 복호화와 시큐리티 적용하면 오류생길가능성이 높다 .equls는 단순한 문자열 비교라 그럼
+		if(result==true){
+			System.out.println("result 값 : " + result);
 			session.setAttribute("member", login);
 			session.setAttribute("session_cid", login.getCid());
 			session.setAttribute("session_cadmin", login.getCadmin());
 			memberSession = String.valueOf(session.getAttribute("member"));
 			System.out.println("멤버세션값 iftrue : " + memberSession);
-		} else{
-			System.out.println("result값 :" +result);
+		} else {
 			session.setAttribute("member", null);
 			memberSession = String.valueOf(session.getAttribute("member"));
 			System.out.println("멤버세션값 else : " + memberSession);
 			rttr.addFlashAttribute("msg", false);
-			
-			return "/user/userLogin";
+			return "redirect:/user/userLogin"; // rttr.addF~ 는 return에 redirect: 안넣으면 안보내진다
 		}
 		return "redirect:/user/userLogin";
 	}
@@ -175,7 +194,7 @@ public class UserController {
 	// 로그아웃 과 세션 초기화
 	// 시큐리티 적용 전 얘하나로만 했었음
 	@GetMapping("/userLogout")
-	public String userLogout(HttpSession session) throws Exception { 
+	public String userLogout(HttpSession session) throws Exception {
 		// security-con~ 에서 세션파기설정이되있음
 		session.invalidate();
 
@@ -220,17 +239,16 @@ public class UserController {
 		session.invalidate();
 		return "/user/userLogin";
 	}
-	
+
 	// 비밀번호찾기 이메일발송
 	@GetMapping("/findpw")
-	public String findPwGet() throws Exception{
+	public String findPwGet() throws Exception {
 		return "/user/findpw";
 	}
-	
+
 	@PostMapping("/findpw")
-	public String findPwPost() throws Exception{
+	public String findPwPost() throws Exception {
 		return "/user/findpw";
 	}
-	
 
 }

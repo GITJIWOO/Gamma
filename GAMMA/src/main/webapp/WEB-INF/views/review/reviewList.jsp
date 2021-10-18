@@ -28,7 +28,7 @@
 		color: dimgray;
 	}
 	.link {
-		margin-bottom: 10px;
+		margin-bottom: 20px;
 	}
 	.gameTitle {
 		font-size: 180%;
@@ -40,6 +40,24 @@
 	}
 	.option {
 		background-color: darkgray;
+		margin-bottom: 10px;
+	}
+	.card-header {
+		font-size: 110%;
+	}
+	.card-title {
+		font-size: 130%;
+		font-weight: bold;
+	}
+	.grdate {
+		opacity: 0.7;
+		margin-bottom: 3px;
+	}
+	.grcontent {
+		font-size: 120%;
+	}
+	.grrecommend {
+	
 	}
 </style>
 </head>
@@ -100,8 +118,11 @@
 		          	<p>${cid}</p>
 		          </div>
 		          <div class="consumer__info">
-	   				<a href="/user/userGet">유저정보창</a>
-	   				<a href="/user/userLogout">로그아웃</a>
+	   				<a href="/user/userGet">* 유저정보창</a><br/>
+	   				<a href="/user/userPro">* 유저프로필창</a><br/>
+	   				<a href="/user/userLogout">* 로그아웃</a><br/>
+	   				<a href="/friends/followerlist">* 팔로워리스트</a><br/>
+	   				<a href="/friends/followinglist">* 팔로윙리스트</a><br/>
 		   		  </div>
 	          </div>
           </c:if>
@@ -125,9 +146,9 @@
 					<input type="submit" value="적용">
 				</form>
 			</div>
-			<div id="review row">
+			<div id="review">
 				<c:forEach var="review" items="${review}">
-					<div class="reviewCard col-md-5">
+					<div class="reviewCard">
 						<div class="card" data-grnum="${review.grnum}">
 							<div class="card-header">
 								${review.cid}
@@ -138,11 +159,13 @@
 										<c:when test="${review.grlike == 1}"><i class="fas fa-thumbs-up fa-2x"></i> 추천</c:when>
 										<c:when test="${review.grlike == 0}"><i class="fas fa-thumbs-down fa-2x"></i> 비추천</c:when>
 									</c:choose></h5>
-							    <p class="card-text">
-							    	${review.grdate}<br/>
-							    	<strong>${review.grcontent}</strong><br/>
-							    	${review.grrecommend}
-							    </p>
+							    <div class="card-text">
+							    	<p class="grdate">${review.grdate}</p>
+							    	<br/>
+							    	<p class="grcontent">${review.grcontent}</p>
+							    	<br/>
+							    	<p class="grrecommend">${review.grrecommend}</p>
+							    </div>
 							</div>
 						</div>
 					</div>

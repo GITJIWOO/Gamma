@@ -10,6 +10,7 @@
 <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
 <link rel="icon" type="image/png" href="http://example.com/myicon.png">
 <link rel="stylesheet" href="/resources/css/styles.css" />
+<script src="<c:url value="/resources/js/main.js"/>"></script>
 <style>
 * {
 	padding: 5px;

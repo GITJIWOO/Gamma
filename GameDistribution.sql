@@ -26,6 +26,7 @@ CREATE TABLE game (
     gdeveloper VARCHAR2(20) NOT NULL,
     gfublisher VARCHAR2(20) NOT NULL,
     gprice VARCHAR2(20) NOT NULL,
+    gpicture VARCHAR2(100) NOT NULL,
     gcontent VARCHAR2(1000) NOT NULL,
     ggrade NUMBER(4) NOT NULL,
     gsite VARCHAR2(100) NOT NULL,
@@ -87,13 +88,14 @@ INSERT INTO consumer(cnum, cid, email, password, nickname, cadmin)
     VALUES(consumer_num.nextval,'kjw011231', 'kjw0111231@gmail.com', 'rlawldn', '김지우', 1);
 INSERT INTO consumer(cnum, cid, email, password, nickname, cadmin) 
     VALUES(consumer_num.nextval,'cho', 'chocc', 'aaa', 'cho', 0);
-
+ 
 SELECT * FROM consumer; 
 CREATE TABLE authorities(
 cnum NUMBER ,
 cid VARCHAR2(20) NOT NULL,
 auth varchar2(50) not null,
 constraint fk_authorities_users foreign key(cnum) references consumer(cnum));
+
 
  alter table authorities drop constraint fk_authorities_users;
 create unique index ix_auth_cid on authorities (cid, auth);
@@ -108,6 +110,7 @@ insert into authorities (cnum,cid,authority) values(504,'admin00','ROLE_ADMIN');
 commit;
 
 /* 유저방명록 (각 개인 상태창에 보임)*/
+DROP TABLE userreply_tbl;
 CREATE table userreply_tbl(
     rno number(10,0),
     cnum number(10,0) not null,
@@ -122,12 +125,11 @@ CREATE table userreply_tbl(
     alter table userreply_tbl add constraint pk_reply1 primary key(rno);
     
     alter table userreply_tbl add constraint fk_ureply 
-    foreign key (cnum) references consumer(cnum);
+    foreign key (cnum) references consumer(cnum) ON DELETE CASCADE;
  alter table userreply_tbl add constraint fk_ureply1 
-    foreign key (nickname) references consumer(nickname);
+    foreign key (nickname) references consumer(nickname) ON DELETE CASCADE;
     ALTER TABLE userreply_tbl RENAME COLUMN replyDate to ureplydate;
     ALTER TABLE userreply_tbl RENAME COLUMN updateDate to uupdatedate;
-  
   
     /*프로필 전용 db*/
 CREATE TABLE img_tbl(
