@@ -7,8 +7,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+<link rel="icon" type="image/png" href="http://example.com/myicon.png">
 <link rel="stylesheet" href="/resources/css/styles.css" />
 <style>
 * {
@@ -18,10 +18,6 @@
 .detail{
 	display: flex;
 	flex-flow: row;
-}
-.modAub{
-	position:relative;
-	left:50px;
 }
 .Mbtn{position:relative;
 	left:50px;}
@@ -78,7 +74,42 @@ strong {
 	z-index: 1000;
 	width: 310px;
 }
-
+	.consumer {
+		width: 25%;
+		position: relative;
+		text-align: center;
+		height: 20%;
+		buttom: 100;
+		left:50px;
+	}
+	.consumer__imgPro {
+		float: left;
+		padding: 0;
+		margin: 0;
+	}
+	.conimg {
+		width: 100px;
+		height: 100px;
+	}
+	.consumer__nickname {
+		float: right;
+		font-size: 25px;
+		font-weight: bold;
+		color: white;
+		
+	}
+	.consumer__info {
+		background-color:gray;
+		color:white;
+		display: none;
+		position: absolute;
+		top:50px;
+		left: 150%;
+		width:120px;
+		margin:5px;
+		border-radius: 10%;
+		text-align:left;
+	}
 modBtn {
 	display: flex;
 	flex-flow: row;
@@ -142,7 +173,7 @@ position:relative;
 			<!-- logo -->
 			<div class="side-bar__row">
 				<!-- 클릭하면 main화면으로 돌아오도록 a 태그 수정 -->
-				<span><a href="#"><img
+				<span><a href="/main/main"><img
 						src="/resources/css/image/logo.png" /></a></span>
 			</div>
 			<!-- search -->
@@ -162,16 +193,33 @@ position:relative;
 				<span><a href="#">Q&A</a></span> &nbsp;&nbsp;|&nbsp;&nbsp; <span><a
 					href="#">자주하는 질문</a></span>
 			</div>
-				<div class="proImg side-bar__row">
-					<div>
-						<p class="uId">${member.nickname }(${member.cid  })</p>
-					</div>
-					<img class="imgPro" src="/resources/css/image/chaIcon.png" />
-					<div>
-						<a href="/user/userGet">유저정보창</a> <a href="/user/userDelete">탈퇴창</a>
-					</div>
-				</div>
-		</div>
+				<div class="side-bar__row">
+				<c:if test="${member == null }">
+            <div class="loginBtn">
+		        <span><a href="/user/userLogin" class="loginA">로그인</a></span>
+            </div>
+            <div class="joinBtn">
+		        <span><a href="/user/userJoin" class="joinA">가입하기</a></span>
+            </div>
+          </c:if>
+          <c:if test="${member != null }">
+	          <div class="consumer">
+	          	  <div class="consumer__imgPro">
+			        <img class="conimg" src="/resources/css/image/chaIcon.png"/>
+	          	  </div>
+		          <div class="consumer__nickname">
+		          	<p>${member.cid}</p>
+		          </div>
+		          <div class="consumer__info">
+	   					<a href="/user/userGet">* 유저정보창</a><br/>
+	   				<a href="/user/userpro">* 유저프로필창</a><br/>
+	   				<a href="/user/userLogout">* 로그아웃</a><br/>
+	   				<a href="/user/userDelete">* 회원탈퇴</a><br/>
+		   		  </div>
+	          </div>
+          </c:if>
+        </div>
+      </div>
 			<!-- about user -->
 			<div class="main">
 				<div class="container">
@@ -237,29 +285,8 @@ position:relative;
 								<a href="/user/userLogout"><button>로그아웃</button></a>
 								<a href="/user/userModify"><button>유저수정</button></a>
 								<a href="/user/userDelete"><button>탈퇴</button></a>
+								<a href="/user/userPro"><button>프로필창</button></a>
 							</c:if>
-						</div>
-						<br> <br /> <br />
-						<div class="modAub">
-							<div class="row">
-								<div class="col-md-3">
-									<p>${member.nickname }(방명록)</p>
-								</div>
-								<div class="col-md-6">
-									<textarea style="resize: none;" name="reply" id="newReply"
-										rows="2" cols="30"></textarea>
-									<input type="hidden" name="nickname"
-										value="${member.nickname }" id="newReplyWriter" readonly>
-								</div>
-								<div class="col-md-3">
-									<button id="replyAddBtn">방명록 남기기</button>
-									<br />
-								</div>
-							</div>
-
-							<ul id="replies">
-
-							</ul>
 						</div>
 						</div>
 				<div class="rowB">
@@ -319,13 +346,21 @@ position:relative;
 
 	<script>
 	$(document).ready(function() {
-		// 취소
+		
 		$(".loginA").on("click", function() {
 			location.href = "/user/userLogin";
-		})
+		});
 		$(".joinA").on("click", function() {
 			location.href = "/user/userJoin";
-		})
+		});
+		$(".consumer").mouseover(function(){
+				$(".consumer__info").show();
+			});
+
+			$(".consumer").mouseout(function(){
+				$(".consumer__info").hide();
+			});
+			
 	
 		var cnum = ${member.cnum};
 		function getAllList() {
@@ -688,9 +723,9 @@ position:relative;
 				// 그림정보가 잘 추가되는지 디버깅
 				//console.log($(formObj));
 			});// #submitBtn onclick
-			
-			
+						
 	});
+	
 	</script>
 </body>
 </html>

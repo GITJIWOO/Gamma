@@ -46,6 +46,13 @@ position: relative;
 	border: 1px solid #000;
 	border-radius: 10%;
 }
+.border2{
+margin: 0 auto;
+	width: 230px;
+	height: 350px;
+	border: 1px solid #000;
+	border-radius: 10%;
+}
 
 img {
 	width: 150px;
@@ -80,6 +87,46 @@ button {
 }
 </style>
 </head>
+<body>
+	<form name='homeForm' method="post" action="/user/userLogin">
+				<c:if test="${member == null}">
+		<div class="border">
+			<img src="/resources/css/image/mainIcon.png" />
+			<div class="main">
+					<h1 class="IPvalue">로그인</h1>
+					<div>
+						<label class="IPvalue" for="cid">아이디</label><br /> <input
+							type="text" id="cid" name="cid" />
+					</div>
+					<br />
+					<div>
+						<label class="IPvalue" for="password">비밀번호</label><br /> <input
+							type="password" id="password" name="password" />
+					</div>
+					<br />
+				<div>
+					<button id="loginBtn" type="submit">로그인</button>
+					<!-- 시큐리티적용 교안 11-->
+					<%-- <input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }"/> --%>
+					<a href="/user/userJoin"><button id="registerBtn" type="button">회원가입</button></a>
+					<a href="/user/findpw"><button id="findpwBtn" type="button">비밀번호찾기</button></a>
+				</div>
+			</div>
+		</div>
+				</c:if>
+				<c:if test="${member != null }">
+					<div class="border2">
+			<img src="/resources/css/image/mainIcon.png" />
+						<p>${member.cid}님 환영합니다.</p>
+								<a href="/main/main"><button id="mainBtn" type="button">메인으로</button></a>
+								<a href="/user/userLogout"><button id="logoutBtn" type="button">로그아웃</button></a>
+					</div>
+				</c:if>
+				<c:if test="${msg == false}">
+					<p style="color: red;">로그인 실패! 아이디와 비밀번호 확인해주세요.</p>
+				</c:if>
+	</form>
+	
 <script type="text/javascript">
 	$(document).ready(function() {
 		$("#logoutBtn").on("click", function() {
@@ -100,53 +147,8 @@ button {
 		$("#usererDeleteBtn").on("click", function() {
 			location.href = "user/userDelete";
 		})
-
+	
 	})
 </script>
-<body>
-	<form name='homeForm' method="post" action="/user/userLogin">
-		<div class="border">
-			<img src="/resources/css/image/mainIcon.png" />
-			<div class="main">
-				<c:if test="${member == null}">
-					<h1 class="IPvalue">로그인</h1>
-					<div>
-						<label class="IPvalue" for="cid">아이디</label><br /> <input
-							type="text" id="cid" name="cid" />
-					</div>
-					<br />
-					<div>
-						<label class="IPvalue" for="password">비밀번호</label><br /> <input
-							type="password" id="password" name="password" />
-					</div>
-					<br />
-				<div>
-					<button type="submit">로그인</button>
-					<!-- 시큐리티적용 교안 11-->
-					<%-- <input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }"/> --%>
-					<a href="/user/userJoin"><button id=registerBtn type="button">회원가입</button></a>
-					<a href="/user/findpw"><button id=findpwBtn type="button">비밀번호찾기</button></a>
-				</div>
-				</c:if>
-				<c:if test="${member != null }">
-					<div>
-					<div class="row">&nbsp;</div>
-					<div class="row">&nbsp;</div>
-						<p>${member.cid}님환영합니다.</p>
-						<a href="/user/userModify"><button id="userUpdateBtn"
-								type="button">회원정보수정</button></a> <a href="/user/userDelete"><button
-								id="userDeleteBtn" type="button">회원탈퇴</button></a> 
-								<a href="/user/userLogout"><button id="logoutBtn" type="button">로그아웃</button></a>
-								<a href="/main/main"><button id="mainBtn" type="button">메인으로</button></a>
-								<a href="/user/userGet"><button id="getBtn" type="button">유저정보창</button></a>
-					</div>
-				</c:if>
-				<c:if test="${msg == false}">
-					<p style="color: red;">로그인 실패! 아이디와 비밀번호 확인해주세요.</p>
-				</c:if>
-			</div>
-		</div>
-	</form>
-	
 </body>
 </html>

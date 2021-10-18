@@ -36,6 +36,7 @@ public class MainController {
 		
 		List<GameInfoVO> latestGame = gameInfoService.latestGame();
 		List<GameInfoVO> randomList = gameInfoService.randomList();
+		List<GameInfoVO> actionList = gameInfoService.actionList();
 		
 		if(cid != null) {
 			ConsumerVO consumer = userMapper.userGet(cid);
@@ -45,6 +46,7 @@ public class MainController {
 		model.addAttribute("cid", cid);
 		model.addAttribute("latestGame", latestGame);
 		model.addAttribute("randomList", randomList);
+		model.addAttribute("actionList", actionList);
 		
 		return "/main/main";
 	}

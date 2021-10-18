@@ -6,14 +6,50 @@
 
 <!DOCTYPE html>
 <html>
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+<link rel="icon" type="image/png" href="http://example.com/myicon.png">
 <link rel="stylesheet" href="/resources/css/styles.css" />
 <style>
 * {
 	padding: 5px;
 	margin: 5px;
 }
+	.consumer {
+		width: 25%;
+		position: relative;
+		text-align: center;
+		height: 20%;
+		buttom: 100;
+		left:50px;
+	}
+	.consumer__imgPro {
+		float: left;
+		padding: 0;
+		margin: 0;
+	}
+	.conimg {
+		width: 100px;
+		height: 100px;
+	}
+	.consumer__nickname {
+		float: right;
+		font-size: 25px;
+		font-weight: bold;
+		color: white;
+		
+	}
+	.consumer__info {
+		background-color:gray;
+		color:white;
+		display: none;
+		position: absolute;
+		top:50px;
+		left: 150%;
+		width:120px;
+		margin:5px;
+		border-radius: 10%;
+		text-align:left;
+	}
 .detail{
 	display: flex;
 	flex-flow: row;
@@ -22,8 +58,7 @@
 	position:relative;
 	left:50px;
 }
-.Mbtn{position:relative;
-	left:50px;}
+
 .table1{position:relative;
 	left:50px;}
 .rowB{
@@ -161,16 +196,33 @@ position:relative;
 				<span><a href="#">Q&A</a></span> &nbsp;&nbsp;|&nbsp;&nbsp; <span><a
 					href="#">자주하는 질문</a></span>
 			</div>
-				<div class="proImg side-bar__row">
-					<div>
-						<p class="uId">${member.nickname }(${member.cid  })</p>
-					</div>
-					<img class="imgPro" src="/resources/css/image/chaIcon.png" />
-					<div>
-						<a href="/user/userGet">유저정보창</a> <a href="/user/userDelete">탈퇴창</a>
-					</div>
-				</div>
-		</div>
+				<div class="side-bar__row">
+					<c:if test="${member == null }">
+            <div class="loginBtn">
+		        <span><a href="/user/userLogin" class="loginA">로그인</a></span>
+            </div>
+            <div class="joinBtn">
+		        <span><a href="/user/userJoin" class="joinA">가입하기</a></span>
+            </div>
+          </c:if>
+          <c:if test="${member != null }">
+	          <div class="consumer">
+	          	  <div class="consumer__imgPro">
+			        <img class="conimg" src="/resources/css/image/chaIcon.png"/>
+	          	  </div>
+		          <div class="consumer__nickname">
+		          	<p>${member.cid}</p>
+		          </div>
+		          <div class="consumer__info">
+	   					<a href="/user/userGet">* 유저정보창</a><br/>
+	   				<a href="/user/userpro">* 유저프로필창</a><br/>
+	   				<a href="/user/userLogout">* 로그아웃</a><br/>
+	   				<a href="/user/userDelete">* 회원탈퇴</a><br/>
+		   		  </div>
+	          </div>
+          </c:if>
+        </div>
+      </div>
 			<!-- about user -->
 			<div class="main">
 				<div class="container">
@@ -182,42 +234,21 @@ position:relative;
 								<img class="imgProA" src="/resources/css/image/chaIcon.png" />
 							</div>
 							<table class="table table1" width="400px">
-
 								<c:if test="${member eq 'kjw011231' }">
 									<tr>
 										<td>유저고유번호</td>
 										<td><input id="cnum" name="cnum" value="${member.cnum}"
 											readonly="readonly"></td>
 									</tr>
+							<tr>
+							<td>닉네임</td>
+								<td id="nickname" name="nickname">${member.nickname}</td>
+							</tr>
 								</c:if>
-								<tr>
-									<td>아이디</td>
-									<td id="cid" name="cid">${member.cid}</td>
-								</tr>
-								<tr>
-									<td>닉네임</td>
-									<td id="nickname" name="nickname">${member.nickname}</td>
-								</tr>
-								<tr>
-									<td>이메일</td>
-									<td id="email" name="email">${member.email}</td>
-								</tr>
-								<tr>
-									<td>회원가입일자</td>
-									<td><fmt:formatDate value="${member.userregdate}"
-											pattern="yyy-MM-dd" /></td>
-								</tr>
+								
 							</table>
 						</form>
-						<div class="row">&nbsp;</div>
-						<div class="Mbtn">
-							<c:if test="${member != null}">
-								<a href="/user/userLogin"><button>로그인</button></a>
-								<a href="/user/userLogout"><button>로그아웃</button></a>
-								<a href="/user/userModify"><button>유저수정</button></a>
-								<a href="/user/userDelete"><button>탈퇴</button></a>
-							</c:if>
-						</div>
+					
 						<br> <br /> <br />
 						<div class="modAub">
 							<div class="row">
@@ -235,10 +266,9 @@ position:relative;
 									<br />
 								</div>
 							</div>
-
 							<ul id="replies">
 
-							</ul>
+							</ul><br/>
 						</div>
 						</div>
 				<div class="rowB">
@@ -267,20 +297,6 @@ position:relative;
 				</div>
 			</div>
 			<!--  row main-->
-
-			<div class="footer">
-				<div class="footer-info">
-					<div>CREATORS&nbsp;&nbsp;김영훈, 김지우, 조훈현, 최재인</div>
-					<div>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;</div>
-					<div>
-						CONTACT&nbsp;&nbsp;<a href="https://github.com/GITJIWOO">https://github.com/GITJIWOO</a>
-					</div>
-				</div>
-				<div class="footer-copyright">
-					<div>Copyright © GAMMA All right reserved.</div>
-				</div>
-			</div>
-	</div>
 	<!-- 모달 요소는 안 보이기 때문에 어디 넣어도 되지만 보통 html요소들 끼리 놨을때
 	제일 아래쪽에 작성하는 경우가 많습니다. -->
 	<div id="modDiv" style="display: none;">
@@ -296,20 +312,25 @@ position:relative;
 		</div>
 	</div>
 
+			<div class="footer">
+				<div class="footer-info">
+					<div>CREATORS&nbsp;&nbsp;김영훈, 김지우, 조훈현, 최재인</div>
+					<div>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;</div>
+					<div>
+						CONTACT&nbsp;&nbsp;<a href="https://github.com/GITJIWOO">https://github.com/GITJIWOO</a>
+					</div>
+				</div>
+				<div class="footer-copyright">
+					<div>Copyright © GAMMA All right reserved.</div>
+				</div>
+			</div>
+	</div>
+
 	<script>
-	$(document).ready(function() {
-		// 취소
-		$(".loginA").on("click", function() {
-			location.href = "/user/userLogin";
-		})
-		$(".joinA").on("click", function() {
-			location.href = "/user/userJoin";
-		})
 	
 		var cnum = ${member.cnum};
 		function getAllList() {
-			$.getJSON("/userrp/all/" + cnum,
-							function(data) {
+			$.getJSON("/userrp/all/" + cnum,function(data) {
 								//data 변수가 바로 얻어온 json데이터의 집합
 								console.log(data);
 
@@ -327,8 +348,7 @@ position:relative;
 													console.log(date);
 													// date 내부의 시간을 형식(format)화 해서 출력
 													var formattedTime = "게시일 : "
-															+ date
-																	.getFullYear() // 년도 추출
+															+ date.getFullYear() // 년도 추출
 															+ "/"
 															+ (date.getMonth() + 1) // month는 0월부터시작
 															+ "/"
@@ -398,7 +418,7 @@ position:relative;
 		$("#replyDelBtn").on("click", function() {
 			// 삭제에 필요한 댓글번호를 모달 타이틀 부분에서 얻기
 			var rno = $(".modal-title").html();
-
+			console.log("rno얻어왓니?딜리트"+rno)
 			$.ajax({
 				type : 'delete',
 				url : '/userrp/' + rno,
@@ -421,7 +441,9 @@ position:relative;
 			var rno = $(".modal-title").html();
 			// 수정에 필요한 본문내역을 #replytext의 value값으로 얻기
 			var reply = $("#replytext").val();
-
+			console.log("rno?? :"+rno);
+			console.log("reply?? :"+reply);
+			
 			$.ajax({
 				type : 'put',
 				url : '/userrp/' + rno,
@@ -473,24 +495,17 @@ position:relative;
 		$("#closeBtn").on("click", function() {
 			$("#modDiv").hide("slow");
 		});
+		
+		$(".consumer").mouseover(function(){
+			$(".consumer__info").show();
+		});
 
-			$("#btnUpdate").click(function() {
-				// 확인 대화상자
-				if (confirm("수정하시겠습니까?")) {
-					document.form1.action = "localhost:8181/user/userModify";
-					document.form1.submit();
-				}
-			});
-			$("#btnDelete").click(function() {
-				//확인 대화 상자
-				if (confirm("삭제하시겠습니까?")) {
-					document.form1.action = "localhost:8181/user/userDelete"
-					document.form1.submit();
-				}
-			});
-			
-			
-	});
+		$(".consumer").mouseout(function(){
+			$(".consumer__info").hide();
+		});
+		
+
+		
 	</script>
 </body>
 </html>
