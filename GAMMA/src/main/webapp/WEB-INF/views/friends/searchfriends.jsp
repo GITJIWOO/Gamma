@@ -54,6 +54,9 @@
   z-index: 11;
   background-color: black;
 }
+.userList{
+  margin: 20px 0;
+}
 .userList:nth-child(odd) {
   float: left;
 }
@@ -98,6 +101,9 @@
 }
 .notyet {
   display: none;
+}
+.pageList{
+  margin-top: 1000px;
 }
 .page-item.active .page-link {
   background-color: var(--mainColor);
@@ -315,6 +321,7 @@
 	const input = document.querySelector(".searchfriendsinput");
 	const searchtotal = document.querySelector(".searchtotal");
 	let keyword = input.getAttribute("value");
+	const detail = document.quetySelector(".detail");
 	console.log(keyword);
 	if(keyword != ""){
 		const infinite = document.querySelector(".infinite");
