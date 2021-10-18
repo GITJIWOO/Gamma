@@ -9,6 +9,7 @@ import org.game.friends.service.FriendsService;
 import org.game.user.domain.ConsumerVO;
 import org.game.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -40,14 +41,24 @@ public class UserController {
 	// 유저프로필
 	@GetMapping("/userPro")
 	public String userPro() {
+		
+		
+		return "/user/userPro";
+	}
+	@PostMapping("/userPro")
+	public String userPro(ConsumerVO userVO, Model model) {
 		/*
-		재인 추가
-		service.userGet(null);	// 아마 이거 작성되어야 프로필 조회할 수 있을듯..
-		model.addAttribute("result" ,fservice.fOrNot(null, cid));	// null 에는 해당 로직으로 이동하면 나오는 user 정보 추가 예정, cid는 로그인 계정 
-		log.info(fservice.fOrNot(null, cid);
-		model.addAttribute("follower", null);
-		model.addAttribute("following", cid);
-		*/
+		 * service.userGet(userVO.getCid()); // 아마 이거 작성되어야 프로필 조회할 수 있을듯..
+		 * model.addAttribute("result" ,fservice.fOrNot(null, userVO.getCid())); // null
+		 * 에는 해당 로직으로 이동하면 나오는 user 정보 추가 예정, cid는 로그인 계정 log.info(fservice.fOrNot(null,
+		 * userVO.getCid())); model.addAttribute("follower", null);
+		 * model.addAttribute("following", userVO.getCid());
+		 */
+		model.addAttribute("dto", service.userGet(userVO.getCid()));
+		log.info("클릭한유저번호" + userVO);
+		if(userVO.getAttachList() != null) {
+			userVO.getAttachList().forEach(attach -> log.info(attach));
+		}
 		return "/user/userPro";
 	}
 
@@ -55,6 +66,7 @@ public class UserController {
 	public String userGet() {
 		return "/user/userGet";
 	}
+	
 
 	// 유저 상제정보창
 	@PostMapping("/userGet")
@@ -148,14 +160,16 @@ public class UserController {
 			session.setAttribute("session_cadmin", login.getCadmin());
 			memberSession = String.valueOf(session.getAttribute("member"));
 			System.out.println("멤버세션값 iftrue : " + memberSession);
-		} else {
+		} else{
+			System.out.println("result값 :" +result);
 			session.setAttribute("member", null);
 			memberSession = String.valueOf(session.getAttribute("member"));
 			System.out.println("멤버세션값 else : " + memberSession);
 			rttr.addFlashAttribute("msg", false);
+			
 			return "/user/userLogin";
 		}
-		return "/main/main";
+		return "redirect:/user/userLogin";
 	}
 
 	// 로그아웃 과 세션 초기화
@@ -190,7 +204,7 @@ public class UserController {
 	public String registerUpdate(ConsumerVO vo, HttpSession session) throws Exception {
 		service.userModify(vo);
 		session.invalidate();
-		return "/user/userLogin";
+		return "redirect:/user/userLogin";
 	}
 
 	// 회원 탈퇴 get
