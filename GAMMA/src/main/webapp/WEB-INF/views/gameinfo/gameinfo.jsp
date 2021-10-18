@@ -13,33 +13,7 @@
 input[type="radio"] {
 		visibility:hidden;
 	}
-.consumer {
-		width: 18%;
-		position: relative;
-		text-align: center;
-		height: 10%;
-		buttom: 100;
-	}
-	.consumer__imgPro {
-		float: left;
-		padding: 0;
-		margin: 0;
-	}
-	.conimg {
-		width: 100px;
-		height: 100px;
-	}
-	.consumer__nickname {
-		float: right;
-		font-size: 25px;
-		font-weight: bold;
-		color: white;
-	}
-	.consumer__info {
-		display: none;
-		position: absolute;
-		left: 100%;
-	}
+
 * {
 	margin: 0px;
 	padding: 0px;
@@ -114,6 +88,7 @@ input[type="radio"] {
 </style>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+
 </head>
 <body>
 	<div class="display">
@@ -172,8 +147,12 @@ input[type="radio"] {
 		          	<p>${cid}</p>
 		          </div>
 		          <div class="consumer__info">
-	   				<a href="/user/userGet">유저정보창</a>
-	   				<a href="/user/userLogout">로그아웃</a>
+	   				<a href="/user/userGet">* 유저정보창</a><br/>
+	   				<a href="/user/userPro">* 유저프로필창</a><br/>
+	   				<a href="/user/userLogout">* 로그아웃</a><br/>
+	   				<a href="/friends/followerlist">* 팔로워리스트</a><br/>
+	   				<a href="/friends/followinglist">* 팔로윙리스트</a><br/>
+	   				<a href="/friends/searchfriends">* 친구 검색</a><br/>
 		   		  </div>
 	          </div>
           </c:if>
