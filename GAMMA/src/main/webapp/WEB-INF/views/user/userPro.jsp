@@ -20,7 +20,7 @@
 		text-align: center;
 		height: 20%;
 		buttom: 100;
-		left:50px;
+		left:10px;
 	}
 	.consumer__imgPro {
 		float: left;
@@ -91,10 +91,6 @@ h2 {
 	font-weight: bold;
 }
 
-p {
-	font-weight: bold;
-	font-size: big;
-}
 
 strong {
 	color: blue;
@@ -244,11 +240,11 @@ position:relative;
 										<td><input id="cnum" name="cnum" value="${member.cnum}"
 											readonly="readonly"></td>
 									</tr>
+								</c:if>
 							<tr>
 							<td>닉네임</td>
 								<td id="nickname" name="nickname">${member.nickname}</td>
 							</tr>
-								</c:if>
 								
 							</table>
 						</form>

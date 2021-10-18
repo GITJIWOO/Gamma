@@ -16,12 +16,51 @@
 	padding: 5px;
 	margin: 5px;
 }
+	.consumer {
+		width: 25%;
+		position: relative;
+		text-align: center;
+		height: 20%;
+		buttom: 100;
+		left:10px;
+	}
+	.consumer__imgPro {
+		float: left;
+		padding: 0;
+		margin: 0;
+	}
+	.conimg {
+		width: 100px;
+		height: 100px;
+	}
+	.consumer__nickname {
+		float: right;
+		font-size: 25px;
+		font-weight: bold;
+		color: white;
+		
+	}
+	.consumer__info {
+		background-color:gray;
+		color:white;
+		display: none;
+		position: absolute;
+		top:50px;
+		left: 150%;
+		width:120px;
+		margin:5px;
+		border-radius: 10%;
+		text-align:left;
+	}
 .detail{
 	display: flex;
 	flex-flow: row;
 }
-.Mbtn{position:relative;
-	left:50px;}
+.modAub{
+	position:relative;
+	left:50px;
+}
+
 .table1{position:relative;
 	left:50px;}
 .rowB{
@@ -54,10 +93,6 @@ h2 {
 	font-weight: bold;
 }
 
-p {
-	font-weight: bold;
-	font-size: big;
-}
 
 strong {
 	color: blue;
@@ -75,42 +110,7 @@ strong {
 	z-index: 1000;
 	width: 310px;
 }
-	.consumer {
-		width: 25%;
-		position: relative;
-		text-align: center;
-		height: 20%;
-		buttom: 100;
-		left:50px;
-	}
-	.consumer__imgPro {
-		float: left;
-		padding: 0;
-		margin: 0;
-	}
-	.conimg {
-		width: 100px;
-		height: 100px;
-	}
-	.consumer__nickname {
-		float: right;
-		font-size: 25px;
-		font-weight: bold;
-		color: white;
-		
-	}
-	.consumer__info {
-		background-color:gray;
-		color:white;
-		display: none;
-		position: absolute;
-		top:50px;
-		left: 150%;
-		width:120px;
-		margin:5px;
-		border-radius: 10%;
-		text-align:left;
-	}
+
 modBtn {
 	display: flex;
 	flex-flow: row;
@@ -159,6 +159,10 @@ position:relative;
 	top: 10px;
 	font-weight: bold;
 	color: white;
+}
+.gameImg {
+	height: 100px;
+	width: 100px;
 }
 </style>
 <meta charset="UTF-8">
