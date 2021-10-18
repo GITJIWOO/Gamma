@@ -215,7 +215,7 @@ position:relative;
 		          </div>
 		          <div class="consumer__info">
 	   					<a href="/user/userGet">* 유저정보창</a><br/>
-	   				<a href="/user/userpro">* 유저프로필창</a><br/>
+	   				<a href="/user/userPro">* 유저프로필창</a><br/>
 	   				<a href="/user/userLogout">* 로그아웃</a><br/>
 	   				<a href="/user/userDelete">* 회원탈퇴</a><br/>
 		   		  </div>
