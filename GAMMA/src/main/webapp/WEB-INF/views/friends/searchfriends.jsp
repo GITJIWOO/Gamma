@@ -5,7 +5,9 @@
 <html>
 <head>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
+<script src="<c:url value="/resources/js/main.js"/>"></script>
 <link rel="stylesheet" href="/resources/css/styles.css" />
+<link rel="icon" type="image/png" href="http://example.com/myicon.png">
 <meta charset="UTF-8">
 <title>Insert title here</title>
 </head>
@@ -234,9 +236,7 @@
         <!-- category -->
         <div class="side-bar__row">
           <span><a href="/gameInfo/gamelist">게임 스토어</a></span>
-          <c:if test="${cid ne null}">
-          	<span><a href="/library/conLibrary?cid=${cid}">라이브러리</a></span>
-          </c:if>
+          	<span><a href="/library/conLibrary?cid=${param.cid }">라이브러리</a></span>
         </div>
         <!-- qna -->
         <div class="side-bar__row">
@@ -247,21 +247,12 @@
         <!-- about user -->
         <div class="side-bar__row">
           <!-- c:if로 로그인 전에는 회원가입+로그인 / 로그인 후에는 프로필 -->
-          <c:if test="${cid eq null}">
-            <div class="loginBtn">
-		        <span><a href="/user/userLogin" class="loginA">로그인</a></span>
-            </div>
-            <div class="joinBtn">
-		        <span><a href="/user/userJoin" class="joinA">가입하기</a></span>
-            </div>
-          </c:if>
-          <c:if test="${cid ne null}">
 	          <div class="consumer">
 	          	  <div class="consumer__imgPro">
 			        <img class="conimg" src="/resources/css/image/chaIcon.png"/>
 	          	  </div>
 		          <div class="consumer__nickname">
-		          	<p>${cid}</p>
+		          	<p>${param.cid}</p>
 		          </div>
 		          <div class="consumer__info">
 	   				<a href="/user/userGet">* 유저정보창</a><br/>
@@ -270,7 +261,6 @@
 	   				<a href="/user/userDelete">* 회원탈퇴</a><br/>
 		   		  </div>
 	          </div>
-          </c:if>
         </div>
       </div>
       <div class="main">
