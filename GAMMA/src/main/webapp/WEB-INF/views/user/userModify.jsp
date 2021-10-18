@@ -7,10 +7,8 @@
 <!-- 합쳐지고 최소화된 최신 CSS -->
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
-<!-- 부가적인 테마 -->
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
 
+<!-- Include all compiled plugins (below), or include individual files as needed -->
 <script
 	src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 	<style>
@@ -67,50 +65,8 @@ h1{
 
 	</style>
 <meta charset="UTF-8">
-<title>회원가입</title>
+<title>회원정보수정</title>
 </head>
-<script type="text/javascript">
- 	$(document).ready(function() {
-		// 취소
-		$(".cencle").on("click", function() {
-
-			location.href = "/user/userGet";
-
-		})
-
-		$("#submit").on("click", function() {
-			if ($("#password").val() == "") {
-				alert("비밀번호를 입력해주세요.");
-				$("#password").focus();
-				return false;
-			}
-			if ($("#cid").val() == "") {
-				alert("아이디를 입력해주세요.");
-				$("#cid").focus();
-				return false;
-			} 
-		 	$.ajax({
-				url : "/user/userModify",
-				type : "POST",
-				dateType : "json",
-				data : $("#updateForm").serializeArray(),
-				success : function(data) {
-
-					if (data == true) {
-						if (confirm("회원수정하시겠습니까?")) {
-							$("#updateForm").submit();
-						}
-
-					} else {
-						alert("패스워드가 틀렸습니다.");
-						return;
-
-					}
-				}
-			}) 
-		});
-	})
-</script>
 <body>
 	<div id="container">
 		<form action="/user/userModify" method="post">
@@ -136,13 +92,32 @@ h1{
 					value="${member.email}" />
 			</div>
 			<div class="row">
-				<button class="btn" type="submit" id="submit">회원정보수정</button>
+				<button class="btn" type="submit"onclick="fn_mody();" id="submit">회원정보수정</button>
 				<button class="cencle btn" type="button">취소</button>
 			</div>
 			</div>
 		</form>
 	</div>
 
+<script type="text/javascript">
+ 	$(document).ready(function() {
+		// 취소
+		$(".cencle").on("click", function() {
+
+			location.href = "/user/userGet";
+
+		});
+
+		$("#submit").on("click", function() {
+			if ($("#password").val() == "") {
+				alert("비밀번호를 입력해주세요.");
+				$("#password").focus();
+				return false;
+			}
+	});
+		});
+		
+</script>
 </body>
 
 </html>

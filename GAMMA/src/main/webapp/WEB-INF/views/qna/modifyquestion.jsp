@@ -186,7 +186,7 @@
               <div class="submitBtn">		
 		<input type="hidden" name="qnum" value="${vo.qnum }"/>
 		<input type="hidden" name="pageNum" value="${param.pageNum }"/>
-		<input type="submit" value="질문 수정"/><br>
+		<input type="submit" value="문의 수정"/><br>
 		<button class="cancelBtn">취소</button>
               </div>
             </form>

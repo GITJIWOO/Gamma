@@ -101,7 +101,7 @@
         <div class="side-bar__row">
           <!-- 클릭하면 main화면으로 돌아오도록 a 태그 수정 -->
           <span
-            ><a href="#"><img src="/logo.png" /></a
+            ><a href="#"><img src="/resources/css/image/logo.png" /></a
           ></span>
         </div>
         <!-- search -->
