@@ -18,17 +18,16 @@
 	margin: 0;
 	padding: 0;
 	text-align: center;
-	
 }
 img {
 	width: 120px;
 	height: 120px;
-	
 }
 .Title{
 display:flex; 
 	flex-flow:row;
 }
+
 	.border {
 	margin: 0 auto;
 	width: 370px;

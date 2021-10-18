@@ -15,15 +15,14 @@
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">	
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap-theme.min.css">	
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>	
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 <style>
 	.consumer {
-		width: 18%;
+		width: 25%;
 		position: relative;
 		text-align: center;
-		height: 10%;
+		height: 20%;
 		buttom: 100;
+		left:25%;
 	}
 	.consumer__imgPro {
 		float: left;
@@ -39,11 +38,19 @@
 		font-size: 25px;
 		font-weight: bold;
 		color: white;
+		
 	}
 	.consumer__info {
+		background-color:gray;
+		color:white;
 		display: none;
 		position: absolute;
-		left: 100%;
+		top:50px;
+		left: 150%;
+		width:120px;
+		margin:5px;
+		border-radius: 10%;
+		text-align:left;
 	}
 </style>
 </head>
@@ -104,8 +111,10 @@
 		          	<p>${cid}</p>
 		          </div>
 		          <div class="consumer__info">
-	   				<a href="/user/userGet">유저정보창</a>
-	   				<a href="/user/userLogout">로그아웃</a>
+	   				<a href="/user/userGet">* 유저정보창</a><br/>
+	   				<a href="/user/userpro">* 유저프로필창</a><br/>
+	   				<a href="/user/userLogout">* 로그아웃</a><br/>
+	   				<a href="/user/userDelete">* 회원탈퇴</a><br/>
 		   		  </div>
 	          </div>
           </c:if>
