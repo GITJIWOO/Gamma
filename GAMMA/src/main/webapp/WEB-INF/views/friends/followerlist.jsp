@@ -104,9 +104,6 @@
         <div class="side-bar__row">
           <form action="/gameInfo/gamelist" method="get">
           <select name="searchType" style="display:none">
-          	<option  value="n"
-				<c:out value="${btnMaker.cri.searchType eq 'n' ? 'selected' : '' }"/>>
-				</option>
             </select>
             <input type="text" placeholder="Search Game" name="keyword" value="${btnMaker.cri.keyword }"/>
             <!-- origin처럼 버튼 숨겼음, enter 치면 검색됨 -->
