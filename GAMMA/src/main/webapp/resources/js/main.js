@@ -1,0 +1,18 @@
+$(document).ready(function() {
+	// 취소
+	$(".loginBtn").on("click", function() {
+		location.href = "/user/userLogin";
+	})
+	$(".joinBtn").on("click", function() {
+		location.href = "/user/userJoin";
+	})
+	
+	$(".consumer").mouseover(function(){
+		$(".consumer__info").show();
+	});
+
+	$(".consumer").mouseout(function(){
+		$(".consumer__info").hide();
+	});
+	
+});
