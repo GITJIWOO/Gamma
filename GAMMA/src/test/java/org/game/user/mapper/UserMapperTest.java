@@ -75,6 +75,12 @@ public class UserMapperTest {
 		vo.getAuthList();
 	}*/
 
-	
+	// 재인 추가 
+	@Test
+	public void testRead() {
+		ConsumerVO vo = mapper.read("user2");
+		log.info(vo);
+		vo.getAuthList();
+	}
 
 }

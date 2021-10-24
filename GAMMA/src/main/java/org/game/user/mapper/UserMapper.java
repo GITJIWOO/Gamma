@@ -35,4 +35,7 @@ public interface UserMapper {
 	//패스워드 체크
 	public long passChk(ConsumerVO userVO) throws Exception;
 	
+	// 재인 추가
+	public ConsumerVO read(String cid);
+	
 }
