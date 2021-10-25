@@ -64,6 +64,16 @@
 	.reviewGrrecommend {
 		font-size: 110%;
 	}
+	.commentCid {
+		font-size: 110%;
+	}
+	.commentRcdate {
+		margin-bottom: 15px;
+		opacity: 0.7;
+	}
+	.commentRccontent {
+		font-size: 130%;
+	}
 </style>
 </head>
 <body>
@@ -209,30 +219,27 @@
 								</c:when>
 							</c:choose>
 						</div>
-						
-						<!-- 리뷰 수정 버튼(아이디 검사) -->
-						<div class="reviewModifyBtn">
-							<c:if test="${cid eq review.cid}">
+						<c:if test="${cid eq review.cid}">
+							<!-- 리뷰 수정 버튼(아이디 검사) -->
+							<div class="reviewModifyBtn">
 								<button id="modifyBtn" class="btn btn-secondary">수정하기</button>
-							</c:if>
-						</div>
-						
-						<!-- 리뷰 삭제 버튼(아이디 검사) -->
-						<div id="removeReviewButton">
-							<c:if test="${cid eq review.cid}">
+							</div>
+							
+							<!-- 리뷰 삭제 버튼(아이디 검사) -->
+							<div id="removeReviewButton">
 								<form action="/review/reviewRemove" method="post" id="removeReview">
 									<input type="hidden" name="grnum" value="${review.grnum}">
 								</form>
 								<button onclick="removeReview()" class="btn btn-secondary">리뷰 삭제</button>
-							</c:if>
-						</div>
-						<hr/>
+							</div>
+							<hr/>
+						</c:if>
 					</div>
 				</div>
 				<div id="reviewComment">
 					
 					<!-- 리뷰 댓글 작성(로그인 여부) -->
-					<c:if test="${cid ne 'null'}">
+					<c:if test="${cid ne null}">
 						<form action="/review/reviewCommentWrite" method="post">
 							<input type="hidden" name="cid" value="${cid}">
 							<input type="hidden" name="grnum" value="${review.grnum}">
