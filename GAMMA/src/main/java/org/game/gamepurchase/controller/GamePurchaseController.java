@@ -68,6 +68,19 @@ public class GamePurchaseController {
 		return "";
 	}
 	
+	@GetMapping("/consumerBreakdown")
+	public String consumerBreakdown(String cid, HttpSession session, Model model) {
+
+		cid = (String)session.getAttribute("session_cid");
+
+		if(cid == null) {
+			return "redirect:/user/userLogin";
+		}
+		
+		
+		return "/payment/paymentBreakdown";
+	}
+	
 	@GetMapping("/successjsp")
 	public String successJsp() {
 		return "/payment/paymentSuccess";
