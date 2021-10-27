@@ -1,5 +1,7 @@
 package org.game.gamepurchase.controller;
 
+import java.util.List;
+
 import javax.servlet.http.HttpSession;
 
 import org.game.gamelibrary.service.GameLibraryService;
@@ -77,6 +79,10 @@ public class GamePurchaseController {
 			return "redirect:/user/userLogin";
 		}
 		
+		List<GamePurchaseVO> paymentList = gamePurchaseService.getPaymentList(cid);
+		
+		model.addAttribute("cid", cid);
+		model.addAttribute("paymentList", paymentList);
 		
 		return "/payment/paymentBreakdown";
 	}
