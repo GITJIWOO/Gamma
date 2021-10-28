@@ -1,5 +1,7 @@
 package org.game.gamepurchase.controller;
 
+import java.util.List;
+
 import javax.servlet.http.HttpSession;
 
 import org.game.gamelibrary.service.GameLibraryService;
@@ -66,6 +68,23 @@ public class GamePurchaseController {
 		basketService.removeConsumerBasket(cid, gnum);
 		
 		return "";
+	}
+	
+	@GetMapping("/consumerBreakdown")
+	public String consumerBreakdown(String cid, HttpSession session, Model model) {
+
+		cid = (String)session.getAttribute("session_cid");
+
+		if(cid == null) {
+			return "redirect:/user/userLogin";
+		}
+		
+		List<GamePurchaseVO> paymentList = gamePurchaseService.getPaymentList(cid);
+		
+		model.addAttribute("cid", cid);
+		model.addAttribute("paymentList", paymentList);
+		
+		return "/payment/paymentBreakdown";
 	}
 	
 	@GetMapping("/successjsp")
