@@ -187,20 +187,19 @@
 			<version>2.13.0-rc2</version>
 		</dependency>
 
-		<!-- mail인증번호관련 3 -->
-		<!-- https://mvnrepository.com/artifact/javax.mail/mail -->
-		<!-- <dependency>
+		<!-- 이메일 인증 2 -->
+		<dependency>
 			<groupId>javax.mail</groupId>
 			<artifactId>mail</artifactId>
 			<version>1.4.7</version>
 		</dependency>
-		 https://mvnrepository.com/artifact/org.springframework/spring-context-support
+		<!-- https://mvnrepository.com/artifact/org.springframework/spring-context-support -->
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-context-support</artifactId>
 			<version>${org.springframework-version}</version>
-		</dependency> -->
-		<!-- 메일 api -->
+		</dependency>
+		
 <dependency>
 	<groupId>org.apache.commons</groupId>
 	<artifactId>commons-email</artifactId>
@@ -226,7 +225,34 @@
 			<artifactId>gson</artifactId>
 			<version>2.8.2</version>
 		</dependency>
-		<!-- security 4개 -->
+
+		<!--  security 4개 -->
+		<!-- https://mvnrepository.com/artifact/org.springframework.security/spring-security-web -->
+		<dependency>
+		    <groupId>org.springframework.security</groupId>
+		    <artifactId>spring-security-web</artifactId>
+		    <version>5.0.7.RELEASE</version>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.springframework.security/spring-security-config -->
+		<dependency>
+		    <groupId>org.springframework.security</groupId>
+		    <artifactId>spring-security-config</artifactId>
+		    <version>5.0.7.RELEASE</version>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.springframework.security/spring-security-core -->
+		<dependency>
+		    <groupId>org.springframework.security</groupId>
+		    <artifactId>spring-security-core</artifactId>
+		    <version>5.0.7.RELEASE</version>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.springframework.security/spring-security-taglibs -->
+		<dependency>
+		    <groupId>org.springframework.security</groupId>
+		    <artifactId>spring-security-taglibs</artifactId>
+		    <version>5.0.7.RELEASE</version>
+		</dependency>
+		
+		<!-- security 4개(재인 추가) -->
 		<!-- https://mvnrepository.com/artifact/org.springframework.security/spring-security-web -->
 		<!-- <dependency> <groupId>org.springframework.security</groupId> <artifactId>spring-security-web</artifactId> 
 			<version>5.0.7.RELEASE</version> </dependency> https://mvnrepository.com/artifact/org.springframework.security/spring-security-config 
