@@ -345,10 +345,10 @@ CREATE TABLE consumerPayment (
     gname VARCHAR2(100) NOT NULL,
     gprice VARCHAR2(20) NOT NULL,
     cid VARCHAR2(20) NOT NULL,
+    cpdate DATE DEFAULT sysdate,
     merchant_uid VARCHAR2(100) PRIMARY KEY,
     CONSTRAINT fk_consumerpayment FOREIGN KEY (cid) REFERENCES consumer(cid)
 );
-drop table consumerpayment;
 commit;
 
 /*  사용자 찜 목록
