@@ -73,8 +73,8 @@ select * from gamerequirement left join game using (gnum);
 
 CREATE SEQUENCE consumer_num INCREMENT BY 1 START WITH 1;
 CREATE TABLE consumer (
-    cnum NUMBER PRIMARY KEY,
-    cid VARCHAR2(20) NOT NULL UNIQUE,
+    cnum NUMBER,
+    cid VARCHAR2(20) PRIMARY KEY,
     email VARCHAR2(100) NOT NULL,
     password VARCHAR2(20) NOT NULL,
     nickname VARCHAR(20) NOT NULL UNIQUE,
@@ -97,9 +97,15 @@ auth varchar2(50) not null,
 constraint fk_authorities_users foreign key(cnum) references consumer(cnum));
 
 
+CREATE TABLE consumer_auth(
+    cid VARCHAR2(20) NOT NULL,
+    auth varchar2(50) not null,
+    constraint fk_consumer_auth foreign key(cid) references consumer(cid)
+);
+/*
  alter table authorities drop constraint fk_authorities_users;
 create unique index ix_auth_cid on authorities (cid, auth);
-
+*/
 insert into consumer (cnum,cid,password,email,nickname,cadmin) values (consumer_num.nextval,'user00','pw00','ssos@sos','scho',0);
 insert into consumer (cnum,cid,password,email,nickname,cadmin) values (consumer_num.nextval,'member00','pw00','m@sos','mcho',0);
 insert into consumer (cnum,cid,password,email,nickname,cadmin) values (consumer_num.nextval,'admin00','pw00','assos@sos','ascho',0);

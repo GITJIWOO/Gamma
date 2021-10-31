@@ -1,8 +1,43 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!-- 재인 추가 -->
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:security="http://www.springframework.org/schema/security"
+	xsi:schemaLocation="http://www.springframework.org/schema/security
+		http://www.springframework.org/schema/security/spring-security.xsd
+		http://www.springframework.org/schema/beans 
+		http://www.springframework.org/schema/beans/spring-beans.xsd">
+	
+	<bean id="customAccessDenied" class="org.game.user.security.CustomAccessDeniedHandler" />
+	<bean id="customLoginSuccess" class="org.game.user.security.CustomLoginSuccessHandler" />
+	<bean id="bycryptPasswordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" />
+	<bean id="customUserDetailService" class="org.game.user.security.CustomUserDetailService" />
+	
+	<security:http>
+		<security:intercept-url pattern="/user/*" access="permitAll" />
+		<security:intercept-url pattern="/user/member" access="hasRole('ROLE_MEMBER')" />
+		<security:intercept-url pattern="/user/admin" access="hasRole('ROLE_ADMIN')" />
+		<security:form-login login-page="/user/customLogin " authentication-success-handler-ref="customLoginSuccess"/>
+		<security:form-login login-page="/user/userLogin"
+				authentication-success-handler-ref="customLoginSuccess"/>
+		<!-- 접근 제한 페이지 -->
+		<security:access-denied-handler ref="customAccessDenied" />
+		<security:logout logout-url="/user/customLogout" invalidate-session="true" />
+		<security:logout logout-url="/user/userLogout" invalidate-session="true"/>
+	</security:http>
+	
+	<security:authentication-manager>
+			<security:authentication-provider user-service-ref="customUserDetailsService">
+		 	<!-- <security:jdbc-user-service data-source-ref="dataSource" /> --> 
+			<security:password-encoder ref="bycryptPasswordEncoder" />
+		</security:authentication-provider>
+	</security:authentication-manager>
+
+<!-- 
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
-	<!-- 	
+	
 		커스텀 클래스 빈 저장
 	<bean id="customAccessDenied" class="org.game.user.security.CustomAccessDeniedHandler" />
 	 <bean id="customLoginSuccess" class="org.game.user.security.CustomLoginSuccessHandler" />
