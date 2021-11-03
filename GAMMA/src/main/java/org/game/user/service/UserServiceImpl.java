@@ -161,4 +161,11 @@ public class UserServiceImpl implements UserService {
 	public List<UserAttachVO> getAttachList(Long cnum) {
 		return attachMapper.findByCnum(cnum);
 	}
+
+	// 재인 추가 - 회원가입
+	@Override
+	public void insertConsumer(ConsumerVO vo) {
+		mapper.insertConsumer(vo);
+		mapper.insertConsumerAuth(vo);
+	}
 }

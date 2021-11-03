@@ -9,6 +9,7 @@ import org.game.user.domain.QuestionSearchCriteria;
 import org.game.user.domain.QuestionVO;
 import org.game.user.service.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -28,6 +29,7 @@ public class QuestionController {
 	private QuestionService service;
 	
 	// 질문글 작성하는 폼 
+	@PreAuthorize("hasAnyRole('ROLE_MEMBER')")
 	@PostMapping("/questionform")
 	public String addQuestion(HttpSession session, Model model) {
 		String cid = String.valueOf(session.getAttribute("session_cid"));
@@ -36,6 +38,7 @@ public class QuestionController {
 	}
 	
 	// 작성한 질문글 등록하고 자신이 작성한 질문글 목록 조회
+	@PreAuthorize("hasAnyRole('ROLE_MEMBER')")
 	@PostMapping("/registerquestion")
 	public String registerQuestion(QuestionVO vo, RedirectAttributes rttr) {
 		service.addQuestion(vo);
@@ -48,6 +51,7 @@ public class QuestionController {
 	}
 	
 	// 질문글 목록 조회
+	@PreAuthorize("hasAnyRole('ROLE_MEMBER')")
 	@GetMapping("/questionlist")
 	public String questionList(HttpSession session, QuestionSearchCriteria cri, Model model) {
 		String qwriter = String.valueOf(session.getAttribute("session_cid"));
@@ -74,6 +78,7 @@ public class QuestionController {
 	}
 	
 	// 질문글 수정
+	@PreAuthorize("hasAnyRole('ROLE_MEMBER')")
 	@PostMapping("/modifyquestion")
 	public String modifyQuestionForm(int qnum, Model model) {
 		QuestionVO vo = service.ownQuestion(qnum);
@@ -82,6 +87,7 @@ public class QuestionController {
 	}
 	
 	// 질문글 수정 완료
+	@PreAuthorize("hasAnyRole('ROLE_MEMBER')")
 	@PostMapping("/modifyclear")
 	public String modifyQuestion(QuestionVO vo, QuestionSearchCriteria cri, RedirectAttributes rttr) {
 		service.modifyQuestion(vo);
@@ -95,6 +101,7 @@ public class QuestionController {
 	}
 	
 	// 질문글 상세 조회
+	@PreAuthorize("hasAnyRole('ROLE_MEMBER')")
 	@GetMapping("/getquestion")
 	public String getQuestion(HttpSession session, int qnum, Model model) {
 		String qwriter = String.valueOf(session.getAttribute("session_cid"));
@@ -106,6 +113,7 @@ public class QuestionController {
 	}
 	
 	// 질문글 삭제
+	@PreAuthorize("hasAnyRole('ROLE_MEMBER')")
 	@PostMapping("/removequestion")
 	public String removeQuestion(HttpSession session, int qnum, RedirectAttributes rttr) {
 		String qwriter = String.valueOf(session.getAttribute("session_cid"));
@@ -117,6 +125,7 @@ public class QuestionController {
 	}
 	
 	// 자주하는 질문 
+	@PreAuthorize("permitAll")
 	@GetMapping("/commonquestion")
 	public String commonQuestion(HttpSession session, Model model) {
 		String cid = String.valueOf(session.getAttribute("session_cid"));
