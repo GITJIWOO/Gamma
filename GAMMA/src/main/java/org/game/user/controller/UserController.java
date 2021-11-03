@@ -38,12 +38,18 @@ public class UserController {
 	// BCryptPasswordEncoder pwdEncoder;
 	// @Autowired
 	// private JavaMailSender mailSender;
-
+	
 	@Autowired
 	private FriendsService fservice;
 	
 	@Autowired
 	private GameLibraryService libraryService;
+	
+	@GetMapping("/agreeJoin")
+	private void agreeJoin() { 
+		log.info("약관의 동의");
+	}
+	
 	
 	// 유저프로필
 	@GetMapping("/userPro")

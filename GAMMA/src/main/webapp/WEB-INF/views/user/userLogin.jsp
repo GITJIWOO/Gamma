@@ -110,7 +110,7 @@ button {
 				<div>
 					<button id="loginBtn" type="submit">로그인</button>
 					<!-- 시큐리티적용 교안 11-->
-					<%-- <input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }"/> --%>
+					 <input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }"/> 
 					<a href="/user/userJoin"><button id="registerBtn" type="button">회원가입</button></a>
 					<a href="/user/findpw"><button id="findpwBtn" type="button">비밀번호찾기</button></a>
 				</div>
@@ -125,6 +125,7 @@ button {
 								<a href="/user/userLogout"><button id="logoutBtn" type="button">로그아웃</button></a>
 					</div>
 				</c:if>
+				
 	</form>
 	
 <script type="text/javascript">

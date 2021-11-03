@@ -166,6 +166,10 @@ var code = "";
 				alert("닉네임을 입력해주세요.");
 				$("#nickname").focus();
 				return false;
+			}if ($("#email").val() == "" && $("#email").val().indexOf('@')==-1 ) {
+				alert("이메일 형식을 다시 확인해주세요");
+				$("#email").focus();
+				return false;
 			}
 			var idChkVal = $('#idChk').val();
 			console.log(idChkVal);
@@ -242,7 +246,7 @@ var code = "";
 	            }
 	        }
 	        if(check_SC == 0){
-	            window.alert('!,@,#,$,% 의 특수문자가 들어가 있지 않습니다.')
+	            window.alert('패스워드에 !,@,#,$,% 중 하나이상이 기입해야합니다..')
 	            document.getElementById('password').value='';
 	        }
 	        if(document.getElementById('password').value !='' && document.getElementById('pw2').value!=''){
@@ -273,12 +277,12 @@ var code = "";
 					<label class="control-label" for="password">패스워드</label><br/> <input
 						 type="password" name="password" id="password"
 						onchange="check_pw()" placeholder="!,@,#,$,%중 하나이상을 포함해주세요" /><br/>
-					<label class="control-label" for="passwordConfirm">패스워드확인</label><br/> <input
+					<label class="control-label" for="pw2">패스워드확인</label><br/> <input
 						 type="password" name="userPW2" id="pw2"
 						onchange="check_pw()" placeholder="!,@,#,$,%중 하나이상을 포함해주세요"><span
 						id="check"></span><br/><br/>
 					<label class="control-label" for="email">Email</label> <br/><input
-						class="mail_input" type="text" id="email"
+						class="mail_input" type="text" id="email" 
 						name="email" /><br/>
 					<button class="emailChk" type="button" id="emailChk"
 						onclick="fn_emailChk();" value="N">중복확인</button><br/><br/>
