@@ -102,6 +102,13 @@ CREATE TABLE consumer_auth(
     auth varchar2(50) not null,
     constraint fk_consumer_auth foreign key(cid) references consumer(cid)
 );
+/* 자동 로그인 */
+CREATE TABLE persistent_logins(
+    username VARCHAR(64) NOT NULL,
+    series VARCHAR(64) PRIMARY KEY,
+    token VARCHAR(64) NOT NULL,
+    last_used TIMESTAMP NOT NULL
+);
 /*
  alter table authorities drop constraint fk_authorities_users;
 create unique index ix_auth_cid on authorities (cid, auth);

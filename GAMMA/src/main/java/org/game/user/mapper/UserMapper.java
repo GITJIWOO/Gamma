@@ -38,4 +38,8 @@ public interface UserMapper {
 	// 재인 추가
 	public ConsumerVO read(String cid);
 	
+	// 회원가입
+	public void insertConsumer(ConsumerVO vo);
+	public void insertConsumerAuth(ConsumerVO vo);
+	
 }
