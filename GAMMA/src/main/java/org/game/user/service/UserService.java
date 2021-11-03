@@ -42,4 +42,7 @@ public interface UserService {
 	
 	// 유저 상세창에 같이 딸려오는거
 		public List<UserAttachVO> getAttachList(Long cnum);
+		
+	// 재인 추가 - 회워가입 
+	public void insertConsumer(ConsumerVO vo);
 }
