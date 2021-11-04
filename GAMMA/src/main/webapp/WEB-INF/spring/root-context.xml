@@ -44,6 +44,8 @@
 	</bean>
 
 
+
+
 	<!-- gmail설정 메일설정중 구글꺼임 -->
 	<bean id="mailSender"
 		class="org.springframework.mail.javamail.JavaMailSenderImpl">
@@ -57,7 +59,7 @@
 	      <prop key="mail.smtp.starttls.enable">true</prop>
 	    </props>
 	    </property>
-	  </bean>
+	</bean>
 
 	<mybatis-spring:scan
 		base-package="org.game.gameinfo.mapper" />

@@ -23,13 +23,12 @@ import lombok.extern.log4j.Log4j;
 @Controller
 @Log4j
 @RequestMapping("/qna/*")
-@AllArgsConstructor
 public class QuestionController {
 	@Autowired
 	private QuestionService service;
 	
 	// 질문글 작성하는 폼 
-	@PreAuthorize("hasAnyRole('ROLE_MEMBER')")
+	//@PreAuthorize("hasAnyRole('ROLE_MEMBER')")
 	@PostMapping("/questionform")
 	public String addQuestion(HttpSession session, Model model) {
 		String cid = String.valueOf(session.getAttribute("session_cid"));
@@ -51,7 +50,7 @@ public class QuestionController {
 	}
 	
 	// 질문글 목록 조회
-	@PreAuthorize("hasAnyRole('ROLE_MEMBER')")
+	//@PreAuthorize("hasAnyRole('ROLE_MEMBER')")
 	@GetMapping("/questionlist")
 	public String questionList(HttpSession session, QuestionSearchCriteria cri, Model model) {
 		String qwriter = String.valueOf(session.getAttribute("session_cid"));
@@ -78,7 +77,7 @@ public class QuestionController {
 	}
 	
 	// 질문글 수정
-	@PreAuthorize("hasAnyRole('ROLE_MEMBER')")
+	//@PreAuthorize("hasAnyRole('ROLE_MEMBER')")
 	@PostMapping("/modifyquestion")
 	public String modifyQuestionForm(int qnum, Model model) {
 		QuestionVO vo = service.ownQuestion(qnum);
@@ -87,7 +86,7 @@ public class QuestionController {
 	}
 	
 	// 질문글 수정 완료
-	@PreAuthorize("hasAnyRole('ROLE_MEMBER')")
+	//@PreAuthorize("hasAnyRole('ROLE_MEMBER')")
 	@PostMapping("/modifyclear")
 	public String modifyQuestion(QuestionVO vo, QuestionSearchCriteria cri, RedirectAttributes rttr) {
 		service.modifyQuestion(vo);
@@ -101,7 +100,7 @@ public class QuestionController {
 	}
 	
 	// 질문글 상세 조회
-	@PreAuthorize("hasAnyRole('ROLE_MEMBER')")
+	//@PreAuthorize("hasAnyRole('ROLE_MEMBER')")
 	@GetMapping("/getquestion")
 	public String getQuestion(HttpSession session, int qnum, Model model) {
 		String qwriter = String.valueOf(session.getAttribute("session_cid"));
@@ -113,7 +112,7 @@ public class QuestionController {
 	}
 	
 	// 질문글 삭제
-	@PreAuthorize("hasAnyRole('ROLE_MEMBER')")
+	//@PreAuthorize("hasAnyRole('ROLE_MEMBER')")
 	@PostMapping("/removequestion")
 	public String removeQuestion(HttpSession session, int qnum, RedirectAttributes rttr) {
 		String qwriter = String.valueOf(session.getAttribute("session_cid"));
@@ -125,7 +124,7 @@ public class QuestionController {
 	}
 	
 	// 자주하는 질문 
-	@PreAuthorize("permitAll")
+	//@PreAuthorize("permitAll")
 	@GetMapping("/commonquestion")
 	public String commonQuestion(HttpSession session, Model model) {
 		String cid = String.valueOf(session.getAttribute("session_cid"));
