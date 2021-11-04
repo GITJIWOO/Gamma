@@ -4,11 +4,13 @@
 	xmlns:beans="http://www.springframework.org/schema/beans"
 	xmlns:context="http://www.springframework.org/schema/context"
 	xmlns:websocket="http://www.springframework.org/schema/websocket"
-	xsi:schemaLocation="http://www.springframework.org/schema/websocket http://www.springframework.org/schema/websocket/spring-websocket-4.3.xsd
-		http://www.springframework.org/schema/mvc https://www.springframework.org/schema/mvc/spring-mvc.xsd 
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:security="http://www.springframework.org/schema/security"
+	xsi:schemaLocation="http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd
+		http://www.springframework.org/schema/websocket http://www.springframework.org/schema/websocket/spring-websocket-4.3.xsd
+		http://www.springframework.org/schema/mvc https://www.springframework.org/schema/mvc/spring-mvc.xsd
 		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
-		http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd"
-	xmlns:mvc="http://www.springframework.org/schema/mvc"><!-- 웹소켓때문에 추가함 -->
+		http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd"><!-- 웹소켓때문에 추가함 -->
 
 	<!-- DispatcherServlet Context: defines this servlet's request-processing infrastructure -->
 	
@@ -61,5 +63,6 @@
 
 	<context:component-scan base-package="org.game.*.controller" />
 	<context:component-scan base-package="org.game.controller" />
+	<security:global-method-security pre-post-annotations="enabled" secured-annotations="enabled" />
 	
 </beans:beans>

@@ -187,19 +187,20 @@
 			<version>2.13.0-rc2</version>
 		</dependency>
 
-		<!-- 이메일 인증 2 -->
-		<dependency>
+		<!-- mail인증번호관련 3 -->
+		<!-- https://mvnrepository.com/artifact/javax.mail/mail -->
+		<!-- <dependency>
 			<groupId>javax.mail</groupId>
 			<artifactId>mail</artifactId>
 			<version>1.4.7</version>
 		</dependency>
-		<!-- https://mvnrepository.com/artifact/org.springframework/spring-context-support -->
+		 https://mvnrepository.com/artifact/org.springframework/spring-context-support
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-context-support</artifactId>
 			<version>${org.springframework-version}</version>
-		</dependency>
-		
+		</dependency> -->
+		<!-- 메일 api -->
 <dependency>
 	<groupId>org.apache.commons</groupId>
 	<artifactId>commons-email</artifactId>

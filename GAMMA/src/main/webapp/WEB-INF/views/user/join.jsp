@@ -18,18 +18,15 @@
 	padding: 5px;
 	margin: 0;
 }
-
-label {
-	font-weight: bold;
+label{
+font-weight:bold;
 }
-
-h1 {
-	position: relative;
-	top: 30px;
-	font-weight: bold;
-	right: 15px;
+h1{
+ position: relative;
+ top:30px;
+ font-weight:bold;
+ right:15px;
 }
-
 button {
 	width: 150px;
 	height: 40px;
@@ -46,29 +43,24 @@ button {
 #mail_check_input_box_false {
 	background-color: #ebebe4;
 }
-
-input {
-	width: 300px;
-}
+input{
+width:300px;}
 
 img {
 	width: 150px;
 	height: 150px;
-	padding: 0;
-	margin: 0;
+	padding:0;
+	margin:0;
 }
-
-.row {
-	display: flex;
-	flex-flow: row;
+.row{
+display:flex; 
+	flex-flow:row;
 }
-
-.row1 {
-	position: relative;
-	left: 20px;
-	bottom: 30px;
+.row1{
+	position:relative;
+	left:20px;
+	bottom:30px;
 }
-
 .border {
 	margin: 0 auto;
 	width: 380px;
@@ -270,33 +262,31 @@ var code = "";
 	    } ;
 </script>
 <body>
-	<div class="container">
-		<div class="border">
-			<div class="row">
-				<img src="/resources/css/image/mainIcon.png" />
-				<h1 style="text-align: left;">회원가입</h1>
-			</div>
-			<div class="row1">
-				<form action="/user/userJoin" method="post" id="regForm">
-					<label class="control-label" for="cid">아이디</label> <br />
-					<input type="text" id="cid" name="cid" /><br />
+<div class="container">
+			<div class="border">
+				<div class="row">
+						<img src="/resources/css/image/mainIcon.png" />
+						<h1 style="text-align: left;">회원가입</h1>
+				</div>
+				<div class="row1">
+		<form action="/user/join" method="post" id="regForm">
+					<label class="control-label" for="cid">아이디</label> <br/><input
+						 type="text" id="cid" name="cid" /><br/>
 					<button class="idChk" type="button" id="idChk"
-						onclick="fn_idChk();" value="N">중복확인</button>
-					<br />
-					<br /> <label class="control-label" for="password">패스워드</label><br />
-					<input type="password" name="password" id="password"
-						onchange="check_pw()" placeholder="!,@,#,$,%중 하나이상을 포함해주세요" /><br />
-					<label class="control-label" for="pw2">패스워드확인</label><br /> <input
-						type="password" name="userPW2" id="pw2" onchange="check_pw()"
-						placeholder="!,@,#,$,%중 하나이상을 포함해주세요"><span id="check"></span><br />
-					<br /> <input type="hidden" name="${_csrf.parameterName }"
-						value="${_csrf.token }" /> <label class="control-label"
-						for="email">Email</label> <br />
-					<input class="mail_input" type="text" id="email" name="email" /><br />
+						onclick="fn_idChk();" value="N">중복확인</button><br/><br/>
+					<label class="control-label" for="password">패스워드</label><br/> <input
+						 type="password" name="password" id="password"
+						onchange="check_pw()" placeholder="!,@,#,$,%중 하나이상을 포함해주세요" /><br/>
+					<label class="control-label" for="pw2">패스워드확인</label><br/> <input
+						 type="password" name="userPW2" id="pw2"
+						onchange="check_pw()" placeholder="!,@,#,$,%중 하나이상을 포함해주세요"><span
+						id="check"></span><br/><br/>
+						<input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }" />
+					<label class="control-label" for="email">Email</label> <br/><input
+						class="mail_input" type="text" id="email" 
+						name="email" /><br/>
 					<button class="emailChk" type="button" id="emailChk"
-						onclick="fn_emailChk();" value="N">중복확인</button>
-					<br />
-					<br />
+						onclick="fn_emailChk();" value="N">중복확인</button><br/><br/>
 					<!-- <div class="mail_check_warn">
 							<div class="mail_check_input_box" id="mail_check_input_box_false">
 								<input class="mail_check_input" disabled="disabled"/>
@@ -307,15 +297,14 @@ var code = "";
 						 <div class="clearfix"></div>
                     <span id="mail_check_input_box_warn"></span>
                 </div>-->
-					<label class="control-label" for="nickname">닉네임</label><br /> <input
-						type="text" id="nickname" name="nickname" /><br />
-					<br /> <input type="hidden" name="role" value="ROLE_MEMBER" />
-				</form>
-				<button class="btn" type="button" id="submit" value="JOIN">회원가입</button>
-				<button class="cencle btn" type="button">취소</button>
+					<label class="control-label" for="nickname">닉네임</label><br/> <input
+						 type="text" id="nickname" name="nickname" /><br/><br/>
+<input type="hidden" name="role" value="ROLE_MEMBER" />		</form>
+					<button class="btn" type="button" id="submit"value="JOIN">회원가입</button>
+					<button class="cencle btn" type="button">취소</button>
+				</div>
 			</div>
-		</div>
-	</div>
+</div>
 </body>
 
 </html>

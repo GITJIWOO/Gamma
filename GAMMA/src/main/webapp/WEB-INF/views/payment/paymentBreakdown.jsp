@@ -12,6 +12,11 @@
 <script src="<c:url value="/resources/js/main.js"/>"></script>
 <link rel="stylesheet" href="/resources/css/styles.css" />
 <link rel="icon" type="image/png" href="http://example.com/myicon.png">
+<style>
+	.detail {
+		padding: 30px;
+	}
+</style>
 </head>
 <body>
     <div class="display">
@@ -84,7 +89,25 @@
         <div class="contents">
           <div class="detail">
             <!-- 여기에 각자 content 붙여넣기 -->
-            
+            <p class="title">내 결제내역</p>
+           	<table class="table">
+			  <thead>
+			    <tr>
+			      <th scope="col">게임</th>
+			      <th scope="col">가격</th>
+			      <th scope="col">결제일</th>
+			    </tr>
+			  </thead>
+			  <tbody>
+	            <c:forEach var="paymentList" items="${paymentList}">
+					    <tr>
+					      <th scope="row">${paymentList.gname}</th>
+					      <td>${paymentList.gprice}</td>
+					      <td>${paymentList.cpdate}</td>
+					    </tr>
+	            </c:forEach>
+			  </tbody>
+			</table>
           </div>
         </div>
         <div class="footer">
