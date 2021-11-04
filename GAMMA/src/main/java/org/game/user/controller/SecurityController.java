@@ -29,7 +29,7 @@ public class SecurityController {
 	@PreAuthorize("permitAll")
 	@GetMapping("/join")
 	public void joinForm() {
-		System.out.println("회원가입창으로 접속");
+		System.out.println("회원가입창으로 접-속");
 	}
 	
 	@PreAuthorize("permitAll")
