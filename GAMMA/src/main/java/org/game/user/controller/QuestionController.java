@@ -1,5 +1,6 @@
 package org.game.user.controller;
 
+import java.security.Principal;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -27,13 +28,20 @@ import lombok.extern.log4j.Log4j;
 public class QuestionController {
 	@Autowired
 	private QuestionService service;
-	
+	/*
 	// 질문글 작성하는 폼 
 	@PreAuthorize("hasAnyRole('ROLE_MEMBER')")
 	@PostMapping("/questionform")
-	public String addQuestion(HttpSession session, Model model) {
-		String cid = String.valueOf(session.getAttribute("session_cid"));
+	public String addQuestion(Principal principal, Model model) {
+		String cid = principal.getName();
 		model.addAttribute("qwriter", cid);
+		return "/qna/registerquestion";
+	}
+	*/
+	// 질문글 작성하는 폼 
+	@PreAuthorize("hasAnyRole('ROLE_MEMBER')")
+	@PostMapping("/questionform")
+	public String addQuestion() {
 		return "/qna/registerquestion";
 	}
 	
@@ -53,8 +61,8 @@ public class QuestionController {
 	// 질문글 목록 조회
 	@PreAuthorize("hasAnyRole('ROLE_MEMBER')")
 	@GetMapping("/questionlist")
-	public String questionList(HttpSession session, QuestionSearchCriteria cri, Model model) {
-		String qwriter = String.valueOf(session.getAttribute("session_cid"));
+	public String questionList(Principal principal, QuestionSearchCriteria cri, Model model) {
+		String qwriter = principal.getName();
 		int admin = service.adminOrNot(qwriter);
 		List<QuestionVO> vo;
 		QuestionPageDTO btnMaker;
@@ -103,8 +111,8 @@ public class QuestionController {
 	// 질문글 상세 조회
 	@PreAuthorize("hasAnyRole('ROLE_MEMBER')")
 	@GetMapping("/getquestion")
-	public String getQuestion(HttpSession session, int qnum, Model model) {
-		String qwriter = String.valueOf(session.getAttribute("session_cid"));
+	public String getQuestion(Principal principal, int qnum, Model model) {
+		String qwriter = principal.getName();
 		int admin = service.adminOrNot(qwriter);
 		QuestionVO vo = service.ownQuestion(qnum);
 		model.addAttribute("admin", admin);
@@ -115,8 +123,8 @@ public class QuestionController {
 	// 질문글 삭제
 	@PreAuthorize("hasAnyRole('ROLE_MEMBER')")
 	@PostMapping("/removequestion")
-	public String removeQuestion(HttpSession session, int qnum, RedirectAttributes rttr) {
-		String qwriter = String.valueOf(session.getAttribute("session_cid"));
+	public String removeQuestion(Principal principal, int qnum, RedirectAttributes rttr) {
+		String qwriter = principal.getName();
 		service.removeQuestion(qnum);
 		rttr.addFlashAttribute("success", "remove");
 		rttr.addFlashAttribute("qnum", qnum);

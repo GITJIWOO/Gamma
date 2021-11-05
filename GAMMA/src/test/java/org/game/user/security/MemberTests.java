@@ -27,7 +27,7 @@ public class MemberTests {
 	@Autowired DataSource ds;
 	
 	// 기존 데이터 변경
-	@Test
+	//@Test
 	public void testCryptDefaultDB() {
 		String [] idList = {"user00", "member00", "admin00"};
 		
@@ -37,6 +37,23 @@ public class MemberTests {
 			for(String id : idList) {
 				PreparedStatement pstmt = con.prepareStatement(sql);
 				pstmt.setString(1, pwen.encode("pw00"));
+				pstmt.setString(2, id);
+				pstmt.executeUpdate();
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
+	@Test
+	public void testCryptDB() {
+		String [] idList = {"admin"};
+		
+		String sql = "UPDATE consumer SET password = ? WHERE cid = ?";
+		try {
+			Connection con = ds.getConnection();
+			for(String id : idList) {
+				PreparedStatement pstmt = con.prepareStatement(sql);
+				pstmt.setString(1, pwen.encode("admin"));
 				pstmt.setString(2, id);
 				pstmt.executeUpdate();
 			}
@@ -74,7 +91,7 @@ public class MemberTests {
 		}
 	}
 	
-	@Test
+	//@Test
 	public void testAuthDB() {
 		try {
 			Connection con = ds.getConnection();
