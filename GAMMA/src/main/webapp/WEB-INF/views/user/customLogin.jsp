@@ -20,7 +20,7 @@
 	</div>
 	<form action="/login" method="post">
 		<input type="text" name="username" placeholder="ID"/><br>
-		<input type="text" name="password" placeholder="PASSWORD"/>
+		<input type="password" name="password" placeholder="PASSWORD"/>
 		<!-- 체크하면 7일간 로그인 유지됨 -->
 		<input type="checkbox" name="remember-me">로그인 상태 유지 
 		<input type="submit" value="LOGIN" />

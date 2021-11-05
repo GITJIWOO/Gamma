@@ -1,6 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -78,15 +79,6 @@
 </style>
 </head>
 <body>
-	<!-- 검색창 - 관리자만 볼 수 있음 
-	<c:if test="${admin == 1 }">
-	<form action="qna/questionlist" method="get">
-		<input type="hidden" name="pageNum" value="${btnMaker.cri.pageNum }"/>
-		<input type="hidden" name="amount" value="${btnMaker.cri.amount }"/>
-		<input type="text" name="keyword" value="${btnMaker.cri.keyword }" placeholder="작성자 아이디를 입력해주세요"/>
-		<input type="submit" value="검색"/>
-	</form>
-	</c:if> -->
 	<c:if test="${success eq 'register'}">
 		<script>
 			alert("질문글이 등록되었습니다.");
@@ -102,6 +94,7 @@
 			alert("질문글이 삭제되었습니다.");
 		</script>
 	</c:if>
+	
     <div class="display">
       <!-- side-bar -->
       <div class="side-bar">
@@ -160,7 +153,10 @@
       <div class="main">
         <div class="contents">
           <div class="detail">
-          <!-- start -->
+        <!-- start -->
+          <sec:authorize access="isAuthenticated()">
+          	<sec:authentication property="principal" var="secuInfo" />
+          	<c:if test="${secuInfo.consumer.cid eq qwriter }">
             <h2 class="table-header">1:1 문의</h2>
   			<c:if test="${!empty vo}">
             <table class="table table-hover questiontable">
@@ -203,6 +199,7 @@
                 </c:forEach>
               </tbody>
             </table>
+            
             <!-- 페이징 처리 -->
             <nav aria-label="...">
               <ul class="pagination justify-content-center">
@@ -259,6 +256,8 @@
               <h1>등록된 문의가 없습니다.</h1>
             </div>
 			</c:if>
+			</c:if>
+          </sec:authorize>
             <c:if test="${admin == 0 }">
                 <form action="/qna/questionform" method="post">
                   <input type="hidden" name="qwriter" value="${qwriter }" />
