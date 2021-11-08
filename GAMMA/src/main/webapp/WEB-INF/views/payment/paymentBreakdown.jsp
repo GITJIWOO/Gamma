@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>라이브러리</title>
+<title>${cid}님의 결제내역</title>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous"><!-- Bootstrap cdn 설정 -->	
 <script src="<c:url value="/resources/js/main.js"/>"></script>
@@ -15,26 +15,6 @@
 <style>
 	.detail {
 		padding: 30px;
-	}
-	.title {
-		font-size: 200%;
-		font-weight: bold;
-		margin-bottom: 30px;
-	}
-	.card {
-		height: 310px;
-		float: left;
-		margin-right: 30px;
-		margin-bottom: 30px;
-	}
-	.card-title {
-		padding-top: 10px;
-		padding-bottom: 10px;
-		font-size: 150%;
-		font-weight: bold;
-	}
-	.store {
-		margin-top: 50px;
 	}
 </style>
 </head>
@@ -100,7 +80,6 @@
 	   				<a href="/user/userLogout">* 로그아웃</a><br/>
 	   				<a href="/friends/followerlist">* 팔로워리스트</a><br/>
 	   				<a href="/friends/followinglist">* 팔로윙리스트</a><br/>
-	   				<a href="/friends/searchfriends">* 친구 검색</a><br/>
 		   		  </div>
 	          </div>
           </c:if>
@@ -110,21 +89,25 @@
         <div class="contents">
           <div class="detail">
             <!-- 여기에 각자 content 붙여넣기 -->
-            <div class="title"> 
-	            <p>${cid}의 라이브러리</p>
-	            <hr/>
-            </div>
-            <div class="library">
-				<c:forEach var="library" items="${library}">
-					<div class="card" style="width: 205px;">
-						<img src="${library.gpicture}" class="card-img-top" height="130px">
-						<div class="card-body">
-							<h5 class="card-title">${library.gname}</h5>
-							<a href="/gameInfo/get?gnum=${library.gnum}" class="btn btn-primary store">상점 페이지</a>
-						</div>
-					</div>
-				</c:forEach>
-            </div>
+            <p class="title">내 결제내역</p>
+           	<table class="table">
+			  <thead>
+			    <tr>
+			      <th scope="col">게임</th>
+			      <th scope="col">가격</th>
+			      <th scope="col">결제일</th>
+			    </tr>
+			  </thead>
+			  <tbody>
+	            <c:forEach var="paymentList" items="${paymentList}">
+					    <tr>
+					      <th scope="row">${paymentList.gname}</th>
+					      <td>${paymentList.gprice}</td>
+					      <td>${paymentList.cpdate}</td>
+					    </tr>
+	            </c:forEach>
+			  </tbody>
+			</table>
           </div>
         </div>
         <div class="footer">

@@ -10,6 +10,7 @@
 <script src="<c:url value="/resources/js/main.js"/>"></script>
 <link rel="stylesheet" href="/resources/css/styles.css" />
 <link rel="icon" type="image/png" href="http://example.com/myicon.png">
+<script src="<c:url value="/resources/js/reviewDetail.js"/>"></script>
 <title>${review.cid}의 리뷰</title>
 <style>
 	.detail {
@@ -63,6 +64,16 @@
 	}
 	.reviewGrrecommend {
 		font-size: 110%;
+	}
+	.commentCid {
+		font-size: 110%;
+	}
+	.commentRcdate {
+		margin-bottom: 15px;
+		opacity: 0.7;
+	}
+	.commentRccontent {
+		font-size: 130%;
 	}
 </style>
 </head>
@@ -128,6 +139,7 @@
 	   				<a href="/user/userLogout">* 로그아웃</a><br/>
 	   				<a href="/friends/followerlist">* 팔로워리스트</a><br/>
 	   				<a href="/friends/followinglist">* 팔로윙리스트</a><br/>
+	   				<a href="/friends/searchfriends">* 친구 검색</a><br/>
 		   		  </div>
 	          </div>
           </c:if>
@@ -208,30 +220,27 @@
 								</c:when>
 							</c:choose>
 						</div>
-						
-						<!-- 리뷰 수정 버튼(아이디 검사) -->
-						<div class="reviewModifyBtn">
-							<c:if test="${cid eq review.cid}">
+						<c:if test="${cid eq review.cid}">
+							<!-- 리뷰 수정 버튼(아이디 검사) -->
+							<div class="reviewModifyBtn">
 								<button id="modifyBtn" class="btn btn-secondary">수정하기</button>
-							</c:if>
-						</div>
-						
-						<!-- 리뷰 삭제 버튼(아이디 검사) -->
-						<div id="removeReviewButton">
-							<c:if test="${cid eq review.cid}">
+							</div>
+							
+							<!-- 리뷰 삭제 버튼(아이디 검사) -->
+							<div id="removeReviewButton">
 								<form action="/review/reviewRemove" method="post" id="removeReview">
 									<input type="hidden" name="grnum" value="${review.grnum}">
 								</form>
 								<button onclick="removeReview()" class="btn btn-secondary">리뷰 삭제</button>
-							</c:if>
-						</div>
-						<hr/>
+							</div>
+							<hr/>
+						</c:if>
 					</div>
 				</div>
 				<div id="reviewComment">
 					
 					<!-- 리뷰 댓글 작성(로그인 여부) -->
-					<c:if test="${cid ne 'null'}">
+					<c:if test="${cid ne null}">
 						<form action="/review/reviewCommentWrite" method="post">
 							<input type="hidden" name="cid" value="${cid}">
 							<input type="hidden" name="grnum" value="${review.grnum}">
@@ -309,75 +318,4 @@
 	<!-- font-awesome code kit -->
 	<script src="https://kit.fontawesome.com/6478f529f2.js" crossorigin="anonymous"></script>       
 </body>
-<script>
-
-	$("#modifyBtn").click(function(){
-		$("#reviewInfo").hide();
-		$("#modifyBtn").hide();
-		$("#removeReview").hide();
-		$("#reviewModify").css("display", "flex");
-	});
-	
-	$("#modifyCancel").click(function(){
-		$("#reviewInfo").show();
-		$("#modifyBtn").show();
-		$("#removeReview").show();
-		$("#reviewModify").css("display", "none");
-	});
-
-	$("div#notLike").click(function() {
-		let isCheck = $(".isLike").is(":checked");
-		$(".notLike").prop("checked", true);
-		$("#notLike").toggleClass().addClass("btn btn-danger");
-		$(".fa-thumbs-down").toggleClass().addClass("fas fa-thumbs-down fa-lg");
-		if(isCheck === true) {
-			$(".isLike").prop("checked", false);
-			$("#isLike").toggleClass().addClass("btn btn-secondary");
-			$(".fa-thumbs-up").toggleClass().addClass("far fa-thumbs-up fa-lg");
-		}
-	});
-	
-	$("div#isLike").click(function() {
-		let notCheck = $(".notLike").is(":checked");
-		$(".isLike").prop("checked", true);
-		$("#isLike").toggleClass().addClass("btn btn-success");
-		$(".fa-thumbs-up").toggleClass().addClass("fas fa-thumbs-up fa-lg");
-		if(notCheck === true) {
-			$(".notLike").prop("checked", false);
-			$("#notLike").toggleClass().addClass("btn btn-secondary");
-			$(".fa-thumbs-down").toggleClass().addClass("far fa-thumbs-down fa-lg");
-		}
-	});
-
-	$("#reviewUpdate").click(function updateCheck(){
-		let isCheck = $(".isLike").is(":checked");
-		let notCheck = $(".notLike").is(":checked");
-		
-		if(isCheck === false && notCheck === false) {
-			alert("평가를 선택하십시오.");
-			return false;
-		} else {
-			return true;
-		}
-	});
-
-	function removeReview() {
-		if(confirm("리뷰를 삭제하시겠습니까?")) {
-			let choice = document.getElementById("removeReview");
-			choice.submit();
-		} else {
-			location.href="/review/reviewDetail/${review.grnum}";
-		}
-	}
-
-	function removeReviewComment() {
-		if(confirm("댓글을 삭제하시겠습니까?")) {
-			let choice = document.getElementById("removeReviewComment");
-			choice.submit();
-		} else {
-			location.href="/review/reviewDetail/${review.grnum}";
-		}
-	}
-
-</script>
 </html>

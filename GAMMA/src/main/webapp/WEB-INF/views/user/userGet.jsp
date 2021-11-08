@@ -15,13 +15,191 @@
 * {
 	padding: 5px;
 	margin: 5px;
+	}
+.display {
+  display: flex;
+  flex-direction: row;
+  height: 200vh;
 }
+.side-bar {
+  z-index: 99;
+  width: 18%;
+  height: 100%;
+  position: fixed;
+  background-color: var(--sideColor);
+  color: var(--fontColor);
+}
+.side-bar__row:first-child img {
+  display: block;
+  margin: 50px auto;
+  width: 170px;
+}
+.side-bar__row:nth-child(2) input[type="text"] {
+  padding: 15px;
+  font-size: large;
+  width: 90%;
+  margin-left: 5%;
+  border-radius: 50px;
+  border: none;
+  transition: border 0.4s ease-in-out;
+}
+.side-bar__row:nth-child(2) input[type="text"]::placeholder {
+  color: var(--fontColor);
+}
+.side-bar__row:nth-child(2) input[type="text"]:focus {
+  border: 1.5px solid var(--mainColor);
+}
+.side-bar__row:nth-child(2) input:not([type="text"]) {
+  display: none;
+}
+.side-bar__row:nth-child(3) {
+  margin: 20px 0;
+  font-size: 25px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-bottom: 30px;
+  border-bottom: 1px solid var(--opacity);
+}
+.side-bar__row:nth-child(3) span {
+  padding: 15px 0;
+  margin: 5px 0;
+  width: 100%;
+  text-align: center;
+}
+.side-bar__row:nth-child(3) span:hover {
+  background-color: var(--opacity);
+  border-left: 5px solid var(--mainColor);
+}
+.side-bar__row:nth-child(4) {
+  display: flex;
+  justify-content: center;
+  margin: 30px;
+}
+.side-bar__row:nth-child(4) span {
+  transition: color 0.6s ease-in-out;
+}
+.side-bar__row:nth-child(4) span:hover {
+  color: white;
+}
+
+.side-bar__row:last-child {
+  /* margin-top: 500px; */
+}
+.side-bar__row:last-child span {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  width: 90%;
+  color: white;
+  border-radius: 5px;
+  padding: 15px 0;
+  margin: 10px auto;
+}
+.side-bar__row:last-child span:first-child {
+  background-color: var(--mainColor);
+
+  transition: background-color 0.4s ease-in-out;
+}
+.side-bar__row:last-child span:first-child:hover {
+  background-color: rgba(245, 108, 45, 0.8);
+}
+.side-bar__row:last-child span:last-child {
+  background-color: inherit;
+  border: 1px solid white;
+  transition: border-color 0.4s ease-in-out;
+  transition: color 0.2s ease-in-out;
+}
+.side-bar__row:last-child span:last-child:hover {
+  border-color: var(--fontColor);
+  color: var(--fontColor);
+}
+.side-bar a:hover {
+  color: white;
+}
+.main {
+  width: 100%;
+  padding-left: 18%;
+  height: 100%;
+  position: relative;
+}
+.footer {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--footerColor);
+  bottom: 0;
+  height: 100px;
+  color: rgb(161, 161, 161);
+  position: absolute;
+}
+.footer-info {
+  display: flex;
+  justify-content: center;
+  position: absolute;
+  top: 0;
+  padding: 20px 0;
+  font-weight: 600;
+  font-size: 14px;
+}
+.footer-copyright {
+  padding-top: 30px;
+  display: flex;
+  font-weight: 300;
+  font-size: 13px;
+}
+.consumer {
+	position: relative;
+	text-align: center;
+	display: flex;
+	flex-flow: row;
+	align-items: center;
+	margin: 10px;
+}
+.consumer__imgPro {
+	float: left;
+	padding: 0;
+	margin: 0;
+}
+.conimg {
+	width: 100px;
+	height: 100px;
+}
+.consumer__nickname {
+	float: right;
+	font-size: 25px;
+	font-weight: bold;
+	color: white;
+	height: 100px;
+	display: flex;
+	flex-flow: row;
+	align-items: center;
+	width: 250px;
+}
+.consumer__info {
+	background-color: white;
+	border: 1px solid black;
+	font-size: 120%;
+	display: none;
+	position: absolute;
+	top: 50px;
+	left: 100%;
+	width: 120px;
+	border-radius: 10%;
+	text-align:left;
+ }
 .detail{
 	display: flex;
 	flex-flow: row;
 }
-.Mbtn{position:relative;
-	left:50px;}
+.modAub{
+	position:relative;
+	left:50px;
+}
+
 .table1{position:relative;
 	left:50px;}
 .rowB{
@@ -54,10 +232,6 @@ h2 {
 	font-weight: bold;
 }
 
-p {
-	font-weight: bold;
-	font-size: big;
-}
 
 strong {
 	color: blue;
@@ -75,42 +249,7 @@ strong {
 	z-index: 1000;
 	width: 310px;
 }
-	.consumer {
-		width: 25%;
-		position: relative;
-		text-align: center;
-		height: 20%;
-		buttom: 100;
-		left:50px;
-	}
-	.consumer__imgPro {
-		float: left;
-		padding: 0;
-		margin: 0;
-	}
-	.conimg {
-		width: 100px;
-		height: 100px;
-	}
-	.consumer__nickname {
-		float: right;
-		font-size: 25px;
-		font-weight: bold;
-		color: white;
-		
-	}
-	.consumer__info {
-		background-color:gray;
-		color:white;
-		display: none;
-		position: absolute;
-		top:50px;
-		left: 150%;
-		width:120px;
-		margin:5px;
-		border-radius: 10%;
-		text-align:left;
-	}
+
 modBtn {
 	display: flex;
 	flex-flow: row;
@@ -160,6 +299,10 @@ position:relative;
 	font-weight: bold;
 	color: white;
 }
+.gameImg {
+	height: 100px;
+	width: 100px;
+}
 </style>
 <meta charset="UTF-8">
 
@@ -168,34 +311,46 @@ position:relative;
 </head>
 <body>
 
-	<div class="display">
-		<!-- side-bar -->
-		<div class="side-bar">
-			<!-- logo -->
-			<div class="side-bar__row">
-				<!-- 클릭하면 main화면으로 돌아오도록 a 태그 수정 -->
-				<span><a href="/main/main"><img
-						src="/resources/css/image/logo.png" /></a></span>
-			</div>
-			<!-- search -->
-			<div class="side-bar__row">
-				<form action="#" method="get">
-					<input type="text" placeholder="   Search Game" />
-					<!-- origin처럼 버튼 숨겼음, enter 치면 검색됨 -->
-					<input type="submit" value="" />
-				</form>
-			</div>
-			<!-- category -->
-			<div class="side-bar__row">
-				<span><a href="#">게임 스토어</a></span> <span><a href="#">라이브러리</a></span>
-			</div>
-			<!-- qna -->
-			<div class="side-bar__row">
-				<span><a href="#">Q&A</a></span> &nbsp;&nbsp;|&nbsp;&nbsp; <span><a
-					href="#">자주하는 질문</a></span>
-			</div>
-				<div class="side-bar__row">
-				<c:if test="${member == null }">
+    <div class="display">
+      <!-- side-bar -->
+      <div class="side-bar">
+        <!-- logo -->
+        <div class="side-bar__row">
+          <!-- 클릭하면 main화면으로 돌아오도록 a 태그 수정 -->
+          <span
+            ><a href="/main/main"><img src="/resources/css/image/logo.png" /></a
+          ></span>
+        </div>
+        <!-- search -->
+        <div class="side-bar__row">
+          <form action="/gameInfo/gamelist" method="get">
+          <select name="searchType" style="display:none">
+          	<option  value="n"
+				<c:out value="${btnMaker.cri.searchType eq 'n' ? 'selected' : '' }"/>>
+				</option>
+            </select>
+            <input type="text" placeholder="Search Game" name="keyword" value="${btnMaker.cri.keyword }"/>
+            <!-- origin처럼 버튼 숨겼음, enter 치면 검색됨 -->
+            <input type="submit" value="" />
+          </form>
+        </div>
+        <!-- category -->
+        <div class="side-bar__row">
+          <span><a href="/gameInfo/gamelist">게임 스토어</a></span>
+          <c:if test="${member.cid ne null}">
+          	<span><a href="/library/conLibrary?cid=${cid}">라이브러리</a></span>
+          </c:if>
+        </div>
+        <!-- qna -->
+        <div class="side-bar__row">
+          <span><a href="/qna/questionlist">Q&A</a></span>
+          &nbsp;&nbsp;|&nbsp;&nbsp;
+          <span><a href="/qna/commonquestion">자주하는 질문</a></span>
+        </div>
+        <!-- about user -->
+        <div class="side-bar__row">
+          <!-- c:if로 로그인 전에는 회원가입+로그인 / 로그인 후에는 프로필 -->
+          <c:if test="${member.cid eq null}">
             <div class="loginBtn">
 		        <span><a href="/user/userLogin" class="loginA">로그인</a></span>
             </div>
@@ -203,7 +358,7 @@ position:relative;
 		        <span><a href="/user/userJoin" class="joinA">가입하기</a></span>
             </div>
           </c:if>
-          <c:if test="${member != null }">
+          <c:if test="${member.cid ne null}">
 	          <div class="consumer">
 	          	  <div class="consumer__imgPro">
 			        <img class="conimg" src="/resources/css/image/chaIcon.png"/>
@@ -213,14 +368,21 @@ position:relative;
 		          </div>
 		          <div class="consumer__info">
 	   					<a href="/user/userGet">* 유저정보창</a><br/>
-	   				<a href="/user/userpro">* 유저프로필창</a><br/>
+
+	   				<a href="/user/userPro">* 유저프로필창</a><br/>
 	   				<a href="/user/userLogout">* 로그아웃</a><br/>
-	   				<a href="/user/userDelete">* 회원탈퇴</a><br/>
+	   				<a href="/friends/followerlist">* 팔로워리스트</a><br/>
+	   				<a href="/friends/followinglist">* 팔로윙리스트</a><br/>
+	   				<a href="/friends/searchfriends">* 친구 검색</a><br/>
 		   		  </div>
 	          </div>
           </c:if>
         </div>
       </div>
+      <div class="main">
+        <div class="contents">
+          <div class="detail">
+            <!-- 여기에 각자 content 붙여넣기 -->
 			<!-- about user -->
 			<div class="main">
 				<div class="container">
@@ -287,29 +449,11 @@ position:relative;
 								<a href="/user/userModify"><button>유저수정</button></a>
 								<a href="/user/userDelete"><button>탈퇴</button></a>
 								<a href="/user/userPro"><button>프로필창</button></a>
+								<a href="/gamepayment/consumerBreakdown"><button>결제 목록</button></a>
 							</c:if>
 						</div>
 						</div>
 				<div class="rowB">
-				<table class="table table-hover">
-					<tr>
-						<th>게임식별번호</th>
-						<th>게임제목</th>
-						<th>게임설명</th>
-						<th>태그</th>
-						<th>구매일자</th>
-					</tr>
-					<c:forEach var="library" items="${library }">
-						<tr>
-							<td>${library.gnum }</td>
-							<td><a href="gname">${gname}</a></td>
-							<td>${gcontent}</td>
-							<td>${tagname }</td>
-							<td>${board.regdate }</td>
-						</tr>
-					</c:forEach>
-
-				</table>
 				</div>
 					</div>
 				
@@ -345,6 +489,23 @@ position:relative;
 		</div>
 	</div>
 
+        <div class="footer">
+          <div class="footer-info">
+            <div>CREATORS&nbsp;&nbsp;김영훈, 김지우, 조훈현, 최재인</div>
+            <div>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;</div>
+            <div>
+              CONTACT&nbsp;&nbsp;<a href="https://github.com/GITJIWOO/Game-Project"
+                >https://github.com/GITJIWOO/Game-Project</a
+              >
+            </div>
+          </div>
+          <div class="footer-copyright">
+            <div>Copyright © GAMMA All right reserved.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    </div>
 	<script>
 	$(document).ready(function() {
 		

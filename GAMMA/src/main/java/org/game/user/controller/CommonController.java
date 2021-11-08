@@ -1,5 +1,8 @@
 package org.game.user.controller;
 
+import java.security.Principal;
+
+import org.springframework.lang.Nullable;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,7 +22,6 @@ public class CommonController {
 		log.info("접근 거부: " + auth);
 		model.addAttribute("errorMessage", "접근 거부");
 	}
-	
 	@GetMapping("/customLogin")
 	public void loginInput(String error, String logout, Model model) {
 		log.info("error 여부: " + error);

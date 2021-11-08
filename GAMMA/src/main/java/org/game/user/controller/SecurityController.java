@@ -16,8 +16,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import lombok.extern.log4j.Log4j;
 
 @Log4j
-@RequestMapping("/user/*")
 @Controller
+@RequestMapping("/user")
 public class SecurityController {
 	
 	@Autowired
@@ -26,7 +26,7 @@ public class SecurityController {
 	@Autowired
 	private PasswordEncoder pwen;
 	
-	@PreAuthorize("permitAll")
+	//@PreAuthorize("permitAll")
 	@GetMapping("/join")
 	public void joinForm() {
 		System.out.println("회원가입창으로 접-속");
@@ -58,27 +58,17 @@ public class SecurityController {
 	}
 	
 	// security-context에서 인터셉트 사용안하고 어노테이션으로 처리
-	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_MEMBER')")
+	//@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_MEMBER')")
 	@GetMapping("/member")
 	public void doMember() {
 		log.info("회원 접속 가능 - member");
 	}
 	
-	@PreAuthorize("hasAnyRole('ROLE_ADMIN')")
+	//@PreAuthorize("hasAnyRole('ROLE_ADMIN')")
 	@GetMapping("/admin")
 	public void doAdmijn() {
 		log.info("운영자만 접속 가능 - admin");
 	}
-	/* 시큐리티
-	 * @GetMapping("/all") public void doAll() { log.info("모든사람이 접속가능한 all 로직"); }
-	 * 
-	 * @GetMapping("/member") public void doMember() {
-	 * log.info("회원들이 접속가능한 member로직");
-	 * 
-	 * }
-	 * 
-	 * @GetMapping("/admin") public void doAdmin() {
-	 * log.info("운영자만 접속 가능한 admin 로직"); }
-	 */
+
 
 }

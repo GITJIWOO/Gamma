@@ -1,5 +1,6 @@
 package org.game.user.controller;
 
+import java.security.Principal;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -28,9 +29,9 @@ public class ConsumerBasketController {
 	private ConsumerBasketService service;
 	
 	@GetMapping("/basketList")
-	public String getBasketList(HttpSession session, Model model) {
+	public String getBasketList(Principal principal, Model model) {
 		
-		String cid = (String)session.getAttribute("session_cid");
+		String cid = principal.getName();
 		
 		if(cid == null) {
 			return "redirect:/user/userLogin";
@@ -39,14 +40,15 @@ public class ConsumerBasketController {
 		List<ConsumerBasketVO> BasketList = service.getConsumerBasketList(cid);
 		
 		model.addAttribute("basket", BasketList);
+		model.addAttribute("cid", cid);
 		
 		return "/payment/consumerBasket";
 	}
 	
 	@PostMapping("/basketAdd")
-	public String additionConsumerBasket(long gnum, HttpSession session, Model model) {
+	public String additionConsumerBasket(long gnum, Principal principal, Model model) {
 
-		String cid = (String)session.getAttribute("session_cid");
+		String cid = principal.getName();
 
 		if(cid == null) {
 			return "redirect:/user/userLogin";
@@ -58,9 +60,9 @@ public class ConsumerBasketController {
 	}
 	
 	@PostMapping("/basketRemove")
-	public String removeConsumerBasket(long gnum, HttpSession session, Model model) {
+	public String removeConsumerBasket(long gnum, Principal principal, Model model) {
 		
-		String cid = (String)session.getAttribute("session_cid");
+		String cid = principal.getName();
 
 		if(cid == null) {
 			return "redirect:/user/userLogin";

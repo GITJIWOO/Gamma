@@ -38,17 +38,27 @@ public class UserController {
 	// BCryptPasswordEncoder pwdEncoder;
 	// @Autowired
 	// private JavaMailSender mailSender;
-
+	
 	@Autowired
 	private FriendsService fservice;
 	
 	@Autowired
 	private GameLibraryService libraryService;
 	
+	@GetMapping("/agreeJoin")
+	private void agreeJoin() { 
+		log.info("약관의 동의");
+	}
+	
+	
 	// 유저프로필
 	@GetMapping("/userPro")
-	public String userPro() {
-
+	public String userPro(HttpSession session, Model model) {		
+		// 세션 아이디, 어드민
+		String cid = (String)session.getAttribute("session_cid");
+		String cadmin = String.valueOf(session.getAttribute("session_cadmin"));
+		model.addAttribute("cid", cid);
+		model.addAttribute("cadmin", cadmin);
 		return "/user/userPro";
 	}
 
@@ -75,7 +85,12 @@ public class UserController {
 	}
 
 	@GetMapping("/userGet")
-	public String userGet() {
+	public String userGet(HttpSession session, Model model) {
+		// 세션 아이디, 어드민
+		String cid = (String)session.getAttribute("session_cid");
+		String cadmin = String.valueOf(session.getAttribute("session_cadmin"));
+		model.addAttribute("cid", cid);
+		model.addAttribute("cadmin", cadmin);
 		return "/user/userGet";
 	}
 
@@ -198,7 +213,7 @@ public class UserController {
 		// security-con~ 에서 세션파기설정이되있음
 		session.invalidate();
 
-		return "/main/main";
+		return "redirect:/main/main";
 	}
 
 	// 로그아웃 과 세션 초기화 시큐리티적용버전
