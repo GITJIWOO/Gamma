@@ -27,7 +27,7 @@ public class CustomLoginSuccessHandler implements AuthenticationSuccessHandler{@
 		
 		log.warn("부여받은 권한들: " + roleList);
 		if(roleList.contains("ROLE_ADMIN")) {
-			response.sendRedirect("/user/admin");
+			response.sendRedirect("/main/main");
 			return;
 		}
 		if(roleList.contains("ROLE_MEMBER")) {
