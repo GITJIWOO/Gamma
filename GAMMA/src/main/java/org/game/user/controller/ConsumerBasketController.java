@@ -30,17 +30,16 @@ public class ConsumerBasketController {
 	
 	@GetMapping("/basketList")
 	public String getBasketList(Principal principal, Model model) {
-		
-		String cid = principal.getName();
-		
-		if(cid == null) {
-			return "redirect:/user/userLogin";
+
+		if(principal != null) {
+			String cid = principal.getName();
+			model.addAttribute("cid", cid);
+			if(cid == null) {
+				return "redirect:/user/userLogin";
+			}
+			List<ConsumerBasketVO> BasketList = service.getConsumerBasketList(cid);
+			model.addAttribute("basket", BasketList);
 		}
-		
-		List<ConsumerBasketVO> BasketList = service.getConsumerBasketList(cid);
-		
-		model.addAttribute("basket", BasketList);
-		model.addAttribute("cid", cid);
 		
 		return "/payment/consumerBasket";
 	}
@@ -48,29 +47,31 @@ public class ConsumerBasketController {
 	@PostMapping("/basketAdd")
 	public String additionConsumerBasket(long gnum, Principal principal, Model model) {
 
-		String cid = principal.getName();
-
-		if(cid == null) {
-			return "redirect:/user/userLogin";
+		if(principal != null) {
+			String cid = principal.getName();
+			model.addAttribute("cid", cid);
+			if(cid == null) {
+				return "redirect:/user/userLogin";
+			}
+			service.additionConsumerBasket(cid, gnum);
 		}
-		
-		service.additionConsumerBasket(cid, gnum);
 		
 		return "redirect:/gamepayment/basketList";
 	}
 	
 	@PostMapping("/basketRemove")
 	public String removeConsumerBasket(long gnum, Principal principal, Model model) {
-		
-		String cid = principal.getName();
 
-		if(cid == null) {
-			return "redirect:/user/userLogin";
+		if(principal != null) {
+			String cid = principal.getName();
+			model.addAttribute("cid", cid);
+			if(cid == null) {
+				return "redirect:/user/userLogin";
+			}
+			service.removeConsumerBasket(cid, gnum);
+			return "redirect:/gamepayment/basketList?cid=" + cid;
 		}
-		
-		service.removeConsumerBasket(cid, gnum);
-		
-		return "redirect:/gamepayment/basketList?cid=" + cid;
+		return "redirect:/user/userLogin";
 	}
 	
 }

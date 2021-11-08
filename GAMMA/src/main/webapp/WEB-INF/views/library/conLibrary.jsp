@@ -29,6 +29,10 @@
 		font-size: 150%;
 		font-weight: bold;
 	}
+	.libraryTitle {
+		font-size: 200%;
+		font-weight: bold;
+	} 
 </style>
 </head>
 <body>
@@ -104,6 +108,7 @@
           <div class="detail">
             <!-- 여기에 각자 content 붙여넣기 -->
             <div class="library">
+            	<p class="libraryTitle">${cid}의 라이브러리</p>
 				<c:forEach var="library" items="${library}">
 					<div class="card" style="width: 200px;">
 						<img src="${library.gpicture}" class="card-img-top">
