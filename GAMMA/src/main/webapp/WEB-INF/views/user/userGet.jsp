@@ -449,7 +449,6 @@ position:relative;
 								<a href="/user/userModify"><button>유저수정</button></a>
 								<a href="/user/userDelete"><button>탈퇴</button></a>
 								<a href="/user/userPro"><button>프로필창</button></a>
-								<a href="/gamepayment/consumerBreakdown"><button>결제 목록</button></a>
 							</c:if>
 						</div>
 						</div>

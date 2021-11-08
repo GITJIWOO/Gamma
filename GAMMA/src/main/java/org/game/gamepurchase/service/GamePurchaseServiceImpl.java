@@ -15,7 +15,7 @@ public class GamePurchaseServiceImpl implements GamePurchaseService {
 
 	@Override
 	public List<GamePurchaseVO> getPaymentList(String cid) {
-		List<GamePurchaseVO> paymentList = mapper.paymentSelect(cid);
+		List<GamePurchaseVO> paymentList = mapper.patmentSelect(cid);
 		return paymentList;
 	}
 
