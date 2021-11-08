@@ -1,5 +1,6 @@
 package org.game.gamepurchase.controller;
 
+import java.security.Principal;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -38,9 +39,9 @@ public class GamePurchaseController {
 	private GamePurchaseService gamePurchaseService;
 	
 	@GetMapping("/paymentscreen")
-	public String paymentScreen(ConsumerBasketVO basket, String merchant_uid, String cid, HttpSession session, Model model) {
+	public String paymentScreen(ConsumerBasketVO basket, String merchant_uid, String cid, Principal principal, Model model) {
 		
-		cid = (String)session.getAttribute("session_cid");
+		cid = principal.getName();
 		
 		if(cid == null) {
 			return "redirect:/user/userLogin";
@@ -54,9 +55,9 @@ public class GamePurchaseController {
 	
 	@PostMapping("/paymentsuccess")
 	@ResponseBody
-	public String paymentSuccess(GamePurchaseVO gpVO, @RequestParam("gnum") long gnum, HttpSession session) throws Exception {
+	public String paymentSuccess(GamePurchaseVO gpVO, @RequestParam("gnum") long gnum, Principal principal) throws Exception {
 		
-		String cid = (String)session.getAttribute("session_cid");
+		String cid = principal.getName();
 		
 		gpVO.setCid(cid);
 		
@@ -71,9 +72,9 @@ public class GamePurchaseController {
 	}
 	
 	@GetMapping("/consumerBreakdown")
-	public String consumerBreakdown(String cid, HttpSession session, Model model) {
+	public String consumerBreakdown(String cid, Principal principal, Model model) {
 
-		cid = (String)session.getAttribute("session_cid");
+		cid = principal.getName();
 
 		if(cid == null) {
 			return "redirect:/user/userLogin";

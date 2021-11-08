@@ -1,5 +1,6 @@
 package org.game.gamelibrary.controller;
 
+import java.security.Principal;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -25,9 +26,9 @@ public class GameLibraryController {
 	private GameLibraryService libraryService;
 	
 	@GetMapping("/conLibrary")
-	public String consumerLibraryList(String cid, HttpSession session, Model model) {
+	public String consumerLibraryList(String cid, Principal principal, Model model) {
 		
-		cid = (String)session.getAttribute("session_cid");
+		cid = principal.getName();
 		
 		if(cid == null) {
 			return "redirect:/user/userLogin";
