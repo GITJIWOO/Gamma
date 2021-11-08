@@ -1,5 +1,6 @@
 package org.game.controller;
 
+import java.security.Principal;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -30,9 +31,9 @@ public class MainController {
 	private GameInfoService gameInfoService;
 	
 	@GetMapping("/main")
-	public String gammaMain(HttpSession session, Model model) {
+	public String gammaMain(Principal principal, Model model) {
 		
-		String cid = (String)session.getAttribute("session_cid");
+		String cid = principal.getName(); 
 		
 		List<GameInfoVO> latestGame = gameInfoService.latestGame();
 		List<GameInfoVO> randomList = gameInfoService.randomList();
