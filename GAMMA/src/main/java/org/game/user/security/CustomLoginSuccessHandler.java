@@ -38,20 +38,3 @@ public class CustomLoginSuccessHandler implements AuthenticationSuccessHandler{@
 	}
 	
 }
-//implements AuthenticationSuccessHandler {
-	/*
-	 * @Override public void onAuthenticationSuccess(HttpServletRequest request,
-	 * HttpServletResponse response, Authentication authentication) throws
-	 * IOException,ServletException{
-	 * 
-	 * log.warn("로그인 성공"); List<String> roleList = new ArrayList<>();
-	 * 
-	 * for(GrantedAuthority role : authentication.getAuthorities()) {
-	 * roleList.add(role.getAuthority()); } log.warn("부여받은 권한들 : " +roleList);
-	 * if(roleList.contains("ROLE_ADMIN")) { response.sendRedirect("/secu/admin");
-	 * return; } if(roleList.contains("ROLE_MEMBER")) {
-	 * response.sendRedirect("/secu/member"); return; } response.sendRedirect("/");
-	 * 
-	 * }
-	 */
-

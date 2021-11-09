@@ -174,6 +174,7 @@
 			    <form action="/main" method="post">
 	          	  <input type="hidden" name="follower" value="${cid }"/><!-- 로그인 계정 -->
 		          <input type="hidden" name="following" value="${followingList.cid }"/><!-- 로그인 계정이 팔로우 하는 계정 -->
+	          	  <input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }"/>
 	          	  <input class="chatBtn" type="submit" value="채팅" />
 			    </form>
 
@@ -182,6 +183,7 @@
 			    <form action="/friends/followingremove" method="post">
 			      <input type="hidden" name="follower" value="${cid }"/><!-- 로그인 계정 -->
 		          <input type="hidden" name="following" value="${followingList.cid }"/><!-- 로그인 계정이 팔로우 하는 계정 -->
+	          	  <input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }"/>
 	          	  <input class="unfollowBtn" type="submit" value="팔로워 삭제" />
 			    </form>
 			</div>
