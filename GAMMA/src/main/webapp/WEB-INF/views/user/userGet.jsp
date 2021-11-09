@@ -495,10 +495,10 @@ position:relative;
 	$(document).ready(function() {
 		
 		$(".loginA").on("click", function() {
-			location.href = "/user/userLogin";
+			location.href = "/user/customLogin";
 		});
 		$(".joinA").on("click", function() {
-			location.href = "/user/userJoin";
+			location.href = "/user/join";
 		});
 		$(".consumer").mouseover(function(){
 				$(".consumer__info").show();

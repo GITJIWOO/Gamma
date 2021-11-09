@@ -112,6 +112,7 @@ public class UserController {
 	@PreAuthorize("hasAnyRole('ROLE_MEMBER')")
 	@PostMapping("/userGet")
 	public String userGet(ConsumerVO userVO, Model model,Principal principal) {
+		
 		model.addAttribute("dto", service.userGet(userVO.getCid()));
 		log.info("클릭한유저번호" + userVO);
 		if (userVO.getAttachList() != null) {
