@@ -33,9 +33,15 @@
 		font-size: 150%;
 		font-weight: bold;
 	}
+
 	.store {
 		margin-top: 50px;
 	}
+
+	.libraryTitle {
+		font-size: 200%;
+		font-weight: bold;
+
 </style>
 </head>
 <body>
@@ -115,6 +121,7 @@
 	            <hr/>
             </div>
             <div class="library">
+            	<p class="libraryTitle">${cid}의 라이브러리</p>
 				<c:forEach var="library" items="${library}">
 					<div class="card" style="width: 205px;">
 						<img src="${library.gpicture}" class="card-img-top" height="130px">

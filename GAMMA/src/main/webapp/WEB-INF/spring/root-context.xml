@@ -67,9 +67,6 @@
 			</props>
 		</property>
 	</bean> -->
-	
-	
-
 
 	<tx:annotation-driven />
 
