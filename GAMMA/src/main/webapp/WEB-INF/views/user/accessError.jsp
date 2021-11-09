@@ -16,7 +16,7 @@
 	</div>
 	<div>
 		<a href="#"><button>이전페이지</button></a>
-		<a href="#"><button>홈으로</button></a>
+		<a href="/main/main"><button>홈으로</button></a>
 	</div>
 <script src="https://kit.fontawesome.com/62b1f47417.js" crossorigin="anonymous"></script>	
 </body>

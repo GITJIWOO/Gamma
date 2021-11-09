@@ -1,5 +1,6 @@
 package org.game.user.controller;
 
+import java.security.Principal;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -28,48 +29,49 @@ public class ConsumerBasketController {
 	private ConsumerBasketService service;
 	
 	@GetMapping("/basketList")
-	public String getBasketList(HttpSession session, Model model) {
-		
-		String cid = (String)session.getAttribute("session_cid");
-		
-		if(cid == null) {
-			return "redirect:/user/userLogin";
+	public String getBasketList(Principal principal, Model model) {
+
+		if(principal != null) {
+			String cid = principal.getName();
+			model.addAttribute("cid", cid);
+			if(cid == null) {
+				return "redirect:/user/userLogin";
+			}
+			List<ConsumerBasketVO> BasketList = service.getConsumerBasketList(cid);
+			model.addAttribute("basket", BasketList);
 		}
-		
-		List<ConsumerBasketVO> BasketList = service.getConsumerBasketList(cid);
-		
-		model.addAttribute("basket", BasketList);
-		model.addAttribute("cid", cid);
 		
 		return "/payment/consumerBasket";
 	}
 	
 	@PostMapping("/basketAdd")
-	public String additionConsumerBasket(long gnum, HttpSession session, Model model) {
+	public String additionConsumerBasket(long gnum, Principal principal, Model model) {
 
-		String cid = (String)session.getAttribute("session_cid");
-
-		if(cid == null) {
-			return "redirect:/user/userLogin";
+		if(principal != null) {
+			String cid = principal.getName();
+			model.addAttribute("cid", cid);
+			if(cid == null) {
+				return "redirect:/user/userLogin";
+			}
+			service.additionConsumerBasket(cid, gnum);
 		}
-		
-		service.additionConsumerBasket(cid, gnum);
 		
 		return "redirect:/gamepayment/basketList";
 	}
 	
 	@PostMapping("/basketRemove")
-	public String removeConsumerBasket(long gnum, HttpSession session, Model model) {
-		
-		String cid = (String)session.getAttribute("session_cid");
+	public String removeConsumerBasket(long gnum, Principal principal, Model model) {
 
-		if(cid == null) {
-			return "redirect:/user/userLogin";
+		if(principal != null) {
+			String cid = principal.getName();
+			model.addAttribute("cid", cid);
+			if(cid == null) {
+				return "redirect:/user/userLogin";
+			}
+			service.removeConsumerBasket(cid, gnum);
+			return "redirect:/gamepayment/basketList?cid=" + cid;
 		}
-		
-		service.removeConsumerBasket(cid, gnum);
-		
-		return "redirect:/gamepayment/basketList?cid=" + cid;
+		return "redirect:/user/userLogin";
 	}
 	
 }
