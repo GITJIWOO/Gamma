@@ -31,7 +31,6 @@ public class GameLibraryController {
 		if(principal != null) {
 			String cid = principal.getName();
 			List<ResultLibraryVO> library = libraryService.getAllConsumerLibrary(cid);
-			System.out.println(library);
 			if(cid == null) {
 				return "redirect:/user/userLogin";
 			}
