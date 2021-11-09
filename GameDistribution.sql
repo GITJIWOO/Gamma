@@ -80,6 +80,7 @@ CREATE TABLE consumer (
     nickname VARCHAR(20) NOT NULL UNIQUE,
     cadmin NUMBER(3) DEFAULT 0
    );
+   
 commit;   
 ALTER TABLE consumer MODIFY password VARCHAR2(100);
 ALTER TABLE consumer ADD(userregdate DATE Default sysdate NOT NULL,userupdatedate DATE Default sysdate NOT NULL);
@@ -90,6 +91,7 @@ INSERT INTO consumer(cnum, cid, email, password, nickname, cadmin)
     VALUES(consumer_num.nextval,'cho', 'chocc', 'aaa', 'cho', 0);
  
 SELECT * FROM consumer; 
+SELECT * FROM consumer_auth;
 CREATE TABLE authorities(
 cnum NUMBER ,
 cid VARCHAR2(20) NOT NULL,
@@ -146,14 +148,14 @@ CREATE table userreply_tbl(
   
     /*?”„ë¡œí•„ ? „?š© db*/
 CREATE TABLE img_tbl(
-uuuid varchar2(100) not null,
+user_no varchar2(100) not null,
 uploadPath varchar2(200) not null,
 fileName varchar2(100) not null,
 filetype char(1) default'I',
 cnum number(10,0)
 );
-
-alter table img_tbl add constraint pk_img primary key ( uuuid);
+drop table img_tbl;
+alter table img_tbl add constraint pk_img primary key ( user_no);
 alter table img_tbl add constraint fk_user_img foreign key (cnum)
 references consumer(cnum);
     

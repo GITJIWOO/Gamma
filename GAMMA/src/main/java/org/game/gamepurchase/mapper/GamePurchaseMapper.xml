@@ -4,8 +4,8 @@
 
 <mapper namespace="org.game.gamepurchase.mapper.GamePurchaseMapper">
 	
-	<select id="paymentSelect">
-		SELECT * FROM consumerPayment WHERE cid=#{cid}
+	<select id="paymentSelect" resultType="org.game.gamepurchase.domain.GamePurchaseVO">
+		SELECT * FROM consumerPayment WHERE cid=#{cid} ORDER BY cpdate DESC
 	</select>
 	
 	<insert id="paymentInsert">

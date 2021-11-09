@@ -1,8 +1,8 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
-<!DOCTYPE html>
+<%@ page language="java" pageEncoding="UTF-8"
+	contentType="text/html; charset=UTF-8"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+
 <html>
 <head>
 <meta charset="UTF-8">
@@ -17,9 +17,6 @@
 <script
 	src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <style>
-	.loginDeniedAlert h2{
-		color: red;
-	}
 * {
 	margin: 0;
 	padding: 0;
@@ -62,6 +59,10 @@ img {
 	height: 150px;
 	
 }
+#checkB{
+display:flex; 
+	flex-flow:row;
+}
 
 input {
 	width: 300px;
@@ -91,14 +92,7 @@ button {
 </style>
 </head>
 <body>
-	<sec:authorize access="isAuthenticated()">
-		<meta http-equiv="refresh" content="0; url=/main/main">
-	</sec:authorize>
-	<div class="loginDeniedAlert">
-	<h2><c:out value="${error }" /></h2>
-	<h2><c:out value="${logout }" /></h2>
-	</div>
-	<form name='homeForm' method="post" action="/login">
+	<form name='homeForm' method="post" action="/user/customLogin">
 				<c:if test="${principal == null}">
 		<div class="border">
 			<img src="/resources/css/image/mainIcon.png" />
@@ -106,7 +100,7 @@ button {
 					<h1 class="IPvalue">로그인</h1>
 					<div>
 						<label class="IPvalue" for="cid">아이디</label><br /> <input
-							type="text" id="cid" name="username" />
+							type="text" id="cid" name="cid" />
 					</div>
 					<br />
 					<div>
@@ -118,10 +112,10 @@ button {
 					</div>
 					<br />
 				<div>
-					<button id="loginBtn" type="submit">로그인</button>
-					<input type="checkbox" name="remember-me">로그인 상태 유지 
-					<!-- 시큐리티적용 교안 11-->
-					 <input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }"/> 
+				<!-- 체크하면 7일간 로그인 유지됨 -->
+				<div class="checkB">
+		<input type="checkbox" name="remember-me" /><p>로그인 상태 유지</p></div>
+					<button id="loginBtn" type="submit" value="LOGIN">로그인</button>
 					<a href="/user/userJoin"><button id="registerBtn" type="button">회원가입</button></a>
 					<a href="/user/findpw"><button id="findpwBtn" type="button">비밀번호찾기</button></a>
 				</div>
@@ -137,6 +131,7 @@ button {
 					</div>
 				</c:if>
 				
+					 <input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }"/> 
 	</form>
 	
 <script type="text/javascript">

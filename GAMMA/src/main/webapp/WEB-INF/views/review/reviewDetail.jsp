@@ -10,7 +10,7 @@
 <script src="<c:url value="/resources/js/main.js"/>"></script>
 <link rel="stylesheet" href="/resources/css/styles.css" />
 <link rel="icon" type="image/png" href="http://example.com/myicon.png">
-<script src="<c:url value="/resources/js/review.js"/>"></script>
+<script src="<c:url value="/resources/js/reviewDetail.js"/>"></script>
 <title>${review.cid}의 리뷰</title>
 <style>
 	.detail {

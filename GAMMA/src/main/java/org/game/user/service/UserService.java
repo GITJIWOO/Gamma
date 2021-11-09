@@ -24,7 +24,7 @@ public interface UserService {
 
 	// 회원가입
 	public void userJoin(ConsumerVO userVO) throws Exception;
-
+	
 	// 로그인
 	public ConsumerVO userLogin(ConsumerVO userVO) throws Exception;
 
