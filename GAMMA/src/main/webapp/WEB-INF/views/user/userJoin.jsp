@@ -298,6 +298,8 @@ var code = "";
                 </div>-->
 					<label class="control-label" for="nickname">닉네임</label><br/> <input
 						 type="text" id="nickname" name="nickname" /><br/><br/>
+                <input type="hidden" name="role" value="ROLE_MEMBER"/>
+                <input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }" />
 		</form>
 					<button class="btn" type="button" id="submit">회원가입</button>
 					<button class="cencle btn" type="button">취소</button>

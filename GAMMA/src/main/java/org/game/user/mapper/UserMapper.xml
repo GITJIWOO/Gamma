@@ -53,6 +53,7 @@
 		VALUES(consumer_num.nextval,#{cid},#{email},#{password},#{nickname})
 	</insert>
 	
+	
 	<!-- 로그인 -->
 	<select id="userLogin" resultType="org.game.user.domain.ConsumerVO">
 		SELECT *
@@ -99,4 +100,29 @@
 		consumer c LEFT OUTER JOIN consumer_auth a ON c.cid = a.cid
 		WHERE c.cid = #{cid}
 	</select>
+	
+	<insert id="insertConsumer">
+		INSERT INTO consumer(cnum, cid, email, password, nickname)
+		VALUES
+		(consumer_num.nextval, #{cid}, #{email}, #{password}, #{nickname})
+	</insert>
+	
+	<!-- 다중 insert문 update로 처리 -->
+	<update id="insertConsumerAuth">
+		INSERT ALL
+		<foreach collection="authList" item="item" separator=" ">
+			INTO consumer_auth(cid, auth)
+			VALUES
+			(#{item.cid}, #{item.auth})
+		</foreach>
+		SELECT * FROM DUAL
+	</update>
 </mapper>
+
+
+
+
+
+
+
+

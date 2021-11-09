@@ -1,5 +1,6 @@
 package org.game.user.controller;
 
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,7 +22,12 @@ public class CommonController {
 	}
 	
 	@GetMapping("/customLogin")
-	public void loginInput(String error, String logout, Model model) {
+	public String loginInput() {
+		return "/user/customLogin";
+	}
+	@PreAuthorize("permitAll")
+	@PostMapping("/customLogin")
+	public String loginInput(String error, String logout, Model model) {
 		log.info("error 여부: " + error);
 		log.info("logout 여부: " + logout);
 		if(error != null) {
@@ -30,6 +36,7 @@ public class CommonController {
 		if(logout != null) {
 			model.addAttribute("logout", "로그아웃 되었습니다.");
 		}
+		return "redirect:/main/main";
 	}
 	
 	@GetMapping("/customLogout")
