@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <html>
 <head>
 <!-- 합쳐지고 최소화된 최신 CSS -->
@@ -298,6 +298,8 @@ var code = "";
                 </div>-->
 					<label class="control-label" for="nickname">닉네임</label><br/> <input
 						 type="text" id="nickname" name="nickname" /><br/><br/>
+                <input type="hidden" name="role" value="ROLE_MEMBER"/>
+                <input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }" />
 		</form>
 					<button class="btn" type="button" id="submit">회원가입</button>
 					<button class="cencle btn" type="button">취소</button>

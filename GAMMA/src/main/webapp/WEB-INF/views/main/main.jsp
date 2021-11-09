@@ -59,10 +59,10 @@
           <!-- c:if로 로그인 전에는 회원가입+로그인 / 로그인 후에는 프로필 -->
           <c:if test="${cid eq null}">
             <div class="loginBtn">
-		        <span><a href="/user/userLogin" class="loginA">로그인</a></span>
+		        <span><a href="/user/customLogin" class="loginA">로그인</a></span>
             </div>
             <div class="joinBtn">
-		        <span><a href="/user/userJoin" class="joinA">가입하기</a></span>
+		        <span><a href="/user/customJoin" class="joinA">가입하기</a></span>
             </div>
           </c:if>
           <c:if test="${cid ne null}">
@@ -75,7 +75,6 @@
 		          </div>
 		          <div class="consumer__info">
 	   				<a href="/user/userGet">* 유저정보창</a><br/>
-	   				<a href="/user/userPro">* 유저프로필창</a><br/>
 	   				<a href="/user/userLogout">* 로그아웃</a><br/>
 	   				<a href="/friends/followerlist">* 팔로워리스트</a><br/>
 	   				<a href="/friends/followinglist">* 팔로윙리스트</a><br/>
