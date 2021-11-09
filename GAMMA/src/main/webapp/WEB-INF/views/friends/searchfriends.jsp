@@ -4,6 +4,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
 <script src="<c:url value="/resources/js/main.js"/>"></script>
 <link rel="stylesheet" href="/resources/css/styles.css" />
@@ -282,7 +283,7 @@
 	<!-- 처음에는 비어있다가 검색하면 나타나도록 작성 -->
 	<div class="infinite hidden">
 		<c:forEach items="${userList }" var="userList">
-			<div class="userList" onmouseover="showProfile()" onmouseout="showProfile()">
+			<div class="userList">
 				<div class="background notyet"></div>
 				<div class="userList__pro"><img src="/resources/css/image/friends.png" width="200"/></div>
 				<div class="userList__proBack"><img src="/resources/css/image/friends.png" width="700" height="250"/></div>
@@ -291,6 +292,7 @@
 				<form action="/user/userPro" method="post">
 					<input type="hidden" name="following" value="${param.cid }" />
 					<input type="hidden" name="follower" value="${userList.cid }" />
+					<input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }"/>
 					<input class="profileBtn notyet" type="submit" value="프로필 보기" />
 				</form>
 			</div>
@@ -316,9 +318,9 @@
 	</div>
 	</nav>
 
-    <script>
-
-	// 처음에는 안보이다가 검색하면 나타나도록 작성
+    <script type="text/javascript">
+ 	
+ 	// 처음에는 안보이다가 검색하면 나타나도록 작성
 	const input = document.querySelector(".searchfriendsinput");
 	const searchtotal = document.querySelector(".searchtotal");
 	let keyword = input.getAttribute("value");
@@ -333,27 +335,23 @@
 		searchtotal.classList.remove("hidden");
 	}
 	
+	// 
     let num;
     const total = ${page.total };
-	const userList = document.querySelectorAll(".userList");
-	console.log(userList[0])
-    for(num = 0; num < total; num++){
-		if(userList[num]){
-			//userList.setAttribute("onmouseover", "showProfile(num)")
-			//userList.setAttribute("onmouseout", "showProfile(num)")
-		}
-    }
-    const showBtn = document.querySelector(".profileBtn");
-    const backGround = document.querySelector(".background");
-    console.log(showBtn);
-    console.log(backGround);
-    function showProfile(num) {
-      showBtn.classList.toggle("notyet");
-      backGround.classList.toggle("notyet");
-    }
-    //  const detail = document.querySelector(".detail");
-    //	userList[num].addEventListener("mouseover", showProfile);
-    //	userList[num].addEventListener("mouseout", showProfile);
+	const userLists = document.querySelectorAll(".userList");
+	
+    const showBtns = document.querySelectorAll(".profileBtn");
+    const backGrounds = document.querySelectorAll(".background");
+    userLists.forEach(function(userList){
+    	userList.addEventListener("mouseover", function(event){
+    		this.getElementsByTagName('input')[3].classList.remove("notyet");
+    		this.children[0].classList.remove("notyet");
+    	});
+    	userList.addEventListener("mouseout", function(event){
+    		this.getElementsByTagName('input')[3].classList.add("notyet");
+    		this.children[0].classList.add("notyet");
+    	});
+    });
   </script>
             </div>
         </div>
