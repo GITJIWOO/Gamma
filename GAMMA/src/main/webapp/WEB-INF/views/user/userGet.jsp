@@ -349,34 +349,22 @@ position:relative;
         </div>
         <!-- about user -->
         <div class="side-bar__row">
-          <!-- c:if로 로그인 전에는 회원가입+로그인 / 로그인 후에는 프로필 -->
-          <c:if test="${member.cid eq null}">
-            <div class="loginBtn">
-		        <span><a href="/user/userLogin" class="loginA">로그인</a></span>
-            </div>
-            <div class="joinBtn">
-		        <span><a href="/user/userJoin" class="joinA">가입하기</a></span>
-            </div>
-          </c:if>
-          <c:if test="${member.cid ne null}">
 	          <div class="consumer">
 	          	  <div class="consumer__imgPro">
 			        <img class="conimg" src="/resources/css/image/chaIcon.png"/>
 	          	  </div>
 		          <div class="consumer__nickname">
-		          	<p>${member.cid}</p>
+		          	<p>${principal.vo.cid}</p>
 		          </div>
 		          <div class="consumer__info">
 	   					<a href="/user/userGet">* 유저정보창</a><br/>
 
-	   				<a href="/user/userPro">* 유저프로필창</a><br/>
-	   				<a href="/user/userLogout">* 로그아웃</a><br/>
+	   				<a href="/user/customLogout">* 로그아웃</a><br/>
 	   				<a href="/friends/followerlist">* 팔로워리스트</a><br/>
 	   				<a href="/friends/followinglist">* 팔로윙리스트</a><br/>
 	   				<a href="/friends/searchfriends">* 친구 검색</a><br/>
 		   		  </div>
 	          </div>
-          </c:if>
         </div>
       </div>
       <div class="main">
@@ -410,51 +398,48 @@ position:relative;
 							</div>
 							<table class="table table1" width="400px">
 
-								<c:if test="${member eq 'kjw011231' }">
+								<c:if test="${principal.vo.cid eq 'kjw011231' }">
 									<tr>
 										<td>유저고유번호</td>
-										<td><input id="cnum" name="cnum" value="${member.cnum}"
+										<td><input id="cnum" name="cnum" value="${principal.vo.cnum}"
 											readonly="readonly"></td>
 									</tr>
 								</c:if>
 								<tr>
 									<td>아이디</td>
-									<td id="cid" name="cid">${member.cid}</td>
+									<td id="cid" name="cid"><a href="/user/userPro?cid=${principal.vo.cid }">${principal.vo.cid}</a></td>
 								</tr>
 								<tr>
 									<td>닉네임</td>
-									<td id="nickname" name="nickname">${member.nickname}</td>
+									<td id="nickname" name="nickname">${principal.vo.nickname}</td>
 								</tr>
 								<tr>
 									<td>이메일</td>
-									<td id="email" name="email">${member.email}</td>
+									<td id="email" name="email">${principal.vo.email}</td>
 								</tr>
 								<tr>
 									<td>회원가입일자</td>
-									<td><fmt:formatDate value="${member.userregdate}"
+									<td><fmt:formatDate value="${principal.vo.userregdate}"
 											pattern="yyy-MM-dd" /></td>
 								</tr>
 								<tr>
 									<td>회원정보 수정일자</td>
-									<td><fmt:formatDate value="${member.userupdatedate}"
+									<td><fmt:formatDate value="${principal.vo.userupdatedate}"
 											pattern="yyy-MM-dd" /></td>
 								</tr>
 							</table>
 						</form>
 						<div class="row">&nbsp;</div>
 						<div class="Mbtn">
-							<c:if test="${member != null}">
 								<a href="/user/userLogin"><button>로그인</button></a>
 								<a href="/user/userLogout"><button>로그아웃</button></a>
 								<a href="/user/userModify"><button>유저수정</button></a>
 								<a href="/user/userDelete"><button>탈퇴</button></a>
 								<a href="/user/userPro"><button>프로필창</button></a>
 								<a href="/gamepayment/consumerBreakdown"><button>결제 목록</button></a>
-							</c:if>
 						</div>
 						</div>
-				<div class="rowB">
-				</div>
+				
 					</div>
 				
 				</div>

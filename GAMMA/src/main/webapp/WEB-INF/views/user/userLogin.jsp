@@ -89,7 +89,7 @@ button {
 </head>
 <body>
 	<form name='homeForm' method="post" action="/user/userLogin">
-				<c:if test="${member == null}">
+				<c:if test="${principal == null}">
 		<div class="border">
 			<img src="/resources/css/image/mainIcon.png" />
 			<div class="main">
@@ -117,10 +117,10 @@ button {
 			</div>
 		</div>
 				</c:if>
-				<c:if test="${member != null }">
+				<c:if test="${principal != null }">
 					<div class="border2">
 			<img src="/resources/css/image/mainIcon.png" />
-						<p>${member.cid}님 환영합니다.</p>
+						<p>${principal.vo.cid}님 환영합니다.</p>
 								<a href="/main/main"><button id="mainBtn" type="button">메인으로</button></a>
 								<a href="/user/userLogout"><button id="logoutBtn" type="button">로그아웃</button></a>
 					</div>

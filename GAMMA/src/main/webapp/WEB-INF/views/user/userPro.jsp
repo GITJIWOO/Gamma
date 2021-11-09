@@ -325,21 +325,12 @@ position:relative;
 					href="#">자주하는 질문</a></span>
 			</div>
 				<div class="side-bar__row">
-					<c:if test="${member == null }">
-            <div class="loginBtn">
-		        <span><a href="/user/userLogin" class="loginA">로그인</a></span>
-            </div>
-            <div class="joinBtn">
-		        <span><a href="/user/userJoin" class="joinA">가입하기</a></span>
-            </div>
-          </c:if>
-          <c:if test="${member != null }">
 	          <div class="consumer">
 	          	  <div class="consumer__imgPro">
 			        <img class="conimg" src="/resources/css/image/chaIcon.png"/>
 	          	  </div>
 		          <div class="consumer__nickname">
-		          	<p>${member.cid}</p>
+		          	<p>${principal.vo.cid}</p>
 		          </div>
 		          <div class="consumer__info">
 
@@ -351,7 +342,6 @@ position:relative;
 	   				<a href="/friends/searchfriends">* 친구 검색</a><br/>
 		   		  </div>
 	          </div>
-          </c:if>
         </div>
       </div>
 			<!-- about user -->
@@ -365,7 +355,7 @@ position:relative;
 								<img class="imgProA" src="/resources/css/image/chaIcon.png" />
 							</div>
 							<table class="table table1" width="400px">
-								<c:if test="${member eq 'kjw011231' }">
+								<c:if test="${principal.vo.cid eq 'kjw011231' }">
 									<tr>
 										<td>유저고유번호</td>
 										<td><input id="cnum" name="cnum" value="${member.cnum}"
@@ -384,15 +374,16 @@ position:relative;
 						<div class="modAub">
 							<div class="row">
 								<div class="col-md-3">
-									<p>${member.nickname }(방명록)</p>
+									<p>${principal.vo.nickname }(방명록)</p>
 								</div>
 								<div class="col-md-6">
 									<textarea style="resize: none;" name="reply" id="newReply"
 										rows="2" cols="30"></textarea>
 									<input type="hidden" name="nickname"
-										value="${member.nickname }" id="newReplyWriter" readonly>
+										value="${principal.vo.nickname }" id="newReplyWriter" readonly>
 								</div>
 								<div class="col-md-3">
+								<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 									<button id="replyAddBtn">방명록 남기기</button>
 									<br />
 								</div>

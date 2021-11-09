@@ -1,5 +1,7 @@
 package org.game.user.controller;
 
+import java.security.Principal;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -10,6 +12,7 @@ import javax.servlet.http.HttpSession;
 import org.game.friends.service.FriendsService;
 import org.game.gamelibrary.domain.ResultLibraryVO;
 import org.game.gamelibrary.service.GameLibraryService;
+import org.game.user.domain.AuthVO;
 import org.game.user.domain.ConsumerVO;
 import org.game.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,8 +39,8 @@ public class UserController {
 
 	@Inject
 	UserService service;
-	 @Inject
-	 BCryptPasswordEncoder pwdEncoder;
+	@Inject
+	BCryptPasswordEncoder pwdEncoder;
 	// @Autowired
 	// private JavaMailSender mailSender;
 
@@ -55,13 +58,19 @@ public class UserController {
 	// 유저프로필
 	@PreAuthorize("permitAll")
 	@GetMapping("/userPro")
-	public String userPro(HttpSession session, Model model) {
-		// 세션 아이디, 어드민
-		String cid = (String) session.getAttribute("session_cid");
-		String cadmin = String.valueOf(session.getAttribute("session_cadmin"));
-		model.addAttribute("cid", cid);
-		model.addAttribute("cadmin", cadmin);
-		List<ResultLibraryVO> libraryList = libraryService.getAllConsumerLibrary(cid);
+	public String userPro(String cid,HttpSession session, Model model) {
+
+		System.out.println("cid값 : "+cid);
+		
+		ConsumerVO userVO=service.userGet(cid);
+		
+		System.out.println("userVO들어왓나 : "+userVO);
+		
+		
+		model.addAttribute("cid", userVO.getCid());
+		model.addAttribute("cadmin", userVO.getCadmin());
+		
+		List<ResultLibraryVO> libraryList = libraryService.getAllConsumerLibrary(userVO.getCid());
 
 		model.addAttribute("libraryList", libraryList);
 
@@ -90,19 +99,19 @@ public class UserController {
 	 * return "/user/userPro"; }
 	 */
 
-	/*
-	 * @GetMapping("/userGet") public String userGet(HttpSession session, Model
-	 * model) { // 세션 아이디, 어드민 String cid =
-	 * (String)session.getAttribute("session_cid"); String cadmin =
-	 * String.valueOf(session.getAttribute("session_cadmin"));
-	 * model.addAttribute("cid", cid); model.addAttribute("cadmin", cadmin); return
-	 * "/user/userGet"; }
-	 */
+	@GetMapping("/userGet")
+	public String userGet(HttpSession session, Model model) { // 세션 아이디, 어드민
+		String cid = (String) session.getAttribute("session_cid");
+		String cadmin = String.valueOf(session.getAttribute("session_cadmin"));
+		model.addAttribute("cid", cid);
+		model.addAttribute("cadmin", cadmin);
+		return "/user/userGet";
+	}
 
 	// 유저 상제정보창
 	@PreAuthorize("hasAnyRole('ROLE_MEMBER')")
 	@PostMapping("/userGet")
-	public String userGet(ConsumerVO userVO, Model model) {
+	public String userGet(ConsumerVO userVO, Model model,Principal principal) {
 		model.addAttribute("dto", service.userGet(userVO.getCid()));
 		log.info("클릭한유저번호" + userVO);
 		if (userVO.getAttachList() != null) {
@@ -123,35 +132,25 @@ public class UserController {
 	}
 
 	// 회원가입
-	@PreAuthorize("permitAll")
-	@PostMapping("/userJoin")
-	public String userJoin(ConsumerVO userVO, String[] role) throws Exception {
-		// log.info("회원가입");
-		// service.userJoin(userVO);
-		log.info("가입시받는데이터" + userVO);
-		log.info("권한받은거" + role);
-
-		String beforeCrPw = userVO.getPassword();
-
-		log.info("poset회원가입실행");
-		long result = service.idChk(userVO.getCid());
-		log.info("result값: " + result);
-		try {
-			if (result == 1) {
-				return "/user/userJoin";
-			} else if (result == 0) {
-				// String inputPass = userVO.getPassword();
-				// String pwd = pwdEncoder.encode(inputPass);
-				// userVO.setPassword(pwd);
-				service.userJoin(userVO);
-			}
-
-		} catch (Exception e) {
-			throw new RuntimeException();
-		}
-
-		return "/user/userLogin";
-	}
+	/*
+	 * @PreAuthorize("permitAll")
+	 * 
+	 * @PostMapping("/userJoin") public String userJoin(ConsumerVO userVO, String[]
+	 * role) throws Exception { // log.info("회원가입"); // service.userJoin(userVO);
+	 * log.info("가입시받는데이터" + userVO); log.info("권한받은거" + role);
+	 * 
+	 * String beforeCrPw = userVO.getPassword();
+	 * 
+	 * log.info("poset회원가입실행"); long result = service.idChk(userVO.getCid());
+	 * log.info("result값: " + result); try { if (result == 1) { return
+	 * "/user/userJoin"; } else if (result == 0) { // String inputPass =
+	 * userVO.getPassword(); // String pwd = pwdEncoder.encode(inputPass); //
+	 * userVO.setPassword(pwd); service.userJoin(userVO); }
+	 * 
+	 * } catch (Exception e) { throw new RuntimeException(); }
+	 * 
+	 * return "/user/userLogin"; }
+	 */
 
 	/*
 	 * @GetMapping("/userHome") public String home(Locale locale, Model model) {
@@ -169,71 +168,64 @@ public class UserController {
 
 	// get로그인
 
-	@GetMapping("/userLogin")
-	public String userLogin() throws Exception {
+	/*
+	 * @GetMapping("/userLogin") public String userLogin() throws Exception {
+	 * 
+	 * return "/user/userLogin"; }
+	 */
 
-		return "/user/userLogin";
-	}
-
-	@PreAuthorize("permitAll")
-	@SuppressWarnings("unused")
-	@PostMapping("/userLogin")
-	public String userLogin(ConsumerVO userVO, HttpServletRequest req, RedirectAttributes rttr) throws Exception {
-		log.info("로그인컨트롤실행");
-		System.out.println("넘어오는 cid : "+userVO.getCid());
-		System.out.println("넘어오는 userVO : "+userVO);
-		HttpSession session = req.getSession();
-		String memberSession = String.valueOf(session.getAttribute("member"));
-		System.out.println("멤버세션값 : " + memberSession);
-		ConsumerVO login = service.userLogin(userVO);
-		
-		
-		  System.out.println("UserVO : " + userVO); 
-		  System.out.println("DB : " + login); 
-		  System.out.println("UserVO의 비번 : " + userVO.getPassword());
-		  System.out.println("DB의 비번 : " + login.getPassword());
-		  boolean pwdMatch = pwdEncoder.matches(userVO.getPassword(),login.getPassword());
-		 System.out.println("비번매칭 : " + pwdMatch);
-		 
-		 
-		if (login == null) {
-			session.setAttribute("member", null);
-			memberSession = String.valueOf(session.getAttribute("member"));
-			System.out.println("멤버세션값 else1 : " + memberSession);
-			rttr.addFlashAttribute("msg", false);
-
-			return "redirect:/user/userLogin";
-		}
-		/* 시큐리티 적용전 (비번복호화전)
-		 * boolean result = login.getPassword().equals(userVO.getPassword());
+	/*
+	 * @PreAuthorize("permitAll")
+	 * 
+	 * @SuppressWarnings("unused")
+	 * 
+	 * @PostMapping("/userLogin") public String userLogin(ConsumerVO userVO,
+	 * HttpServletRequest req, RedirectAttributes rttr) throws Exception {
+	 * log.info("로그인컨트롤실행"); System.out.println("넘어오는 cid : " + userVO.getCid());
+	 * System.out.println("넘어오는 userVO : " + userVO); HttpSession session =
+	 * req.getSession(); String memberSession =
+	 * String.valueOf(session.getAttribute("member")); System.out.println("멤버세션값 : "
+	 * + memberSession); ConsumerVO login = service.userLogin(userVO);
+	 * 
+	 * System.out.println("UserVO : " + userVO); System.out.println("DB : " +
+	 * login); System.out.println("UserVO의 비번 : " + userVO.getPassword());
+	 * System.out.println("DB의 비번 : " + login.getPassword()); boolean pwdMatch =
+	 * pwdEncoder.matches(userVO.getPassword(), login.getPassword());
+	 * System.out.println("비번매칭 : " + pwdMatch);
+	 * 
+	 * if (login == null) { session.setAttribute("member", null); memberSession =
+	 * String.valueOf(session.getAttribute("member"));
+	 * System.out.println("멤버세션값 else1 : " + memberSession);
+	 * rttr.addFlashAttribute("msg", false);
+	 * 
+	 * return "redirect:/user/userLogin"; }
+	 */
+		/*
+		 * 시큐리티 적용전 (비번복호화전) boolean result =
+		 * login.getPassword().equals(userVO.getPassword());
 		 * System.out.println("result 값 : "+result);
 		 */
-		if (pwdMatch == true) {
-			System.out.println("비번매칭 : " + pwdMatch);
-			session.setAttribute("member", login);
-			session.setAttribute("session_cid", login.getCid());
-			session.setAttribute("session_cadmin", login.getCadmin());
-			memberSession = String.valueOf(session.getAttribute("member"));
-			System.out.println("멤버세션값 iftrue : " + memberSession);
-		} else {
-			session.setAttribute("member", null);
-			memberSession = String.valueOf(session.getAttribute("member"));
-			System.out.println("멤버세션값 else2 : " + memberSession);
-			rttr.addFlashAttribute("msg", false);
-			return "redirect:/user/userLogin"; // rttr.addF~ 는 return에 redirect: 안넣으면 안보내진다
-		}
-		return "redirect:/user/userLogin";
-	}
-
+		/*
+		 * if (pwdMatch == true) { System.out.println("비번매칭 : " + pwdMatch);
+		 * session.setAttribute("member", login); session.setAttribute("session_cid",
+		 * login.getCid()); session.setAttribute("session_cadmin", login.getCadmin());
+		 * memberSession = String.valueOf(session.getAttribute("member"));
+		 * System.out.println("멤버세션값 iftrue : " + memberSession); } else {
+		 * session.setAttribute("member", null); memberSession =
+		 * String.valueOf(session.getAttribute("member"));
+		 * System.out.println("멤버세션값 else2 : " + memberSession);
+		 * rttr.addFlashAttribute("msg", false); return "redirect:/user/userLogin"; //
+		 * rttr.addF~ 는 return에 redirect: 안넣으면 안보내진다 } return
+		 * "redirect:/user/userLogin"; }
+		 */
 	// 로그아웃 과 세션 초기화
 	// 시큐리티 적용 전 얘하나로만 했었음
-	@GetMapping("/userLogout")
-	public String userLogout(HttpSession session) throws Exception {
-		// security-con~ 에서 세션파기설정이되있음
-		session.invalidate();
-
-		return "redirect:/main/main";
-	}
+	/*
+	 * @GetMapping("/userLogout") public String userLogout(HttpSession session)
+	 * throws Exception { // security-con~ 에서 세션파기설정이되있음 session.invalidate();
+	 * 
+	 * return "redirect:/main/main"; }
+	 */
 
 	// 로그아웃 과 세션 초기화 시큐리티적용버전
 	/*
@@ -255,18 +247,26 @@ public class UserController {
 	// post 회원정보 수정
 	@PostMapping("/userModify")
 	public String registerUpdate(ConsumerVO vo, HttpSession session) throws Exception {
+		String beforeCrPw = vo.getPassword();
+		vo.setPassword(pwdEncoder.encode(beforeCrPw));
+		
+		vo.setAuthList(new ArrayList<AuthVO>());
+		vo.getAuthList().add(new AuthVO());
+		vo.getAuthList().get(0).setCid(vo.getCid());
 		service.userModify(vo);
 		session.invalidate();
 		return "redirect:/user/userLogin";
 	}
 
 	// 회원 탈퇴 get
+	@PreAuthorize("hasAnyRole('ROLE_MEMBER')")
 	@GetMapping("/userDelete")
 	public String userDelete(HttpSession session) throws Exception {
 		return "/user/userDelete";
 	}
 
 	// 회원 탈퇴 post
+	@PreAuthorize("hasAnyRole('ROLE_MEMBER')")
 	@PostMapping("/userDelete")
 	public String memberDelete(ConsumerVO userVO, HttpSession session, RedirectAttributes rttr) throws Exception {
 		service.userDelete(userVO);

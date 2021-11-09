@@ -82,12 +82,13 @@ h1{
 				</div>
 				<label class="control-label" for="cid">아이디</label> <br/><input
 					 type="text" id="cid" name="cid"
-					value="${member.cid}" readonly/><br/>
+					value="${principal.vo.cid}" readonly/><br/>
 				<label class="control-label" for="password">패스워드</label> <br/><input
 					 type="password" id="password" name="password" /><br/>
 				<label class="control-label" for="nickname">닉네임</label> <br/><input
 					 type="text" id="nickname" name="nickname"
-					value="${member.nickname}" readonly /><br/>
+					value="${principal.vo.nickname}" readonly /><br/>
+					<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 				<button class="btn" type="submit" id="submit">회원탈퇴</button>
 				<button class="cencle btn" type="button">취소</button>
 			</div>
