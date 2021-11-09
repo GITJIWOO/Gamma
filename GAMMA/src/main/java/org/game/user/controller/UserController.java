@@ -65,8 +65,6 @@ public class UserController {
 		ConsumerVO userVO=service.userGet(cid);
 		
 		System.out.println("userVO들어왓나 : "+userVO);
-		
-		
 		model.addAttribute("cid", userVO.getCid());
 		model.addAttribute("cadmin", userVO.getCadmin());
 		
@@ -121,6 +119,7 @@ public class UserController {
 				System.out.println("consumer : "+ consumer);
 			}
 		}
+		
 		log.info("클릭한유저번호" + userVO);
 		if (userVO.getAttachList() != null) {
 			userVO.getAttachList().forEach(attach -> log.info(attach));

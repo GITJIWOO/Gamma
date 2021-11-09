@@ -356,8 +356,9 @@ position:relative;
 			        <img class="conimg" src="/resources/css/image/chaIcon.png"/>
 	          	  </div>
 		          <div class="consumer__nickname">
+
 		          	<p>${principal.consumer.nickname}</p>
-		          </div>
+</div>
 		          <div class="consumer__info">
 	   					<a href="/user/userGet">* 유저정보창</a><br/>
 
@@ -404,6 +405,7 @@ position:relative;
 									<tr>
 										<td>유저고유번호</td>
 										<td><input id="cnum" name="cnum" value="${principal.consumer.cnum}"
+
 											readonly="readonly"></td>
 									</tr>
 								</c:if>
