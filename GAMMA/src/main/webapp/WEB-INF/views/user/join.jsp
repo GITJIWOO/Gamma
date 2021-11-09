@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <html>
 <head>
 <!-- 합쳐지고 최소화된 최신 CSS -->
@@ -64,7 +64,7 @@ display:flex;
 .border {
 	margin: 0 auto;
 	width: 380px;
-	height: 720px;
+	height: 730px;
 	border: 1px solid #000;
 	border-radius: 10%;
 }
@@ -89,7 +89,8 @@ display:flex;
 </head>
 
 <script type="text/javascript">
-
+var csrfHeaderName = "${_csrf.headerName}"
+	var csrfTokenValue="${_csrf.token}"
 
 var code = ""; 
 	function fn_idChk() {
@@ -100,6 +101,9 @@ var code = "";
 		$.ajax({
 			url : '/urest/idChk',
 			type : 'post',
+			beforeSend : function(xhr) {
+		        xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+		   },
 			headers : {
 				"Content-Type" : "application/json",
 				"X-HTTP-Method-Override" : "POST"
@@ -124,6 +128,9 @@ var code = "";
 		$.ajax({
 			url : '/urest/emailChk',
 			type : 'post',
+			beforeSend : function(xhr) {
+		        xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+		   },
 			headers : {
 				"Content-Type" : "application/json",
 				"X-HTTP-Method-Override" : "POST"
@@ -196,6 +203,9 @@ var code = "";
 		$.ajax({
 			
 			type:'GET',
+			beforeSend : function(xhr) {
+		        xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+		   },
 			headers : {
 				"Content-Type" : "application/json",
 				"X-HTTP-Method-Override" : "POST"
@@ -281,7 +291,6 @@ var code = "";
 						 type="password" name="userPW2" id="pw2"
 						onchange="check_pw()" placeholder="!,@,#,$,%중 하나이상을 포함해주세요"><span
 						id="check"></span><br/><br/>
-						<input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }" />
 					<label class="control-label" for="email">Email</label> <br/><input
 						class="mail_input" type="text" id="email" 
 						name="email" /><br/>
@@ -299,8 +308,10 @@ var code = "";
                 </div>-->
 					<label class="control-label" for="nickname">닉네임</label><br/> <input
 						 type="text" id="nickname" name="nickname" /><br/><br/>
-<input type="hidden" name="role" value="ROLE_MEMBER" />		</form>
-					<button class="btn" type="button" id="submit"value="JOIN">회원가입</button>
+                <input type="hidden" name="role" value="ROLE_MEMBER"/>
+                <input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }" />
+		</form>
+					<button class="btn" type="button" id="submit">회원가입</button>
 					<button class="cencle btn" type="button">취소</button>
 				</div>
 			</div>

@@ -1,5 +1,6 @@
 package org.game.gamepurchase.controller;
 
+import java.security.Principal;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -38,12 +39,14 @@ public class GamePurchaseController {
 	private GamePurchaseService gamePurchaseService;
 	
 	@GetMapping("/paymentscreen")
-	public String paymentScreen(ConsumerBasketVO basket, String merchant_uid, String cid, HttpSession session, Model model) {
-		
-		cid = (String)session.getAttribute("session_cid");
-		
-		if(cid == null) {
-			return "redirect:/user/userLogin";
+	public String paymentScreen(ConsumerBasketVO basket, String merchant_uid, Principal principal, Model model) {
+
+		if(principal != null) {
+			String cid = principal.getName();
+			model.addAttribute("cid", cid);
+			if(cid == null) {
+				return "redirect:/user/userLogin";
+			}
 		}
 		
 		model.addAttribute("basket", basket);
@@ -54,35 +57,36 @@ public class GamePurchaseController {
 	
 	@PostMapping("/paymentsuccess")
 	@ResponseBody
-	public String paymentSuccess(GamePurchaseVO gpVO, @RequestParam("gnum") long gnum, HttpSession session) throws Exception {
-		
-		String cid = (String)session.getAttribute("session_cid");
-		
-		gpVO.setCid(cid);
-		
-		if(cid == null) {
-			return "redirect:/user/userLogin";
+	public String paymentSuccess(GamePurchaseVO gpVO, @RequestParam("gnum") long gnum, Principal principal) throws Exception {
+
+		if(principal != null) {
+			String cid = principal.getName();
+			if(cid == null) {
+				return "redirect:/user/userLogin";
+			}
+			gpVO.setCid(cid);
+			gamePurchaseService.paymentInputInfo(gpVO);
+			libraryService.additionalLibrary(cid, gnum);
+			basketService.removeConsumerBasket(cid, gnum);
 		}
-		gamePurchaseService.paymentInputInfo(gpVO);
-		libraryService.additionalLibrary(cid, gnum);
-		basketService.removeConsumerBasket(cid, gnum);
 		
 		return "";
 	}
 	
 	@GetMapping("/consumerBreakdown")
-	public String consumerBreakdown(String cid, HttpSession session, Model model) {
+	public String consumerBreakdown(Principal principal, Model model) {
 
-		cid = (String)session.getAttribute("session_cid");
-
-		if(cid == null) {
-			return "redirect:/user/userLogin";
+		if(principal != null) {
+			String cid = principal.getName();
+			model.addAttribute("cid", cid);
+			if(cid == null) {
+				return "redirect:/user/userLogin";
+			}
+			List<GamePurchaseVO> paymentList = gamePurchaseService.getPaymentList(cid);
+			model.addAttribute("paymentList", paymentList);
 		}
 		
-		List<GamePurchaseVO> paymentList = gamePurchaseService.getPaymentList(cid);
 		
-		model.addAttribute("cid", cid);
-		model.addAttribute("paymentList", paymentList);
 		
 		return "/payment/paymentBreakdown";
 	}

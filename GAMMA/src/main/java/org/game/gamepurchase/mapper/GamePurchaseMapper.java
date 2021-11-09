@@ -6,7 +6,7 @@ import org.game.gamepurchase.domain.GamePurchaseVO;
 
 public interface GamePurchaseMapper {
 	
-	public List<GamePurchaseVO> patmentSelect(String cid);
+	public List<GamePurchaseVO> paymentSelect(String cid);
 	
 	public void paymentInsert(GamePurchaseVO gpVO);
 	

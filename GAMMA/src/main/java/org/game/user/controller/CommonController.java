@@ -42,7 +42,7 @@ public class CommonController {
 		log.info("로그아웃 요청 처리");
 	}
 	
-	
+}
 	/*
 	 * @GetMapping("/accessError") public void accessDenied(Authentication
 	 * auth,Model model) {
@@ -59,6 +59,3 @@ public class CommonController {
 	 * model.addAttribute("error","로그인 관련 에러 입니다. 계정 확인을 다시해주세요"); } if(logout !=
 	 * null) { model.addAllAttribute("logout","로그아웃했습니다"); } }
 	 */
-		
-
-}

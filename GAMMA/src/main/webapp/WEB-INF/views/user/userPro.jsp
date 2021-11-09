@@ -3,7 +3,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
 <!DOCTYPE html>
 <html>
 <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
@@ -325,21 +325,12 @@ position:relative;
 					href="#">자주하는 질문</a></span>
 			</div>
 				<div class="side-bar__row">
-					<c:if test="${member == null }">
-            <div class="loginBtn">
-		        <span><a href="/user/userLogin" class="loginA">로그인</a></span>
-            </div>
-            <div class="joinBtn">
-		        <span><a href="/user/userJoin" class="joinA">가입하기</a></span>
-            </div>
-          </c:if>
-          <c:if test="${member != null }">
 	          <div class="consumer">
 	          	  <div class="consumer__imgPro">
 			        <img class="conimg" src="/resources/css/image/chaIcon.png"/>
 	          	  </div>
 		          <div class="consumer__nickname">
-		          	<p>${member.cid}</p>
+		          	<p>${principal.consumer.nickname}</p>
 		          </div>
 		          <div class="consumer__info">
 
@@ -351,7 +342,6 @@ position:relative;
 	   				<a href="/friends/searchfriends">* 친구 검색</a><br/>
 		   		  </div>
 	          </div>
-          </c:if>
         </div>
       </div>
 			<!-- about user -->
@@ -365,16 +355,16 @@ position:relative;
 								<img class="imgProA" src="/resources/css/image/chaIcon.png" />
 							</div>
 							<table class="table table1" width="400px">
-								<c:if test="${member eq 'kjw011231' }">
+								<c:if test="${principal.consumer.cid eq 'kjw011231' }">
 									<tr>
 										<td>유저고유번호</td>
-										<td><input id="cnum" name="cnum" value="${member.cnum}"
+										<td><input id="cnum" name="cnum" value="${principal.consumer.cnum}"
 											readonly="readonly"></td>
 									</tr>
 								</c:if>
 							<tr>
 							<td>닉네임</td>
-								<td id="nickname" name="nickname">${member.nickname}</td>
+								<td id="nickname" name="nickname">${principal.consumer.nickname}</td>
 							</tr>
 								
 							</table>
@@ -384,15 +374,16 @@ position:relative;
 						<div class="modAub">
 							<div class="row">
 								<div class="col-md-3">
-									<p>${member.nickname }(방명록)</p>
+									<p>${principal.consumer.nickname }(방명록)</p>
 								</div>
 								<div class="col-md-6">
 									<textarea style="resize: none;" name="reply" id="newReply"
 										rows="2" cols="30"></textarea>
 									<input type="hidden" name="nickname"
-										value="${member.nickname }" id="newReplyWriter" readonly>
+										value="${principal.consumer.nickname }" id="newReplyWriter" readonly>
 								</div>
 								<div class="col-md-3">
+								<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 									<button id="replyAddBtn">방명록 남기기</button>
 									<br />
 								</div>
@@ -450,7 +441,7 @@ position:relative;
 
 	<script>
 	
-		var cnum = ${member.cnum};
+		var cnum = ${principal.consumer.cnum};
 		function getAllList() {
 			$.getJSON("/userrp/all/" + cnum,function(data) {
 								//data 변수가 바로 얻어온 json데이터의 집합
