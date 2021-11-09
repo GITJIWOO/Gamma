@@ -201,6 +201,7 @@
               <div class="submitBtn">		
 		<input type="hidden" name="qnum" value="${vo.qnum }"/>
 		<input type="hidden" name="pageNum" value="${param.pageNum }"/>
+		<input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }" />
 		<input type="submit" value="문의 수정"/><br>
 		<button class="cancelBtn">취소</button>
               </div>

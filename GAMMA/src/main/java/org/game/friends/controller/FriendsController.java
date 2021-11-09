@@ -1,5 +1,6 @@
 package org.game.friends.controller;
 
+import java.security.Principal;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -10,6 +11,7 @@ import org.game.friends.domain.FriendsVO;
 import org.game.friends.service.FriendsService;
 import org.game.user.domain.ConsumerVO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -30,17 +32,19 @@ public class FriendsController {
 	
 	
 	// 메인화면 
+	@PreAuthorize("hasAnyRole('ROLE_MEMBER')")
 	@GetMapping("/friendsmain")	// 이거 메인화면으로 바꾸기 
 	public String friendsMain(Model model) {
 		return "/friends/friendsmain";
 	}
 	
 	// 현재 팔로우하는 친구 목록 가져오기
+	@PreAuthorize("hasAnyRole('ROLE_MEMBER')")
 	@GetMapping("/followerlist")
-	public String followerList(HttpSession session, FriendsSearchCriteria criteria, Model model) {
+	public String followerList(Principal principal, FriendsSearchCriteria criteria, Model model) {
 		log.info("로그인 계정이 팔로우하는 친구 목록 조회");
 		// 로그인 세션 확인 
-		String cid = String.valueOf(session.getAttribute("session_cid"));
+		String cid = principal.getName();
 		log.info("cid session: " + cid);
 		if(criteria.getKeyword() == null) {
 			criteria.setKeyword("");			
@@ -54,6 +58,7 @@ public class FriendsController {
 	}
 	
 	// 언팔로우 
+	@PreAuthorize("hasAnyRole('ROLE_MEMBER')")
 	@PostMapping("/followerremove")
 	public String followerRemove(String following, String follower, RedirectAttributes rttr) {
 		service.removeFriend(follower, following);
@@ -64,11 +69,12 @@ public class FriendsController {
 	}
 	
 	// 나를 팔로잉하는 친구 목록 가져오기
+	@PreAuthorize("hasAnyRole('ROLE_MEMBER')")
 	@GetMapping("/followinglist")
-	public String followingList(HttpSession session, FriendsSearchCriteria criteria, Model model) {
+	public String followingList(Principal principal, FriendsSearchCriteria criteria, Model model) {
 		log.info("로그인 계정을 팔로우하는 친구 목록 조회");
 		// 로그인 세션 확인 
-		String cid = String.valueOf(session.getAttribute("session_cid"));
+		String cid = principal.getName();
 		//String cadmin = String.valueOf(session.getAttribute("session_cadmin"));
 		if(criteria.getKeyword() == null) {
 			criteria.setKeyword("");			
@@ -82,6 +88,7 @@ public class FriendsController {
 	}
 	
 	// 언팔로우
+	@PreAuthorize("hasAnyRole('ROLE_MEMBER')")
 	@PostMapping("/followingremove")
 	public String followingRemove(String follower, String following, RedirectAttributes rttr) {
 		System.out.println("로그인 계정 : " + follower);
@@ -94,10 +101,11 @@ public class FriendsController {
 	}
 
 	// 전체 회원중에서 친구 추가할 회원 검색 
+	@PreAuthorize("permitAll")
 	@GetMapping("/searchfriends")
-	public String searchFriends(HttpSession session, FriendsSearchCriteria criteria, Model model) {
+	public String searchFriends(Principal principal, FriendsSearchCriteria criteria, Model model) {
 		log.info("전체 회원중에서 친구 찾는 로직 실행");
-		String cid = String.valueOf(session.getAttribute("session_cid"));
+		String cid = principal.getName();
 		if(criteria.getKeyword() == null) {
 			criteria.setKeyword("");			
 		}
@@ -109,6 +117,7 @@ public class FriendsController {
 	}
 	
 	// 전체 회원중에서 친구 추가 - userPro와 연결 
+	@PreAuthorize("hasAnyRole('ROLE_MEMBER')")
 	@PostMapping("/addfriends")
 	public String addFriends(FriendsVO vo, RedirectAttributes rttr) {
 		log.info("vo 들어오는지 확인: " + vo);
@@ -122,6 +131,7 @@ public class FriendsController {
 	}
 	
 	// 전체 회원중에서 친구 삭제 - userPro와 연결 
+	@PreAuthorize("hasAnyRole('ROLE_MEMBER')")
 	@PostMapping("/removefriends")
 	public String removeFriends(String follower, String following, RedirectAttributes rttr) {
 		log.info("follower, 로그인계정이 언팔로우할 상대: " + follower);
@@ -131,9 +141,10 @@ public class FriendsController {
 	}
 	
 	// 채팅
+	@PreAuthorize("hasAnyRole('ROLE_MEMBER')")
 	@GetMapping("/chat")
-	public String chatroom(HttpSession session, Model model) {
-		String cid = String.valueOf(session.getAttribute("session_cid"));
+	public String chatroom(Principal principal, Model model) {
+		String cid = principal.getName();
 		model.addAttribute("cid", cid);
 		log.info("cid 확인: " + cid);
 		return "/friends/chat";

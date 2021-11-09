@@ -107,7 +107,7 @@ public class UserController {
 	}
 
 	// 회원가입 get방식으로 접근여부 가능
-
+/*
 	@GetMapping("/userJoin")
 	public String userJoin() throws Exception {
 		log.info("get방식회원가입접속");
@@ -142,7 +142,7 @@ public class UserController {
 
 		return "/user/userLogin";
 	}
-
+*/
 	/*
 	 * @GetMapping("/userHome") public String home(Locale locale, Model model) {
 	 * log.info("userHome실행");//로깅이 안되는거같네요. 우선 System.out.println으로 대체해서 디버깅하시고.
@@ -158,13 +158,13 @@ public class UserController {
 	 */
 
 	// get로그인
-
+/*
 	@GetMapping("/userLogin")
 	public String userLogin() throws Exception {
 
 		return "/user/userLogin";
 	}
-
+*/
 	@SuppressWarnings("unused")
 	@PostMapping("/userLogin")
 	public String userLogin(ConsumerVO userVO, HttpServletRequest req, RedirectAttributes rttr) throws Exception {
@@ -205,7 +205,7 @@ public class UserController {
 		}
 		return "redirect:/user/userLogin";
 	}
-
+/*
 	// 로그아웃 과 세션 초기화
 	// 시큐리티 적용 전 얘하나로만 했었음
 	@GetMapping("/userLogout")
@@ -215,7 +215,7 @@ public class UserController {
 
 		return "redirect:/main/main";
 	}
-
+*/
 	// 로그아웃 과 세션 초기화 시큐리티적용버전
 	/*
 	 * @GetMapping("/userLogout") public void userLogoutget() { // security-con~ 에서
