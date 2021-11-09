@@ -114,7 +114,7 @@ button {
 				<div>
 				<!-- 체크하면 7일간 로그인 유지됨 -->
 				<div class="checkB">
-		<input type="checkbox" name="remember-me" /><p>로그인 상태 유지</p></div>
+					<input type="checkbox" name="remember-me" /><p>로그인 상태 유지</p></div>
 					<button id="loginBtn" type="submit" value="LOGIN">로그인</button>
 					<a href="/user/userJoin"><button id="registerBtn" type="button">회원가입</button></a>
 					<a href="/user/findpw"><button id="findpwBtn" type="button">비밀번호찾기</button></a>
