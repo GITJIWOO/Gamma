@@ -53,6 +53,7 @@
 		VALUES(consumer_num.nextval,#{cid},#{email},#{password},#{nickname})
 	</insert>
 	
+	
 	<!-- 로그인 -->
 	<select id="userLogin" resultType="org.game.user.domain.ConsumerVO">
 		SELECT *

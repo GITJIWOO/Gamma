@@ -14,6 +14,8 @@ import org.game.user.domain.ConsumerVO;
 import org.game.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -34,67 +36,71 @@ public class UserController {
 
 	@Inject
 	UserService service;
-	// @Inject
-	// BCryptPasswordEncoder pwdEncoder;
+	 @Inject
+	 BCryptPasswordEncoder pwdEncoder;
 	// @Autowired
 	// private JavaMailSender mailSender;
-	
+
 	@Autowired
 	private FriendsService fservice;
-	
+
 	@Autowired
 	private GameLibraryService libraryService;
-	
+
 	@GetMapping("/agreeJoin")
-	private void agreeJoin() { 
+	private void agreeJoin() {
 		log.info("약관의 동의");
 	}
-	
-	
+
 	// 유저프로필
+	@PreAuthorize("permitAll")
 	@GetMapping("/userPro")
-	public String userPro(HttpSession session, Model model) {		
+	public String userPro(HttpSession session, Model model) {
 		// 세션 아이디, 어드민
-		String cid = (String)session.getAttribute("session_cid");
+		String cid = (String) session.getAttribute("session_cid");
 		String cadmin = String.valueOf(session.getAttribute("session_cadmin"));
 		model.addAttribute("cid", cid);
 		model.addAttribute("cadmin", cadmin);
-		return "/user/userPro";
-	}
+		List<ResultLibraryVO> libraryList = libraryService.getAllConsumerLibrary(cid);
 
-	@PostMapping("/userPro")
-	public String userPro(ConsumerVO userVO, Model model) {
-		/*
-		 * service.userGet(userVO.getCid()); // 아마 이거 작성되어야 프로필 조회할 수 있을듯..
-		 * model.addAttribute("result" ,fservice.fOrNot(null, userVO.getCid())); // null
-		 * 에는 해당 로직으로 이동하면 나오는 user 정보 추가 예정, cid는 로그인 계정 log.info(fservice.fOrNot(null,
-		 * userVO.getCid())); model.addAttribute("follower", null);
-		 * model.addAttribute("following", userVO.getCid());
-		 */
-		model.addAttribute("dto", service.userGet(userVO.getCid()));
-		log.info("클릭한유저번호" + userVO);
-		if (userVO.getAttachList() != null) {
-			userVO.getAttachList().forEach(attach -> log.info(attach));
-		}
-		
-		List<ResultLibraryVO> libraryList = libraryService.getAllConsumerLibrary(userVO.getCid());
-		
 		model.addAttribute("libraryList", libraryList);
-		
+
 		return "/user/userPro";
 	}
 
-	@GetMapping("/userGet")
-	public String userGet(HttpSession session, Model model) {
-		// 세션 아이디, 어드민
-		String cid = (String)session.getAttribute("session_cid");
-		String cadmin = String.valueOf(session.getAttribute("session_cadmin"));
-		model.addAttribute("cid", cid);
-		model.addAttribute("cadmin", cadmin);
-		return "/user/userGet";
-	}
+	/*
+	 * @PostMapping("/userPro") public String userPro(ConsumerVO userVO, Model
+	 * model) {
+	 * 
+	 * service.userGet(userVO.getCid()); // 아마 이거 작성되어야 프로필 조회할 수 있을듯..
+	 * model.addAttribute("result" ,fservice.fOrNot(null, userVO.getCid())); // null
+	 * 에는 해당 로직으로 이동하면 나오는 user 정보 추가 예정, cid는 로그인 계정 log.info(fservice.fOrNot(null,
+	 * userVO.getCid())); model.addAttribute("follower", null);
+	 * model.addAttribute("following", userVO.getCid());
+	 * 
+	 * model.addAttribute("dto", service.userGet(userVO.getCid()));
+	 * log.info("클릭한유저번호" + userVO); if (userVO.getAttachList() != null) {
+	 * userVO.getAttachList().forEach(attach -> log.info(attach)); }
+	 * 
+	 * List<ResultLibraryVO> libraryList =
+	 * libraryService.getAllConsumerLibrary(userVO.getCid());
+	 * 
+	 * model.addAttribute("libraryList", libraryList);
+	 * 
+	 * return "/user/userPro"; }
+	 */
+
+	/*
+	 * @GetMapping("/userGet") public String userGet(HttpSession session, Model
+	 * model) { // 세션 아이디, 어드민 String cid =
+	 * (String)session.getAttribute("session_cid"); String cadmin =
+	 * String.valueOf(session.getAttribute("session_cadmin"));
+	 * model.addAttribute("cid", cid); model.addAttribute("cadmin", cadmin); return
+	 * "/user/userGet"; }
+	 */
 
 	// 유저 상제정보창
+	@PreAuthorize("hasAnyRole('ROLE_MEMBER')")
 	@PostMapping("/userGet")
 	public String userGet(ConsumerVO userVO, Model model) {
 		model.addAttribute("dto", service.userGet(userVO.getCid()));
@@ -117,11 +123,15 @@ public class UserController {
 	}
 
 	// 회원가입
-
+	@PreAuthorize("permitAll")
 	@PostMapping("/userJoin")
-	public String userJoin(ConsumerVO userVO) throws Exception {
+	public String userJoin(ConsumerVO userVO, String[] role) throws Exception {
 		// log.info("회원가입");
 		// service.userJoin(userVO);
+		log.info("가입시받는데이터" + userVO);
+		log.info("권한받은거" + role);
+
+		String beforeCrPw = userVO.getPassword();
 
 		log.info("poset회원가입실행");
 		long result = service.idChk(userVO.getCid());
@@ -165,32 +175,41 @@ public class UserController {
 		return "/user/userLogin";
 	}
 
+	@PreAuthorize("permitAll")
 	@SuppressWarnings("unused")
 	@PostMapping("/userLogin")
 	public String userLogin(ConsumerVO userVO, HttpServletRequest req, RedirectAttributes rttr) throws Exception {
 		log.info("로그인컨트롤실행");
+		System.out.println("넘어오는 cid : "+userVO.getCid());
+		System.out.println("넘어오는 userVO : "+userVO);
 		HttpSession session = req.getSession();
 		String memberSession = String.valueOf(session.getAttribute("member"));
 		System.out.println("멤버세션값 : " + memberSession);
 		ConsumerVO login = service.userLogin(userVO);
-		/*
-		 * System.out.println("UserVO : " + userVO); System.out.println("DB : " +
-		 * login); System.out.println("UserVO의 비번 : " + userVO.getPassword());
-		 * System.out.println("DB의 비번 : " + login.getPassword());
-		 */		// boolean pwdMatch = pwdEncoder.matches(userVO.getPassword(),
-		// login.getPassword());
-		// System.out.println("비번매칭 : " + pwdMatch);
+		
+		
+		  System.out.println("UserVO : " + userVO); 
+		  System.out.println("DB : " + login); 
+		  System.out.println("UserVO의 비번 : " + userVO.getPassword());
+		  System.out.println("DB의 비번 : " + login.getPassword());
+		  boolean pwdMatch = pwdEncoder.matches(userVO.getPassword(),login.getPassword());
+		 System.out.println("비번매칭 : " + pwdMatch);
+		 
+		 
 		if (login == null) {
 			session.setAttribute("member", null);
 			memberSession = String.valueOf(session.getAttribute("member"));
-			System.out.println("멤버세션값 else : " + memberSession);
+			System.out.println("멤버세션값 else1 : " + memberSession);
 			rttr.addFlashAttribute("msg", false);
 
 			return "redirect:/user/userLogin";
-		} 
-		boolean result = login.getPassword().equals(userVO.getPassword());
-		if(result==true){
-			System.out.println("result 값 : " + result);
+		}
+		/* 시큐리티 적용전 (비번복호화전)
+		 * boolean result = login.getPassword().equals(userVO.getPassword());
+		 * System.out.println("result 값 : "+result);
+		 */
+		if (pwdMatch == true) {
+			System.out.println("비번매칭 : " + pwdMatch);
 			session.setAttribute("member", login);
 			session.setAttribute("session_cid", login.getCid());
 			session.setAttribute("session_cadmin", login.getCadmin());
@@ -199,7 +218,7 @@ public class UserController {
 		} else {
 			session.setAttribute("member", null);
 			memberSession = String.valueOf(session.getAttribute("member"));
-			System.out.println("멤버세션값 else : " + memberSession);
+			System.out.println("멤버세션값 else2 : " + memberSession);
 			rttr.addFlashAttribute("msg", false);
 			return "redirect:/user/userLogin"; // rttr.addF~ 는 return에 redirect: 안넣으면 안보내진다
 		}

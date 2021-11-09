@@ -18,9 +18,9 @@
 	<h2><c:out value="${error }" /></h2>
 	<h2><c:out value="${logout }" /></h2>
 	</div>
-	<form action="/login" method="post">
-		<input type="text" name="username" placeholder="ID"/><br>
-		<input type="text" name="password" placeholder="PASSWORD"/>
+	<form action="/user/userLogin" method="post">
+		<input type="text" name="cid" placeholder="ID"/><br>
+		<input type="password" name="password" placeholder="PASSWORD"/>
 		<!-- 체크하면 7일간 로그인 유지됨 -->
 		<input type="checkbox" name="remember-me">로그인 상태 유지 
 		<input type="submit" value="LOGIN" />

@@ -16,8 +16,12 @@
 	.detail {
 		padding: 30px;
 	}
+	.title {
+		font-size: 200%;
+		font-weight: bold;
+		margin-bottom: 30px;
+	}
 	.card {
-		width: 200px;
 		height: 310px;
 		float: left;
 		margin-right: 30px;
@@ -28,6 +32,9 @@
 		padding-bottom: 10px;
 		font-size: 150%;
 		font-weight: bold;
+	}
+	.store {
+		margin-top: 50px;
 	}
 </style>
 </head>
@@ -103,13 +110,17 @@
         <div class="contents">
           <div class="detail">
             <!-- 여기에 각자 content 붙여넣기 -->
+            <div class="title"> 
+	            <p>${cid}의 라이브러리</p>
+	            <hr/>
+            </div>
             <div class="library">
 				<c:forEach var="library" items="${library}">
-					<div class="card" style="width: 200px;">
-						<img src="${library.gpicture}" class="card-img-top">
+					<div class="card" style="width: 205px;">
+						<img src="${library.gpicture}" class="card-img-top" height="130px">
 						<div class="card-body">
 							<h5 class="card-title">${library.gname}</h5>
-							<a href="/gameInfo/get?gnum=${library.gnum}" class="btn btn-primary">상점 페이지</a>
+							<a href="/gameInfo/get?gnum=${library.gnum}" class="btn btn-primary store">상점 페이지</a>
 						</div>
 					</div>
 				</c:forEach>
