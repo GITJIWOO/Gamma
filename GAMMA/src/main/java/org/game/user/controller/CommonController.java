@@ -21,7 +21,7 @@ public class CommonController {
 		model.addAttribute("errorMessage", "접근 거부");
 	}
 	
-	@GetMapping("/customLogin")
+	@GetMapping("/userLogin")
 	public void loginInput(String error, String logout, Model model) {
 
 		log.info("error 여부: " + error);
