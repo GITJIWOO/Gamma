@@ -15,13 +15,12 @@ public class CustomUser extends User{
 	
 	private ConsumerVO consumer;
 	
-	public CustomUser(String username, String password, Collection<? extends GrantedAuthority> auth) {
-		super(username, password, auth);
+	public CustomUser(String cid, String password, Collection<? extends GrantedAuthority> auth) {
+		super(cid, password,auth);
 	}
 	
 	public CustomUser(ConsumerVO vo) {
-		super(vo.getCid(), vo.getPassword(), 
-				vo.getAuthList().stream().map(author -> new SimpleGrantedAuthority(author.getAuth())).collect(Collectors.toList()));
+		super(vo.getCid(), vo.getPassword(), vo.getAuthList().stream().map(author -> new SimpleGrantedAuthority(author.getAuth())).collect(Collectors.toList()));
 		this.consumer = vo;
 	}
 	

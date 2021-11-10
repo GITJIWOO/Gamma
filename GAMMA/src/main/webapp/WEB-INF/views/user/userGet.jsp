@@ -1,8 +1,9 @@
 <%@page import="org.springframework.web.util.UrlPathHelper"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
 <!DOCTYPE html>
 <html>
@@ -310,7 +311,6 @@ position:relative;
 
 </head>
 <body>
-
     <div class="display">
       <!-- side-bar -->
       <div class="side-bar">
@@ -337,9 +337,12 @@ position:relative;
         <!-- category -->
         <div class="side-bar__row">
           <span><a href="/gameInfo/gamelist">게임 스토어</a></span>
-          <c:if test="${member.cid ne null}">
+         <sec:authorize access="isAuthenticated()">
+          	<sec:authentication property="principal" var="principal" />
+          <c:if test="${principal.consumer.cid ne null}">
           	<span><a href="/library/conLibrary?cid=${cid}">라이브러리</a></span>
           </c:if>
+          </sec:authorize>
         </div>
         <!-- qna -->
         <div class="side-bar__row">
@@ -354,8 +357,12 @@ position:relative;
 			        <img class="conimg" src="/resources/css/image/chaIcon.png"/>
 	          	  </div>
 		          <div class="consumer__nickname">
-		          	<p>${principal.vo.cid}</p>
-		          </div>
+<sec:authorize access="isAuthenticated()">
+          	<sec:authentication property="principal" var="secuInfo" />
+		          	<p>${secuinfo.consumer.nickname}</p>
+		          	</sec:authorize>
+		          	
+</div>
 		          <div class="consumer__info">
 	   					<a href="/user/userGet">* 유저정보창</a><br/>
 
@@ -396,38 +403,42 @@ position:relative;
 
 									</div>
 							</div>
+							<sec:authorize access="isAuthenticated()">
+          	<sec:authentication property="principal" var="principal" />
 							<table class="table table1" width="400px">
 
-								<c:if test="${principal.vo.cid eq 'kjw011231' }">
+								<c:if test="${principal.consumer.cid eq 'kjw011231' }">
 									<tr>
 										<td>유저고유번호</td>
-										<td><input id="cnum" name="cnum" value="${principal.vo.cnum}"
+										<td><input id="cnum" name="cnum" value="${principal.consumer.cnum}"
+
 											readonly="readonly"></td>
 									</tr>
 								</c:if>
 								<tr>
 									<td>아이디</td>
-									<td id="cid" name="cid"><a href="/user/userPro?cid=${principal.vo.cid }">${principal.vo.cid}</a></td>
+									<td id="cid" name="cid"><a href="/user/userPro?cid=${principal.consumer.cid }">${principal.consumer.cid}</a></td>
 								</tr>
 								<tr>
 									<td>닉네임</td>
-									<td id="nickname" name="nickname">${principal.vo.nickname}</td>
+									<td id="nickname" name="nickname">${principal.consumer.nickname}</td>
 								</tr>
 								<tr>
 									<td>이메일</td>
-									<td id="email" name="email">${principal.vo.email}</td>
+									<td id="email" name="email">${principal.consumer.email}</td>
 								</tr>
 								<tr>
 									<td>회원가입일자</td>
-									<td><fmt:formatDate value="${principal.vo.userregdate}"
+									<td><fmt:formatDate value="${principal.consumer.userregdate}"
 											pattern="yyy-MM-dd" /></td>
 								</tr>
 								<tr>
 									<td>회원정보 수정일자</td>
-									<td><fmt:formatDate value="${principal.vo.userupdatedate}"
+									<td><fmt:formatDate value="${principal.consumer.userupdatedate}"
 											pattern="yyy-MM-dd" /></td>
 								</tr>
 							</table>
+							</sec:authorize>
 						</form>
 						<div class="row">&nbsp;</div>
 						<div class="Mbtn">
@@ -495,10 +506,10 @@ position:relative;
 	$(document).ready(function() {
 		
 		$(".loginA").on("click", function() {
-			location.href = "/user/userLogin";
+			location.href = "/user/customLogin";
 		});
 		$(".joinA").on("click", function() {
-			location.href = "/user/userJoin";
+			location.href = "/user/join";
 		});
 		$(".consumer").mouseover(function(){
 				$(".consumer__info").show();
@@ -509,7 +520,7 @@ position:relative;
 			});
 			
 	
-		var cnum = ${member.cnum};
+		var cnum = ${principal.consumer.cnum};
 		function getAllList() {
 			$.getJSON("/userrp/all/" + cnum,
 							function(data) {

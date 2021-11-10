@@ -59,10 +59,9 @@ public class UserController {
 		ConsumerVO userVO=service.userGet(cid);
 		
 		System.out.println("userVO들어왓나 : "+userVO);
-		
-		
 		model.addAttribute("cid", userVO.getCid());
 		model.addAttribute("cadmin", userVO.getCadmin());
+		model.addAttribute("nickname", userVO.getNickname());
 		
 		List<ResultLibraryVO> libraryList = libraryService.getAllConsumerLibrary(userVO.getCid());
 
@@ -106,7 +105,16 @@ public class UserController {
 	@PreAuthorize("hasAnyRole('ROLE_MEMBER')")
 	@PostMapping("/userGet")
 	public String userGet(ConsumerVO userVO, Model model,Principal principal) {
-		model.addAttribute("dto", service.userGet(userVO.getCid()));
+		if(principal != null) {
+			String cid = principal.getName();
+			model.addAttribute("cid", cid);
+			if(cid != null) {
+				ConsumerVO consumer = service.userGet(cid);
+				model.addAttribute("consumer", consumer);
+				System.out.println("consumer : "+ consumer);
+			}
+		}
+		
 		log.info("클릭한유저번호" + userVO);
 		if (userVO.getAttachList() != null) {
 			userVO.getAttachList().forEach(attach -> log.info(attach));
