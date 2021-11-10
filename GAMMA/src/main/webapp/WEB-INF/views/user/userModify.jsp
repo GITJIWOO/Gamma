@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+	<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <html>
@@ -70,6 +71,8 @@ h1{
 <body>
 	<div id="container">
 		<form action="/user/userModify" method="post">
+		<sec:authorize access="isAuthenticated()">
+          	<sec:authentication property="principal" var="principal" />
 		<div class="border">
 		<div class="Title">
 						<img src="/resources/css/image/mainIcon.png" />
@@ -97,6 +100,7 @@ h1{
 				<button class="cencle btn" type="button">취소</button>
 			</div>
 			</div>
+			</sec:authorize>
 		</form>
 	</div>
 

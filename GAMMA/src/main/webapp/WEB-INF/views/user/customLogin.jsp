@@ -21,7 +21,6 @@
 	margin: 0;
 	padding: 0;
 	text-align: center;
-	
 }
 
 form {
@@ -32,22 +31,23 @@ form {
 	align-items: center;
 	min-height: 80vh;
 }
-.main{
-position: relative;
-	bottom: 25px;
-	font-weight:bold;
 
+.main {
+	position: relative;
+	bottom: 25px;
+	font-weight: bold;
 }
 
 .border {
 	margin: 0 auto;
-	width: 400px;
-	height: 500px;
+	width: 380px;
+	height: 400px;
 	border: 1px solid #000;
 	border-radius: 10%;
 }
-.border2{
-margin: 0 auto;
+
+.border2 {
+	margin: 0 auto;
 	width: 230px;
 	height: 350px;
 	border: 1px solid #000;
@@ -57,15 +57,18 @@ margin: 0 auto;
 img {
 	width: 150px;
 	height: 150px;
-	
 }
-#checkB{
-display:flex; 
-	flex-flow:row;
+
+#checkB {
+	display: flex;
+	flex-flow: row;
 }
 
 input {
-	width: 300px;
+	
+}
+#lo{
+	
 }
 
 #IPvalue {
@@ -92,70 +95,60 @@ button {
 </style>
 </head>
 <body>
-	<form name='homeForm' method="post" action="/user/customLogin">
-				<c:if test="${principal == null}">
+	<div class="loginDeniedAlert">
+		<h2>
+			<c:out value="${error }" />
+		</h2>
+		<h2>
+			<c:out value="${logout }" />
+		</h2>
+	</div>
+	<form action="/login" method="post">
 		<div class="border">
 			<img src="/resources/css/image/mainIcon.png" />
 			<div class="main">
-					<h1 class="IPvalue">로그인</h1>
-					<div>
-						<label class="IPvalue" for="cid">아이디</label><br /> <input
-							type="text" id="cid" name="cid" />
-					</div>
-					<br />
-					<div>
-						<label class="IPvalue" for="password">비밀번호</label><br /> <input
-							type="password" id="password" name="password" />
-				<c:if test="${msg == false}">
-					<p style="color: red;">로그인 실패! 아이디와 비밀번호 확인해주세요.</p>
-				</c:if>
-					</div>
-					<br />
+				<h1 class="IPvalue">로그인</h1>
 				<div>
-				<!-- 체크하면 7일간 로그인 유지됨 -->
-				<div class="checkB">
-		<input type="checkbox" name="remember-me" /><p>로그인 상태 유지</p></div>
-					<button id="loginBtn" type="submit" value="LOGIN">로그인</button>
-					<a href="/user/userJoin"><button id="registerBtn" type="button">회원가입</button></a>
-					<a href="/user/findpw"><button id="findpwBtn" type="button">비밀번호찾기</button></a>
+					<label class="IPvalue" for="cid">아이디</label><br /> <input
+						type="text" id="cid" name="username" />
 				</div>
+				<br />
+				<div>
+					<label class="IPvalue" for="password">비밀번호</label><br /> <input
+						type="password" id="password" name="password" />
+				</div>
+				<br />
+				<!-- 체크하면 7일간 로그인 유지됨 -->
+				<label class="lo"><input type="checkbox"  name="remember-me">로그인 상태 유지 </label><br/>
+				<input
+					type="submit" value="LOGIN" /> <input type="hidden"
+					name="${_csrf.parameterName }" value="${_csrf.token }" />
 			</div>
 		</div>
-				</c:if>
-				<c:if test="${principal != null }">
-					<div class="border2">
-			<img src="/resources/css/image/mainIcon.png" />
-						<p>${principal.vo.cid}님 환영합니다.</p>
-								<a href="/main/main"><button id="mainBtn" type="button">메인으로</button></a>
-								<a href="/user/userLogout"><button id="logoutBtn" type="button">로그아웃</button></a>
-					</div>
-				</c:if>
-				
-					 <input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }"/> 
 	</form>
-	
-<script type="text/javascript">
-	$(document).ready(function() {
-		$("#logoutBtn").on("click", function() {
-			location.href = "user/userLogout";
-		})
 
-		$("#registerBtn").on("click", function() {
-			location.href = "user/userJoin";
-		})
-		$("#findpwBtn").on("click", function() {
-			location.href = "user/findpw";
-		})
+	<script type="text/javascript">
+		$(document).ready(function() {
+			$("#logoutBtn").on("click", function() {
+				location.href = "user/userLogout";
+			})
 
-		$("#userUpdateBtn").on("click", function() {
-			location.href = "user/userModify";
-		})
+			$("#registerBtn").on("click", function() {
+				location.href = "user/userJoin";
+			})
+			$("#findpwBtn").on("click", function() {
+				location.href = "user/findpw";
+			})
 
-		$("#usererDeleteBtn").on("click", function() {
-			location.href = "user/userDelete";
+			$("#userUpdateBtn").on("click", function() {
+				location.href = "user/userModify";
+			})
+
+			$("#usererDeleteBtn").on("click", function() {
+				location.href = "user/userDelete";
+			})
+
 		})
-	
-	})
-</script>
+	</script>
 </body>
 </html>

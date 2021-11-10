@@ -1,5 +1,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
 <%@ page language="java" pageEncoding="UTF-8"
 	contentType="text/html; charset=UTF-8"%>
 <!DOCTYPE html>
@@ -44,8 +45,8 @@
         <!-- category -->
         <div class="side-bar__row">
           <span><a href="/gameInfo/gamelist">게임 스토어</a></span>
-          <c:if test="${cid ne null}">
-          	<span><a href="/library/conLibrary?cid=${cid}">라이브러리</a></span>
+          <c:if test="${principal.consumer.cid ne null}">
+          	<span><a href="/library/conLibrary?cid=${principal.consumer.cid}">라이브러리</a></span>
           </c:if>
         </div>
         <!-- qna -->
@@ -57,21 +58,24 @@
         <!-- about user -->
         <div class="side-bar__row">
           <!-- c:if로 로그인 전에는 회원가입+로그인 / 로그인 후에는 프로필 -->
-          <c:if test="${cid eq null}">
+           <sec:authorize access="isAuthenticated()">
+          	<sec:authentication property="principal" var="secuInfo" />
+          	<c:if test="${secuInfo.consumer.cid eq null }">
             <div class="loginBtn">
 		        <span><a href="/user/customLogin" class="loginA">로그인</a></span>
             </div>
             <div class="joinBtn">
 		        <span><a href="/user/customJoin" class="joinA">가입하기</a></span>
             </div>
-          </c:if>
-          <c:if test="${cid ne null}">
+            
+        </c:if>
+          <c:if test="${secuInfo.consumer.cid ne null}">
 	          <div class="consumer">
 	          	  <div class="consumer__imgPro">
 			        <img class="conimg" src="/resources/css/image/chaIcon.png"/>
 	          	  </div>
 		          <div class="consumer__nickname">
-		          	<p>${cid}</p>
+		          	<p style="font-size:10px; color:white;">${secuInfo.consumer.nickname}</p>
 		          </div>
 		          <div class="consumer__info">
 	   				<a href="/user/userGet">* 유저정보창</a><br/>
@@ -83,6 +87,7 @@
 		   		  </div>
 	          </div>
           </c:if>
+          </sec:authorize>
         </div>
       </div>
       <div class="main">
