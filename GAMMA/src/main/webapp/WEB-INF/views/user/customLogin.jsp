@@ -109,6 +109,11 @@ button {
 			<div class="main">
 				<h1 class="IPvalue">로그인</h1>
 				<div>
+				<!-- 체크하면 7일간 로그인 유지됨 -->
+				<div class="checkB">
+					<button id="loginBtn" type="submit" value="LOGIN">로그인</button>
+					<a href="/user/userJoin"><button id="registerBtn" type="button">회원가입</button></a>
+					<a href="/user/findpw"><button id="findpwBtn" type="button">비밀번호찾기</button></a>
 					<label class="IPvalue" for="cid">아이디</label><br /> <input
 						type="text" id="cid" name="username" />
 				</div>

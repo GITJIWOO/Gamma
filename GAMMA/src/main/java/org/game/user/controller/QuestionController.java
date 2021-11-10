@@ -28,23 +28,13 @@ import lombok.extern.log4j.Log4j;
 public class QuestionController {
 	@Autowired
 	private QuestionService service;
-	/*
-	// 질문글 작성하는 폼 
-	@PreAuthorize("hasAnyRole('ROLE_MEMBER')")
-	@PostMapping("/questionform")
-	public String addQuestion(Principal principal, Model model) {
-		String cid = principal.getName();
-		model.addAttribute("qwriter", cid);
-		return "/qna/registerquestion";
-	}
-	*/
+
 	// 질문글 작성하는 폼 
 	@PreAuthorize("hasAnyRole('ROLE_MEMBER')")
 	@PostMapping("/questionform")
 	public String addQuestion() {
 		return "/qna/registerquestion";
 	}
-	
 	// 작성한 질문글 등록하고 자신이 작성한 질문글 목록 조회
 	@PreAuthorize("hasAnyRole('ROLE_MEMBER')")
 	@PostMapping("/registerquestion")

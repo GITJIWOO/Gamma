@@ -156,13 +156,14 @@
       	    </div>
             <div class="followlist-id">
 	          <a href="/user/userPro?cid=${followerList.cid }">${followerList.cid }</a>
-	          <span>(${followingList.nickname })</span>
+	          <span>(${followerList.nickname })</span>
                 </div>
                 <!-- 현재 팔로잉된 상태이기 때문에 '삭제(default_white)'버튼만 있고 삭제되면 친구목록에서 삭제 -->
                 <div class="followlistBtn">
     			<form action="/main" method="post">
 		          <input type="hidden" name="following" value="${param.cid }"/><!-- 로그인 계정 -->
 		          <input type="hidden" name="follower" value="${followerList.cid }"/><!-- 로그인 계정이 팔로우 하는 계정 -->
+		          <input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }"/>
 		          <input class="chatBtn" type="submit" value="채팅"/>
 			    </form>
 
@@ -171,7 +172,8 @@
     			<form action="/friends/followerremove" method="post">    				
 		          <input type="hidden" name="following" value="${cid }"/><!-- 로그인 계정이 팔로우 하는 계정 -->
 		          <input type="hidden" name="follower" value="${followerList.cid }"/><!-- 로그인 계정이 팔로우 하는 계정 -->
-		          <input class="unfollowBtn" type="submit" value="팔로우 취소" />
+		          <input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }"/>
+		          <input class="unfollowBtn" type="submit" value="팔로우 취소" />		          
 			    </form>
 				</div>
 			</div>

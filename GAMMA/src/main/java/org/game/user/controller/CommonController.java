@@ -1,5 +1,6 @@
 package org.game.user.controller;
 
+import java.security.Principal;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,8 +21,9 @@ public class CommonController {
 		model.addAttribute("errorMessage", "접근 거부");
 	}
 	
-	@GetMapping("/customLogin")
+	@GetMapping("/userLogin")
 	public void loginInput(String error, String logout, Model model) {
+
 		log.info("error 여부: " + error);
 		log.info("logout 여부: " + logout);
 		if(error != null) {
@@ -32,30 +34,13 @@ public class CommonController {
 		}
 	}
 	
-	@GetMapping("/customLogout")
+	@GetMapping("/userLogout")
 	public void logoutGet() {
 		log.info("로그아웃 폼으로 이동");
 	}
 	
-	@PostMapping("/customLogout")
+	@PostMapping("/userLogout")
 	public void logOutPost() {
 		log.info("로그아웃 요청 처리");
 	}
-	
 }
-	/*
-	 * @GetMapping("/accessError") public void accessDenied(Authentication
-	 * auth,Model model) {
-	 * 
-	 * log.info("접근거부 : "+ auth); model.addAttribute("errorMessage","접근 거부"); }
-	 */
-	
-	/*
-	 * @GetMapping("/customLogin") public void loginInput(String error,String
-	 * logout,Model model) { log.info("error 여부 : "+error); log.info("logout 여부 : "
-	 * + logout);
-	 * 
-	 * if(error !=null) {
-	 * model.addAttribute("error","로그인 관련 에러 입니다. 계정 확인을 다시해주세요"); } if(logout !=
-	 * null) { model.addAllAttribute("logout","로그아웃했습니다"); } }
-	 */

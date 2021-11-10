@@ -74,6 +74,11 @@
 	}
 	.commentRccontent {
 		font-size: 130%;
+		margin-right: 300px;
+	}
+	.commentDelete {
+		display: flex;
+		align-items: center;
 	}
 </style>
 </head>
@@ -179,6 +184,7 @@
 					<div id="reviewModify">
 						<c:if test="${cid eq review.cid}">
 							<form action="/review/reviewModify" method="post" name="reviewUpdate"onsubmit="return updateCheck()">
+								<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 								<input type="hidden" name="cid" value="${cid}">
 								<input type="hidden" name="grnum" value="${review.grnum}">
 								<textarea class="form-control" id="exampleFormControlTextarea1" name="grcontent" rows="7" cols="70" placeholder="내용" required>${review.grcontent}</textarea><br/>
@@ -201,6 +207,7 @@
 								<c:when test="${cid ne null && rlvo.cid ne cid}">
 									<c:if test="${cid ne review.cid}">
 										<form action="/review/reviewLike" method="post" id="reviewLike">
+											<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 											<input type="hidden" name="cid" value="${cid}">
 											<input type="hidden" name="gnum" value="${review.gnum}">
 											<input type="hidden" name="grnum" value="${review.grnum}">
@@ -211,6 +218,7 @@
 								<c:when test="${cid ne null && rlvo.cid eq cid}">
 									<c:if test="${cid ne review.cid}">
 										<form action="/review/reviewLikeCancel" method="post" id="reviewLikeCancel">
+											<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 											<input type="hidden" name="cid" value="${cid}">
 											<input type="hidden" name="gnum" value="${review.gnum}">
 											<input type="hidden" name="grnum" value="${review.grnum}">
@@ -229,6 +237,7 @@
 							<!-- 리뷰 삭제 버튼(아이디 검사) -->
 							<div id="removeReviewButton">
 								<form action="/review/reviewRemove" method="post" id="removeReview">
+									<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 									<input type="hidden" name="grnum" value="${review.grnum}">
 								</form>
 								<button onclick="removeReview()" class="btn btn-secondary">리뷰 삭제</button>
@@ -242,6 +251,7 @@
 					<!-- 리뷰 댓글 작성(로그인 여부) -->
 					<c:if test="${cid ne null}">
 						<form action="/review/reviewCommentWrite" method="post">
+							<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 							<input type="hidden" name="cid" value="${cid}">
 							<input type="hidden" name="grnum" value="${review.grnum}">
 							<textarea name="rccontent" rows="5" cols="60" required></textarea>
@@ -257,17 +267,21 @@
 						<div class="commentRcdate">
 							${reviewComment.rcdate}
 						</div>
-						<div class="commentRccontent">
-							${reviewComment.rccontent}
+						<div class="commentDelete">
+							<div class="commentRccontent">
+								${reviewComment.rccontent}
+							</div>
+							<!-- 리뷰 댓글 삭제 버튼(아이디 검사) -->
+							<c:if test="${reviewComment.cid == cid}">
+								<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+								<form action="/review/reviewCommentRemove" method="post" id="removeReviewComment">
+									<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+									<input type="hidden" name="grnum" value="${reviewComment.grnum}">
+									<input type="hidden" name="rcnum" value="${reviewComment.rcnum}">
+									<input type="submit" onclick="removeReviewComment()" class="btn btn-danger" value="삭제">
+								</form>
+							</c:if>
 						</div>
-						<!-- 리뷰 댓글 삭제 버튼(아이디 검사) -->
-						<c:if test="${reviewComment.cid == cid}">
-							<form action="/review/reviewCommentRemove" method="post" id="removeReviewComment">
-								<input type="hidden" name="grnum" value="${reviewComment.grnum}">
-								<input type="hidden" name="rcnum" value="${reviewComment.rcnum}">
-							</form>
-							<button onclick="removeReviewComment()" class="btn btn-danger">삭제</button>
-						</c:if>
 						<hr/>
 					</c:forEach>
 					

@@ -266,6 +266,7 @@
                     name="pageNum"
                     value="${btnMaker.cri.pageNum }"
                   />
+                  <input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }" />
                   <input class="question-submit" type="submit" value="1:1 문의하기" />
                 </form>
               </c:if>

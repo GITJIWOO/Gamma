@@ -27,13 +27,13 @@ public class SecurityController {
 	private PasswordEncoder pwen;
 	
 	//@PreAuthorize("permitAll")
-	@GetMapping("/join")
+	@GetMapping("/userJoin")
 	public void joinForm() {
 		System.out.println("회원가입창으로 접-속");
 	}
 	
 	@PreAuthorize("permitAll")
-	@PostMapping("/join")
+	@PostMapping("/userJoin")
 	public String join(ConsumerVO vo, String role) {
 		// 어떤 데이터가 들어오는지 확인
 		//System.out.println("vo: " + vo);
@@ -49,7 +49,7 @@ public class SecurityController {
 		//System.out.println("autolist: " + vo.getAuthList());
 		
 		service.insertConsumer(vo);
-		return "/user/customLogin";
+		return "/user/userLogin";
 	}
 	
 	@GetMapping("/all")

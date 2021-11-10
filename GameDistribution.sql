@@ -76,7 +76,7 @@ CREATE TABLE consumer (
     cnum NUMBER,
     cid VARCHAR2(20) PRIMARY KEY,
     email VARCHAR2(100) NOT NULL,
-    password VARCHAR2(20) NOT NULL,
+    password VARCHAR2(100) NOT NULL,
     nickname VARCHAR(20) NOT NULL UNIQUE,
     cadmin NUMBER(3) DEFAULT 0
    );
@@ -319,7 +319,7 @@ CREATE SEQUENCE question_num;
 CREATE TABLE question (
     qnum NUMBER,
     qtype VARCHAR(50) NOT NULL,
-    qtitle VARCHAR2(50) NOT NULL,
+    qtitle VARCHAR2(100) NOT NULL,
     qcontent VARCHAR2(1000) NOT NULL,
     qwriter VARCHAR2(30) NOT NULL,
     CONSTRAINT fk_question FOREIGN KEY(qwriter) REFERENCES consumer(cid),
