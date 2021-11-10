@@ -22,16 +22,3 @@ public class CustomAccessDeniedHandler implements AccessDeniedHandler{
 	}
 	
 }
-
-
-
-//implements AccessDeniedHandler {
-	/*
-	 * @Override public void handle(HttpServletRequest request, HttpServletResponse
-	 * response, AccessDeniedException accessDeniedException) throws
-	 * IOException,ServletException{
-	 * 
-	 * log.error("커스텀 접근 거부 핸들러 실행"); log.error("/accessError 페이지로 리다이렉트");
-	 * response.sendRedirect("/accessError"); }
-	 */
-

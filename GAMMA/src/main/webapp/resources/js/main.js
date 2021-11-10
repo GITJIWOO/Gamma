@@ -4,7 +4,7 @@ $(document).ready(function() {
 		location.href = "/user/userLogin";
 	})
 	$(".joinBtn").on("click", function() {
-		location.href = "/user/userJoin";
+		location.href = "/user/agreeJoin";
 	})
 	
 	$(".consumer").mouseover(function(){

@@ -6,7 +6,6 @@ import java.util.List;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.game.friends.service.FriendsService;
@@ -16,25 +15,20 @@ import org.game.user.domain.AuthVO;
 import org.game.user.domain.ConsumerVO;
 import org.game.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j;
 
 @Controller
 @Log4j
 @RequestMapping("/user/*")
-@AllArgsConstructor
 public class UserController {
 
 	@Inject
@@ -51,24 +45,25 @@ public class UserController {
 	private GameLibraryService libraryService;
 
 	@GetMapping("/agreeJoin")
-	private void agreeJoin() {
+	private String agreeJoin() {
 		log.info("약관의 동의");
+		return "/user/agreeJoin";
 	}
 
 	// 유저프로필
 	@PreAuthorize("permitAll")
 	@GetMapping("/userPro")
-	public String userPro(String cid,HttpSession session, Model model) {
+	public String userPro(String cid, HttpSession session, Model model) {
 
-		System.out.println("cid값 : "+cid);
-		
-		ConsumerVO userVO=service.userGet(cid);
-		
-		System.out.println("userVO들어왓나 : "+userVO);
+		System.out.println("cid값 : " + cid);
+
+		ConsumerVO userVO = service.userGet(cid);
+
+		System.out.println("userVO들어왓나 : " + userVO);
 		model.addAttribute("cid", userVO.getCid());
 		model.addAttribute("cadmin", userVO.getCadmin());
 		model.addAttribute("nickname", userVO.getNickname());
-		
+
 		List<ResultLibraryVO> libraryList = libraryService.getAllConsumerLibrary(userVO.getCid());
 
 		model.addAttribute("libraryList", libraryList);
@@ -110,17 +105,17 @@ public class UserController {
 	// 유저 상제정보창
 	@PreAuthorize("hasAnyRole('ROLE_MEMBER')")
 	@PostMapping("/userGet")
-	public String userGet(ConsumerVO userVO, Model model,Principal principal) {
-		if(principal != null) {
+	public String userGet(ConsumerVO userVO, Model model, Principal principal) {
+		if (principal != null) {
 			String cid = principal.getName();
 			model.addAttribute("cid", cid);
-			if(cid != null) {
+			if (cid != null) {
 				ConsumerVO consumer = service.userGet(cid);
 				model.addAttribute("consumer", consumer);
-				System.out.println("consumer : "+ consumer);
+				System.out.println("consumer : " + consumer);
 			}
 		}
-		
+
 		log.info("클릭한유저번호" + userVO);
 		if (userVO.getAttachList() != null) {
 			userVO.getAttachList().forEach(attach -> log.info(attach));
@@ -130,16 +125,29 @@ public class UserController {
 	}
 
 	// 회원가입 get방식으로 접근여부 가능
-
-	@GetMapping("/userJoin")
-	public String userJoin() throws Exception {
-		log.info("get방식회원가입접속");
-
-		return "/user/userJoin";
-
-	}
-
-	// 회원가입
+	/*
+	 * @GetMapping("/userJoin") public String userJoin() throws Exception {
+	 * log.info("get방식회원가입접속");
+	 * 
+	 * return "/user/userJoin";
+	 * 
+	 * }
+	 * 
+	 * // 회원가입
+	 * 
+	 * @PostMapping("/userJoin") public String userJoin(ConsumerVO userVO) throws
+	 * Exception { // log.info("회원가입"); // service.userJoin(userVO);
+	 * 
+	 * log.info("poset회원가입실행"); long result = service.idChk(userVO.getCid());
+	 * log.info("result값: " + result); try { if (result == 1) { return
+	 * "/user/userJoin"; } else if (result == 0) { // String inputPass =
+	 * userVO.getPassword(); // String pwd = pwdEncoder.encode(inputPass); //
+	 * userVO.setPassword(pwd); service.userJoin(userVO); }
+	 * 
+	 * } catch (Exception e) { throw new RuntimeException(); }
+	 * 
+	 * return "/user/userLogin"; }
+	 */
 	/*
 	 * @PreAuthorize("permitAll")
 	 * 
@@ -175,6 +183,53 @@ public class UserController {
 	 */
 
 	// get로그인
+	/*
+	 * @GetMapping("/userLogin") public String userLogin() throws Exception {
+	 * 
+	 * return "/user/userLogin"; }
+	 */
+	/*
+	 * @SuppressWarnings("unused")
+	 * 
+	 * @PostMapping("/userLogin") public String userLogin(ConsumerVO userVO,
+	 * HttpServletRequest req, RedirectAttributes rttr) throws Exception {
+	 * log.info("로그인컨트롤실행"); HttpSession session = req.getSession(); String
+	 * memberSession = String.valueOf(session.getAttribute("member"));
+	 * System.out.println("멤버세션값 : " + memberSession); ConsumerVO login =
+	 * service.userLogin(userVO);
+	 * 
+	 * System.out.println("UserVO : " + userVO); System.out.println("DB : " +
+	 * login); System.out.println("UserVO의 비번 : " + userVO.getPassword());
+	 * System.out.println("DB의 비번 : " + login.getPassword()); // boolean pwdMatch =
+	 * pwdEncoder.matches(userVO.getPassword(), // login.getPassword()); //
+	 * System.out.println("비번매칭 : " + pwdMatch); if (login == null) {
+	 * session.setAttribute("member", null); memberSession =
+	 * String.valueOf(session.getAttribute("member"));
+	 * System.out.println("멤버세션값 else : " + memberSession);
+	 * rttr.addFlashAttribute("msg", false);
+	 * 
+	 * return "redirect:/user/userLogin"; } boolean result =
+	 * login.getPassword().equals(userVO.getPassword()); if(result==true){
+	 * System.out.println("result 값 : " + result); session.setAttribute("member",
+	 * login); session.setAttribute("session_cid", login.getCid());
+	 * session.setAttribute("session_cadmin", login.getCadmin()); memberSession =
+	 * String.valueOf(session.getAttribute("member"));
+	 * System.out.println("멤버세션값 iftrue : " + memberSession); } else {
+	 * session.setAttribute("member", null); memberSession =
+	 * String.valueOf(session.getAttribute("member"));
+	 * System.out.println("멤버세션값 else : " + memberSession);
+	 * rttr.addFlashAttribute("msg", false); return "redirect:/user/userLogin"; //
+	 * rttr.addF~ 는 return에 redirect: 안넣으면 안보내진다 } return
+	 * "redirect:/user/userLogin"; }
+	 */
+	/*
+	 * // 로그아웃 과 세션 초기화 // 시큐리티 적용 전 얘하나로만 했었음
+	 * 
+	 * @GetMapping("/userLogout") public String userLogout(HttpSession session)
+	 * throws Exception { // security-con~ 에서 세션파기설정이되있음 session.invalidate();
+	 * 
+	 * return "redirect:/main/main"; }
+	 */
 
 	/*
 	 * @GetMapping("/userLogin") public String userLogin() throws Exception {
@@ -208,24 +263,24 @@ public class UserController {
 	 * 
 	 * return "redirect:/user/userLogin"; }
 	 */
-		/*
-		 * 시큐리티 적용전 (비번복호화전) boolean result =
-		 * login.getPassword().equals(userVO.getPassword());
-		 * System.out.println("result 값 : "+result);
-		 */
-		/*
-		 * if (pwdMatch == true) { System.out.println("비번매칭 : " + pwdMatch);
-		 * session.setAttribute("member", login); session.setAttribute("session_cid",
-		 * login.getCid()); session.setAttribute("session_cadmin", login.getCadmin());
-		 * memberSession = String.valueOf(session.getAttribute("member"));
-		 * System.out.println("멤버세션값 iftrue : " + memberSession); } else {
-		 * session.setAttribute("member", null); memberSession =
-		 * String.valueOf(session.getAttribute("member"));
-		 * System.out.println("멤버세션값 else2 : " + memberSession);
-		 * rttr.addFlashAttribute("msg", false); return "redirect:/user/userLogin"; //
-		 * rttr.addF~ 는 return에 redirect: 안넣으면 안보내진다 } return
-		 * "redirect:/user/userLogin"; }
-		 */
+	/*
+	 * 시큐리티 적용전 (비번복호화전) boolean result =
+	 * login.getPassword().equals(userVO.getPassword());
+	 * System.out.println("result 값 : "+result);
+	 */
+	/*
+	 * if (pwdMatch == true) { System.out.println("비번매칭 : " + pwdMatch);
+	 * session.setAttribute("member", login); session.setAttribute("session_cid",
+	 * login.getCid()); session.setAttribute("session_cadmin", login.getCadmin());
+	 * memberSession = String.valueOf(session.getAttribute("member"));
+	 * System.out.println("멤버세션값 iftrue : " + memberSession); } else {
+	 * session.setAttribute("member", null); memberSession =
+	 * String.valueOf(session.getAttribute("member"));
+	 * System.out.println("멤버세션값 else2 : " + memberSession);
+	 * rttr.addFlashAttribute("msg", false); return "redirect:/user/userLogin"; //
+	 * rttr.addF~ 는 return에 redirect: 안넣으면 안보내진다 } return
+	 * "redirect:/user/userLogin"; }
+	 */
 	// 로그아웃 과 세션 초기화
 	// 시큐리티 적용 전 얘하나로만 했었음
 	/*
@@ -257,7 +312,7 @@ public class UserController {
 	public String registerUpdate(ConsumerVO vo, HttpSession session) throws Exception {
 		String beforeCrPw = vo.getPassword();
 		vo.setPassword(pwdEncoder.encode(beforeCrPw));
-		
+
 		vo.setAuthList(new ArrayList<AuthVO>());
 		vo.getAuthList().add(new AuthVO());
 		vo.getAuthList().get(0).setCid(vo.getCid());

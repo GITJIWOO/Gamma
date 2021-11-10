@@ -6,9 +6,15 @@
 <%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
 <!DOCTYPE html>
 <html>
-<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
-<link rel="icon" type="image/png" href="http://example.com/myicon.png">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous"><!-- Bootstrap cdn 설정 -->
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>	
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">	
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap-theme.min.css">	
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<script src="<c:url value="/resources/js/main.js"/>"></script>
 <link rel="stylesheet" href="/resources/css/styles.css" />
+<link rel="icon" type="image/png" href="http://example.com/myicon.png">
 <style>
 * {
 	padding: 5px;
@@ -60,7 +66,7 @@ strong {
 
 #modDiv {
 	border-radius: 2px;
-	width: 310px;
+	width: 390px;
 	height: 140px;
 	background-color: black;
 	position: absolute;
@@ -68,7 +74,6 @@ strong {
 	top: 40%;
 	left: 30%;
 	z-index: 1000;
-	width: 310px;
 }
 .display {
   display: flex;
@@ -304,8 +309,8 @@ position:relative;
 			<!-- logo -->
 			<div class="side-bar__row">
 				<!-- 클릭하면 main화면으로 돌아오도록 a 태그 수정 -->
-				<span><a href="#"><img
-						src="/resources/css/image/logo.png" /></a></span>
+				<span><a href="#">
+				<img src="/resources/css/image/logo.png" /></a></span>
 			</div>
 			<!-- search -->
 			<div class="side-bar__row">
@@ -333,9 +338,7 @@ position:relative;
 		          	<p>${nickname}</p>
 		          </div>
 		          <div class="consumer__info">
-
 	   				<a href="/user/userGet">* 유저정보창</a><br/>
-	   				<a href="/user/userPro">* 유저프로필창</a><br/>
 	   				<a href="/user/userLogout">* 로그아웃</a><br/>
 	   				<a href="/friends/followerlist">* 팔로워리스트</a><br/>
 	   				<a href="/friends/followinglist">* 팔로윙리스트</a><br/>
@@ -443,7 +446,8 @@ position:relative;
 	</div>
 
 	<script>
-	
+	var csrfHeaderName = "${_csrf.headerName}"
+		var csrfTokenValue="${_csrf.token}"
 		var cnum = ${principal.consumer.cnum};
 		function getAllList() {
 			$.getJSON("/userrp/all/" + cnum,function(data) {
@@ -511,6 +515,9 @@ position:relative;
 					"Content-Type" : "application/json",
 					"X-HTTP-Method-Override" : "POST"
 				},
+				 beforeSend : function(xhr) {
+				        xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+				   },
 				dataType : 'text',
 				data : JSON.stringify({
 					cnum : cnum,
@@ -536,6 +543,9 @@ position:relative;
 			var rno = $(".modal-title").html();
 			console.log("rno얻어왓니?딜리트"+rno)
 			$.ajax({
+				 beforeSend : function(xhr) {
+				        xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+				   },
 				type : 'delete',
 				url : '/userrp/' + rno,
 				// 삭제로직은 rno만 전달함
@@ -567,6 +577,9 @@ position:relative;
 					"Content-Type" : "application/json",
 					"X-HTTP-Method-Override" : "PUT"
 				},
+				 beforeSend : function(xhr) {
+				        xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+				   },
 				dataType : 'text',
 				data : JSON.stringify({
 					reply : reply

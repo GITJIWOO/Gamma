@@ -207,6 +207,7 @@
                 </tr>
               </table>
               <div class="submitBtn">
+              	<input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }" />
                 <input type="submit" value="문의 등록" /><br />
                 <button class="cancelBtn">취소</button>
               </div>

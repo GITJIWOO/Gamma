@@ -344,11 +344,16 @@
 	<script>
 	
 	// 답변 등록 버튼
+	var csrfHeaderName = "${_csrf.headerName}";
+	var csrfTokenValue="${_csrf.token}";
 	$("#addAnswerBtn").on("click", function(){
 		var acontent = $("#acontent").val();
 		$.ajax({
 			type : 'post',
 			url : '/qna/answer/new',
+			beforeSend : function(xhr) {
+		        xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+		    },
 			headers : {
 				"Content-Type" : "application/json", 
 				"X-HTTP-Method-Override" : "POST"
@@ -387,6 +392,9 @@
 		$.ajax({
 			type : 'patch',
 			url : '/qna/answer/'+ anum,
+			beforeSend : function(xhr) {
+		        xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+		    },
 			headers : {
 				"Content-Type" : "application/json", 
 				"X-HTTP-Method-Override" : "PATCH"
@@ -411,6 +419,9 @@
 		$.ajax({
 			type : 'delete',
 			url : '/qna/answer/'+ anum,
+			beforeSend : function(xhr) {
+		        xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+		    },
 			success : function(result){
 				if(result == 'remove success'){
 					alert("답변 삭제가 완료되었습니다.");
@@ -435,11 +446,13 @@
 		<input type="hidden" name="qnum" value="${vo.qnum }"/>
 		<input type="hidden" name="qwriter" value="${param.qwriter }"/>
 		<input type="hidden" name="pageNum" value="${param.pageNum }"/>
+		<input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }" />
 		<input class="goregister" type="submit" value="문의 수정"/>
 	</form>
 		<form action="/qna/removequestion" method="post">
 			<input type="hidden" name="qnum" value="${vo.qnum }"/>
 			<input type="hidden" name="qwriter" value="${param.qwriter }"/>
+			<input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }" />
 			<input class="godelete" type="submit" value="문의 삭제"/>
 		</form>
 	</c:if>

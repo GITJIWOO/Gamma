@@ -44,6 +44,8 @@ public class MemberTests {
 			e.printStackTrace();
 		}
 	}
+	
+	// admin계정 여기서 생성
 	@Test
 	public void testCryptDB() {
 		String [] idList = {"admin"};

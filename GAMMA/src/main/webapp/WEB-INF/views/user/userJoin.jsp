@@ -64,7 +64,7 @@ display:flex;
 .border {
 	margin: 0 auto;
 	width: 380px;
-	height: 720px;
+	height: 730px;
 	border: 1px solid #000;
 	border-radius: 10%;
 }
@@ -89,7 +89,8 @@ display:flex;
 </head>
 
 <script type="text/javascript">
-
+var csrfHeaderName = "${_csrf.headerName}"
+	var csrfTokenValue="${_csrf.token}"
 
 var code = ""; 
 	function fn_idChk() {
@@ -100,6 +101,9 @@ var code = "";
 		$.ajax({
 			url : '/urest/idChk',
 			type : 'post',
+			beforeSend : function(xhr) {
+		        xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+		   },
 			headers : {
 				"Content-Type" : "application/json",
 				"X-HTTP-Method-Override" : "POST"
@@ -124,6 +128,9 @@ var code = "";
 		$.ajax({
 			url : '/urest/emailChk',
 			type : 'post',
+			beforeSend : function(xhr) {
+		        xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+		   },
 			headers : {
 				"Content-Type" : "application/json",
 				"X-HTTP-Method-Override" : "POST"
@@ -196,6 +203,9 @@ var code = "";
 		$.ajax({
 			
 			type:'GET',
+			beforeSend : function(xhr) {
+		        xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+		   },
 			headers : {
 				"Content-Type" : "application/json",
 				"X-HTTP-Method-Override" : "POST"
@@ -269,7 +279,7 @@ var code = "";
 						<h1 style="text-align: left;">회원가입</h1>
 				</div>
 				<div class="row1">
-		<form action="/user/join" method="post" id="regForm">
+		<form action="/user/userJoin" method="post" id="regForm">
 					<label class="control-label" for="cid">아이디</label> <br/><input
 						 type="text" id="cid" name="cid" /><br/>
 					<button class="idChk" type="button" id="idChk"
