@@ -38,9 +38,9 @@ button {
 }
 	.border {
 	padding:0;
-	margin: 20px auto;
-	width: 400px;
-	height: 550px;
+	margin: 0;
+	width: 370px;
+	height: 450px;
 	border: 1px solid #000;
 	border-radius: 10%;
 }
@@ -48,6 +48,9 @@ textarea{
 width:350px;
 text-align:center;
 resize: none;
+height : 100px;
+line-height:100px;
+          
 }
 
 img {
@@ -59,6 +62,8 @@ img {
 .row{
 display:flex; 
 	flex-flow:row;
+	margin: 5px 0 0 0;	
+	height :110px;
 }
 .row1{
 	position:relative;
@@ -74,16 +79,12 @@ display:flex;
 		<div class="border">
 			<div class="row">
 				<img src="/resources/css/image/mainIcon.png" />
-				<h1 style="text-align: left;">약관의 동의</h1>
+				<h1 style="text-align: left;font-size:40px; font-weight:bold;  ">약관의 동의</h1>
 			</div>
 			<div class="row1">
 				<hr>
 				<div>
-					<textarea rows="10" cols="60" readonly>
-	   
-	   		회원 가입을 위한 동의서 내용
-	   
-   		</textarea>
+					<textarea rows="10" cols="60" readonly>회원 가입을 위한 동의서 내용</textarea>
 
 					<hr>
 				</div>
@@ -107,7 +108,7 @@ display:flex;
    		
    			
    			if(agreeCheck) {
-   				window.location.href="/user/userJoin";
+   				window.location.href="/user/join";
    				
    			}else {
    				alert('개인정보 수집 및 이용에 동의해주세요.');

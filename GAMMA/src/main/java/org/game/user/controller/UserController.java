@@ -51,8 +51,9 @@ public class UserController {
 	private GameLibraryService libraryService;
 
 	@GetMapping("/agreeJoin")
-	private void agreeJoin() {
+	private String agreeJoin() {
 		log.info("약관의 동의");
+		return "/user/agreeJoin";
 	}
 
 	// 유저프로필

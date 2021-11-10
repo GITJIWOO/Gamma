@@ -8,10 +8,15 @@
 <!DOCTYPE html>
 <html>
 <head>
-<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
-<link rel="icon" type="image/png" href="http://example.com/myicon.png">
-<link rel="stylesheet" href="/resources/css/styles.css" />
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous"><!-- Bootstrap cdn 설정 -->
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>	
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">	
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap-theme.min.css">	
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 <script src="<c:url value="/resources/js/main.js"/>"></script>
+<link rel="stylesheet" href="/resources/css/styles.css" />
+<link rel="icon" type="image/png" href="http://example.com/myicon.png">
 <style>
 * {
 	padding: 5px;
@@ -352,26 +357,24 @@ position:relative;
         </div>
         <!-- about user -->
         <div class="side-bar__row">
+		            <sec:authorize access="isAuthenticated()">
+          	<sec:authentication property="principal" var="secuInfo" />
 	          <div class="consumer">
 	          	  <div class="consumer__imgPro">
 			        <img class="conimg" src="/resources/css/image/chaIcon.png"/>
 	          	  </div>
 		          <div class="consumer__nickname">
-<sec:authorize access="isAuthenticated()">
-          	<sec:authentication property="principal" var="secuInfo" />
-		          	<p>${secuinfo.consumer.nickname}</p>
-		          	</sec:authorize>
-		          	
-</div>
+		          	<p>${secuInfo.consumer.nickname}</p>
+		          </div>
 		          <div class="consumer__info">
-	   					<a href="/user/userGet">* 유저정보창</a><br/>
-
-	   				<a href="/user/customLogout">* 로그아웃</a><br/>
+	   				<a href="/user/userGet">* 유저정보창</a><br/>
+	   				<a href="/user/userLogout">* 로그아웃</a><br/>
 	   				<a href="/friends/followerlist">* 팔로워리스트</a><br/>
 	   				<a href="/friends/followinglist">* 팔로윙리스트</a><br/>
 	   				<a href="/friends/searchfriends">* 친구 검색</a><br/>
 		   		  </div>
 	          </div>
+          </sec:authorize>
         </div>
       </div>
       <div class="main">
