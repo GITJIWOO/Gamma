@@ -71,6 +71,8 @@ h1{
 <body>
 	<div id="container">
 		<form action="/user/userModify" method="post">
+		<sec:authorize access="isAuthenticated()">
+          	<sec:authentication property="principal" var="principal" />
 		<div class="border">
 		<div class="Title">
 						<img src="/resources/css/image/mainIcon.png" />
@@ -98,6 +100,7 @@ h1{
 				<button class="cencle btn" type="button">취소</button>
 			</div>
 			</div>
+			</sec:authorize>
 		</form>
 	</div>
 

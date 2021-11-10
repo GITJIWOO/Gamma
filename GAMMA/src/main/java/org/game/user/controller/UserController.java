@@ -67,6 +67,7 @@ public class UserController {
 		System.out.println("userVO들어왓나 : "+userVO);
 		model.addAttribute("cid", userVO.getCid());
 		model.addAttribute("cadmin", userVO.getCadmin());
+		model.addAttribute("nickname", userVO.getNickname());
 		
 		List<ResultLibraryVO> libraryList = libraryService.getAllConsumerLibrary(userVO.getCid());
 

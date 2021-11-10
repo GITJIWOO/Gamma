@@ -330,7 +330,7 @@ position:relative;
 			        <img class="conimg" src="/resources/css/image/chaIcon.png"/>
 	          	  </div>
 		          <div class="consumer__nickname">
-		          	<p>${principal.consumer.nickname}</p>
+		          	<p>${nickname}</p>
 		          </div>
 		          <div class="consumer__info">
 
@@ -355,22 +355,24 @@ position:relative;
 								<img class="imgProA" src="/resources/css/image/chaIcon.png" />
 							</div>
 							<table class="table table1" width="400px">
-								<c:if test="${principal.consumer.cid eq 'kjw011231' }">
+								<c:if test="${cid eq 'kjw011231' }">
 									<tr>
 										<td>유저고유번호</td>
-										<td><input id="cnum" name="cnum" value="${principal.consumer.cnum}"
+										<td><input id="cnum" name="cnum" value="${cnum}"
 											readonly="readonly"></td>
 									</tr>
 								</c:if>
 							<tr>
 							<td>닉네임</td>
-								<td id="nickname" name="nickname">${principal.consumer.nickname}</td>
+								<td id="nickname" name="nickname">${nickname}</td>
 							</tr>
 								
 							</table>
 						</form>
 					
 						<br> <br /> <br />
+				<sec:authorize access="isAuthenticated()">
+          	<sec:authentication property="principal" var="principal" />
 						<div class="modAub">
 							<div class="row">
 								<div class="col-md-3">
@@ -392,6 +394,7 @@ position:relative;
 
 							</ul><br/>
 						</div>
+						</sec:authorize>
 						</div>
 				<div class="rowB">
 					<p>보유중인 게임</p>

@@ -311,8 +311,6 @@ position:relative;
 
 </head>
 <body>
-<h1><sec:authentication property="principal.consumer"/></h1>
-
     <div class="display">
       <!-- side-bar -->
       <div class="side-bar">
@@ -339,9 +337,12 @@ position:relative;
         <!-- category -->
         <div class="side-bar__row">
           <span><a href="/gameInfo/gamelist">게임 스토어</a></span>
+         <sec:authorize access="isAuthenticated()">
+          	<sec:authentication property="principal" var="principal" />
           <c:if test="${principal.consumer.cid ne null}">
           	<span><a href="/library/conLibrary?cid=${cid}">라이브러리</a></span>
           </c:if>
+          </sec:authorize>
         </div>
         <!-- qna -->
         <div class="side-bar__row">
@@ -356,8 +357,11 @@ position:relative;
 			        <img class="conimg" src="/resources/css/image/chaIcon.png"/>
 	          	  </div>
 		          <div class="consumer__nickname">
-
-		          	<p>${principal.consumer.nickname}</p>
+<sec:authorize access="isAuthenticated()">
+          	<sec:authentication property="principal" var="secuInfo" />
+		          	<p>${secuinfo.consumer.nickname}</p>
+		          	</sec:authorize>
+		          	
 </div>
 		          <div class="consumer__info">
 	   					<a href="/user/userGet">* 유저정보창</a><br/>
@@ -399,6 +403,8 @@ position:relative;
 
 									</div>
 							</div>
+							<sec:authorize access="isAuthenticated()">
+          	<sec:authentication property="principal" var="principal" />
 							<table class="table table1" width="400px">
 
 								<c:if test="${principal.consumer.cid eq 'kjw011231' }">
@@ -432,6 +438,7 @@ position:relative;
 											pattern="yyy-MM-dd" /></td>
 								</tr>
 							</table>
+							</sec:authorize>
 						</form>
 						<div class="row">&nbsp;</div>
 						<div class="Mbtn">

@@ -76,6 +76,8 @@ h1{
 <body>
 	<div class="container">
 		<form action="/user/userDelete" method="post" id="delForm">
+		<sec:authorize access="isAuthenticated()">
+          	<sec:authentication property="principal" var="principal" />
 			<div class="row border">
 				<div class="Title">
 						<img src="/resources/css/image/mainIcon.png" />
@@ -83,16 +85,17 @@ h1{
 				</div>
 				<label class="control-label" for="cid">아이디</label> <br/><input
 					 type="text" id="cid" name="cid"
-					value="${principal.vo.cid}" readonly/><br/>
+					value="${principal.consumer.cid}" readonly/><br/>
 				<label class="control-label" for="password">패스워드</label> <br/><input
 					 type="password" id="password" name="password" /><br/>
 				<label class="control-label" for="nickname">닉네임</label> <br/><input
 					 type="text" id="nickname" name="nickname"
-					value="${principal.vo.nickname}" readonly /><br/>
+					value="${principal.consumer.nickname}" readonly /><br/>
 					<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 				<button class="btn" type="submit" id="submit">회원탈퇴</button>
 				<button class="cencle btn" type="button">취소</button>
 			</div>
+			</sec:authorize>
 		</form>
 		<div>
 			<c:if test="${msg == false}">
