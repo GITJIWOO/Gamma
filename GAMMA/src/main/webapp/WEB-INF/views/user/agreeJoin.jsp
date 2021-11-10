@@ -108,7 +108,7 @@ display:flex;
    		
    			
    			if(agreeCheck) {
-   				window.location.href="/user/join";
+   				window.location.href="/user/userJoin";
    				
    			}else {
    				alert('개인정보 수집 및 이용에 동의해주세요.');

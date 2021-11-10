@@ -81,18 +81,18 @@ h1{
 			<div class="row">
 				<label class="control-label" for="cid">아이디</label><br/> <input
 					 type="text" id="cid" name="cid"
-					value="${principal.vo.cid}" readonly="readonly" />
+					value="${principal.consumer.cid}" readonly="readonly" />
 					<div class="row">&nbsp;</div>
 				<label class="control-label" for="password">패스워드</label> <br/><input
 					 type="password" id="password" name="password" />
 					 <div class="row">&nbsp;</div>
 				<label class="control-label" for="nickname">닉네임</label><br/> <input
 					 type="text" id="nickname" name="nickname"
-					value="${principal.vo.nickname}" />
+					value="${principal.consumer.nickname}" />
 					<div class="row">&nbsp;</div>
 				<label class="control-label" for="nickname">이메일</label> <br/><input
 					 type="text" id="email" name="email"
-					value="${principal.vo.email}" />
+					value="${principal.consumer.email}" />
 			<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 			</div>
 			<div class="row">
