@@ -445,11 +445,10 @@ position:relative;
 						</form>
 						<div class="row">&nbsp;</div>
 						<div class="Mbtn">
-								<a href="/user/userLogin"><button>로그인</button></a>
+								<a href="#"><button>이메일인증</button></a>
 								<a href="/user/userLogout"><button>로그아웃</button></a>
 								<a href="/user/userModify"><button>유저수정</button></a>
 								<a href="/user/userDelete"><button>탈퇴</button></a>
-								<a href="/user/userPro"><button>프로필창</button></a>
 								<a href="/gamepayment/consumerBreakdown"><button>결제 목록</button></a>
 						</div>
 						</div>

@@ -13,15 +13,19 @@ import org.game.gamelibrary.domain.ResultLibraryVO;
 import org.game.gamelibrary.service.GameLibraryService;
 import org.game.user.domain.AuthVO;
 import org.game.user.domain.ConsumerVO;
+import org.game.user.service.UserMailSendService;
 import org.game.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import lombok.extern.log4j.Log4j;
@@ -35,8 +39,6 @@ public class UserController {
 	UserService service;
 	@Inject
 	BCryptPasswordEncoder pwdEncoder;
-	// @Autowired
-	// private JavaMailSender mailSender;
 
 	@Autowired
 	private FriendsService fservice;
@@ -263,6 +265,7 @@ public class UserController {
 	 * 
 	 * return "redirect:/user/userLogin"; }
 	 */
+	
 	/*
 	 * 시큐리티 적용전 (비번복호화전) boolean result =
 	 * login.getPassword().equals(userVO.getPassword());
@@ -331,12 +334,14 @@ public class UserController {
 	// 회원 탈퇴 post
 	@PreAuthorize("hasAnyRole('ROLE_MEMBER')")
 	@PostMapping("/userDelete")
-	public String memberDelete(ConsumerVO userVO, HttpSession session, RedirectAttributes rttr) throws Exception {
-		service.userDelete(userVO);
+	public String memberDelete(ConsumerVO vo, HttpSession session, RedirectAttributes rttr) throws Exception {
+		
+		service.userDelete(vo);
+		SecurityContextHolder.clearContext();
 		session.invalidate();
 		return "/user/userLogin";
 	}
-
+	
 	// 비밀번호찾기 이메일발송
 	@GetMapping("/findpw")
 	public String findPwGet() throws Exception {
