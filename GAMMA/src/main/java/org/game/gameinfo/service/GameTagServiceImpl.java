@@ -1,5 +1,6 @@
 package org.game.gameinfo.service;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,7 +22,7 @@ public class GameTagServiceImpl implements GameTagService {
 	private GameTagMapper mapper;
 	
 	@Override
-	public void registerTag(GameInfoVO vo) {
+	public void registerTag(GameInfoVO vo){
 		log.info("태그 등록");
 		mapper.insertTag(vo);
 		

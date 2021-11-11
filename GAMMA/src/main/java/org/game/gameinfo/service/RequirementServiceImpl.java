@@ -1,5 +1,7 @@
 package org.game.gameinfo.service;
 
+import java.sql.SQLException;
+
 import org.game.gameinfo.domain.GameInfoVO;
 import org.game.gameinfo.domain.RequirementVO;
 import org.game.gameinfo.mapper.RequirementMapper;
@@ -18,7 +20,7 @@ public class RequirementServiceImpl implements RequirementService {
 	private RequirementMapper mapper;
 	
 	@Override
-	public void registerRequirement(GameInfoVO vo) {
+	public void registerRequirement(GameInfoVO vo){
 		log.info("사양 등록");
 		mapper.insertRequirement(vo);
 	}

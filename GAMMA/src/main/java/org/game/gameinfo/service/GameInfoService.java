@@ -1,5 +1,6 @@
 package org.game.gameinfo.service;
 
+import java.sql.SQLException;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
@@ -8,7 +9,7 @@ import org.game.gameinfo.domain.GameSearchCriteria;
 
 public interface GameInfoService {
 
-	public void registerGame(GameInfoVO vo); // 게임등록
+	public void registerGame(GameInfoVO vo)  ; // 게임등록
 
 	public GameInfoVO getGame(Long gnum); 	// 게임조회
 
