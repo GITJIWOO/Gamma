@@ -124,7 +124,7 @@ button {
 				<button type="submit" value="LOGIN">로그인</button>
 					<input type="hidden"
 					name="${_csrf.parameterName }" value="${_csrf.token }" />
-					<a href="/user/findpw"><button id="findpwBtn" type="button">비밀번호찾기</button></a>
+					
 			</div>
 		</div>
 	</form>
