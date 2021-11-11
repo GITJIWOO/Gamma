@@ -16,8 +16,12 @@
 	.detail {
 		padding: 30px;
 	}
+	.title {
+		font-size: 200%;
+		font-weight: bold;
+		margin-bottom: 30px;
+	}
 	.card {
-		width: 200px;
 		height: 310px;
 		float: left;
 		margin-right: 30px;
@@ -29,6 +33,15 @@
 		font-size: 150%;
 		font-weight: bold;
 	}
+
+	.store {
+		margin-top: 50px;
+	}
+
+	.libraryTitle {
+		font-size: 200%;
+		font-weight: bold;
+
 </style>
 </head>
 <body>
@@ -71,28 +84,32 @@
         <!-- about user -->
         <div class="side-bar__row">
           <!-- c:if로 로그인 전에는 회원가입+로그인 / 로그인 후에는 프로필 -->
-          <c:if test="${cid eq null}">
-            <div class="loginBtn">
-		        <span><a href="/user/userLogin" class="loginA">로그인</a></span>
-            </div>
-            <div class="joinBtn">
-		        <span><a href="/user/userJoin" class="joinA">가입하기</a></span>
-            </div>
-          </c:if>
+          <c:if test="${cid eq null }">
+	          <div class="loginBtn">
+	        	<span><a href="/user/userLogin" class="loginA">로그인</a></span>
+	          </div>
+	          <div class="joinBtn">
+	        	<span><a href="/user/agreeJoin" class="joinA">가입하기</a></span>
+	          </div>
+       	  </c:if>
           <c:if test="${cid ne null}">
 	          <div class="consumer">
 	          	  <div class="consumer__imgPro">
 			        <img class="conimg" src="/resources/css/image/chaIcon.png"/>
 	          	  </div>
 		          <div class="consumer__nickname">
-		          	<p>${cid}</p>
+		          	<p style="font-size:10px; color:white;">${secuInfo.consumer.nickname}</p>
 		          </div>
 		          <div class="consumer__info">
 	   				<a href="/user/userGet">* 유저정보창</a><br/>
 	   				<a href="/user/userPro">* 유저프로필창</a><br/>
-	   				<a href="/user/userLogout">* 로그아웃</a><br/>
+					<form action="/user/userLogout" method="post">
+						<input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }"/>
+						<input type="submit" value="LOGOUT" />
+					</form><br/>
 	   				<a href="/friends/followerlist">* 팔로워리스트</a><br/>
 	   				<a href="/friends/followinglist">* 팔로윙리스트</a><br/>
+	   				<a href="/friends/searchfriends">* 친구 검색</a><br/>
 		   		  </div>
 	          </div>
           </c:if>
@@ -102,13 +119,18 @@
         <div class="contents">
           <div class="detail">
             <!-- 여기에 각자 content 붙여넣기 -->
+            <div class="title"> 
+	            <p>${cid}의 라이브러리</p>
+	            <hr/>
+            </div>
             <div class="library">
+            	<p class="libraryTitle">${cid}의 라이브러리</p>
 				<c:forEach var="library" items="${library}">
-					<div class="card" style="width: 200px;">
-						<img src="${library.gpicture}" class="card-img-top">
+					<div class="card" style="width: 205px;">
+						<img src="${library.gpicture}" class="card-img-top" height="130px">
 						<div class="card-body">
 							<h5 class="card-title">${library.gname}</h5>
-							<a href="/gameInfo/get?gnum=${library.gnum}" class="btn btn-primary">상점 페이지</a>
+							<a href="/gameInfo/get?gnum=${library.gnum}" class="btn btn-primary store">상점 페이지</a>
 						</div>
 					</div>
 				</c:forEach>

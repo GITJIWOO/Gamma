@@ -1,27 +1,211 @@
 <%@page import="org.springframework.web.util.UrlPathHelper"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
 <!DOCTYPE html>
 <html>
 <head>
-<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
-<link rel="icon" type="image/png" href="http://example.com/myicon.png">
-<link rel="stylesheet" href="/resources/css/styles.css" />
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous"><!-- Bootstrap cdn 설정 -->
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>	
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">	
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap-theme.min.css">	
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 <script src="<c:url value="/resources/js/main.js"/>"></script>
+<link rel="stylesheet" href="/resources/css/styles.css" />
+<link rel="icon" type="image/png" href="http://example.com/myicon.png">
 <style>
 * {
 	padding: 5px;
 	margin: 5px;
+	}
+.display {
+  display: flex;
+  flex-direction: row;
+  height: 200vh;
 }
+.side-bar {
+  z-index: 99;
+  width: 18%;
+  height: 100%;
+  position: fixed;
+  background-color: var(--sideColor);
+  color: var(--fontColor);
+}
+.side-bar__row:first-child img {
+  display: block;
+  margin: 50px auto;
+  width: 170px;
+}
+.side-bar__row:nth-child(2) input[type="text"] {
+  padding: 15px;
+  font-size: large;
+  width: 90%;
+  margin-left: 5%;
+  border-radius: 50px;
+  border: none;
+  transition: border 0.4s ease-in-out;
+}
+.side-bar__row:nth-child(2) input[type="text"]::placeholder {
+  color: var(--fontColor);
+}
+.side-bar__row:nth-child(2) input[type="text"]:focus {
+  border: 1.5px solid var(--mainColor);
+}
+.side-bar__row:nth-child(2) input:not([type="text"]) {
+  display: none;
+}
+.side-bar__row:nth-child(3) {
+  margin: 20px 0;
+  font-size: 25px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-bottom: 30px;
+  border-bottom: 1px solid var(--opacity);
+}
+.side-bar__row:nth-child(3) span {
+  padding: 15px 0;
+  margin: 5px 0;
+  width: 100%;
+  text-align: center;
+}
+.side-bar__row:nth-child(3) span:hover {
+  background-color: var(--opacity);
+  border-left: 5px solid var(--mainColor);
+}
+.side-bar__row:nth-child(4) {
+  display: flex;
+  justify-content: center;
+  margin: 30px;
+}
+.side-bar__row:nth-child(4) span {
+  transition: color 0.6s ease-in-out;
+}
+.side-bar__row:nth-child(4) span:hover {
+  color: white;
+}
+
+.side-bar__row:last-child {
+  /* margin-top: 500px; */
+}
+.side-bar__row:last-child span {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  width: 90%;
+  color: white;
+  border-radius: 5px;
+  padding: 15px 0;
+  margin: 10px auto;
+}
+.side-bar__row:last-child span:first-child {
+  background-color: var(--mainColor);
+
+  transition: background-color 0.4s ease-in-out;
+}
+.side-bar__row:last-child span:first-child:hover {
+  background-color: rgba(245, 108, 45, 0.8);
+}
+.side-bar__row:last-child span:last-child {
+  background-color: inherit;
+  border: 1px solid white;
+  transition: border-color 0.4s ease-in-out;
+  transition: color 0.2s ease-in-out;
+}
+.side-bar__row:last-child span:last-child:hover {
+  border-color: var(--fontColor);
+  color: var(--fontColor);
+}
+.side-bar a:hover {
+  color: white;
+}
+.main {
+  width: 100%;
+  padding-left: 18%;
+  height: 100%;
+  position: relative;
+}
+.footer {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--footerColor);
+  bottom: 0;
+  height: 100px;
+  color: rgb(161, 161, 161);
+  position: absolute;
+}
+.footer-info {
+  display: flex;
+  justify-content: center;
+  position: absolute;
+  top: 0;
+  padding: 20px 0;
+  font-weight: 600;
+  font-size: 14px;
+}
+.footer-copyright {
+  padding-top: 30px;
+  display: flex;
+  font-weight: 300;
+  font-size: 13px;
+}
+.consumer {
+	position: relative;
+	text-align: center;
+	display: flex;
+	flex-flow: row;
+	align-items: center;
+	margin: 10px;
+}
+.consumer__imgPro {
+	float: left;
+	padding: 0;
+	margin: 0;
+}
+.conimg {
+	width: 100px;
+	height: 100px;
+}
+.consumer__nickname {
+	float: right;
+	font-size: 25px;
+	font-weight: bold;
+	color: white;
+	height: 100px;
+	display: flex;
+	flex-flow: row;
+	align-items: center;
+	width: 250px;
+}
+.consumer__info {
+	background-color: white;
+	border: 1px solid black;
+	font-size: 120%;
+	display: none;
+	position: absolute;
+	top: 50px;
+	left: 100%;
+	width: 120px;
+	border-radius: 10%;
+	text-align:left;
+ }
 .detail{
 	display: flex;
 	flex-flow: row;
 }
-.Mbtn{position:relative;
-	left:50px;}
+.modAub{
+	position:relative;
+	left:50px;
+}
+
 .table1{position:relative;
 	left:50px;}
 .rowB{
@@ -54,10 +238,6 @@ h2 {
 	font-weight: bold;
 }
 
-p {
-	font-weight: bold;
-	font-size: big;
-}
 
 strong {
 	color: blue;
@@ -75,42 +255,7 @@ strong {
 	z-index: 1000;
 	width: 310px;
 }
-	.consumer {
-		width: 25%;
-		position: relative;
-		text-align: center;
-		height: 20%;
-		buttom: 100;
-		left:50px;
-	}
-	.consumer__imgPro {
-		float: left;
-		padding: 0;
-		margin: 0;
-	}
-	.conimg {
-		width: 100px;
-		height: 100px;
-	}
-	.consumer__nickname {
-		float: right;
-		font-size: 25px;
-		font-weight: bold;
-		color: white;
-		
-	}
-	.consumer__info {
-		background-color:gray;
-		color:white;
-		display: none;
-		position: absolute;
-		top:50px;
-		left: 150%;
-		width:120px;
-		margin:5px;
-		border-radius: 10%;
-		text-align:left;
-	}
+
 modBtn {
 	display: flex;
 	flex-flow: row;
@@ -160,6 +305,10 @@ position:relative;
 	font-weight: bold;
 	color: white;
 }
+.gameImg {
+	height: 100px;
+	width: 100px;
+}
 </style>
 <meta charset="UTF-8">
 
@@ -167,60 +316,71 @@ position:relative;
 
 </head>
 <body>
-
-	<div class="display">
-		<!-- side-bar -->
-		<div class="side-bar">
-			<!-- logo -->
-			<div class="side-bar__row">
-				<!-- 클릭하면 main화면으로 돌아오도록 a 태그 수정 -->
-				<span><a href="/main/main"><img
-						src="/resources/css/image/logo.png" /></a></span>
-			</div>
-			<!-- search -->
-			<div class="side-bar__row">
-				<form action="#" method="get">
-					<input type="text" placeholder="   Search Game" />
-					<!-- origin처럼 버튼 숨겼음, enter 치면 검색됨 -->
-					<input type="submit" value="" />
-				</form>
-			</div>
-			<!-- category -->
-			<div class="side-bar__row">
-				<span><a href="#">게임 스토어</a></span> <span><a href="#">라이브러리</a></span>
-			</div>
-			<!-- qna -->
-			<div class="side-bar__row">
-				<span><a href="#">Q&A</a></span> &nbsp;&nbsp;|&nbsp;&nbsp; <span><a
-					href="#">자주하는 질문</a></span>
-			</div>
-				<div class="side-bar__row">
-				<c:if test="${member == null }">
-            <div class="loginBtn">
-		        <span><a href="/user/userLogin" class="loginA">로그인</a></span>
-            </div>
-            <div class="joinBtn">
-		        <span><a href="/user/userJoin" class="joinA">가입하기</a></span>
-            </div>
+    <div class="display">
+      <!-- side-bar -->
+      <div class="side-bar">
+        <!-- logo -->
+        <div class="side-bar__row">
+          <!-- 클릭하면 main화면으로 돌아오도록 a 태그 수정 -->
+          <span
+            ><a href="/main/main"><img src="/resources/css/image/logo.png" /></a
+          ></span>
+        </div>
+        <!-- search -->
+        <div class="side-bar__row">
+          <form action="/gameInfo/gamelist" method="get">
+          <select name="searchType" style="display:none">
+          	<option  value="n"
+				<c:out value="${btnMaker.cri.searchType eq 'n' ? 'selected' : '' }"/>>
+				</option>
+            </select>
+            <input type="text" placeholder="Search Game" name="keyword" value="${btnMaker.cri.keyword }"/>
+            <!-- origin처럼 버튼 숨겼음, enter 치면 검색됨 -->
+            <input type="submit" value="" />
+          </form>
+        </div>
+        <!-- category -->
+        <div class="side-bar__row">
+          <span><a href="/gameInfo/gamelist">게임 스토어</a></span>
+         <sec:authorize access="isAuthenticated()">
+          	<sec:authentication property="principal" var="principal" />
+          <c:if test="${principal.consumer.cid ne null}">
+          	<span><a href="/library/conLibrary?cid=${cid}">라이브러리</a></span>
           </c:if>
-          <c:if test="${member != null }">
+          </sec:authorize>
+        </div>
+        <!-- qna -->
+        <div class="side-bar__row">
+          <span><a href="/qna/questionlist">Q&A</a></span>
+          &nbsp;&nbsp;|&nbsp;&nbsp;
+          <span><a href="/qna/commonquestion">자주하는 질문</a></span>
+        </div>
+        <!-- about user -->
+        <div class="side-bar__row">
+		            <sec:authorize access="isAuthenticated()">
+          	<sec:authentication property="principal" var="secuInfo" />
 	          <div class="consumer">
 	          	  <div class="consumer__imgPro">
 			        <img class="conimg" src="/resources/css/image/chaIcon.png"/>
 	          	  </div>
 		          <div class="consumer__nickname">
-		          	<p>${member.cid}</p>
+		          	<p>${secuInfo.consumer.nickname}</p>
 		          </div>
 		          <div class="consumer__info">
-	   					<a href="/user/userGet">* 유저정보창</a><br/>
-	   				<a href="/user/userpro">* 유저프로필창</a><br/>
+	   				<a href="/user/userGet">* 유저정보창</a><br/>
 	   				<a href="/user/userLogout">* 로그아웃</a><br/>
-	   				<a href="/user/userDelete">* 회원탈퇴</a><br/>
+	   				<a href="/friends/followerlist">* 팔로워리스트</a><br/>
+	   				<a href="/friends/followinglist">* 팔로윙리스트</a><br/>
+	   				<a href="/friends/searchfriends">* 친구 검색</a><br/>
 		   		  </div>
 	          </div>
-          </c:if>
+          </sec:authorize>
         </div>
       </div>
+      <div class="main">
+        <div class="contents">
+          <div class="detail">
+            <!-- 여기에 각자 content 붙여넣기 -->
 			<!-- about user -->
 			<div class="main">
 				<div class="container">
@@ -246,71 +406,54 @@ position:relative;
 
 									</div>
 							</div>
+							<sec:authorize access="isAuthenticated()">
+          	<sec:authentication property="principal" var="principal" />
 							<table class="table table1" width="400px">
 
-								<c:if test="${member eq 'kjw011231' }">
+								<c:if test="${principal.consumer.cid eq 'kjw011231' }">
 									<tr>
 										<td>유저고유번호</td>
-										<td><input id="cnum" name="cnum" value="${member.cnum}"
+										<td><input id="cnum" name="cnum" value="${principal.consumer.cnum}"
+
 											readonly="readonly"></td>
 									</tr>
 								</c:if>
 								<tr>
 									<td>아이디</td>
-									<td id="cid" name="cid">${member.cid}</td>
+									<td id="cid" name="cid"><a href="/user/userPro?cid=${principal.consumer.cid }">${principal.consumer.cid}</a></td>
 								</tr>
 								<tr>
 									<td>닉네임</td>
-									<td id="nickname" name="nickname">${member.nickname}</td>
+									<td id="nickname" name="nickname">${principal.consumer.nickname}</td>
 								</tr>
 								<tr>
 									<td>이메일</td>
-									<td id="email" name="email">${member.email}</td>
+									<td id="email" name="email">${principal.consumer.email}</td>
 								</tr>
 								<tr>
 									<td>회원가입일자</td>
-									<td><fmt:formatDate value="${member.userregdate}"
+									<td><fmt:formatDate value="${principal.consumer.userregdate}"
 											pattern="yyy-MM-dd" /></td>
 								</tr>
 								<tr>
 									<td>회원정보 수정일자</td>
-									<td><fmt:formatDate value="${member.userupdatedate}"
+									<td><fmt:formatDate value="${principal.consumer.userupdatedate}"
 											pattern="yyy-MM-dd" /></td>
 								</tr>
 							</table>
+							</sec:authorize>
 						</form>
 						<div class="row">&nbsp;</div>
 						<div class="Mbtn">
-							<c:if test="${member != null}">
 								<a href="/user/userLogin"><button>로그인</button></a>
 								<a href="/user/userLogout"><button>로그아웃</button></a>
 								<a href="/user/userModify"><button>유저수정</button></a>
 								<a href="/user/userDelete"><button>탈퇴</button></a>
 								<a href="/user/userPro"><button>프로필창</button></a>
-							</c:if>
+								<a href="/gamepayment/consumerBreakdown"><button>결제 목록</button></a>
 						</div>
 						</div>
-				<div class="rowB">
-				<table class="table table-hover">
-					<tr>
-						<th>게임식별번호</th>
-						<th>게임제목</th>
-						<th>게임설명</th>
-						<th>태그</th>
-						<th>구매일자</th>
-					</tr>
-					<c:forEach var="library" items="${library }">
-						<tr>
-							<td>${library.gnum }</td>
-							<td><a href="gname">${gname}</a></td>
-							<td>${gcontent}</td>
-							<td>${tagname }</td>
-							<td>${board.regdate }</td>
-						</tr>
-					</c:forEach>
-
-				</table>
-				</div>
+				
 					</div>
 				
 				</div>
@@ -345,14 +488,31 @@ position:relative;
 		</div>
 	</div>
 
+        <div class="footer">
+          <div class="footer-info">
+            <div>CREATORS&nbsp;&nbsp;김영훈, 김지우, 조훈현, 최재인</div>
+            <div>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;</div>
+            <div>
+              CONTACT&nbsp;&nbsp;<a href="https://github.com/GITJIWOO/Game-Project"
+                >https://github.com/GITJIWOO/Game-Project</a
+              >
+            </div>
+          </div>
+          <div class="footer-copyright">
+            <div>Copyright © GAMMA All right reserved.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    </div>
 	<script>
 	$(document).ready(function() {
 		
 		$(".loginA").on("click", function() {
-			location.href = "/user/userLogin";
+			location.href = "/user/customLogin";
 		});
 		$(".joinA").on("click", function() {
-			location.href = "/user/userJoin";
+			location.href = "/user/join";
 		});
 		$(".consumer").mouseover(function(){
 				$(".consumer__info").show();
@@ -363,7 +523,7 @@ position:relative;
 			});
 			
 	
-		var cnum = ${member.cnum};
+		var cnum = ${principal.consumer.cnum};
 		function getAllList() {
 			$.getJSON("/userrp/all/" + cnum,
 							function(data) {

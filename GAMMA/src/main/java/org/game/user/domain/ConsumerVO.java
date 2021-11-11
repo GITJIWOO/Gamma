@@ -18,5 +18,8 @@ public class ConsumerVO {
 	private Date userupdatedate;
 	//private boolean enabled;
 	
+	// spring security 권한
+	private List<AuthVO> authList;
+	
 	private List<UserAttachVO> attachList;
 }

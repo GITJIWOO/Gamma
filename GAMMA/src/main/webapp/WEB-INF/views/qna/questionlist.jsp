@@ -1,12 +1,15 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
+<script src="<c:url value="/resources/js/main.js"/>"></script>
 <link rel="stylesheet" href="/resources/css/styles.css" />
+<link rel="icon" type="image/png" href="http://example.com/myicon.png">
 <title>Insert title here</title>
 <style>
 .detail {
@@ -76,15 +79,6 @@
 </style>
 </head>
 <body>
-	<!-- 검색창 - 관리자만 볼 수 있음 
-	<c:if test="${admin == 1 }">
-	<form action="qna/questionlist" method="get">
-		<input type="hidden" name="pageNum" value="${btnMaker.cri.pageNum }"/>
-		<input type="hidden" name="amount" value="${btnMaker.cri.amount }"/>
-		<input type="text" name="keyword" value="${btnMaker.cri.keyword }" placeholder="작성자 아이디를 입력해주세요"/>
-		<input type="submit" value="검색"/>
-	</form>
-	</c:if> -->
 	<c:if test="${success eq 'register'}">
 		<script>
 			alert("질문글이 등록되었습니다.");
@@ -100,6 +94,7 @@
 			alert("질문글이 삭제되었습니다.");
 		</script>
 	</c:if>
+	
     <div class="display">
       <!-- side-bar -->
       <div class="side-bar">
@@ -123,8 +118,8 @@
         <!-- category -->
         <div class="side-bar__row">
           <span><a href="/gameInfo/gamelist">게임 스토어</a></span>
-          <c:if test="${cid ne null}">
-          	<span><a href="/library/conLibrary?cid=${cid}">라이브러리</a></span>
+          <c:if test="${qwriter ne null}">
+          	<span><a href="/library/conLibrary?cid=${qwriter}">라이브러리</a></span>
           </c:if>
         </div>
         <!-- qna -->
@@ -136,27 +131,20 @@
         <!-- about user -->
         <div class="side-bar__row">
           <!-- c:if로 로그인 전에는 회원가입+로그인 / 로그인 후에는 프로필 -->
-          <c:if test="${cid eq null}">
-            <div class="loginBtn">
-		        <span><a href="/user/userLogin" class="loginA">로그인</a></span>
-            </div>
-            <div class="joinBtn">
-		        <span><a href="/user/userJoin" class="joinA">가입하기</a></span>
-            </div>
-          </c:if>
-          <c:if test="${cid ne null}">
+          <c:if test="${qwriter ne null}">
 	          <div class="consumer">
 	          	  <div class="consumer__imgPro">
 			        <img class="conimg" src="/resources/css/image/chaIcon.png"/>
 	          	  </div>
 		          <div class="consumer__nickname">
-		          	<p>${cid}</p>
+		          	<p>${qwriter}</p>
 		          </div>
 		          <div class="consumer__info">
 	   				<a href="/user/userGet">* 유저정보창</a><br/>
-	   				<a href="/user/userpro">* 유저프로필창</a><br/>
+	   				<a href="/user/userPro">* 유저프로필창</a><br/>
 	   				<a href="/user/userLogout">* 로그아웃</a><br/>
-	   				<a href="/user/userDelete">* 회원탈퇴</a><br/>
+	   				<a href="/friends/followerlist">* 팔로워리스트</a><br/>
+	   				<a href="/friends/followinglist">* 팔로윙리스트</a><br/>
 		   		  </div>
 	          </div>
           </c:if>
@@ -165,7 +153,10 @@
       <div class="main">
         <div class="contents">
           <div class="detail">
-          <!-- start -->
+        <!-- start -->
+          <sec:authorize access="isAuthenticated()">
+          	<sec:authentication property="principal" var="secuInfo" />
+          	<c:if test="${secuInfo.consumer.cid eq qwriter }">
             <h2 class="table-header">1:1 문의</h2>
   			<c:if test="${!empty vo}">
             <table class="table table-hover questiontable">
@@ -208,6 +199,7 @@
                 </c:forEach>
               </tbody>
             </table>
+            
             <!-- 페이징 처리 -->
             <nav aria-label="...">
               <ul class="pagination justify-content-center">
@@ -264,6 +256,8 @@
               <h1>등록된 문의가 없습니다.</h1>
             </div>
 			</c:if>
+			</c:if>
+          </sec:authorize>
             <c:if test="${admin == 0 }">
                 <form action="/qna/questionform" method="post">
                   <input type="hidden" name="qwriter" value="${qwriter }" />
@@ -272,6 +266,7 @@
                     name="pageNum"
                     value="${btnMaker.cri.pageNum }"
                   />
+                  <input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }" />
                   <input class="question-submit" type="submit" value="1:1 문의하기" />
                 </form>
               </c:if>

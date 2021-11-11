@@ -3,62 +3,30 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
 <!DOCTYPE html>
 <html>
-<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
-<link rel="icon" type="image/png" href="http://example.com/myicon.png">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous"><!-- Bootstrap cdn 설정 -->
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>	
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">	
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap-theme.min.css">	
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<script src="<c:url value="/resources/js/main.js"/>"></script>
 <link rel="stylesheet" href="/resources/css/styles.css" />
+<link rel="icon" type="image/png" href="http://example.com/myicon.png">
 <style>
 * {
 	padding: 5px;
 	margin: 5px;
 }
-	.consumer {
-		width: 25%;
-		position: relative;
-		text-align: center;
-		height: 20%;
-		buttom: 100;
-		left:50px;
-	}
-	.consumer__imgPro {
-		float: left;
-		padding: 0;
-		margin: 0;
-	}
-	.conimg {
-		width: 100px;
-		height: 100px;
-	}
-	.consumer__nickname {
-		float: right;
-		font-size: 25px;
-		font-weight: bold;
-		color: white;
-		
-	}
-	.consumer__info {
-		background-color:gray;
-		color:white;
-		display: none;
-		position: absolute;
-		top:50px;
-		left: 150%;
-		width:120px;
-		margin:5px;
-		border-radius: 10%;
-		text-align:left;
-	}
+
 .detail{
 	display: flex;
 	flex-flow: row;
 }
-.modAub{
-	position:relative;
-	left:50px;
-}
-
+.Mbtn{position:relative;
+	left:50px;}
 .table1{position:relative;
 	left:50px;}
 .rowB{
@@ -91,10 +59,6 @@ h2 {
 	font-weight: bold;
 }
 
-p {
-	font-weight: bold;
-	font-size: big;
-}
 
 strong {
 	color: blue;
@@ -102,7 +66,7 @@ strong {
 
 #modDiv {
 	border-radius: 2px;
-	width: 310px;
+	width: 390px;
 	height: 140px;
 	background-color: black;
 	position: absolute;
@@ -110,9 +74,178 @@ strong {
 	top: 40%;
 	left: 30%;
 	z-index: 1000;
-	width: 310px;
+}
+.display {
+  display: flex;
+  flex-direction: row;
+  height: 200vh;
+}
+.side-bar {
+  z-index: 99;
+  width: 18%;
+  height: 100%;
+  position: fixed;
+  background-color: var(--sideColor);
+  color: var(--fontColor);
+}
+.side-bar__row:first-child img {
+  display: block;
+  margin: 50px auto;
+  width: 170px;
+}
+.side-bar__row:nth-child(2) input[type="text"] {
+  padding: 15px;
+  font-size: large;
+  width: 90%;
+  margin-left: 5%;
+  border-radius: 50px;
+  border: none;
+  transition: border 0.4s ease-in-out;
+}
+.side-bar__row:nth-child(2) input[type="text"]::placeholder {
+  color: var(--fontColor);
+}
+.side-bar__row:nth-child(2) input[type="text"]:focus {
+  border: 1.5px solid var(--mainColor);
+}
+.side-bar__row:nth-child(2) input:not([type="text"]) {
+  display: none;
+}
+.side-bar__row:nth-child(3) {
+  margin: 20px 0;
+  font-size: 25px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-bottom: 30px;
+  border-bottom: 1px solid var(--opacity);
+}
+.side-bar__row:nth-child(3) span {
+  padding: 15px 0;
+  margin: 5px 0;
+  width: 100%;
+  text-align: center;
+}
+.side-bar__row:nth-child(3) span:hover {
+  background-color: var(--opacity);
+  border-left: 5px solid var(--mainColor);
+}
+.side-bar__row:nth-child(4) {
+  display: flex;
+  justify-content: center;
+  margin: 30px;
+}
+.side-bar__row:nth-child(4) span {
+  transition: color 0.6s ease-in-out;
+}
+.side-bar__row:nth-child(4) span:hover {
+  color: white;
 }
 
+.side-bar__row:last-child span {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  width: 90%;
+  color: white;
+  border-radius: 5px;
+  padding: 15px 0;
+  margin: 10px auto;
+}
+.side-bar__row:last-child span:first-child {
+  background-color: var(--mainColor);
+
+  transition: background-color 0.4s ease-in-out;
+}
+.side-bar__row:last-child span:first-child:hover {
+  background-color: rgba(245, 108, 45, 0.8);
+}
+.side-bar__row:last-child span:last-child {
+  background-color: inherit;
+  border: 1px solid white;
+  transition: border-color 0.4s ease-in-out;
+  transition: color 0.2s ease-in-out;
+}
+.side-bar__row:last-child span:last-child:hover {
+  border-color: var(--fontColor);
+  color: var(--fontColor);
+}
+.side-bar a:hover {
+  color: white;
+}
+.main {
+  width: 100%;
+  padding-left: 18%;
+  height: 100%;
+  position: relative;
+}
+.footer {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--footerColor);
+  bottom: 0;
+  height: 100px;
+  color: rgb(161, 161, 161);
+  position: absolute;
+}
+.footer-info {
+  display: flex;
+  justify-content: center;
+  position: absolute;
+  top: 0;
+  padding: 20px 0;
+  font-weight: 600;
+  font-size: 14px;
+}
+.footer-copyright {
+  padding-top: 30px;
+  display: flex;
+  font-weight: 300;
+  font-size: 13px;
+}
+.consumer {
+	position: relative;
+	text-align: center;
+	display: flex;
+	flex-flow: row;
+	align-items: center;
+	margin: 10px;
+}
+.consumer__imgPro {
+	float: left;
+	padding: 0;
+	margin: 0;
+}
+.conimg {
+	width: 100px;
+	height: 100px;
+}
+.consumer__nickname {
+	float: right;
+	font-size: 25px;
+	font-weight: bold;
+	color: white;
+	height: 100px;
+	display: flex;
+	flex-flow: row;
+	align-items: center;
+	width: 250px;
+}
+.consumer__info {
+	background-color: white;
+	border: 1px solid black;
+	display: none;
+	position: absolute;
+	top: 50px;
+	left: 100%;
+	width: 120px;
+	border-radius: 10%;
+	text-align:left;
+ }
 modBtn {
 	display: flex;
 	flex-flow: row;
@@ -162,10 +295,6 @@ position:relative;
 	font-weight: bold;
 	color: white;
 }
-.gameImg {
-	height: 100px;
-	width: 100px;
-}
 </style>
 <meta charset="UTF-8">
 
@@ -180,8 +309,8 @@ position:relative;
 			<!-- logo -->
 			<div class="side-bar__row">
 				<!-- 클릭하면 main화면으로 돌아오도록 a 태그 수정 -->
-				<span><a href="#"><img
-						src="/resources/css/image/logo.png" /></a></span>
+				<span><a href="#">
+				<img src="/resources/css/image/logo.png" /></a></span>
 			</div>
 			<!-- search -->
 			<div class="side-bar__row">
@@ -201,30 +330,21 @@ position:relative;
 					href="#">자주하는 질문</a></span>
 			</div>
 				<div class="side-bar__row">
-					<c:if test="${member == null }">
-            <div class="loginBtn">
-		        <span><a href="/user/userLogin" class="loginA">로그인</a></span>
-            </div>
-            <div class="joinBtn">
-		        <span><a href="/user/userJoin" class="joinA">가입하기</a></span>
-            </div>
-          </c:if>
-          <c:if test="${member != null }">
 	          <div class="consumer">
 	          	  <div class="consumer__imgPro">
 			        <img class="conimg" src="/resources/css/image/chaIcon.png"/>
 	          	  </div>
 		          <div class="consumer__nickname">
-		          	<p>${member.cid}</p>
+		          	<p>${nickname}</p>
 		          </div>
 		          <div class="consumer__info">
-	   					<a href="/user/userGet">* 유저정보창</a><br/>
-	   				<a href="/user/userpro">* 유저프로필창</a><br/>
+	   				<a href="/user/userGet">* 유저정보창</a><br/>
 	   				<a href="/user/userLogout">* 로그아웃</a><br/>
-	   				<a href="/user/userDelete">* 회원탈퇴</a><br/>
+	   				<a href="/friends/followerlist">* 팔로워리스트</a><br/>
+	   				<a href="/friends/followinglist">* 팔로윙리스트</a><br/>
+	   				<a href="/friends/searchfriends">* 친구 검색</a><br/>
 		   		  </div>
 	          </div>
-          </c:if>
         </div>
       </div>
 			<!-- about user -->
@@ -238,34 +358,37 @@ position:relative;
 								<img class="imgProA" src="/resources/css/image/chaIcon.png" />
 							</div>
 							<table class="table table1" width="400px">
-								<c:if test="${member eq 'kjw011231' }">
+								<c:if test="${cid eq 'kjw011231' }">
 									<tr>
 										<td>유저고유번호</td>
-										<td><input id="cnum" name="cnum" value="${member.cnum}"
+										<td><input id="cnum" name="cnum" value="${cnum}"
 											readonly="readonly"></td>
 									</tr>
+								</c:if>
 							<tr>
 							<td>닉네임</td>
-								<td id="nickname" name="nickname">${member.nickname}</td>
+								<td id="nickname" name="nickname">${nickname}</td>
 							</tr>
-								</c:if>
 								
 							</table>
 						</form>
 					
 						<br> <br /> <br />
+				<sec:authorize access="isAuthenticated()">
+          	<sec:authentication property="principal" var="principal" />
 						<div class="modAub">
 							<div class="row">
 								<div class="col-md-3">
-									<p>${member.nickname }(방명록)</p>
+									<p>${principal.consumer.nickname }(방명록)</p>
 								</div>
 								<div class="col-md-6">
 									<textarea style="resize: none;" name="reply" id="newReply"
 										rows="2" cols="30"></textarea>
 									<input type="hidden" name="nickname"
-										value="${member.nickname }" id="newReplyWriter" readonly>
+										value="${principal.consumer.nickname }" id="newReplyWriter" readonly>
 								</div>
 								<div class="col-md-3">
+								<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 									<button id="replyAddBtn">방명록 남기기</button>
 									<br />
 								</div>
@@ -274,6 +397,7 @@ position:relative;
 
 							</ul><br/>
 						</div>
+						</sec:authorize>
 						</div>
 				<div class="rowB">
 					<p>보유중인 게임</p>
@@ -322,8 +446,9 @@ position:relative;
 	</div>
 
 	<script>
-	
-		var cnum = ${member.cnum};
+	var csrfHeaderName = "${_csrf.headerName}"
+		var csrfTokenValue="${_csrf.token}"
+		var cnum = ${principal.consumer.cnum};
 		function getAllList() {
 			$.getJSON("/userrp/all/" + cnum,function(data) {
 								//data 변수가 바로 얻어온 json데이터의 집합
@@ -390,6 +515,9 @@ position:relative;
 					"Content-Type" : "application/json",
 					"X-HTTP-Method-Override" : "POST"
 				},
+				 beforeSend : function(xhr) {
+				        xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+				   },
 				dataType : 'text',
 				data : JSON.stringify({
 					cnum : cnum,
@@ -415,6 +543,9 @@ position:relative;
 			var rno = $(".modal-title").html();
 			console.log("rno얻어왓니?딜리트"+rno)
 			$.ajax({
+				 beforeSend : function(xhr) {
+				        xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+				   },
 				type : 'delete',
 				url : '/userrp/' + rno,
 				// 삭제로직은 rno만 전달함
@@ -446,6 +577,9 @@ position:relative;
 					"Content-Type" : "application/json",
 					"X-HTTP-Method-Override" : "PUT"
 				},
+				 beforeSend : function(xhr) {
+				        xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+				   },
 				dataType : 'text',
 				data : JSON.stringify({
 					reply : reply

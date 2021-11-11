@@ -73,8 +73,8 @@ select * from gamerequirement left join game using (gnum);
 
 CREATE SEQUENCE consumer_num INCREMENT BY 1 START WITH 1;
 CREATE TABLE consumer (
-    cnum NUMBER PRIMARY KEY,
-    cid VARCHAR2(20) NOT NULL UNIQUE,
+    cnum NUMBER,
+    cid VARCHAR2(20) PRIMARY KEY,
     email VARCHAR2(100) NOT NULL,
     password VARCHAR2(20) NOT NULL,
     nickname VARCHAR(20) NOT NULL UNIQUE,
@@ -89,7 +89,7 @@ INSERT INTO consumer(cnum, cid, email, password, nickname, cadmin)
 INSERT INTO consumer(cnum, cid, email, password, nickname, cadmin) 
     VALUES(consumer_num.nextval,'cho', 'chocc', 'aaa', 'cho', 0);
  
-SELECT * FROM consumer; 
+SELECT * FROM consumer_auth; 
 CREATE TABLE authorities(
 cnum NUMBER ,
 cid VARCHAR2(20) NOT NULL,
@@ -97,9 +97,22 @@ auth varchar2(50) not null,
 constraint fk_authorities_users foreign key(cnum) references consumer(cnum));
 
 
+CREATE TABLE consumer_auth(
+    cid VARCHAR2(20) NOT NULL,
+    auth varchar2(50) not null,
+    constraint fk_consumer_auth foreign key(cid) references consumer(cid)
+);
+/* 자동 로그인 */
+CREATE TABLE persistent_logins(
+    username VARCHAR(64) NOT NULL,
+    series VARCHAR(64) PRIMARY KEY,
+    token VARCHAR(64) NOT NULL,
+    last_used TIMESTAMP NOT NULL
+);
+/*
  alter table authorities drop constraint fk_authorities_users;
 create unique index ix_auth_cid on authorities (cid, auth);
-
+*/
 insert into consumer (cnum,cid,password,email,nickname,cadmin) values (consumer_num.nextval,'user00','pw00','ssos@sos','scho',0);
 insert into consumer (cnum,cid,password,email,nickname,cadmin) values (consumer_num.nextval,'member00','pw00','m@sos','mcho',0);
 insert into consumer (cnum,cid,password,email,nickname,cadmin) values (consumer_num.nextval,'admin00','pw00','assos@sos','ascho',0);
@@ -133,14 +146,14 @@ CREATE table userreply_tbl(
   
     /*프로필 전용 db*/
 CREATE TABLE img_tbl(
-uuuid varchar2(100) not null,
+user_no varchar2(100) not null,
 uploadPath varchar2(200) not null,
 fileName varchar2(100) not null,
 filetype char(1) default'I',
 cnum number(10,0)
 );
 
-alter table img_tbl add constraint pk_img primary key ( uuuid);
+alter table img_tbl add constraint pk_img primary key (user_no);
 alter table img_tbl add constraint fk_user_img foreign key (cnum)
 references consumer(cnum);
     
@@ -339,10 +352,10 @@ CREATE TABLE consumerPayment (
     gname VARCHAR2(100) NOT NULL,
     gprice VARCHAR2(20) NOT NULL,
     cid VARCHAR2(20) NOT NULL,
+    cpdate DATE DEFAULT sysdate,
     merchant_uid VARCHAR2(100) PRIMARY KEY,
     CONSTRAINT fk_consumerpayment FOREIGN KEY (cid) REFERENCES consumer(cid)
 );
-drop table consumerpayment;
 commit;
 
 /*  사용자 찜 목록

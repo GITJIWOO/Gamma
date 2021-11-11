@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <html>
 <head>
 <!-- 합쳐지고 최소화된 최신 CSS -->
@@ -64,7 +64,7 @@ display:flex;
 .border {
 	margin: 0 auto;
 	width: 380px;
-	height: 720px;
+	height: 730px;
 	border: 1px solid #000;
 	border-radius: 10%;
 }
@@ -89,7 +89,8 @@ display:flex;
 </head>
 
 <script type="text/javascript">
-
+var csrfHeaderName = "${_csrf.headerName}"
+	var csrfTokenValue="${_csrf.token}"
 
 var code = ""; 
 	function fn_idChk() {
@@ -100,6 +101,9 @@ var code = "";
 		$.ajax({
 			url : '/urest/idChk',
 			type : 'post',
+			beforeSend : function(xhr) {
+		        xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+		   },
 			headers : {
 				"Content-Type" : "application/json",
 				"X-HTTP-Method-Override" : "POST"
@@ -124,6 +128,9 @@ var code = "";
 		$.ajax({
 			url : '/urest/emailChk',
 			type : 'post',
+			beforeSend : function(xhr) {
+		        xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+		   },
 			headers : {
 				"Content-Type" : "application/json",
 				"X-HTTP-Method-Override" : "POST"
@@ -166,6 +173,10 @@ var code = "";
 				alert("닉네임을 입력해주세요.");
 				$("#nickname").focus();
 				return false;
+			}if ($("#email").val() == "" && $("#email").val().indexOf('@')==-1 ) {
+				alert("이메일 형식을 다시 확인해주세요");
+				$("#email").focus();
+				return false;
 			}
 			var idChkVal = $('#idChk').val();
 			console.log(idChkVal);
@@ -192,6 +203,9 @@ var code = "";
 		$.ajax({
 			
 			type:'GET',
+			beforeSend : function(xhr) {
+		        xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+		   },
 			headers : {
 				"Content-Type" : "application/json",
 				"X-HTTP-Method-Override" : "POST"
@@ -242,7 +256,7 @@ var code = "";
 	            }
 	        }
 	        if(check_SC == 0){
-	            window.alert('!,@,#,$,% 의 특수문자가 들어가 있지 않습니다.')
+	            window.alert('패스워드에 !,@,#,$,% 중 하나이상이 기입해야합니다..')
 	            document.getElementById('password').value='';
 	        }
 	        if(document.getElementById('password').value !='' && document.getElementById('pw2').value!=''){
@@ -273,12 +287,12 @@ var code = "";
 					<label class="control-label" for="password">패스워드</label><br/> <input
 						 type="password" name="password" id="password"
 						onchange="check_pw()" placeholder="!,@,#,$,%중 하나이상을 포함해주세요" /><br/>
-					<label class="control-label" for="passwordConfirm">패스워드확인</label><br/> <input
+					<label class="control-label" for="pw2">패스워드확인</label><br/> <input
 						 type="password" name="userPW2" id="pw2"
 						onchange="check_pw()" placeholder="!,@,#,$,%중 하나이상을 포함해주세요"><span
 						id="check"></span><br/><br/>
 					<label class="control-label" for="email">Email</label> <br/><input
-						class="mail_input" type="text" id="email"
+						class="mail_input" type="text" id="email" 
 						name="email" /><br/>
 					<button class="emailChk" type="button" id="emailChk"
 						onclick="fn_emailChk();" value="N">중복확인</button><br/><br/>
@@ -294,6 +308,8 @@ var code = "";
                 </div>-->
 					<label class="control-label" for="nickname">닉네임</label><br/> <input
 						 type="text" id="nickname" name="nickname" /><br/><br/>
+                <input type="hidden" name="role" value="ROLE_MEMBER"/>
+                <input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }" />
 		</form>
 					<button class="btn" type="button" id="submit">회원가입</button>
 					<button class="cencle btn" type="button">취소</button>

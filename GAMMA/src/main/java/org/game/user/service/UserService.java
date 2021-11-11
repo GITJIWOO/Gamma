@@ -24,7 +24,7 @@ public interface UserService {
 
 	// 회원가입
 	public void userJoin(ConsumerVO userVO) throws Exception;
-
+	
 	// 로그인
 	public ConsumerVO userLogin(ConsumerVO userVO) throws Exception;
 
@@ -42,4 +42,7 @@ public interface UserService {
 	
 	// 유저 상세창에 같이 딸려오는거
 		public List<UserAttachVO> getAttachList(Long cnum);
+		
+	// 재인 추가 - 회워가입 
+	public void insertConsumer(ConsumerVO vo);
 }
