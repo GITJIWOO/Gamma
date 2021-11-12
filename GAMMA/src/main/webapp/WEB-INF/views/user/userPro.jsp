@@ -346,12 +346,21 @@ position:relative;
 					href="#">자주하는 질문</a></span>
 			</div>
 				<div class="side-bar__row">
+				<c:if test="${myCid eq null }">
+	          <div class="loginBtn">
+	        	<span><a href="/user/userLogin" class="loginA">로그인</a></span>
+	          </div>
+	          <div class="joinBtn">
+	        	<span><a href="/user/agreeJoin" class="joinA">가입하기</a></span>
+	          </div>
+       	  </c:if>
+          <c:if test="${myCid ne null}">
 	          <div class="consumer">
 	          	  <div class="consumer__imgPro">
 			        <img class="conimg" src="/resources/css/image/chaIcon.png"/>
 	          	  </div>
 		          <div class="consumer__nickname">
-		          	<p>${nickname}</p>
+		          	<p>${myCid}</p>
 		          	<form action="/user/userLogout" method="post">
 						<input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }"/>
 						<input class="logout" type="submit" value="LOGOUT" />
@@ -365,6 +374,7 @@ position:relative;
 	   				<a href="/friends/searchfriends">* 친구 검색</a><br/>
 		   		  </div>
 	          </div>
+	          </c:if>
         </div>
       </div>
 			<!-- about user -->
