@@ -1,44 +1,17 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ page language="java" pageEncoding="UTF-8"
+	contentType="text/html; charset=UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
-<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
+<meta charset="UTF-8">
+<title>Gamma</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous"><!-- Bootstrap cdn 설정 -->	
+<script src="<c:url value="/resources/js/main.js"/>"></script>
 <link rel="stylesheet" href="/resources/css/styles.css" />
 <link rel="icon" type="image/png" href="http://example.com/myicon.png">
-<style>
-	.consumer {
-		width: 18%;
-		position: relative;
-		text-align: center;
-		height: 10%;
-		buttom: 100;
-	}
-	.consumer__imgPro {
-		float: left;
-		padding: 0;
-		margin: 0;
-	}
-	.conimg {
-		width: 100px;
-		height: 100px;
-	}
-	.consumer__nickname {
-		float: right;
-		font-size: 25px;
-		font-weight: bold;
-		color: white;
-	}
-	.consumer__info {
-		display: none;
-		position: absolute;
-		left: 100%;
-	}
-</style>
-<meta charset="UTF-8">
-<title>Insert title here</title>
 </head>
 <script>
 	var arrInput = new Array(0);
@@ -123,28 +96,32 @@
         <!-- about user -->
         <div class="side-bar__row">
           <!-- c:if로 로그인 전에는 회원가입+로그인 / 로그인 후에는 프로필 -->
-          <c:if test="${cid eq null}">
-            <div class="loginBtn">
-		        <span><a href="/user/userLogin" class="loginA">로그인</a></span>
-            </div>
-            <div class="joinBtn">
-		        <span><a href="/user/userJoin" class="joinA">가입하기</a></span>
-            </div>
-          </c:if>
+          <c:if test="${cid eq null }">
+	          <div class="loginBtn">
+	        	<span><a href="/user/userLogin" class="loginA">로그인</a></span>
+	          </div>
+	          <div class="joinBtn">
+	        	<span><a href="/user/agreeJoin" class="joinA">가입하기</a></span>
+	          </div>
+       	  </c:if>
           <c:if test="${cid ne null}">
 	          <div class="consumer">
 	          	  <div class="consumer__imgPro">
 			        <img class="conimg" src="/resources/css/image/chaIcon.png"/>
 	          	  </div>
 		          <div class="consumer__nickname">
-		          	<p>${cid}</p>
+		          	<p style="font-size:10px; color:white;">${secuInfo.consumer.nickname}</p>
 		          </div>
 		          <div class="consumer__info">
 	   				<a href="/user/userGet">* 유저정보창</a><br/>
 	   				<a href="/user/userPro">* 유저프로필창</a><br/>
-	   				<a href="/user/userLogout">* 로그아웃</a><br/>
+					<form action="/user/userLogout" method="post">
+						<input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }"/>
+						<input type="submit" value="LOGOUT" />
+					</form><br/>
 	   				<a href="/friends/followerlist">* 팔로워리스트</a><br/>
 	   				<a href="/friends/followinglist">* 팔로윙리스트</a><br/>
+	   				<a href="/friends/searchfriends">* 친구 검색</a><br/>
 		   		  </div>
 	          </div>
           </c:if>
@@ -156,6 +133,7 @@
             <!-- 여기에 각자 content 붙여넣기 -->
 	
 	<form action="/gameInfo/modify" method="post">
+	<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 		<input type="hidden" name="gnum" value="${gvo.gnum }"> <input
 			type="hidden" name="pageNum" value="${param.pageNum }"> <input
 			type="hidden" name="searchType" value="${param.searchType }">

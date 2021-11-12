@@ -26,18 +26,17 @@ public class GameLibraryController {
 	private GameLibraryService libraryService;
 	
 	@GetMapping("/conLibrary")
-	public String consumerLibraryList(String cid, Principal principal, Model model) {
-		
-		cid = principal.getName();
-		
-		if(cid == null) {
-			return "redirect:/user/userLogin";
+	public String consumerLibraryList(Principal principal, Model model) {
+
+		if(principal != null) {
+			String cid = principal.getName();
+			List<ResultLibraryVO> library = libraryService.getAllConsumerLibrary(cid);
+			if(cid == null) {
+				return "redirect:/user/userLogin";
+			}
+			model.addAttribute("cid", cid);
+			model.addAttribute("library", library);
 		}
-		
-		List<ResultLibraryVO> library = libraryService.getAllConsumerLibrary(cid);
-		
-		model.addAttribute("cid", cid);
-		model.addAttribute("library", library);
 		
 		return "/library/conLibrary";
 	}

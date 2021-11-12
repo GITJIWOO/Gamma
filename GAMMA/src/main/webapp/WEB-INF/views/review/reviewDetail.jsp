@@ -1,6 +1,8 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
+<%@ page language="java" pageEncoding="UTF-8"
+	contentType="text/html; charset=UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -74,6 +76,11 @@
 	}
 	.commentRccontent {
 		font-size: 130%;
+		margin-right: 300px;
+	}
+	.commentDelete {
+		display: flex;
+		align-items: center;
 	}
 </style>
 </head>
@@ -117,26 +124,29 @@
         <!-- about user -->
         <div class="side-bar__row">
           <!-- c:if로 로그인 전에는 회원가입+로그인 / 로그인 후에는 프로필 -->
-          <c:if test="${cid eq null}">
-            <div class="loginBtn">
-		        <span><a href="/user/userLogin" class="loginA">로그인</a></span>
-            </div>
-            <div class="joinBtn">
-		        <span><a href="/user/userJoin" class="joinA">가입하기</a></span>
-            </div>
-          </c:if>
+          <c:if test="${cid eq null }">
+	          <div class="loginBtn">
+	        	<span><a href="/user/userLogin" class="loginA">로그인</a></span>
+	          </div>
+	          <div class="joinBtn">
+	        	<span><a href="/user/agreeJoin" class="joinA">가입하기</a></span>
+	          </div>
+       	  </c:if>
           <c:if test="${cid ne null}">
 	          <div class="consumer">
 	          	  <div class="consumer__imgPro">
 			        <img class="conimg" src="/resources/css/image/chaIcon.png"/>
 	          	  </div>
 		          <div class="consumer__nickname">
-		          	<p>${cid}</p>
+		          	<p style="color:white;"><sec:authentication property="principal.consumer.nickname"/></p>
 		          </div>
 		          <div class="consumer__info">
 	   				<a href="/user/userGet">* 유저정보창</a><br/>
 	   				<a href="/user/userPro">* 유저프로필창</a><br/>
-	   				<a href="/user/userLogout">* 로그아웃</a><br/>
+					<form action="/user/userLogout" method="post">
+						<input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }"/>
+						<input type="submit" value="LOGOUT" />
+					</form><br/>
 	   				<a href="/friends/followerlist">* 팔로워리스트</a><br/>
 	   				<a href="/friends/followinglist">* 팔로윙리스트</a><br/>
 	   				<a href="/friends/searchfriends">* 친구 검색</a><br/>
@@ -179,6 +189,7 @@
 					<div id="reviewModify">
 						<c:if test="${cid eq review.cid}">
 							<form action="/review/reviewModify" method="post" name="reviewUpdate"onsubmit="return updateCheck()">
+								<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 								<input type="hidden" name="cid" value="${cid}">
 								<input type="hidden" name="grnum" value="${review.grnum}">
 								<textarea class="form-control" id="exampleFormControlTextarea1" name="grcontent" rows="7" cols="70" placeholder="내용" required>${review.grcontent}</textarea><br/>
@@ -201,6 +212,7 @@
 								<c:when test="${cid ne null && rlvo.cid ne cid}">
 									<c:if test="${cid ne review.cid}">
 										<form action="/review/reviewLike" method="post" id="reviewLike">
+											<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 											<input type="hidden" name="cid" value="${cid}">
 											<input type="hidden" name="gnum" value="${review.gnum}">
 											<input type="hidden" name="grnum" value="${review.grnum}">
@@ -211,6 +223,7 @@
 								<c:when test="${cid ne null && rlvo.cid eq cid}">
 									<c:if test="${cid ne review.cid}">
 										<form action="/review/reviewLikeCancel" method="post" id="reviewLikeCancel">
+											<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 											<input type="hidden" name="cid" value="${cid}">
 											<input type="hidden" name="gnum" value="${review.gnum}">
 											<input type="hidden" name="grnum" value="${review.grnum}">
@@ -229,6 +242,7 @@
 							<!-- 리뷰 삭제 버튼(아이디 검사) -->
 							<div id="removeReviewButton">
 								<form action="/review/reviewRemove" method="post" id="removeReview">
+									<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 									<input type="hidden" name="grnum" value="${review.grnum}">
 								</form>
 								<button onclick="removeReview()" class="btn btn-secondary">리뷰 삭제</button>
@@ -242,6 +256,7 @@
 					<!-- 리뷰 댓글 작성(로그인 여부) -->
 					<c:if test="${cid ne null}">
 						<form action="/review/reviewCommentWrite" method="post">
+							<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 							<input type="hidden" name="cid" value="${cid}">
 							<input type="hidden" name="grnum" value="${review.grnum}">
 							<textarea name="rccontent" rows="5" cols="60" required></textarea>
@@ -257,17 +272,21 @@
 						<div class="commentRcdate">
 							${reviewComment.rcdate}
 						</div>
-						<div class="commentRccontent">
-							${reviewComment.rccontent}
+						<div class="commentDelete">
+							<div class="commentRccontent">
+								${reviewComment.rccontent}
+							</div>
+							<!-- 리뷰 댓글 삭제 버튼(아이디 검사) -->
+							<c:if test="${reviewComment.cid == cid}">
+								<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+								<form action="/review/reviewCommentRemove" method="post" id="removeReviewComment">
+									<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+									<input type="hidden" name="grnum" value="${reviewComment.grnum}">
+									<input type="hidden" name="rcnum" value="${reviewComment.rcnum}">
+									<input type="submit" onclick="removeReviewComment()" class="btn btn-danger" value="삭제">
+								</form>
+							</c:if>
 						</div>
-						<!-- 리뷰 댓글 삭제 버튼(아이디 검사) -->
-						<c:if test="${reviewComment.cid == cid}">
-							<form action="/review/reviewCommentRemove" method="post" id="removeReviewComment">
-								<input type="hidden" name="grnum" value="${reviewComment.grnum}">
-								<input type="hidden" name="rcnum" value="${reviewComment.rcnum}">
-							</form>
-							<button onclick="removeReviewComment()" class="btn btn-danger">삭제</button>
-						</c:if>
 						<hr/>
 					</c:forEach>
 					

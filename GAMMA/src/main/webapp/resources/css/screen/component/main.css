@@ -141,36 +141,44 @@
 	flex-flow: row;
 	align-items: center;
 	margin: 10px;
+	height:100px;
 }
 .consumer__imgPro {
 	float: left;
 	padding: 0;
 	margin: 0;
+	width: 100px;
 }
 .conimg {
-	width: 100px;
-	height: 100px;
+	width: 130px;
+	height: 130px;
 }
 .consumer__nickname {
-	float: right;
+	float: left;
 	font-size: 25px;
 	font-weight: bold;
 	color: white;
-	height: 100px;
-	display: flex;
-	flex-flow: row;
+	height: 70px;
 	align-items: center;
 	width: 250px;
+	margin:0;
+	padding:0;
+	line-height:60%;
+	
+}
+.logout{
+	font-size:10px; 
+	background-color:black;
 }
 .consumer__info {
 	background-color: white;
-	border: 1px solid black;
+	border: 2px solid black;
 	font-size: 120%;
 	display: none;
 	position: absolute;
-	top: 50px;
+	top: 40px;
 	left: 100%;
-	width: 120px;
+	width: 130px;
 	border-radius: 10%;
 	text-align:left;
  }

@@ -1,5 +1,6 @@
 package org.game.gameinfo.mapper;
 
+import java.sql.SQLException;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
@@ -12,7 +13,7 @@ public interface GameInfoMapper {
 	public List<GameInfoVO> gameList(String keyword);
 	
 	// 게임 추가
-	public void insertGame(GameInfoVO vo);
+	public void insertGame(GameInfoVO vo)  ;
 	
 	// 게임 상세 조회
 	public GameInfoVO selectGame(Long gnum);

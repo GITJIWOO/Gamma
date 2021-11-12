@@ -1,5 +1,7 @@
 package org.game.gameinfo.service;
 
+import java.sql.SQLException;
+
 import org.game.gameinfo.domain.GameInfoVO;
 import org.game.gameinfo.domain.RequirementVO;
 

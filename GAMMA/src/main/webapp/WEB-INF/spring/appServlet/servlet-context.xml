@@ -26,22 +26,6 @@
 		<beans:property name="prefix" value="/WEB-INF/views/" />
 		<beans:property name="suffix" value=".jsp" />
 	</beans:bean>
-
-
-	<!-- WebSocket 생성시 설정한 url 처리 
-	<mvc:annotation-driven></mvc:annotation-driven>
-	<mvc:default-servlet-handler />
-	<mvc:view-controller path="/friends/chat" view-name="/friends/chat" />
-	<beans:bean id="echoHandler" class="org.game.websocket.EchoHandler"/>
-
-	<websocket:handlers>
-		<websocket:mapping handler="echoHandler" path="/echo" />
-		<websocket:handshake-interceptors>
-			<beans:bean class="org.springframework.web.socket.server.support.HttpSessionHandshakeInterceptor"/>
-		</websocket:handshake-interceptors>
-		<websocket:sockjs/>
-	</websocket:handlers>-->
-	
 	
 	<!-- 회원가입 메일 인증 -->
 	<!--  <beans:bean id="mailSender"	class="org.springframework.mail.javamail.JavaMailSenderImpl">
@@ -64,5 +48,5 @@
 	<context:component-scan base-package="org.game.*.controller" />
 	<context:component-scan base-package="org.game.controller" />
 	<security:global-method-security pre-post-annotations="enabled" secured-annotations="enabled" />
-	
+
 </beans:beans>

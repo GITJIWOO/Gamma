@@ -55,20 +55,21 @@ public class ReviewController {
 	@PreAuthorize("permitAll")
 	@GetMapping("/reviewList/{gnum}")
 	public String getReviewList(@PathVariable("gnum") long gnum, String listKind, Principal principal, Model model) {
-
-		String cid = principal.getName();
+		
+		if(principal != null) {
+			String cid = principal.getName();
+			model.addAttribute("cid", cid);
+		}
 		
 		GameInfoVO game = gameService.getGame(gnum);
 		if(listKind == null || listKind.equals("") || listKind.equals("famous")) {
 			List<ReviewVO> famousReview = reviewService.getFamousReview(gnum);
 			model.addAttribute("review", famousReview);
 			model.addAttribute("game", game);
-			model.addAttribute("cid", cid);
 		} else if(listKind.equals("new")) {
 			List<ReviewVO> newReview = reviewService.getNewReview(gnum);
 			model.addAttribute("review", newReview);
 			model.addAttribute("game", game);
-			model.addAttribute("cid", cid);
 		}
 		return "/review/reviewList";
 	}
@@ -95,15 +96,16 @@ public class ReviewController {
 		ReviewCommentDTO pageBtn = new ReviewCommentDTO(rccri, total, 10);
 		
 		// 세션 아이디, 어드민
-		String cid = principal.getName();
-		
-		// 좋아요 여부
-		if(cid != null) {
-			ReviewLikeVO rlvo = reviewLikeService.getReviewLike(grnum, cid);
-			model.addAttribute("rlvo", rlvo);
+		if(principal != null) {
+			String cid = principal.getName();
+			model.addAttribute("cid", cid);
+			// 좋아요 여부
+			if(cid != null) {
+				ReviewLikeVO rlvo = reviewLikeService.getReviewLike(grnum, cid);
+				model.addAttribute("rlvo", rlvo);
+			}
 		}
 		
-		model.addAttribute("cid", cid);
 		model.addAttribute("game", game);
 		model.addAttribute("review", review);
 		model.addAttribute("pageBtn", pageBtn);
@@ -118,10 +120,11 @@ public class ReviewController {
 	public String writeReview(ReviewVO review, Principal principal, RedirectAttributes rttr) {
 		
 		long gnum = review.getGnum();
-		String cid = principal.getName();
-		
-		if(cid == null) {
-			return "redirect:/review/reviewList/" + gnum;
+		if(principal != null) {
+			String cid = principal.getName();
+			if(cid == null) {
+				return "redirect:/review/reviewList/" + gnum;
+			}
 		}
 		
 		reviewService.writeReview(review);
@@ -136,10 +139,11 @@ public class ReviewController {
 	public String modifyReview(ReviewVO review, Principal principal, RedirectAttributes rttr) {
 		
 		long grnum = review.getGrnum();
-		String cid = principal.getName();
-		
-		if(cid == null) {
-			return "redirect:/review/reviewDetail/" + grnum;
+		if(principal != null) {
+			String cid = principal.getName();
+			if(cid == null) {
+				return "redirect:/review/reviewDetail/" + grnum;
+			}
 		}
 		
 		reviewService.modifyReview(review);
@@ -156,10 +160,11 @@ public class ReviewController {
 		ReviewVO grvo = reviewService.getReviewDetail(grnum);
 		
 		long gnum = grvo.getGnum();
-		String cid = principal.getName();
-		
-		if(cid == null) {
-			return "redirect:/review/reviewDetail/" + grnum;
+		if(principal != null) {
+			String cid = principal.getName();
+			if(cid == null) {
+				return "redirect:/review/reviewDetail/" + grnum;
+			}
 		}
 		
 		commentService.removeAllReviewComment(grnum);
@@ -171,33 +176,38 @@ public class ReviewController {
 	}
 	
 	// 평가 좋아요
+	@PreAuthorize("permitAll")
 	@PostMapping("/reviewLike")
 	public String likeReview(ReviewLikeVO vo, Principal principal, RedirectAttributes rttr) {
 		
 		long grnum = vo.getGrnum();
-		String cid = principal.getName();
-		
-		if(cid == null) {
-			return "redirect:/review/reviewDetail/" + grnum;
+		if(principal != null) {
+			String cid = principal.getName();
+			if(cid == null) {
+				return "redirect:/review/reviewDetail/" + grnum;
+			}
+			rttr.addFlashAttribute("cid", cid);
 		}
 		
 		reviewLikeService.reviewLike(vo);
 		reviewService.likeReview(vo.getGrnum());
 
 		rttr.addFlashAttribute("grnum", vo.getGrnum());
-		rttr.addFlashAttribute("cid", cid);
 		
 		return "redirect:/review/reviewDetail/" + grnum;
 	}
 	
 	// 평가 좋아요 취소
 	@PostMapping("/reviewLikeCancel")
-	public String likeCancelReview(long grnum, String cid, Principal principal, RedirectAttributes rttr) {
-		
-		reviewLikeService.reviewLikeCancel(grnum, cid);
+	public String likeCancelReview(long grnum, Principal principal, RedirectAttributes rttr) {
+
+		if(principal != null) {
+			String cid = principal.getName();
+			reviewLikeService.reviewLikeCancel(grnum, cid);
+			rttr.addFlashAttribute("cid", cid);
+		}
 		reviewService.likeReviewCancel(grnum);
 		
-		rttr.addFlashAttribute("cid", cid);
 		rttr.addFlashAttribute("grnum", grnum);
 		
 		return "redirect:/review/reviewDetail/" + grnum;
@@ -208,10 +218,11 @@ public class ReviewController {
 	public String writeReviewComment(ReviewCommentVO rc, Principal principal) {
 		
 		long grnum = rc.getGrnum();
-		String cid = principal.getName();
-		
-		if(cid == null) {
-			return "redirect:/review/reviewDetail/" + grnum;
+		if(principal != null) {
+			String cid = principal.getName();
+			if(cid == null) {
+				return "redirect:/review/reviewDetail/" + grnum;
+			}
 		}
 		
 		commentService.writeReviewComment(rc);
@@ -224,10 +235,11 @@ public class ReviewController {
 	public String removeReviewComment(ReviewCommentVO rc, Principal principal) {
 		
 		long grnum = rc.getGrnum();
-		String cid = principal.getName();
-		
-		if(cid == null) {
-			return "redirect:/review/reviewDetail/" + grnum;
+		if(principal != null) {
+			String cid = principal.getName();
+			if(cid == null) {
+				return "redirect:/review/reviewDetail/" + grnum;
+			}
 		}
 		
 		commentService.removeReviewComment(rc);
