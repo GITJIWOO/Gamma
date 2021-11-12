@@ -1,8 +1,11 @@
+
 /*  미완성 테이블
+
     consumerPicture
     gamePicture
     consumerPayment
 */
+
 
 /*  게임 테이블
     gnum = 게임 식별 번호
@@ -16,6 +19,7 @@
     등급
     게임 사이트
     동영상 주소
+
 */
 
 CREATE SEQUENCE game_num;
@@ -36,6 +40,7 @@ SELECT * FROM game;
 INSERT INTO game 
 VALUES (game_num.nextval, '배그', TO_DATE('2021/09/24 ', 'YYYY/MM/DD '), 'duo', 'dou', 18000, 'good', 18, 'www.bg.com', 'www.youtube.com/2312eqeqw');
 
+
 /*  게임 시스템 요구 사항
     gnum = 게임 식별 번호(외래키)
     운영체제
@@ -44,6 +49,7 @@ VALUES (game_num.nextval, '배그', TO_DATE('2021/09/24 ', 'YYYY/MM/DD '), 'duo'
     그래픽
     DirectX
     저장공간
+
 */
 CREATE SEQUENCE gamerequirement_num;
 CREATE TABLE gameRequirement (
@@ -62,6 +68,7 @@ SELECT * FROM gamerequirement;
 INSERT INTO gamerequirement VALUES (gamerequirement_num.nextval, 23,'a', 'a','a','a','a','a');
 select * from gamerequirement left join game using (gnum);
 
+
 /*  사용자 테이블
     cnum = 사용자 식별 번호
     cid = 아이디
@@ -69,6 +76,7 @@ select * from gamerequirement left join game using (gnum);
     password = 비밀번호
     nickname = 닉네임
     cadmin = 관리자 여부(0 = 일반 사용자)
+
 */
 
 CREATE SEQUENCE consumer_num INCREMENT BY 1 START WITH 1;
@@ -80,29 +88,42 @@ CREATE TABLE consumer (
     nickname VARCHAR(20) NOT NULL UNIQUE,
     cadmin NUMBER(3) DEFAULT 0
    );
+
+   
+commit;
+ALTER TABLE consumer ADD(user_key VARCHAR(100)DEFAULT 'N');
+
 commit;   
+
 ALTER TABLE consumer MODIFY password VARCHAR2(100);
 ALTER TABLE consumer ADD(userregdate DATE Default sysdate NOT NULL,userupdatedate DATE Default sysdate NOT NULL);
 ALTER TABLE consumer ADD UNIQUE(userphone);
 INSERT INTO consumer(cnum, cid, email, password, nickname, cadmin) 
+
+SELECT * FROM consumer; 
+SELECT * FROM consumer_auth;
+
     VALUES(consumer_num.nextval,'kjw011231', 'kjw0111231@gmail.com', 'rlawldn', '김지우', 1);
 INSERT INTO consumer(cnum, cid, email, password, nickname, cadmin) 
     VALUES(consumer_num.nextval,'cho', 'chocc', 'aaa', 'cho', 0);
  
 SELECT * FROM consumer_auth; 
+
 CREATE TABLE authorities(
 cnum NUMBER ,
 cid VARCHAR2(20) NOT NULL,
 auth varchar2(50) not null,
 constraint fk_authorities_users foreign key(cnum) references consumer(cnum));
 
-
 CREATE TABLE consumer_auth(
     cid VARCHAR2(20) NOT NULL,
     auth varchar2(50) not null,
     constraint fk_consumer_auth foreign key(cid) references consumer(cid)
 );
+
+
 /* 자동 로그인 */
+
 CREATE TABLE persistent_logins(
     username VARCHAR(64) NOT NULL,
     series VARCHAR(64) PRIMARY KEY,
@@ -123,6 +144,7 @@ insert into authorities (cnum,cid,authority) values(504,'admin00','ROLE_ADMIN');
 commit;
 
 /* 유저방명록 (각 개인 상태창에 보임)*/
+
 DROP TABLE userreply_tbl;
 CREATE table userreply_tbl(
     rno number(10,0),
@@ -144,7 +166,9 @@ CREATE table userreply_tbl(
     ALTER TABLE userreply_tbl RENAME COLUMN replyDate to ureplydate;
     ALTER TABLE userreply_tbl RENAME COLUMN updateDate to uupdatedate;
   
+
     /*프로필 전용 db*/
+
 CREATE TABLE img_tbl(
 user_no varchar2(100) not null,
 uploadPath varchar2(200) not null,
@@ -159,9 +183,11 @@ references consumer(cnum);
     
     
     
+
 /*  사진 테이블
     시간
     외래키
+
     번호
     UUID
 */
@@ -183,9 +209,11 @@ CREATE TABLE gamePicture (
     REFERENCES game(gnum)
 );
 
+
 /*  사용자 라이브러리
     사용자 이메일
     게임 식별 번호
+
 */
 CREATE SEQUENCE consumerlibrary_num;
 CREATE TABLE consumerLibrary (
@@ -198,10 +226,12 @@ CREATE TABLE consumerLibrary (
     REFERENCES game(gnum)
 );
 
+
 /*  게임 태그 테이블
     태그 식별 번호
     gnum = 게임 식별 번호(외래키)
     tag = 태그
+
 */
 select gametag_num.nextval from dual;
 CREATE SEQUENCE gametag_num;
@@ -214,6 +244,7 @@ CREATE TABLE gameTag (
 );
 SELECT * FROM gametag;
 SELECT * FROM game;
+
 INSERT INTO gametag VALUES(gametag_num.nextval, '롤은 타워 깨는 게임이야', 6);
 select * from gametag a left join game b using (gnum);
 
@@ -225,6 +256,7 @@ select * from gametag a left join game b using (gnum);
     grcontent = 본문
     grrecommend = 평가 추천 수
     grdate = 작성일
+
 */
 CREATE SEQUENCE gamereview_num;
 CREATE TABLE gameReview (
@@ -245,6 +277,7 @@ CREATE TABLE gameReview (
     rlnum = 좋아요 식별 번호
     grnum = 게임 리뷰 번호
     cid = 사용자 아이디
+
 */
 CREATE SEQUENCE reviewlike_num;
 CREATE TABLE reviewLike (
@@ -257,11 +290,13 @@ CREATE TABLE reviewLike (
     REFERENCES consumer(cid)
 );
 
+
 /*  리뷰 댓글 테이블
     rcnum = 댓글 식별 번호
     grnum = 리뷰 식별 번호(외래키)
     rccontent = 댓글 본문
     rcdate = 작성일
+
 */
 CREATE SEQUENCE reviewcomment_num;
 CREATE TABLE reviewComment (
@@ -276,17 +311,20 @@ CREATE TABLE reviewComment (
     REFERENCES consumer(cid)
 );
 
+
 /*  친구 테이블
     친구 식별 번호(기본키)
     친구 이메일
     본인 이메일(외래키)
     팔로잉(본인이 다른사람을)
     팔로워(다른사람이 본인을)
+
 */
 CREATE SEQUENCE friends_num;
 CREATE TABLE friends (
     fnum NUMBER,
     follower VARCHAR2(20) NOT NULL,
+
     following VARCHAR2(20) NOT NULL,/* 로그인 계정 */
     CONSTRAINT fk_friends FOREIGN KEY(following) REFERENCES consumer(cid)
 );
@@ -297,6 +335,7 @@ ALTER TABLE friends ADD (fornot NUMBER DEFAULT 1); /* 컬럼 추가 */
     상태글 식별 번호(기본키)
     이메일(외래키)
     상태글 작성일
+
 */
 CREATE SEQUENCE statuscomment_num;
 CREATE TABLE statuscomment(
@@ -306,12 +345,14 @@ CREATE TABLE statuscomment(
     sdate DATE DEFAULT SYSDATE
 );
 
+<
 /*  Question 테이블
     글 식별 번호(기본키)
     제목
     본문
     글쓴이(외래키)
     질문 날짜
+
 */
 CREATE SEQUENCE question_num;
 CREATE TABLE question (
@@ -324,6 +365,7 @@ CREATE TABLE question (
     qdate DATE DEFAULT SYSDATE
 );
 ALTER TABLE question ADD CONSTRAINT pk_question PRIMARY KEY(qnum);
+
 ALTER TABLE question ADD (aornot NUMBER DEFAULT 0); /* 컬럼 추가 */
 UPDATE question SET aornot = (SELECT count(anum) FROM answer WHERE answer.qnum = question.qnum); /* 반영 */
 
@@ -332,6 +374,7 @@ UPDATE question SET aornot = (SELECT count(anum) FROM answer WHERE answer.qnum =
     질문글 식별 번호(외래키)
     본문
     답변 날짜
+
 */
 CREATE SEQUENCE answer_num;
 CREATE TABLE answer (
@@ -347,6 +390,7 @@ ALTER TABLE answer ADD CONSTRAINT pk_answer PRIMARY KEY(anum);
     게임 이름
     게임 가격
     결제 식별 아이디
+
 */
 CREATE TABLE consumerPayment (
     gname VARCHAR2(100) NOT NULL,
@@ -362,6 +406,7 @@ commit;
     찜 식별 번호
     사용자 이메일
     게임 식별 번호
+
 */
 CREATE SEQUENCE gamewishlist_num;
 CREATE TABLE gameWishlist (
@@ -376,6 +421,7 @@ CREATE TABLE gameWishlist (
     장바구니 번호
     사용자 이메일
     게임 식별 번호
+
 */
 CREATE SEQUENCE shoppingbasket_num;
 CREATE TABLE shoppingBasket (

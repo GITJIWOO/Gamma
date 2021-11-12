@@ -110,7 +110,7 @@ h1{
 			// 취소
 			$(".cencle").on("click", function() {
 
-				location.href = "/user/userLogin?cid=${memer.cid}";
+				location.href = "/user/userLogin?cid=${principal.consumer.cid}";
 
 			})
 
@@ -141,7 +141,7 @@ h1{
 
 			}); */
 
-		})
+		});
 	</script>
 </body>
 
