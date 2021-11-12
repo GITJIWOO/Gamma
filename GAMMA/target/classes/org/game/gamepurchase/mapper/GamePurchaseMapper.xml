@@ -9,7 +9,7 @@
 	</select>
 	
 	<insert id="paymentInsert">
-		INSERT INTO consumerPayment(gname, gprice, cid, cpdate, merchant_uid) VALUES (#{gname}, #{gprice}, #{cid}, #{merchant_uid})
+		INSERT INTO consumerPayment(gname, gprice, cid, merchant_uid) VALUES (#{gname}, #{gprice}, #{cid}, #{merchant_uid})
 	</insert>
 	
 </mapper>
