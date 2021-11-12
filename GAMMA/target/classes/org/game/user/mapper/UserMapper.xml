@@ -74,6 +74,10 @@
 		password=#{password}, email=#{email},nickname=#{nickname} WHERE cid=#{cid}
 	</update>
 	
+	<delete id="authDelete">
+		DELETE FROM consumer_auth
+		WHERE cid=#{cid} 
+	</delete>
 	<!-- 회원탈퇴 -->
 	<delete id="userDelete">
 		DELETE FROM consumer
