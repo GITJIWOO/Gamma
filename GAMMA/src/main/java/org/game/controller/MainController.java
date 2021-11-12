@@ -1,5 +1,6 @@
 package org.game.controller;
 
+import java.security.Principal;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -30,20 +31,20 @@ public class MainController {
 	private GameInfoService gameInfoService;
 	
 	@GetMapping("/main")
-	public String gammaMain(HttpSession session, Model model) {
-		
-		String cid = (String)session.getAttribute("session_cid");
-		
+	public String gammaMain(Principal principal, Model model) {
+
+		if(principal != null) {
+			String cid = principal.getName();
+			model.addAttribute("cid", cid);
+			if(cid != null) {
+				ConsumerVO consumer = userMapper.userGet(cid);
+				model.addAttribute("consumer", consumer);
+			}
+		}
 		List<GameInfoVO> latestGame = gameInfoService.latestGame();
 		List<GameInfoVO> randomList = gameInfoService.randomList();
 		List<GameInfoVO> actionList = gameInfoService.actionList();
 		
-		if(cid != null) {
-			ConsumerVO consumer = userMapper.userGet(cid);
-			model.addAttribute("consumer", consumer);
-		}
-		
-		model.addAttribute("cid", cid);
 		model.addAttribute("latestGame", latestGame);
 		model.addAttribute("randomList", randomList);
 		model.addAttribute("actionList", actionList);

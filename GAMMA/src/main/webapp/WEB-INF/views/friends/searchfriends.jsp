@@ -289,10 +289,13 @@
 				<div class="userList__proBack"><img src="/resources/css/image/friends.png" width="700" height="250"/></div>
 				<div class="userList__cid">${userList.cid }(${userList.nickname })</div>
 				<!-- 해당 유저 프로필로 이동하고 거기서 친구 추가 혹은 삭제 로직 진행, url 바꾸면서 아래 hidden 삭제 예정 -->
-				<form action="/user/userPro" method="post">
+				<form action="/user/userPro?cid=" method="get">
+					<input type="hidden" name="cid" value="${userList.cid }" />
+				<!-- 
 					<input type="hidden" name="following" value="${param.cid }" />
 					<input type="hidden" name="follower" value="${userList.cid }" />
 					<input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }"/>
+				 -->
 					<input class="profileBtn notyet" type="submit" value="프로필 보기" />
 				</form>
 			</div>
@@ -344,11 +347,11 @@
     const backGrounds = document.querySelectorAll(".background");
     userLists.forEach(function(userList){
     	userList.addEventListener("mouseover", function(event){
-    		this.getElementsByTagName('input')[3].classList.remove("notyet");
+    		this.getElementsByTagName('input')[1].classList.remove("notyet");
     		this.children[0].classList.remove("notyet");
     	});
     	userList.addEventListener("mouseout", function(event){
-    		this.getElementsByTagName('input')[3].classList.add("notyet");
+    		this.getElementsByTagName('input')[1].classList.add("notyet");
     		this.children[0].classList.add("notyet");
     	});
     });

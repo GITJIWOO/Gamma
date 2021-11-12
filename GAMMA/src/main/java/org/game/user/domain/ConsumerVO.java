@@ -13,6 +13,7 @@ public class ConsumerVO {
 	private String email;
 	private String password;
 	private String nickname;
+	private String user_key;
 	private Long cadmin;
 	private Date userregdate;
 	private Date userupdatedate;

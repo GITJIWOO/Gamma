@@ -1,21 +1,23 @@
 <%@page import="org.springframework.web.util.UrlPathHelper"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
 <!DOCTYPE html>
 <html>
 <head>
-<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
-<link rel="icon" type="image/png" href="http://example.com/myicon.png">
-<link rel="stylesheet" href="/resources/css/styles.css" />
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous"><!-- Bootstrap cdn 설정 -->
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>	
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">	
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap-theme.min.css">	
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 <script src="<c:url value="/resources/js/main.js"/>"></script>
+<link rel="stylesheet" href="/resources/css/styles.css" />
+<link rel="icon" type="image/png" href="http://example.com/myicon.png">
 <style>
-* {
-	padding: 5px;
-	margin: 5px;
-	}
 .display {
   display: flex;
   flex-direction: row;
@@ -119,7 +121,7 @@
   color: white;
 }
 .main {
-  width: 100%;
+  width: 82%;
   padding-left: 18%;
   height: 100%;
   position: relative;
@@ -158,36 +160,44 @@
 	flex-flow: row;
 	align-items: center;
 	margin: 10px;
+	height:100px;
 }
 .consumer__imgPro {
 	float: left;
 	padding: 0;
 	margin: 0;
+	width: 100px;
 }
 .conimg {
-	width: 100px;
-	height: 100px;
+	width: 130px;
+	height: 130px;
 }
 .consumer__nickname {
-	float: right;
+	float: left;
 	font-size: 25px;
 	font-weight: bold;
 	color: white;
-	height: 100px;
-	display: flex;
-	flex-flow: row;
+	height: 70px;
 	align-items: center;
 	width: 250px;
+	margin:0;
+	padding:0;
+	line-height:60%;
+	
+}
+.logout{
+	font-size:10px; 
+	background-color:black;
 }
 .consumer__info {
 	background-color: white;
-	border: 1px solid black;
+	border: 2px solid black;
 	font-size: 120%;
 	display: none;
 	position: absolute;
-	top: 50px;
+	top: 40px;
 	left: 100%;
-	width: 120px;
+	width: 130px;
 	border-radius: 10%;
 	text-align:left;
  }
@@ -310,7 +320,6 @@ position:relative;
 
 </head>
 <body>
-
     <div class="display">
       <!-- side-bar -->
       <div class="side-bar">
@@ -337,9 +346,12 @@ position:relative;
         <!-- category -->
         <div class="side-bar__row">
           <span><a href="/gameInfo/gamelist">게임 스토어</a></span>
-          <c:if test="${member.cid ne null}">
+         <sec:authorize access="isAuthenticated()">
+          	<sec:authentication property="principal" var="principal" />
+          <c:if test="${principal.consumer.cid ne null}">
           	<span><a href="/library/conLibrary?cid=${cid}">라이브러리</a></span>
           </c:if>
+          </sec:authorize>
         </div>
         <!-- qna -->
         <div class="side-bar__row">
@@ -349,34 +361,28 @@ position:relative;
         </div>
         <!-- about user -->
         <div class="side-bar__row">
-          <!-- c:if로 로그인 전에는 회원가입+로그인 / 로그인 후에는 프로필 -->
-          <c:if test="${member.cid eq null}">
-            <div class="loginBtn">
-		        <span><a href="/user/userLogin" class="loginA">로그인</a></span>
-            </div>
-            <div class="joinBtn">
-		        <span><a href="/user/userJoin" class="joinA">가입하기</a></span>
-            </div>
-          </c:if>
-          <c:if test="${member.cid ne null}">
+		            <sec:authorize access="isAuthenticated()">
+          	<sec:authentication property="principal" var="secuInfo" />
 	          <div class="consumer">
 	          	  <div class="consumer__imgPro">
 			        <img class="conimg" src="/resources/css/image/chaIcon.png"/>
 	          	  </div>
 		          <div class="consumer__nickname">
-		          	<p>${member.cid}</p>
+		          	<p>${secuInfo.consumer.nickname}</p>
+		          	<form action="/user/userLogout" method="post">
+						<input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }"/>
+						<input class="logout" type="submit" value="LOGOUT" />
+					</form>
 		          </div>
 		          <div class="consumer__info">
-	   					<a href="/user/userGet">* 유저정보창</a><br/>
-
-	   				<a href="/user/userPro">* 유저프로필창</a><br/>
+	   				<a href="/user/userGet">* 유저정보창</a><br/>
 	   				<a href="/user/userLogout">* 로그아웃</a><br/>
 	   				<a href="/friends/followerlist">* 팔로워리스트</a><br/>
 	   				<a href="/friends/followinglist">* 팔로윙리스트</a><br/>
 	   				<a href="/friends/searchfriends">* 친구 검색</a><br/>
 		   		  </div>
 	          </div>
-          </c:if>
+          </sec:authorize>
         </div>
       </div>
       <div class="main">
@@ -408,53 +414,53 @@ position:relative;
 
 									</div>
 							</div>
+							<sec:authorize access="isAuthenticated()">
+          	<sec:authentication property="principal" var="principal" />
 							<table class="table table1" width="400px">
 
-								<c:if test="${member eq 'kjw011231' }">
+								<c:if test="${principal.consumer.cid eq 'kjw011231' }">
 									<tr>
 										<td>유저고유번호</td>
-										<td><input id="cnum" name="cnum" value="${member.cnum}"
+										<td><input id="cnum" name="cnum" value="${principal.consumer.cnum}"
+
 											readonly="readonly"></td>
 									</tr>
 								</c:if>
 								<tr>
 									<td>아이디</td>
-									<td id="cid" name="cid">${member.cid}</td>
+									<td id="cid" name="cid"><a href="/user/userPro?cid=${principal.consumer.cid }">${principal.consumer.cid}</a></td>
 								</tr>
 								<tr>
 									<td>닉네임</td>
-									<td id="nickname" name="nickname">${member.nickname}</td>
+									<td id="nickname" name="nickname">${principal.consumer.nickname}</td>
 								</tr>
 								<tr>
 									<td>이메일</td>
-									<td id="email" name="email">${member.email}</td>
+									<td id="email" name="email">${principal.consumer.email}</td>
 								</tr>
 								<tr>
 									<td>회원가입일자</td>
-									<td><fmt:formatDate value="${member.userregdate}"
+									<td><fmt:formatDate value="${principal.consumer.userregdate}"
 											pattern="yyy-MM-dd" /></td>
 								</tr>
 								<tr>
 									<td>회원정보 수정일자</td>
-									<td><fmt:formatDate value="${member.userupdatedate}"
+									<td><fmt:formatDate value="${principal.consumer.userupdatedate}"
 											pattern="yyy-MM-dd" /></td>
 								</tr>
 							</table>
+							</sec:authorize>
 						</form>
 						<div class="row">&nbsp;</div>
 						<div class="Mbtn">
-							<c:if test="${member != null}">
-								<a href="/user/userLogin"><button>로그인</button></a>
+								<a href="#"><button>이메일인증</button></a>
 								<a href="/user/userLogout"><button>로그아웃</button></a>
 								<a href="/user/userModify"><button>유저수정</button></a>
 								<a href="/user/userDelete"><button>탈퇴</button></a>
-								<a href="/user/userPro"><button>프로필창</button></a>
 								<a href="/gamepayment/consumerBreakdown"><button>결제 목록</button></a>
-							</c:if>
 						</div>
 						</div>
-				<div class="rowB">
-				</div>
+				
 					</div>
 				
 				</div>
@@ -510,10 +516,10 @@ position:relative;
 	$(document).ready(function() {
 		
 		$(".loginA").on("click", function() {
-			location.href = "/user/userLogin";
+			location.href = "/user/customLogin";
 		});
 		$(".joinA").on("click", function() {
-			location.href = "/user/userJoin";
+			location.href = "/user/join";
 		});
 		$(".consumer").mouseover(function(){
 				$(".consumer__info").show();
@@ -524,7 +530,7 @@ position:relative;
 			});
 			
 	
-		var cnum = ${member.cnum};
+		var cnum = ${principal.consumer.cnum};
 		function getAllList() {
 			$.getJSON("/userrp/all/" + cnum,
 							function(data) {

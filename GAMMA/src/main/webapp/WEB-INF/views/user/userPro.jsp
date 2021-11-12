@@ -3,73 +3,19 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
 <!DOCTYPE html>
 <html>
-<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
-<link rel="icon" type="image/png" href="http://example.com/myicon.png">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous"><!-- Bootstrap cdn 설정 -->
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>	
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">	
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap-theme.min.css">	
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<script src="<c:url value="/resources/js/main.js"/>"></script>
 <link rel="stylesheet" href="/resources/css/styles.css" />
+<link rel="icon" type="image/png" href="http://example.com/myicon.png">
 <style>
-* {
-	padding: 5px;
-	margin: 5px;
-}
-
-.detail{
-	display: flex;
-	flex-flow: row;
-}
-.Mbtn{position:relative;
-	left:50px;}
-.table1{position:relative;
-	left:50px;}
-.rowB{
-text-align: center;
-position:relative;
-top:50px;
-}
-
-.nick {
-	display: flex;
-	flex-flow: row;
-}
-
-h2 {
-	font-weight: bold;
-	font-size: big;
-}
-
-.img {
-	display: flex;
-	flex-flow: row;
-	padding: 10px;
-}
-
-.cidPro {
-	color: orange;
-}
-
-.table {
-	font-weight: bold;
-}
-
-
-strong {
-	color: blue;
-}
-
-#modDiv {
-	border-radius: 2px;
-	width: 310px;
-	height: 140px;
-	background-color: black;
-	position: absolute;
-	padding: 10px;
-	top: 40%;
-	left: 30%;
-	z-index: 1000;
-	width: 310px;
-}
 .display {
   display: flex;
   flex-direction: row;
@@ -137,6 +83,9 @@ strong {
   color: white;
 }
 
+.side-bar__row:last-child {
+  /* margin-top: 500px; */
+}
 .side-bar__row:last-child span {
   display: flex;
   flex-direction: column;
@@ -170,7 +119,7 @@ strong {
   color: white;
 }
 .main {
-  width: 100%;
+  width: 82%;
   padding-left: 18%;
   height: 100%;
   position: relative;
@@ -209,38 +158,106 @@ strong {
 	flex-flow: row;
 	align-items: center;
 	margin: 10px;
+	height:100px;
 }
 .consumer__imgPro {
 	float: left;
 	padding: 0;
 	margin: 0;
+	width: 100px;
 }
 .conimg {
-	width: 100px;
-	height: 100px;
+	width: 130px;
+	height: 130px;
 }
 .consumer__nickname {
-	float: right;
+	float: left;
 	font-size: 25px;
 	font-weight: bold;
 	color: white;
-	height: 100px;
-	display: flex;
-	flex-flow: row;
+	height: 70px;
 	align-items: center;
 	width: 250px;
+	margin:0;
+	padding:0;
+	line-height:60%;
+	
+}
+.logout{
+	font-size:10px; 
+	background-color:black;
 }
 .consumer__info {
 	background-color: white;
-	border: 1px solid black;
+	border: 2px solid black;
+	font-size: 120%;
 	display: none;
 	position: absolute;
-	top: 50px;
+	top: 40px;
 	left: 100%;
-	width: 120px;
+	width: 130px;
 	border-radius: 10%;
 	text-align:left;
  }
+.detail{
+	display: flex;
+	flex-flow: row;
+}
+.modAub{
+	position:relative;
+	left:50px;
+}
+
+.table1{position:relative;
+	left:50px;}
+.rowB{
+text-align: center;
+position:relative;
+top:50px;
+}
+
+.nick {
+	display: flex;
+	flex-flow: row;
+}
+
+h2 {
+	font-weight: bold;
+	font-size: big;
+}
+
+.img {
+	display: flex;
+	flex-flow: row;
+	padding: 10px;
+}
+
+.cidPro {
+	color: orange;
+}
+
+.table {
+	font-weight: bold;
+}
+
+
+strong {
+	color: blue;
+}
+
+#modDiv {
+	border-radius: 2px;
+	width: 310px;
+	height: 140px;
+	background-color: black;
+	position: absolute;
+	padding: 10px;
+	top: 40%;
+	left: 30%;
+	z-index: 1000;
+	width: 310px;
+}
+
 modBtn {
 	display: flex;
 	flex-flow: row;
@@ -290,6 +307,10 @@ position:relative;
 	font-weight: bold;
 	color: white;
 }
+.gameImg {
+	height: 100px;
+	width: 100px;
+}
 </style>
 <meta charset="UTF-8">
 
@@ -304,8 +325,8 @@ position:relative;
 			<!-- logo -->
 			<div class="side-bar__row">
 				<!-- 클릭하면 main화면으로 돌아오도록 a 태그 수정 -->
-				<span><a href="#"><img
-						src="/resources/css/image/logo.png" /></a></span>
+				<span><a href="#">
+				<img src="/resources/css/image/logo.png" /></a></span>
 			</div>
 			<!-- search -->
 			<div class="side-bar__row">
@@ -325,33 +346,25 @@ position:relative;
 					href="#">자주하는 질문</a></span>
 			</div>
 				<div class="side-bar__row">
-					<c:if test="${member == null }">
-            <div class="loginBtn">
-		        <span><a href="/user/userLogin" class="loginA">로그인</a></span>
-            </div>
-            <div class="joinBtn">
-		        <span><a href="/user/userJoin" class="joinA">가입하기</a></span>
-            </div>
-          </c:if>
-          <c:if test="${member != null }">
 	          <div class="consumer">
 	          	  <div class="consumer__imgPro">
 			        <img class="conimg" src="/resources/css/image/chaIcon.png"/>
 	          	  </div>
 		          <div class="consumer__nickname">
-		          	<p>${member.cid}</p>
+		          	<p>${nickname}</p>
+		          	<form action="/user/userLogout" method="post">
+						<input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }"/>
+						<input class="logout" type="submit" value="LOGOUT" />
+					</form>
 		          </div>
 		          <div class="consumer__info">
-
 	   				<a href="/user/userGet">* 유저정보창</a><br/>
-	   				<a href="/user/userPro">* 유저프로필창</a><br/>
 	   				<a href="/user/userLogout">* 로그아웃</a><br/>
 	   				<a href="/friends/followerlist">* 팔로워리스트</a><br/>
 	   				<a href="/friends/followinglist">* 팔로윙리스트</a><br/>
 	   				<a href="/friends/searchfriends">* 친구 검색</a><br/>
 		   		  </div>
 	          </div>
-          </c:if>
         </div>
       </div>
 			<!-- about user -->
@@ -365,34 +378,37 @@ position:relative;
 								<img class="imgProA" src="/resources/css/image/chaIcon.png" />
 							</div>
 							<table class="table table1" width="400px">
-								<c:if test="${member eq 'kjw011231' }">
+								<c:if test="${cid eq 'kjw011231' }">
 									<tr>
 										<td>유저고유번호</td>
-										<td><input id="cnum" name="cnum" value="${member.cnum}"
+										<td><input id="cnum" name="cnum" value="${cnum}"
 											readonly="readonly"></td>
 									</tr>
 								</c:if>
 							<tr>
 							<td>닉네임</td>
-								<td id="nickname" name="nickname">${member.nickname}</td>
+								<td id="nickname" name="nickname">${nickname}</td>
 							</tr>
 								
 							</table>
 						</form>
 					
 						<br> <br /> <br />
+				<sec:authorize access="isAuthenticated()">
+          	<sec:authentication property="principal" var="principal" />
 						<div class="modAub">
 							<div class="row">
 								<div class="col-md-3">
-									<p>${member.nickname }(방명록)</p>
+									<p>${principal.consumer.nickname }(방명록)</p>
 								</div>
 								<div class="col-md-6">
 									<textarea style="resize: none;" name="reply" id="newReply"
 										rows="2" cols="30"></textarea>
 									<input type="hidden" name="nickname"
-										value="${member.nickname }" id="newReplyWriter" readonly>
+										value="${principal.consumer.nickname }" id="newReplyWriter" readonly>
 								</div>
 								<div class="col-md-3">
+								<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 									<button id="replyAddBtn">방명록 남기기</button>
 									<br />
 								</div>
@@ -401,6 +417,7 @@ position:relative;
 
 							</ul><br/>
 						</div>
+						</sec:authorize>
 						</div>
 				<div class="rowB">
 					<p>보유중인 게임</p>
@@ -449,8 +466,9 @@ position:relative;
 	</div>
 
 	<script>
-	
-		var cnum = ${member.cnum};
+	var csrfHeaderName = "${_csrf.headerName}"
+		var csrfTokenValue="${_csrf.token}"
+		var cnum = ${principal.consumer.cnum};
 		function getAllList() {
 			$.getJSON("/userrp/all/" + cnum,function(data) {
 								//data 변수가 바로 얻어온 json데이터의 집합
@@ -517,6 +535,9 @@ position:relative;
 					"Content-Type" : "application/json",
 					"X-HTTP-Method-Override" : "POST"
 				},
+				 beforeSend : function(xhr) {
+				        xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+				   },
 				dataType : 'text',
 				data : JSON.stringify({
 					cnum : cnum,
@@ -542,6 +563,9 @@ position:relative;
 			var rno = $(".modal-title").html();
 			console.log("rno얻어왓니?딜리트"+rno)
 			$.ajax({
+				 beforeSend : function(xhr) {
+				        xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+				   },
 				type : 'delete',
 				url : '/userrp/' + rno,
 				// 삭제로직은 rno만 전달함
@@ -573,6 +597,9 @@ position:relative;
 					"Content-Type" : "application/json",
 					"X-HTTP-Method-Override" : "PUT"
 				},
+				 beforeSend : function(xhr) {
+				        xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+				   },
 				dataType : 'text',
 				data : JSON.stringify({
 					reply : reply
