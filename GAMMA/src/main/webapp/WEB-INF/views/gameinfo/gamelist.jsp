@@ -1,50 +1,26 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
+<%@ page language="java" pageEncoding="UTF-8"
+	contentType="text/html; charset=UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
-<style type="text/css">
-h1>a {
-	text-decoration: none
-}
-.consumer {
-		width: 18%;
-		position: relative;
-		text-align: center;
-		height: 10%;
-		buttom: 100;
-	}
-	.consumer__imgPro {
-		float: left;
-		padding: 0;
-		margin: 0;
-	}
-	.conimg {
-		width: 100px;
-		height: 100px;
-	}
-	.consumer__nickname {
-		float: right;
-		font-size: 25px;
-		font-weight: bold;
-		color: white;
-	}
-	.consumer__info {
-		display: none;
-		position: absolute;
-		left: 100%;
-	}
-</style>
+<meta charset="UTF-8">
+<title>Gamma</title>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous"><!-- Bootstrap cdn 설정 -->
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>	
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">	
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap-theme.min.css">	
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<script src="<c:url value="/resources/js/main.js"/>"></script>
 <link rel="stylesheet" href="/resources/css/styles.css" />
 <link rel="icon" type="image/png" href="http://example.com/myicon.png">
-<meta charset="UTF-8">
-<title>Insert title here</title>
+</head>
 </head>
 <body>
-	<div class="display">
+    <div class="display">
       <!-- side-bar -->
       <div class="side-bar">
         <!-- logo -->
@@ -83,28 +59,32 @@ h1>a {
         <!-- about user -->
         <div class="side-bar__row">
           <!-- c:if로 로그인 전에는 회원가입+로그인 / 로그인 후에는 프로필 -->
-          <c:if test="${cid eq null}">
-            <div class="loginBtn">
-		        <span><a href="/user/userLogin" class="loginA">로그인</a></span>
-            </div>
-            <div class="joinBtn">
-		        <span><a href="/user/userJoin" class="joinA">가입하기</a></span>
-            </div>
-          </c:if>
+          <c:if test="${cid eq null }">
+	          <div class="loginBtn">
+	        	<span><a href="/user/userLogin" class="loginA">로그인</a></span>
+	          </div>
+	          <div class="joinBtn">
+	        	<span><a href="/user/agreeJoin" class="joinA">가입하기</a></span>
+	          </div>
+       	  </c:if>
           <c:if test="${cid ne null}">
 	          <div class="consumer">
 	          	  <div class="consumer__imgPro">
 			        <img class="conimg" src="/resources/css/image/chaIcon.png"/>
 	          	  </div>
 		          <div class="consumer__nickname">
-		          	<p>${cid}</p>
+		          	<p style="font-size:10px; color:white;">${secuInfo.consumer.nickname}</p>
 		          </div>
 		          <div class="consumer__info">
 	   				<a href="/user/userGet">* 유저정보창</a><br/>
 	   				<a href="/user/userPro">* 유저프로필창</a><br/>
-	   				<a href="/user/userLogout">* 로그아웃</a><br/>
+					<form action="/user/userLogout" method="post">
+						<input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }"/>
+						<input type="submit" value="LOGOUT" />
+					</form><br/>
 	   				<a href="/friends/followerlist">* 팔로워리스트</a><br/>
 	   				<a href="/friends/followinglist">* 팔로윙리스트</a><br/>
+	   				<a href="/friends/searchfriends">* 친구 검색</a><br/>
 		   		  </div>
 	          </div>
           </c:if>
@@ -122,8 +102,10 @@ h1>a {
 	${gameList }<br/>
 	${btnMaker }<br/>
 	-->
-	<a href="/gameInfo/gameregister"><input type="button" value="게임등록"
-		style="float: right;"></a>
+	 <a href="/gameInfo/gameregister">
+	<input type="button" value="게임등록" style="float: right;"></a>
+	
+	
 	<table class="table table-hover">
 		<tr>
 			<th>게임이름</th>
@@ -150,7 +132,7 @@ h1>a {
   	btnMaker의 prev가 true일떄만 뒤로가기 버튼 출력-->
 			<c:if test="${btnMaker.prev }">
 				<li class="page-item"><a class="page-link"
-					href="/gameinfo/gamelist?pageNum=${btnMaker.startPage -1 }&searchType=${btnMaker.cri.searchType}&keyword=${btnMaker.cri.keyword}"
+					href="/gameInfo/gamelist?pageNum=${btnMaker.startPage -1 }&searchType=${btnMaker.cri.searchType}&keyword=${btnMaker.cri.keyword}"
 					aria-label="Previous"> <span aria-hidden="true">&laquo;</span>
 				</a></li>
 			</c:if>
@@ -169,7 +151,7 @@ h1>a {
 			<!-- next 버튼 -->
 			<c:if test="${btnMaker.next }">
 				<li class="page-item"><a class="page-link"
-					href="/gameinfo/gamelist?pageNum=${btnMaker.endPage + 1 }&searchType=${btnMaker.cri.searchType}&keyword=${btnMaker.cri.keyword}"
+					href="/gameInfo/gamelist?pageNum=${btnMaker.endPage + 1 }&searchType=${btnMaker.cri.searchType}&keyword=${btnMaker.cri.keyword}"
 					aria-label="Next"> <span aria-hidden="true">&raquo;</span>
 				</a></li>
 			</c:if>
@@ -253,8 +235,8 @@ h1>a {
             <div>CREATORS&nbsp;&nbsp;김영훈, 김지우, 조훈현, 최재인</div>
             <div>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;</div>
             <div>
-              CONTACT&nbsp;&nbsp;<a href="https://github.com/GITJIWOO"
-                >https://github.com/GITJIWOO</a
+              CONTACT&nbsp;&nbsp;<a href="https://github.com/GITJIWOO/Game-Project"
+                >https://github.com/GITJIWOO/Game-Project</a
               >
             </div>
           </div>
@@ -265,7 +247,7 @@ h1>a {
       </div>
     </div>
 
-	<script>
+<!-- 	<script>
 		$(document).ready(function() {
 			// 취소
 			$(".loginBtn").on("click", function() {
@@ -284,7 +266,7 @@ h1>a {
 			});
 			
 		});
-    </script>
+    </script> -->
 	
 </body>
 </html>

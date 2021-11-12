@@ -1,7 +1,9 @@
 package org.game.gameinfo.mapper;
 
+
+
 import org.game.gameinfo.domain.GameInfoVO;
-import org.game.gameinfo.domain.RequirementVO;
+
 
 public interface RequirementMapper {
 
