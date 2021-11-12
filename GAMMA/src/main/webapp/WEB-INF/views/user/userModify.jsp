@@ -109,7 +109,7 @@ h1{
 		// 취소
 		$(".cencle").on("click", function() {
 
-			location.href = "/user/userGet";
+			window.close();
 
 		});
 

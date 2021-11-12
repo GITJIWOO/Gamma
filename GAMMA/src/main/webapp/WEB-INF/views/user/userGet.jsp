@@ -290,18 +290,6 @@ strong {
 	color: blue;
 }
 
-#modDiv {
-	border-radius: 2px;
-	width: 310px;
-	height: 140px;
-	background-color: black;
-	position: absolute;
-	padding: 10px;
-	top: 40%;
-	left: 30%;
-	z-index: 1000;
-	width: 310px;
-}
 
 modBtn {
 	display: flex;
@@ -555,9 +543,8 @@ button {
 			myBtn.onclick = theRemove;
 		}
 		function theRemove() {
-			window
-					.open("/user/userDelete.jsp", "naver",
-							"width=600px,height=600px",
+			window.open("/user/userDelete", "userDelete",
+							"width=400px,height=430px",
 							"left=200px,top=20px,scrollbars=yes, toolbar=no,location=no");
 		}
 
@@ -566,20 +553,18 @@ button {
 			myTtn.onclick = theModify;
 		})
 		function theModify() {
-			window
-					.open("/user/userModify.jsp", "naver",
-							"width=600px,height=600px",
-							"left=200px,top=20px,scrollbars=yes, toolbar=no,location=no");
+			window.open("/user/userModify", "userModify",
+							"width=450px,height=500px",
+							"left=400px,top=100px,scrollbars=yes, toolbar=no,location=no, fullscreen=no");
 		}
 		window.addEventListener('load', function() {
 			var myEtn = document.getElementById("emailAcc");
 			myEtn.onclick = theEmail;
 		})
 		function theEmail() {
-			window
-					.open("/.jsp", "naver",
+			window.open("/", "EmailAcc",
 							"width=600px,height=600px",
-							"left=200px,top=20px,scrollbars=yes, toolbar=no,location=no");
+							"left=400px,top=100px,scrollbars=yes, toolbar=no,location=no,fullscreen=no");
 		}
 	</script>
 </body>
