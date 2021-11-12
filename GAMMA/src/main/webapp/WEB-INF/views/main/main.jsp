@@ -72,7 +72,7 @@
 			        <img class="conimg" src="/resources/css/image/chaIcon.png"/>
 	          	  </div>
 		          <div class="consumer__nickname">
-		          	<p style="font-size:20px; color:white;">${secuInfo.consumer.nickname}</p><br/>
+		          	<p style="font-size:20px; color:white;">${nickname}</p><br/>
 					<form action="/user/userLogout" method="post">
 						<input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }"/>
 						<input class="logout" type="submit" value="LOGOUT" />

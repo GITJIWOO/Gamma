@@ -77,7 +77,7 @@
 	<!-- 회원탈퇴 -->
 	<delete id="userDelete">
 		DELETE FROM consumer
-		WHERE cid=#{cid} AND password =#{password}
+		WHERE cid=#{cid} 
 	</delete>
 	
 	<!-- 재인 추가 -->
@@ -89,6 +89,7 @@
 		<result property="password" column="password" />
 		<result property="nickname" column="nickname" />
 		<result property="cadmin" column="cadmin" />
+		<result property="user_key" column="user_key" />
 		<result property="userregdate" column="userregdate" />
 		<result property="userupdatedate" column="userupdatedate" />
 		<collection property="authList" resultMap="authMap"></collection>		
