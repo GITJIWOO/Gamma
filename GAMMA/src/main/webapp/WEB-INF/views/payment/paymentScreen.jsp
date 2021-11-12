@@ -14,6 +14,9 @@
 	if(${merchant_uid ne null}){
 		requestPay();
 	}
+
+	var csrfHeaderName = "${_csrf.headerName}";
+	var csrfTokenValue="${_csrf.token}";
 	
 	function requestPay() {
 		IMP.init('imp54386294');
@@ -34,6 +37,9 @@
 	        	$.ajax({
 	        		url: "/gamepayment/paymentsuccess",
 	        		type: "post",
+        		    beforeSend : function(xhr) {
+        		    	xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+        		    },
 	        		data: {
 	        			gnum : ${basket.gnum},
 	        			gname : '${basket.gname}',
