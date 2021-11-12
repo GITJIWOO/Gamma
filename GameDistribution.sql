@@ -6,6 +6,33 @@
     consumerPayment
 */
 
+alter table consumerlibrary drop constraint fk_consumerlibrarygnum;
+alter table consumerlibrary add constraint fk_consumerlibrarygnum 
+    foreign key (gnum) references game(gnum) ON DELETE CASCADE;
+    
+alter table gamereview drop constraint fk_gamereviewgnum;
+alter table gamereview add constraint fk_gamereviewgnum 
+    foreign key (gnum) references game(gnum) ON DELETE CASCADE;
+
+alter table shoppingBasket drop constraint fk_shoppingbasketgnum;
+alter table shoppingBasket add constraint fk_shoppingbasketgnum 
+    foreign key (gnum) references game(gnum) ON DELETE CASCADE;
+
+alter table gameTag drop constraint fk_gametag;
+alter table gameTag add constraint fk_gametag 
+    foreign key (gnum) references game(gnum) ON DELETE CASCADE;
+    
+alter table gameRequirement drop constraint fk_gameRequirement;
+alter table gameRequirement add constraint fk_gameRequirement 
+    foreign key (gnum) references game(gnum) ON DELETE CASCADE;
+
+alter table reviewComment drop constraint fk_reviewcommentgrnum;
+alter table reviewComment add constraint fk_reviewcommentgrnum 
+    foreign key (grnum) references gamereview(grnum) ON DELETE CASCADE;
+    
+alter table reviewLike drop constraint fk_reviewlikegrnum;
+alter table reviewLike add constraint fk_reviewlikegrnum 
+    foreign key (grnum) references gameReview(grnum) ON DELETE CASCADE;
 
 /*  게임 테이블
     gnum = 게임 식별 번호
