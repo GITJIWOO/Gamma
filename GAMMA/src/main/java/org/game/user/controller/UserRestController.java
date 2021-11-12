@@ -5,21 +5,27 @@ import java.util.Map;
 import java.util.Random;
 
 import javax.inject.Inject;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.game.user.domain.ConsumerVO;
+import org.game.user.service.UserMailSendService;
 import org.game.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.mail.MailSender;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -29,8 +35,9 @@ public class UserRestController {
 
 	@Inject
 	UserService service;
-	// @Autowired
-	// private JavaMailSender mailSender;
+	
+	@Autowired
+	UserMailSendService mailsender;
 
 	// @Inject
 	// BCryptPasswordEncoder pwdEncoder;
@@ -47,7 +54,13 @@ public class UserRestController {
 		System.out.println("strResult : " + strResult);
 		return new ResponseEntity<String>(strResult, HttpStatus.OK);
 	}
+	@RequestMapping(value = "/reg", method = RequestMethod.POST)
+	public String userRegPass(ConsumerVO userVO, Model model, HttpServletRequest request, HttpSession session) {
+		// 인증 메일 보내기 메서드
+				mailsender.mailSendWithUserKey(userVO.getEmail(), userVO.getCid(), request);
 
+				return "redirect:/";
+			}
 	// 이메일 중복확인 체크
 
 	@ResponseBody
@@ -60,19 +73,17 @@ public class UserRestController {
 		String eResult = result + ""; // 문자열로 바꿔줌
 		return new ResponseEntity<String>(eResult, HttpStatus.OK);
 	}
-
-	/* 비밀번호 찾기 */
+	// e-mail 인증 컨트롤러
 	@ResponseBody
-	@GetMapping("/findpw")
-	public void findPwGET() throws Exception {
-	}
+		@RequestMapping(value = "/key_alter", method = RequestMethod.GET)
+		public String key_alterConfirm(@RequestParam("cid") String cid, @RequestParam("user_key") String key) {
 
-	@ResponseBody
-	@PostMapping(value="/findpw", consumes="application/json", produces= {MediaType.TEXT_PLAIN_VALUE})
-	public void findPwPOST(@RequestBody ConsumerVO userVO, HttpServletResponse response) throws Exception {
-		System.out.println("들어왓나??"+userVO);
-		service.findPw(response, userVO);
-	}
+			mailsender.alter_userKey_service(cid, key);
+
+			return "user/userRegSuccess";
+		}
+
+	
 
 	// 이메일 인증 메서드
 	// @ResponseBody

@@ -140,7 +140,7 @@ var code = "";
 			success : function(result) {
 				console.log(result);
 				if (result == 0) {
-					alert("사용가능한 email입니다.")
+					alert("가입된적이 없는 email입니다.")
 					console.log("사용가능한 이멜");
 					$("#emailChk").attr("value", "Y");
 				} else if (result == 1) {
@@ -293,7 +293,7 @@ var code = "";
 						id="check"></span><br/><br/>
 					<label class="control-label" for="email">Email</label> <br/><input
 						class="mail_input" type="text" id="email" 
-						name="email" /><br/>
+						name="email" value="${param.email}"/><br/>
 					<button class="emailChk" type="button" id="emailChk"
 						onclick="fn_emailChk();" value="N">중복확인</button><br/><br/>
 					<!-- <div class="mail_check_warn">

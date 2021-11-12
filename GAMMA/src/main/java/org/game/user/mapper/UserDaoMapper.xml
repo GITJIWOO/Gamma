@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.game.user.dao.UserDao">
+	<!-- 회원 인증키(난수) 생성 -->
+	<update id="GetKey" parameterType="Map">
+		update consumer set user_key = #{param2} where cid = #{param1}
+	</update>
+	<!-- 회원 인증키(난수) Y로 변경 -->
+	<update id="alter_userKey" parameterType="Map">
+		update consumer set user_key = 'Y' where cid = #{param1} and user_key = #{param2}
+	</update>
+	<!-- 회원 임시 비밀번호-->
+	<update id="searchPassword" parameterType="Map">
+		update consumer set password = #{param3} where cid = #{param1} and email = #{param2}
+		</update>
+		<!-- 정보 얻기 -->
+	<select id="userInfo" resultType="org.game.user.domain.ConsumerVO">
+		select * from consumer where user_id = #{user_id}
+	</select>	
+	</mapper>
+	

@@ -92,8 +92,8 @@ public class GameInfoServiceImpl implements GameInfoService {
 		System.out.println("서비스단 삭제 진입");
 //		log.info("게임 삭제");
 		mapper.deleteGame(gnum);
-		tagMapper.deleteTag(gnum);
-		requirementMapper.deleteRequirement(gnum);
+//		tagMapper.deleteTag(gnum);
+//		requirementMapper.deleteRequirement(gnum);
 //		bascketService.removeConsumerBasket(cid, gnum);
 		
 		

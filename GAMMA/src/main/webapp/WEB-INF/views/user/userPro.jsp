@@ -16,65 +16,6 @@
 <link rel="stylesheet" href="/resources/css/styles.css" />
 <link rel="icon" type="image/png" href="http://example.com/myicon.png">
 <style>
-* {
-	padding: 5px;
-	margin: 5px;
-}
-
-.detail{
-	display: flex;
-	flex-flow: row;
-}
-.Mbtn{position:relative;
-	left:50px;}
-.table1{position:relative;
-	left:50px;}
-.rowB{
-text-align: center;
-position:relative;
-top:50px;
-}
-
-.nick {
-	display: flex;
-	flex-flow: row;
-}
-
-h2 {
-	font-weight: bold;
-	font-size: big;
-}
-
-.img {
-	display: flex;
-	flex-flow: row;
-	padding: 10px;
-}
-
-.cidPro {
-	color: orange;
-}
-
-.table {
-	font-weight: bold;
-}
-
-
-strong {
-	color: blue;
-}
-
-#modDiv {
-	border-radius: 2px;
-	width: 390px;
-	height: 140px;
-	background-color: black;
-	position: absolute;
-	padding: 10px;
-	top: 40%;
-	left: 30%;
-	z-index: 1000;
-}
 .display {
   display: flex;
   flex-direction: row;
@@ -142,6 +83,9 @@ strong {
   color: white;
 }
 
+.side-bar__row:last-child {
+  /* margin-top: 500px; */
+}
 .side-bar__row:last-child span {
   display: flex;
   flex-direction: column;
@@ -175,7 +119,7 @@ strong {
   color: white;
 }
 .main {
-  width: 100%;
+  width: 82%;
   padding-left: 18%;
   height: 100%;
   position: relative;
@@ -214,38 +158,106 @@ strong {
 	flex-flow: row;
 	align-items: center;
 	margin: 10px;
+	height:100px;
 }
 .consumer__imgPro {
 	float: left;
 	padding: 0;
 	margin: 0;
+	width: 100px;
 }
 .conimg {
-	width: 100px;
-	height: 100px;
+	width: 130px;
+	height: 130px;
 }
 .consumer__nickname {
-	float: right;
+	float: left;
 	font-size: 25px;
 	font-weight: bold;
 	color: white;
-	height: 100px;
-	display: flex;
-	flex-flow: row;
+	height: 70px;
 	align-items: center;
 	width: 250px;
+	margin:0;
+	padding:0;
+	line-height:60%;
+	
+}
+.logout{
+	font-size:10px; 
+	background-color:black;
 }
 .consumer__info {
 	background-color: white;
-	border: 1px solid black;
+	border: 2px solid black;
+	font-size: 120%;
 	display: none;
 	position: absolute;
-	top: 50px;
+	top: 40px;
 	left: 100%;
-	width: 120px;
+	width: 130px;
 	border-radius: 10%;
 	text-align:left;
  }
+.detail{
+	display: flex;
+	flex-flow: row;
+}
+.modAub{
+	position:relative;
+	left:50px;
+}
+
+.table1{position:relative;
+	left:50px;}
+.rowB{
+text-align: center;
+position:relative;
+top:50px;
+}
+
+.nick {
+	display: flex;
+	flex-flow: row;
+}
+
+h2 {
+	font-weight: bold;
+	font-size: big;
+}
+
+.img {
+	display: flex;
+	flex-flow: row;
+	padding: 10px;
+}
+
+.cidPro {
+	color: orange;
+}
+
+.table {
+	font-weight: bold;
+}
+
+
+strong {
+	color: blue;
+}
+
+#modDiv {
+	border-radius: 2px;
+	width: 310px;
+	height: 140px;
+	background-color: black;
+	position: absolute;
+	padding: 10px;
+	top: 40%;
+	left: 30%;
+	z-index: 1000;
+	width: 310px;
+}
+
 modBtn {
 	display: flex;
 	flex-flow: row;
@@ -295,6 +307,10 @@ position:relative;
 	font-weight: bold;
 	color: white;
 }
+.gameImg {
+	height: 100px;
+	width: 100px;
+}
 </style>
 <meta charset="UTF-8">
 
@@ -336,6 +352,10 @@ position:relative;
 	          	  </div>
 		          <div class="consumer__nickname">
 		          	<p>${nickname}</p>
+		          	<form action="/user/userLogout" method="post">
+						<input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }"/>
+						<input class="logout" type="submit" value="LOGOUT" />
+					</form>
 		          </div>
 		          <div class="consumer__info">
 	   				<a href="/user/userGet">* 유저정보창</a><br/>
