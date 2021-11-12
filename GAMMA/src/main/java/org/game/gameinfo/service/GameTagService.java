@@ -1,5 +1,6 @@
 package org.game.gameinfo.service;
 
+import java.sql.SQLException;
 import java.util.List;
 
 import org.game.gameinfo.domain.GameInfoVO;
