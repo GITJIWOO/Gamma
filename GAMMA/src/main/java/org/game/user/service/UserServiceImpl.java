@@ -75,6 +75,7 @@ public class UserServiceImpl implements UserService {
 	// 회원탈퇴
 	@Override
 	public void userDelete(ConsumerVO userVO) throws Exception {
+		mapper.authDelete(userVO);
 		mapper.userDelete(userVO);
 	}
 

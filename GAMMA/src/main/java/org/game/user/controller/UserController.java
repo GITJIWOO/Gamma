@@ -335,10 +335,14 @@ public class UserController {
 	@PreAuthorize("hasAnyRole('ROLE_MEMBER')")
 	@PostMapping("/userDelete")
 	public String memberDelete(ConsumerVO vo, HttpSession session, RedirectAttributes rttr) throws Exception {
-		
+
+		ConsumerVO login = service.userGet(vo.getCid());
+
+		 boolean pwdMatch = pwdEncoder.matches(vo.getPassword(),  login.getPassword()); 
+		if(pwdMatch==true) {
 		service.userDelete(vo);
-		SecurityContextHolder.clearContext();
 		session.invalidate();
+		}
 		return "/user/userLogin";
 	}
 	
