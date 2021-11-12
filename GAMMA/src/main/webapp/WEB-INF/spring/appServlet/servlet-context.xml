@@ -28,7 +28,7 @@
 	</beans:bean>
 
 
-	<!-- WebSocket 생성시 설정한 url 처리 -->
+	<!-- WebSocket 생성시 설정한 url 처리 
 	<mvc:annotation-driven></mvc:annotation-driven>
 	<mvc:default-servlet-handler />
 	<mvc:view-controller path="/friends/chat" view-name="/friends/chat" />
@@ -40,7 +40,7 @@
 			<beans:bean class="org.springframework.web.socket.server.support.HttpSessionHandshakeInterceptor"/>
 		</websocket:handshake-interceptors>
 		<websocket:sockjs/>
-	</websocket:handlers>
+	</websocket:handlers>-->
 	
 	
 	<!-- 회원가입 메일 인증 -->
