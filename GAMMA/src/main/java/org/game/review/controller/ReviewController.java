@@ -121,10 +121,8 @@ public class ReviewController {
 		
 		long gnum = review.getGnum();
 		if(principal != null) {
-			String cid = principal.getName();
-			if(cid == null) {
-				return "redirect:/review/reviewList/" + gnum;
-			}
+		} else {
+			return "rredirect:/user/userLogin";
 		}
 		
 		reviewService.writeReview(review);
@@ -141,9 +139,8 @@ public class ReviewController {
 		long grnum = review.getGrnum();
 		if(principal != null) {
 			String cid = principal.getName();
-			if(cid == null) {
-				return "redirect:/review/reviewDetail/" + grnum;
-			}
+		} else {
+			return "rredirect:/user/userLogin";
 		}
 		
 		reviewService.modifyReview(review);
