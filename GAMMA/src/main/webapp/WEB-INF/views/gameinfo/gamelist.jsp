@@ -16,9 +16,8 @@
 <link rel="icon" type="image/png" href="http://example.com/myicon.png">
 <style type="text/css">
 .content_list{
-	padding-left: 250px;
+	padding-left: 150px;
 	padding-top: 30px;
-	margin: 50px;
 }
 .search_list{
 	
@@ -27,12 +26,13 @@
 .game_list{
 	outline: 1px solid black;
 	border: none;
-	display: inline; 
+	display: inline;  
 	/*background: gray;*/
 	
 }
-#ttt{
-	
+.gname{
+	font-size: large;
+	font-style: italic;
 }
 
 </style>
@@ -132,15 +132,17 @@
 				 <div class="game_list">
 		 			<div class="row" id="ttt" onmouseover="mouseOver()" onmouseout=""
 		 				style="cursor: pointer;" onclick="location.href='/gameInfo/get?gnum=${gameList.gnum }&pageNum=${btnMaker.cri.pageNum }&searchType=${btnMaker.cri.searchType}&keyword=${btnMaker.cri.keyword}';">
-      					<div class="col-md-5" >
+      					<div class="col-md-4" >
 							<img src="${gameList.gpicture }"
 							 width="300px" height="100px" />
 						</div>
-						<div class="col-md-7">
-	      					<b>${gameList.gname }</b><br><br>
-	      					₩&nbsp;${gameList.gprice }<br><br>
-	      					${gameList.tagname }
+						<div class="col-md-5">
+	      					<br><span class="gname">${gameList.gname }</span><br><br><br>
+	      					${gameList.glaunch }
 	      				</div>
+	      				<div class="col-md-3" >
+	      					₩&nbsp;${gameList.gprice }<br><br>
+						</div>
       				</div>
       			</div>
       		</c:forEach>
