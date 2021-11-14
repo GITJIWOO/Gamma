@@ -1,5 +1,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
 <%@ page language="java" pageEncoding="UTF-8"
 	contentType="text/html; charset=UTF-8"%>
 <!DOCTYPE html>
@@ -118,19 +119,19 @@
 			        <img class="conimg" src="/resources/css/image/chaIcon.png"/>
 	          	  </div>
 		          <div class="consumer__nickname">
-		          	<p style="font-size:10px; color:white;">${secuInfo.consumer.nickname}</p>
+		          	<p style="color:white;"><sec:authentication property="principal.consumer.nickname"/></p>
 		          </div>
 		          <div class="consumer__info">
 	   				<a href="/user/userGet">* 유저정보창</a><br/>
 	   				<a href="/user/userPro">* 유저프로필창</a><br/>
-					<form action="/user/userLogout" method="post">
-						<input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }"/>
-						<input type="submit" value="LOGOUT" />
-					</form><br/>
 	   				<a href="/friends/followerlist">* 팔로워리스트</a><br/>
 	   				<a href="/friends/followinglist">* 팔로윙리스트</a><br/>
 	   				<a href="/friends/searchfriends">* 친구 검색</a><br/>
 		   		  </div>
+				  <form action="/user/userLogout" method="post">
+					  <input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }"/>
+					  <input class="logout" type="submit" value="로그아웃" />
+				  </form>
 	          </div>
           </c:if>
         </div>
@@ -235,8 +236,8 @@
             <div>CREATORS&nbsp;&nbsp;김영훈, 김지우, 조훈현, 최재인</div>
             <div>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;</div>
             <div>
-              CONTACT&nbsp;&nbsp;<a href="https://github.com/GITJIWOO"
-                >https://github.com/GITJIWOO</a
+              CONTACT&nbsp;&nbsp;<a href="https://github.com/GITJIWOO/Game-Project"
+                >https://github.com/GITJIWOO/Game-Project</a
               >
             </div>
           </div>
