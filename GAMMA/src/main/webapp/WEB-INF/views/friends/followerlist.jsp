@@ -91,6 +91,12 @@
     <a href="/friends/followerlist">팔로우한 친구</a>
     <a href="/friends/followinglist">팔로잉한 친구</a>
  -->
+ 	<c:if test="${unfollow ne null }">
+ 		<script type="text/javascript">
+ 			alert("팔로우가 취소되었습니다.");
+ 		</script>
+ 	</c:if>
+ 	
     <div class="display">
       <!-- side-bar -->
       <div class="side-bar">

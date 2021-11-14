@@ -85,21 +85,35 @@ button {
 <title>Insert title here</title>
 </head>
 <body>
-<form action="/urest/reg" method="POST">
+<form action="/user/mailCheck" method="POST">
+<sec:authorize access="isAuthenticated()">
+          	<sec:authentication property="principal" var="principal" />
 <!-- 본인확인 이메일 -->
 			<div class="border">
 			<img src="/resources/css/image/mainIcon.png" />
 			<div class="main">
-				<h1 class="IPvalue">로그인</h1>
+				<h1 class="IPvalue">이메일 인증</h1>
 				<label for="email">이메일</label>
-					<input type="text" class="form-control" name="email" id="email" placeholder="E-mail" value="${param.email}" required>${principal.consumer.email}
-					<div class="check_font" id="email_check"></div>
+				<input type="text" class="form-control" name="email" id="email" placeholder="${principal.consumer.email}" value="${principal.consumer.email}" required>
+				<input type="hidden" name="cid" value="${principal.consumer.cid }"/>
 			</div>
 			<input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }" />
-			<button class="btn btn-primary px-3" id="reg_submit">
-					<i class="fa fa-heart pr-2" aria-hidden="true"></i>인증하기
+			<button id="email_check">
+					인증하기
 				</button>
 			</div>
+			</sec:authorize>
 		</form>
+		<script>
+		window.onload('load', function() {
+			var myEtn = document.getElementById("email_check");
+			myEtn.onclick = theEmailCheck;
+		})
+		function theEmailCheck() {
+			window.open("/user/mailCheckOk", "email_check",
+							"width=600px,height=600px",
+							"left=400px,top=100px,scrollbars=yes, toolbar=no,location=no,fullscreen=no");
+		}
+		</script>
 </body>
 </html>

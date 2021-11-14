@@ -4,6 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
 <script src="<c:url value="/resources/js/main.js"/>"></script>
 <link rel="stylesheet" href="/resources/css/styles.css" />
 <link rel="icon" type="image/png" href="http://example.com/myicon.png">

@@ -1,8 +1,10 @@
 package org.game.user.controller;
 
+import java.io.IOException;
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
@@ -13,10 +15,17 @@ import org.game.gamelibrary.domain.ResultLibraryVO;
 import org.game.gamelibrary.service.GameLibraryService;
 import org.game.user.domain.AuthVO;
 import org.game.user.domain.ConsumerVO;
+import org.game.user.domain.CustomUser;
+import org.game.user.naver.NaverLoginBO;
 import org.game.user.service.UserMailSendService;
 import org.game.user.service.UserService;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -26,7 +35,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import com.github.scribejava.core.model.OAuth2AccessToken;
 
 import lombok.extern.log4j.Log4j;
 
@@ -39,7 +51,11 @@ public class UserController {
 	UserService service;
 	@Inject
 	BCryptPasswordEncoder pwdEncoder;
+	
+	@Autowired
+	UserMailSendService mailsender;
 
+	
 	@Autowired
 	private FriendsService fservice;
 
@@ -55,12 +71,16 @@ public class UserController {
 	// 유저프로필
 	@PreAuthorize("permitAll")
 	@GetMapping("/userPro")
-	public String userPro(String cid, HttpSession session, Model model) {
+	public String userPro(String cid, Principal principal, Model model) {
 
+		if(principal != null) {
+			String myCid = principal.getName();
+			model.addAttribute("myCid", myCid);
+		}
 		System.out.println("cid값 : " + cid);
 
 		ConsumerVO userVO = service.userGet(cid);
-
+ 
 		System.out.println("userVO들어왓나 : " + userVO);
 		model.addAttribute("cid", userVO.getCid());
 		model.addAttribute("cadmin", userVO.getCadmin());
@@ -72,28 +92,6 @@ public class UserController {
 
 		return "/user/userPro";
 	}
-
-	/*
-	 * @PostMapping("/userPro") public String userPro(ConsumerVO userVO, Model
-	 * model) {
-	 * 
-	 * service.userGet(userVO.getCid()); // 아마 이거 작성되어야 프로필 조회할 수 있을듯..
-	 * model.addAttribute("result" ,fservice.fOrNot(null, userVO.getCid())); // null
-	 * 에는 해당 로직으로 이동하면 나오는 user 정보 추가 예정, cid는 로그인 계정 log.info(fservice.fOrNot(null,
-	 * userVO.getCid())); model.addAttribute("follower", null);
-	 * model.addAttribute("following", userVO.getCid());
-	 * 
-	 * model.addAttribute("dto", service.userGet(userVO.getCid()));
-	 * log.info("클릭한유저번호" + userVO); if (userVO.getAttachList() != null) {
-	 * userVO.getAttachList().forEach(attach -> log.info(attach)); }
-	 * 
-	 * List<ResultLibraryVO> libraryList =
-	 * libraryService.getAllConsumerLibrary(userVO.getCid());
-	 * 
-	 * model.addAttribute("libraryList", libraryList);
-	 * 
-	 * return "/user/userPro"; }
-	 */
 
 	@GetMapping("/userGet")
 	public String userGet(HttpSession session, Model model) { // 세션 아이디, 어드민
@@ -346,15 +344,40 @@ public class UserController {
 		return "/user/userLogin";
 	}
 	
-	// 비밀번호찾기 이메일발송
-	@GetMapping("/findpw")
-	public String findPwGet() throws Exception {
-		return "/user/findpw";
+	
+	@GetMapping
+	public String userMailSend() {
+		return "/user/mailCheck";
 	}
+	@GetMapping("/mailCheckOk")
+	public String mailCheckOk() {
+		return "/user/mailCheckOk";
+	}
+	
+	@RequestMapping(value = "/user/mailCheck", method = RequestMethod.POST)
+	public String userMailSend(ConsumerVO userVO, Model model, HttpServletRequest request, HttpSession session) {
+		// 인증 메일 보내기 메서드
+				mailsender.mailSendWithUserKey(userVO.getEmail(), userVO.getCid(), request);
 
-	@PostMapping("/findpw")
-	public String findPwPost() throws Exception {
-		return "/user/findpw";
+				return "redirect:/user/mailCheckOk";
 	}
+	// e-mail 인증 컨트롤러
+		@ResponseBody
+			@RequestMapping(value = "/key_alter", method = RequestMethod.GET)
+			public String key_alterConfirm(@RequestParam("cid") String cid, @RequestParam("user_key") String key) {
+
+				mailsender.alter_userKey_service(cid, key);
+
+				return "/user/userRegSuccess";
+			}
+		// 비밀번호 찾기
+		@RequestMapping(value = "/user/findpw", method = RequestMethod.GET)
+		@ResponseBody
+		public String passwordSearch(@RequestParam("cid")String cid,
+				@RequestParam("email")String email) {
+			mailsender.mailSendWithPassword(cid, email);
+			
+			return "/user/findpw";
+		}
 
 }

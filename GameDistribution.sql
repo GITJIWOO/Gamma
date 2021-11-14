@@ -6,7 +6,6 @@
     consumerPayment
 */
 
-/* ê²Œì„ ì‚­ì œ ê´€ë ¨ ì œì•½ì¡°ê±´*/
 alter table consumerlibrary drop constraint fk_consumerlibrarygnum;
 alter table consumerlibrary add constraint fk_consumerlibrarygnum 
     foreign key (gnum) references game(gnum) ON DELETE CASCADE;
@@ -34,7 +33,6 @@ alter table reviewComment add constraint fk_reviewcommentgrnum
 alter table reviewLike drop constraint fk_reviewlikegrnum;
 alter table reviewLike add constraint fk_reviewlikegrnum 
     foreign key (grnum) references gameReview(grnum) ON DELETE CASCADE;
-
 
 /*  ê²Œì„ ?…Œ?´ë¸?
     gnum = ê²Œì„ ?‹ë³? ë²ˆí˜¸
@@ -131,8 +129,8 @@ ALTER TABLE consumer ADD UNIQUE(userphone);
 
 SELECT * FROM consumer; 
 SELECT * FROM consumer_auth;
-INSERT INTO consumer(cnum, cid, email, password, nickname, cadmin)
-    VALUES(consumer_num.nextval,'kjw011231', 'kjw0111231@gmail.com', 'rlawldn', 'ê¹?ì§??š°', 1);
+
+   
 INSERT INTO consumer(cnum, cid, email, password, nickname, cadmin) 
     VALUES(consumer_num.nextval,'cho', 'chocc', 'aaa', 'cho', 0);
  
