@@ -55,12 +55,16 @@ public class UserController {
 	// 유저프로필
 	@PreAuthorize("permitAll")
 	@GetMapping("/userPro")
-	public String userPro(String cid, HttpSession session, Model model) {
+	public String userPro(String cid, Principal principal, Model model) {
 
+		if(principal != null) {
+			String myCid = principal.getName();
+			model.addAttribute("myCid", myCid);
+		}
 		System.out.println("cid값 : " + cid);
 
 		ConsumerVO userVO = service.userGet(cid);
-
+ 
 		System.out.println("userVO들어왓나 : " + userVO);
 		model.addAttribute("cid", userVO.getCid());
 		model.addAttribute("cadmin", userVO.getCadmin());
@@ -335,10 +339,14 @@ public class UserController {
 	@PreAuthorize("hasAnyRole('ROLE_MEMBER')")
 	@PostMapping("/userDelete")
 	public String memberDelete(ConsumerVO vo, HttpSession session, RedirectAttributes rttr) throws Exception {
-		
+
+		ConsumerVO login = service.userGet(vo.getCid());
+
+		 boolean pwdMatch = pwdEncoder.matches(vo.getPassword(),  login.getPassword()); 
+		if(pwdMatch==true) {
 		service.userDelete(vo);
-		SecurityContextHolder.clearContext();
 		session.invalidate();
+		}
 		return "/user/userLogin";
 	}
 	

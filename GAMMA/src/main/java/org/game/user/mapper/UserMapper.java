@@ -25,6 +25,7 @@ public interface UserMapper {
 	
 	// 회워탈퇴
 	public void userDelete(ConsumerVO userVO) throws Exception;
+	public void authDelete(ConsumerVO userVO) throws Exception;
 	
 	// 아이디 중복체크
 	public long idChk(String cid) throws Exception;

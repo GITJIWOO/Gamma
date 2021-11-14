@@ -35,7 +35,6 @@ public interface UserService {
 	public void userDelete(ConsumerVO userVO) throws Exception;
 
 	
-	
 	// 유저 상세창에 같이 딸려오는거
 		public List<UserAttachVO> getAttachList(Long cnum);
 		

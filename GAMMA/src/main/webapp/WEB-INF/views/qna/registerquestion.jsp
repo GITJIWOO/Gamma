@@ -1,13 +1,16 @@
- <%@ page language="java" contentType="text/html; charset=UTF-8"
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
+<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
 <script src="<c:url value="/resources/js/main.js"/>"></script>
 <link rel="stylesheet" href="/resources/css/styles.css" />
 <link rel="icon" type="image/png" href="http://example.com/myicon.png">
-<title>Insert title here</title>
+<title>Gamma</title>
 <style>
 .detail {
   font-size: 17px;
@@ -109,9 +112,6 @@
         <div class="side-bar__row">
           <form action="/gameInfo/gamelist" method="get">
           <select name="searchType" style="display:none">
-          	<option  value="n"
-				<c:out value="${btnMaker.cri.searchType eq 'n' ? 'selected' : '' }"/>>
-				</option>
             </select>
             <input type="text" placeholder="Search Game" name="keyword" value="${btnMaker.cri.keyword }"/>
             <!-- origin처럼 버튼 숨겼음, enter 치면 검색됨 -->
@@ -136,13 +136,18 @@
 			        <img class="conimg" src="/resources/css/image/chaIcon.png"/>
 	          	  </div>
 		          <div class="consumer__nickname">
-		          	<p>${param.qwriter}</p>
+		          	<p style="color:white;"><sec:authentication property="principal.consumer.nickname"/></p>
 		          </div>
 		          <div class="consumer__info">
 	   				<a href="/user/userGet">* 유저정보창</a><br/>
-	   				<a href="/user/userpro">* 유저프로필창</a><br/>
-	   				<a href="/user/userLogout">* 로그아웃</a><br/>
-	   				<a href="/user/userDelete">* 회원탈퇴</a><br/>
+	   				<a href="/user/userPro">* 유저프로필창</a><br/>
+					<form action="/user/userLogout" method="post">
+						<input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }"/>
+						<input type="submit" value="LOGOUT" />
+					</form><br/>
+	   				<a href="/friends/followerlist">* 팔로워리스트</a><br/>
+	   				<a href="/friends/followinglist">* 팔로윙리스트</a><br/>
+	   				<a href="/friends/searchfriends">* 친구 검색</a><br/>
 		   		  </div>
 	          </div>
         </div>

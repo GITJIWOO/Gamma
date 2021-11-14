@@ -1,4 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -225,9 +226,6 @@
         <div class="side-bar__row">
           <form action="/gameInfo/gamelist" method="get">
           <select name="searchType" style="display:none">
-          	<option  value="n"
-				<c:out value="${btnMaker.cri.searchType eq 'n' ? 'selected' : '' }"/>>
-				</option>
             </select>
             <input type="text" placeholder="Search Game" name="keyword" value="${btnMaker.cri.keyword }"/>
             <!-- origin처럼 버튼 숨겼음, enter 치면 검색됨 -->
@@ -253,14 +251,18 @@
 			        <img class="conimg" src="/resources/css/image/chaIcon.png"/>
 	          	  </div>
 		          <div class="consumer__nickname">
-		          	<p>${param.cid}</p>
+		          	<p style="color:white;"><sec:authentication property="principal.consumer.nickname"/></p>
 		          </div>
 		          <div class="consumer__info">
 	   				<a href="/user/userGet">* 유저정보창</a><br/>
 	   				<a href="/user/userPro">* 유저프로필창</a><br/>
-	   				<a href="/user/userLogout">* 로그아웃</a><br/>
+					<form action="/user/userLogout" method="post">
+						<input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }"/>
+						<input type="submit" value="LOGOUT" />
+					</form><br/>
 	   				<a href="/friends/followerlist">* 팔로워리스트</a><br/>
 	   				<a href="/friends/followinglist">* 팔로윙리스트</a><br/>
+	   				<a href="/friends/searchfriends">* 친구 검색</a><br/>
 		   		  </div>
 	          </div>
         </div>
@@ -289,10 +291,13 @@
 				<div class="userList__proBack"><img src="/resources/css/image/friends.png" width="700" height="250"/></div>
 				<div class="userList__cid">${userList.cid }(${userList.nickname })</div>
 				<!-- 해당 유저 프로필로 이동하고 거기서 친구 추가 혹은 삭제 로직 진행, url 바꾸면서 아래 hidden 삭제 예정 -->
-				<form action="/user/userPro" method="post">
+				<form action="/user/userPro?cid=" method="get">
+					<input type="hidden" name="cid" value="${userList.cid }" />
+				<!-- 
 					<input type="hidden" name="following" value="${param.cid }" />
 					<input type="hidden" name="follower" value="${userList.cid }" />
 					<input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }"/>
+				 -->
 					<input class="profileBtn notyet" type="submit" value="프로필 보기" />
 				</form>
 			</div>
@@ -344,11 +349,11 @@
     const backGrounds = document.querySelectorAll(".background");
     userLists.forEach(function(userList){
     	userList.addEventListener("mouseover", function(event){
-    		this.getElementsByTagName('input')[3].classList.remove("notyet");
+    		this.getElementsByTagName('input')[1].classList.remove("notyet");
     		this.children[0].classList.remove("notyet");
     	});
     	userList.addEventListener("mouseout", function(event){
-    		this.getElementsByTagName('input')[3].classList.add("notyet");
+    		this.getElementsByTagName('input')[1].classList.add("notyet");
     		this.children[0].classList.add("notyet");
     	});
     });

@@ -8,6 +8,7 @@ import javax.servlet.http.HttpSession;
 import org.game.gamelibrary.domain.ResultLibraryVO;
 import org.game.gamelibrary.service.GameLibraryService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,18 +26,16 @@ public class GameLibraryController {
 	@Autowired
 	private GameLibraryService libraryService;
 	
+	@PreAuthorize("hasAnyRole('ROLE_MEMBER')")
 	@GetMapping("/conLibrary")
 	public String consumerLibraryList(Principal principal, Model model) {
-
-		if(principal != null) {
-			String cid = principal.getName();
-			List<ResultLibraryVO> library = libraryService.getAllConsumerLibrary(cid);
-			if(cid == null) {
-				return "redirect:/user/userLogin";
-			}
-			model.addAttribute("cid", cid);
-			model.addAttribute("library", library);
-		}
+		
+		String cid = principal.getName();
+		
+		List<ResultLibraryVO> library = libraryService.getAllConsumerLibrary(cid);
+		
+		model.addAttribute("cid", cid);
+		model.addAttribute("library", library);
 		
 		return "/library/conLibrary";
 	}

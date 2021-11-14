@@ -1,4 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -91,6 +92,12 @@
     <a href="/friends/followerlist">팔로우한 친구</a>
     <a href="/friends/followinglist">팔로잉한 친구</a>
  -->
+ 	<c:if test="${unfollow ne null }">
+ 		<script type="text/javascript">
+ 			alert("팔로우가 취소되었습니다.");
+ 		</script>
+ 	</c:if>
+ 	
     <div class="display">
       <!-- side-bar -->
       <div class="side-bar">
@@ -130,12 +137,15 @@
 			        <img class="conimg" src="/resources/css/image/chaIcon.png"/>
 	          	  </div>
 		          <div class="consumer__nickname">
-		          	<p>${cid}</p>
+		          	<p style="color:white;"><sec:authentication property="principal.consumer.nickname"/></p>
 		          </div>
 		          <div class="consumer__info">
 	   				<a href="/user/userGet">* 유저정보창</a><br/>
 	   				<a href="/user/userPro">* 유저프로필창</a><br/>
-	   				<a href="/user/userLogout">* 로그아웃</a><br/>
+					<form action="/user/userLogout" method="post">
+						<input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }"/>
+						<input type="submit" value="LOGOUT" />
+					</form><br/>
 	   				<a href="/friends/followerlist">* 팔로워리스트</a><br/>
 	   				<a href="/friends/followinglist">* 팔로윙리스트</a><br/>
 	   				<a href="/friends/searchfriends">* 친구 검색</a><br/>
@@ -160,7 +170,7 @@
                 </div>
                 <!-- 현재 팔로잉된 상태이기 때문에 '삭제(default_white)'버튼만 있고 삭제되면 친구목록에서 삭제 -->
                 <div class="followlistBtn">
-    			<form action="/main" method="post">
+    			<form action="/friends/chatting" method="post">
 		          <input type="hidden" name="following" value="${param.cid }"/><!-- 로그인 계정 -->
 		          <input type="hidden" name="follower" value="${followerList.cid }"/><!-- 로그인 계정이 팔로우 하는 계정 -->
 		          <input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }"/>

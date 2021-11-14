@@ -48,14 +48,14 @@ public class MemberTests {
 	// admin계정 여기서 생성
 	@Test
 	public void testCryptDB() {
-		String [] idList = {"admin"};
+		String [] idList = {"admin1"};
 		
 		String sql = "UPDATE consumer SET password = ? WHERE cid = ?";
 		try {
 			Connection con = ds.getConnection();
 			for(String id : idList) {
 				PreparedStatement pstmt = con.prepareStatement(sql);
-				pstmt.setString(1, pwen.encode("admin"));
+				pstmt.setString(1, pwen.encode("admin1"));
 				pstmt.setString(2, id);
 				pstmt.executeUpdate();
 			}

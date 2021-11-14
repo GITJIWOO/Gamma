@@ -125,9 +125,11 @@ public class QuestionController {
 	// 자주하는 질문 
 	@PreAuthorize("permitAll")
 	@GetMapping("/commonquestion")
-	public String commonQuestion(HttpSession session, Model model) {
-		String cid = String.valueOf(session.getAttribute("session_cid"));
-		model.addAttribute("cid", cid);
+	public String commonQuestion(Principal principal, Model model) {
+		if(principal != null) {
+			String cid = principal.getName();
+			model.addAttribute("cid", cid);			
+		}
 		return "/qna/commonquestion";
 	}
 }
