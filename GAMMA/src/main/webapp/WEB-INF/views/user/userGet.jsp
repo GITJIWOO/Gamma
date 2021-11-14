@@ -31,163 +31,140 @@
 
 <style>
 .display {
-	display: flex;
-	flex-direction: row;
-	height: 200vh;
+  display: flex;
+  flex-direction: row;
+  height: 200vh;
 }
-
 .side-bar {
-	z-index: 99;
-	width: 18%;
-	height: 100%;
-	position: fixed;
-	background-color: var(- -sideColor);
-	color: var(- -fontColor);
+  z-index: 99;
+  width: 18%;
+  height: 100%;
+  position: fixed;
+  background-color: var(--sideColor);
+  color: var(--fontColor);
 }
-
 .side-bar__row:first-child img {
-	display: block;
-	margin: 50px auto;
-	width: 170px;
+  display: block;
+  margin: 50px auto;
+  width: 170px;
 }
-
 .side-bar__row:nth-child(2) input[type="text"] {
-	padding: 15px;
-	font-size: large;
-	width: 90%;
-	margin-left: 5%;
-	border-radius: 50px;
-	border: none;
-	transition: border 0.4s ease-in-out;
+  padding: 15px;
+  font-size: large;
+  width: 90%;
+  margin-left: 5%;
+  border-radius: 50px;
+  border: none;
+  transition: border 0.4s ease-in-out;
 }
-
 .side-bar__row:nth-child(2) input[type="text"]::placeholder {
-	color: var(- -fontColor);
+  color: var(--fontColor);
 }
-
 .side-bar__row:nth-child(2) input[type="text"]:focus {
-	border: 1.5px solid var(- -mainColor);
+  border: 1.5px solid var(--mainColor);
 }
-
 .side-bar__row:nth-child(2) input:not([type="text"]) {
-	display: none;
+  display: none;
 }
-
 .side-bar__row:nth-child(3) {
-	margin: 20px 0;
-	font-size: 25px;
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	padding-bottom: 30px;
-	border-bottom: 1px solid var(- -opacity);
+  margin: 20px 0;
+  font-size: 25px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-bottom: 30px;
+  border-bottom: 1px solid var(--opacity);
 }
-
 .side-bar__row:nth-child(3) span {
-	padding: 15px 0;
-	margin: 5px 0;
-	width: 100%;
-	text-align: center;
+  padding: 15px 0;
+  margin: 5px 0;
+  width: 100%;
+  text-align: center;
 }
-
 .side-bar__row:nth-child(3) span:hover {
-	background-color: var(- -opacity);
-	border-left: 5px solid var(- -mainColor);
+  background-color: var(--opacity);
+  border-left: 5px solid var(--mainColor);
 }
-
 .side-bar__row:nth-child(4) {
-	display: flex;
-	justify-content: center;
-	margin: 30px;
+  display: flex;
+  justify-content: center;
+  margin: 30px;
 }
-
 .side-bar__row:nth-child(4) span {
-	transition: color 0.6s ease-in-out;
+  transition: color 0.6s ease-in-out;
 }
-
 .side-bar__row:nth-child(4) span:hover {
-	color: white;
+  color: white;
 }
 
 .side-bar__row:last-child {
-	/* margin-top: 500px; */
-	
+  /* margin-top: 500px; */
 }
-
 .side-bar__row:last-child span {
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	text-align: center;
-	width: 90%;
-	color: white;
-	border-radius: 5px;
-	padding: 15px 0;
-	margin: 10px auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  width: 90%;
+  color: white;
+  border-radius: 5px;
+  padding: 15px 0;
+  margin: 10px auto;
 }
-
 .side-bar__row:last-child span:first-child {
-	background-color: var(- -mainColor);
-	transition: background-color 0.4s ease-in-out;
-}
+  background-color: var(--mainColor);
 
+  transition: background-color 0.4s ease-in-out;
+}
 .side-bar__row:last-child span:first-child:hover {
-	background-color: rgba(245, 108, 45, 0.8);
+  background-color: rgba(245, 108, 45, 0.8);
 }
-
 .side-bar__row:last-child span:last-child {
-	background-color: inherit;
-	border: 1px solid white;
-	transition: border-color 0.4s ease-in-out;
-	transition: color 0.2s ease-in-out;
+  background-color: inherit;
+  border: 1px solid white;
+  transition: border-color 0.4s ease-in-out;
+  transition: color 0.2s ease-in-out;
 }
-
 .side-bar__row:last-child span:last-child:hover {
-	border-color: var(- -fontColor);
-	color: var(- -fontColor);
+  border-color: var(--fontColor);
+  color: var(--fontColor);
 }
-
 .side-bar a:hover {
-	color: white;
+  color: white;
 }
-
 .main {
-	width: 82%;
-	padding-left: 18%;
-	height: 100%;
-	position: relative;
+  width: 82%;
+  padding-left: 18%;
+  height: 100%;
+  position: relative;
 }
-
 .footer {
-	width: 100%;
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
-	align-items: center;
-	background-color: var(- -footerColor);
-	bottom: 0;
-	height: 100px;
-	color: rgb(161, 161, 161);
-	position: absolute;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--footerColor);
+  bottom: 0;
+  height: 100px;
+  color: rgb(161, 161, 161);
+  position: absolute;
 }
-
 .footer-info {
-	display: flex;
-	justify-content: center;
-	position: absolute;
-	top: 0;
-	padding: 20px 0;
-	font-weight: 600;
-	font-size: 14px;
+  display: flex;
+  justify-content: center;
+  position: absolute;
+  top: 0;
+  padding: 20px 0;
+  font-weight: 600;
+  font-size: 14px;
 }
-
 .footer-copyright {
-	padding-top: 30px;
-	display: flex;
-	font-weight: 300;
-	font-size: 13px;
+  padding-top: 30px;
+  display: flex;
+  font-weight: 300;
+  font-size: 13px;
 }
-
 .consumer {
 	position: relative;
 	text-align: center;
@@ -195,21 +172,18 @@
 	flex-flow: row;
 	align-items: center;
 	margin: 10px;
-	height: 100px;
+	height:100px;
 }
-
 .consumer__imgPro {
 	float: left;
 	padding: 0;
 	margin: 0;
 	width: 100px;
 }
-
 .conimg {
 	width: 130px;
 	height: 130px;
 }
-
 .consumer__nickname {
 	float: left;
 	font-size: 25px;
@@ -218,16 +192,14 @@
 	height: 70px;
 	align-items: center;
 	width: 250px;
-	margin: 0;
-	padding: 0;
-	line-height: 60%;
+	margin:0;
+	padding:0;
+	line-height:60%;
+	
 }
-
-.logout {
-	font-size: 10px;
-	background-color: black;
+.logout{
+	font-size:13px; 
 }
-
 .consumer__info {
 	background-color: white;
 	border: 2px solid black;
@@ -238,33 +210,16 @@
 	left: 100%;
 	width: 130px;
 	border-radius: 10%;
-	text-align: left;
-}
-
+	text-align:left;
+ }
 .detail {
 	display: flex;
 	flex-flow: row;
 }
 
-.modAub {
-	position: relative;
-	left: 50px;
-}
-
 .table1 {
 	position: relative;
 	left: 50px;
-}
-
-.rowB {
-	text-align: center;
-	position: relative;
-	top: 50px;
-}
-
-.nick {
-	display: flex;
-	flex-flow: row;
 }
 
 h2 {
@@ -278,30 +233,10 @@ h2 {
 	padding: 10px;
 }
 
-.cidPro {
-	color: orange;
-}
-
 .table {
 	font-weight: bold;
 }
 
-strong {
-	color: blue;
-}
-
-
-modBtn {
-	display: flex;
-	flex-flow: row;
-	background-color: white;
-	color: gray;
-}
-
-#replytext {
-	position: relative;
-	right: 7px;
-}
 
 button {
 	width: 100px;
@@ -316,16 +251,6 @@ button {
 	transition: all 0.5s ease-in-out 0s;
 }
 
-.proImg {
-	position: relative;
-	bottom: 200px;
-	text-align: center;
-}
-
-.imgPro {
-	width: 150px;
-	height: 150px;
-}
 
 .imgProA {
 	width: 250px;
@@ -334,17 +259,7 @@ button {
 	margin: 0;
 }
 
-.uid {
-	position: relative;
-	top: 10px;
-	font-weight: bold;
-	color: white;
-}
 
-.gameImg {
-	height: 100px;
-	width: 100px;
-}
 </style>
 <meta charset="UTF-8">
 
@@ -352,43 +267,40 @@ button {
 
 </head>
 <body>
-	<div class="display">
+<div class="display">
 		<!-- side-bar -->
 		<div class="side-bar">
 			<!-- logo -->
 			<div class="side-bar__row">
 				<!-- 클릭하면 main화면으로 돌아오도록 a 태그 수정 -->
-				<span><a href="/main/main"><img
-						src="/resources/css/image/logo.png" /></a></span>
+				<span><a href="/main/main">
+				<img src="/resources/css/image/logo.png" /></a></span>
 			</div>
 			<!-- search -->
 			<div class="side-bar__row">
 				<form action="/gameInfo/gamelist" method="get">
-					<select name="searchType" style="display: none">
-						<option value="n"
-							<c:out value="${btnMaker.cri.searchType eq 'n' ? 'selected' : '' }"/>>
-						</option>
-					</select> <input type="text" placeholder="Search Game" name="keyword"
-						value="${btnMaker.cri.keyword }" />
+				<select name="searchType" style="display:none">
+          	<option  value="n"
+				<c:out value="${btnMaker.cri.searchType eq 'n' ? 'selected' : '' }"/>>
+				</option>
+            </select>
+					<input type="text" placeholder="   Search Game" />
 					<!-- origin처럼 버튼 숨겼음, enter 치면 검색됨 -->
 					<input type="submit" value="" />
 				</form>
 			</div>
 			<!-- category -->
 			<div class="side-bar__row">
-				<span><a href="/gameInfo/gamelist">게임 스토어</a></span>
+				<span><a href="/gameInfo/gamelist">게임 스토어</a></span> 
 				<sec:authorize access="isAuthenticated()">
-					<sec:authentication property="principal" var="principal" />
-					<c:if test="${principal.consumer.cid ne null}">
-						<span><a href="/library/conLibrary?cid=${cid}">라이브러리</a></span>
-					</c:if>
-				</sec:authorize>
+					<sec:authentication property="principal" var="secuInfo" />
+          	<span><a href="/library/conLibrary?cid=${secuInfo.consumer.cid}">라이브러리</a></span>
+          	</sec:authorize>
 			</div>
 			<!-- qna -->
 			<div class="side-bar__row">
-				<span><a href="/qna/questionlist">Q&A</a></span>
-				&nbsp;&nbsp;|&nbsp;&nbsp; <span><a href="/qna/commonquestion">자주하는
-						질문</a></span>
+				<span><a href="/qna/questionlist">Q&A</a></span> &nbsp;&nbsp;|&nbsp;&nbsp; <span><a
+					href="/qna/commonquestion">자주하는 질문</a></span>
 			</div>
 			<!-- about user -->
 			<div class="side-bar__row">
@@ -562,8 +474,8 @@ button {
 			myEtn.onclick = theEmail;
 		})
 		function theEmail() {
-			window.open("/", "EmailAcc",
-							"width=600px,height=600px",
+			window.open("/user/mailCheck", "EmailAcc",
+							"width=450px,height=450px",
 							"left=400px,top=100px,scrollbars=yes, toolbar=no,location=no,fullscreen=no");
 		}
 	</script>

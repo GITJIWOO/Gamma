@@ -96,6 +96,7 @@ button {
 </style>
 </head>
 <body>
+<h1>url 값??${url }</h1>
 	<div class="loginDeniedAlert">
 		<h2>
 			<c:out value="${error }" />
@@ -124,7 +125,11 @@ button {
 				<button type="submit" value="LOGIN">로그인</button>
 					<input type="hidden"
 					name="${_csrf.parameterName }" value="${_csrf.token }" />
-					
+					<c:if test="${url ne null }">
+		<div id="naver_id_login">
+			<a href="${url }"><img width="223" src="https://developers.naver.com/doc/review_201802/CK_bEFnWMeEBjXpQ5o8N_20180202_7aot50.png"/></a>
+		</div>
+	</c:if>
 			</div>
 		</div>
 	</form>
