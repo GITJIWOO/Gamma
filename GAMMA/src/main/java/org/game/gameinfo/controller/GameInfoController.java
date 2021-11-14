@@ -85,11 +85,10 @@ public class GameInfoController {
 
 		int total = gameInfoService.getTotalGame(cri);
 		GameInfoPageDTO btnMaker = new GameInfoPageDTO(cri, total, 10);
+		
 
 		model.addAttribute("btnMaker", btnMaker);
 		model.addAttribute("gameList", gameList);
-//		model.addAttribute("cid", cid);
-//		model.addAttribute("cadmin", cadmin);
 		return "gameinfo/gamelist";
 	}
 
@@ -184,16 +183,16 @@ public class GameInfoController {
 				
 				ReviewVO getReview = reviewService.getUserReviewDetail(cid, gnum);
 				GameLibraryVO lvo = libraryService.getOneConsumerLibrary(cid, gnum);
-				List<ReviewVO> reviewList = reviewService.getFamousReview(gnum);
-				System.out.println("reviewList: " + reviewList);
+//				System.out.println("reviewList: " + reviewList);
 				ConsumerBasketVO basket = basketService.getOneConsumerBasket(cid, gnum);
 				model.addAttribute("getReview", getReview);
 				System.out.println("getreview: " + getReview);
 				model.addAttribute("lvo", lvo);
-				model.addAttribute("reviewList", reviewList);
 				model.addAttribute("basket", basket);
 			}
 		}
+		List<ReviewVO> reviewList = reviewService.getFamousReview(gnum);
+		model.addAttribute("reviewList", reviewList);
 
 		GameInfoVO gvo = gameInfoService.getGame(gnum);
 		GameInfoVO tvo = gameTagService.getTag(gnum);
@@ -201,18 +200,6 @@ public class GameInfoController {
 
 		System.out.println("gnum" + gnum);
 
-//		if (cid != null) {
-//			ReviewVO getReview = reviewService.getUserReviewDetail(cid, gnum);
-//			GameLibraryVO lvo = libraryService.getOneConsumerLibrary(cid, gnum);
-//			List<ReviewVO> reviewList = reviewService.getFamousReview(gnum);
-//			System.out.println("reviewList: " + reviewList);
-//			ConsumerBasketVO basket = basketService.getOneConsumerBasket(cid, gnum);
-//			model.addAttribute("getReview", getReview);
-//			System.out.println("getreview: " + getReview);
-//			model.addAttribute("lvo", lvo);
-//			model.addAttribute("reviewList", reviewList);
-//			model.addAttribute("basket", basket);
-//		}
 
 		List<GameInfoVO> listByTag = gameInfoService.listByTag(tvo.getTagname());
 		System.out.println("tvo: " + tvo);
