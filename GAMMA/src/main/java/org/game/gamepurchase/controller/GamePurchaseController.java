@@ -11,6 +11,7 @@ import org.game.gamepurchase.service.GamePurchaseService;
 import org.game.user.domain.ConsumerBasketVO;
 import org.game.user.service.ConsumerBasketService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -37,56 +38,45 @@ public class GamePurchaseController {
 	
 	@Autowired
 	private GamePurchaseService gamePurchaseService;
-	
+
+	@PreAuthorize("hasAnyRole('ROLE_MEMBER')")
 	@GetMapping("/paymentscreen")
 	public String paymentScreen(ConsumerBasketVO basket, String merchant_uid, Principal principal, Model model) {
 
-		if(principal != null) {
-			String cid = principal.getName();
-			model.addAttribute("cid", cid);
-			if(cid == null) {
-				return "redirect:/user/userLogin";
-			}
-		}
+		String cid = principal.getName();
 		
+		model.addAttribute("cid", cid);
 		model.addAttribute("basket", basket);
 		model.addAttribute("merchant_uid", merchant_uid);
 		
 		return "/payment/paymentScreen";
 	}
-	
+
+	@PreAuthorize("hasAnyRole('ROLE_MEMBER')")
 	@PostMapping("/paymentsuccess")
 	@ResponseBody
 	public String paymentSuccess(GamePurchaseVO gpVO, @RequestParam("gnum") long gnum, Principal principal) throws Exception {
 
-		if(principal != null) {
-			String cid = principal.getName();
-			if(cid == null) {
-				return "redirect:/user/userLogin";
-			}
-			gpVO.setCid(cid);
-			gamePurchaseService.paymentInputInfo(gpVO);
-			libraryService.additionalLibrary(cid, gnum);
-			basketService.removeConsumerBasket(cid, gnum);
-		}
+		String cid = principal.getName();
 		
-		return "";
+		gpVO.setCid(cid);
+		gamePurchaseService.paymentInputInfo(gpVO);
+		libraryService.additionalLibrary(cid, gnum);
+		basketService.removeConsumerBasket(cid, gnum);
+		
+		return "/gamepayment/successjsp";
 	}
-	
+
+	@PreAuthorize("hasAnyRole('ROLE_MEMBER')")
 	@GetMapping("/consumerBreakdown")
 	public String consumerBreakdown(Principal principal, Model model) {
 
-		if(principal != null) {
-			String cid = principal.getName();
-			model.addAttribute("cid", cid);
-			if(cid == null) {
-				return "redirect:/user/userLogin";
-			}
-			List<GamePurchaseVO> paymentList = gamePurchaseService.getPaymentList(cid);
-			model.addAttribute("paymentList", paymentList);
-		}
+		String cid = principal.getName();
 		
+		List<GamePurchaseVO> paymentList = gamePurchaseService.getPaymentList(cid);
 		
+		model.addAttribute("cid", cid);
+		model.addAttribute("paymentList", paymentList);
 		
 		return "/payment/paymentBreakdown";
 	}
