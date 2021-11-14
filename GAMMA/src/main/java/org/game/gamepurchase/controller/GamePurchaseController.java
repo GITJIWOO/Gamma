@@ -80,9 +80,16 @@ public class GamePurchaseController {
 		
 		return "/payment/paymentBreakdown";
 	}
-	
+
+	@PreAuthorize("permitAll")
 	@GetMapping("/successjsp")
-	public String successJsp() {
+	public String successJsp(Principal principal, Model model) {
+		
+		if(principal != null) {
+			String cid = principal.getName();
+			model.addAttribute("cid", cid);
+		}
+		
 		return "/payment/paymentSuccess";
 	}
 	
