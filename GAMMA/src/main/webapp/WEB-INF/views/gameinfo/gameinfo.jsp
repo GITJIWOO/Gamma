@@ -3,6 +3,7 @@
 <%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
 <%@ page language="java" pageEncoding="UTF-8"
 	contentType="text/html; charset=UTF-8"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -78,7 +79,7 @@ input[type="radio"] {
 	margin-top: 20px;
 	margin-bottom: 10px;
 	width: 900px;
-	height: 1500px;
+	height: 1700px;
 }
 
 .bottom1 {
@@ -86,14 +87,14 @@ input[type="radio"] {
 }
 
 .bottom2 {
-	height: 300px;
+	height: 500px;
 }
 .bottom3{
 	height: 200px;
 }
 </style>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>Gamma</title>
 
 </head>
 <body>
@@ -150,19 +151,19 @@ input[type="radio"] {
 			        <img class="conimg" src="/resources/css/image/chaIcon.png"/>
 	          	  </div>
 		          <div class="consumer__nickname">
-		          	<p style="font-size:10px; color:white;">${secuInfo.consumer.nickname}</p>
+		          	<p style="color:white;"><sec:authentication property="principal.consumer.nickname"/></p>
 		          </div>
 		          <div class="consumer__info">
 	   				<a href="/user/userGet">* 유저정보창</a><br/>
 	   				<a href="/user/userPro">* 유저프로필창</a><br/>
-					<form action="/user/userLogout" method="post">
-						<input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }"/>
-						<input type="submit" value="LOGOUT" />
-					</form><br/>
 	   				<a href="/friends/followerlist">* 팔로워리스트</a><br/>
 	   				<a href="/friends/followinglist">* 팔로윙리스트</a><br/>
 	   				<a href="/friends/searchfriends">* 친구 검색</a><br/>
 		   		  </div>
+				  <form action="/user/userLogout" method="post">
+					  <input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }"/>
+					  <input class="logout" type="submit" value="로그아웃" />
+				  </form>
 	          </div>
           </c:if>
         </div>
@@ -215,12 +216,13 @@ input[type="radio"] {
 						<div class="row" >
 							<div class="col-md">이 제품의 태그</div>
 						</div>
-						<div class="col-md" style="text-decoration: none;"><a href="/gameInfo/totallistbytag?pageNum=${param.pageNum }&searchType=${param.searchType}&keyword=${param.keyword}&tagname=${tvo.tagname}">${tvo.tagname}</a></div>
+						<div class="col-md" style="display:flex: 1;">${tvo.tagname}</div>
 					</div>
 				</div>
 			</div>
 		</div>
-		<c:if test="${cid ne null}">
+		<c:set var = "cid" value = "${cid }"/>
+		<c:if test="${fn:contains(cid, 'admin') }">
 		<form action="/gameInfo/modifyform" method="post">
 		<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 			<input type="hidden" name="gnum" value="${gvo.gnum }"> <input
@@ -290,12 +292,23 @@ input[type="radio"] {
 			</div>
 			<div class="bottom2">
 				비슷한 제품
-				<hr>
 				<div align="right">
-				<a href="/gameInfo/totallistbytag?pageNum=${param.pageNum }&searchType=${param.searchType}&keyword=${param.keyword}&tagname=${tvo.tagname}">
-			<input type="button" value="전체보기"></a>
+				<%-- <a href="/gameInfo/totallistbytag?pageNum=${param.pageNum }&searchType=${param.searchType}&keyword=${param.keyword}&tagname=${tvo.tagname}">
+			<input type="button" value="전체보기"></a> --%>
+			
+			<form action="/gameInfo/gamelist?searchType=t&keyword=${tvo.tagname }" method="get">
+          <select name="searchType" style="display:none">
+          	<option  value="t"
+				<c:out value="${btnMaker.cri.searchType eq 't' ? 'selected' : '' }"/>>
+				</option>
+            </select>
+            <input type="hidden" name="keyword" value="${tvo.tagname }"/>
+            <!-- origin처럼 버튼 숨겼음, enter 치면 검색됨 -->
+            <input type="submit" value="더보기" />
+          </form>
 			</div>
-				<table class="table table-hover">
+				<hr>
+				<%-- <table class="table table-hover">
 					<tr>
 						<th>게임이름</th>
 						<th>가격</th>
@@ -312,7 +325,65 @@ input[type="radio"] {
 						</tr>
 						</c:if>
 					</c:forEach>
-				</table>
+				</table> --%>
+				
+				<!-- carousel를 구성할 영역 설정 -->
+			  <div style="width: 900px; height: 100px; " >
+			    <div id="carousel-example-generic" class="carousel slide" >
+			      <ol class="carousel-indicators">
+			        <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
+			        <li data-target="#carousel-example-generic" data-slide-to="1"></li>
+			        <li data-target="#carousel-example-generic" data-slide-to="2"></li>
+			      </ol>
+			      <div class="carousel-inner" role="listbox">
+			        <div class="item active">
+			        <a href="/gameInfo/get?gnum=${listByTag[0].gnum }">
+			          <img src="${listByTag[1].gpicture }" style="width:100%; height: 400px;">
+			          </a>
+			          <div class="carousel-caption" style="color:red;">
+			           ${listByTag[1].gname }
+			          </div>
+			        </div>
+			        <div class="item">
+			        <a href="/gameInfo/get?gnum=${listByTag[1].gnum }">
+			          <img src="${listByTag[2].gpicture }" style="width:100%; height: 400px;">
+			          </a>
+			          <div class="carousel-caption" style="color:red;">
+			          ${listByTag[2].gname }
+			          </div>
+			        </div>
+			        <div class="item">
+			        <a href="/gameInfo/get?gnum=${listByTag[2].gnum }">
+			          <img src="${listByTag[3].gpicture }" style="width:100%; height: 400px;">
+			          </a>
+			          <div class="carousel-caption" style="color:red;">
+			          ${listByTag[3].gname }
+			          </div>
+			        </div>
+			      </div>
+			      <!-- 왼쪽 화살표 버튼 -->
+			      <a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">
+			        <!-- 왼쪽 화살표 -->
+			        <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+			      </a>
+			      <!-- 오른쪽 화살표 버튼 -->
+			      <a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next">
+			        <!-- 오른쪽 화살표 -->
+			        <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+			      </a>
+			    </div>
+			  </div>
+			  <script>
+			    $(function(){
+			      $('#carousel-example-generic').carousel({
+			        interval: 2000,	// 슬리아드 자동 순환 지연 시간 false는 자동순환x
+			        
+			        pause: "hover",	// hover 설정시 마우스를 가져대면 자동 순환 정지
+			        wrap: true,
+			        keyboard : true	// 키보드로 조작가능 tab
+				  });
+				});
+			  </script>
 
 			</div>
 			
@@ -320,7 +391,26 @@ input[type="radio"] {
 				<c:if test="${cid ne null && lvo ne null}">
                      <c:choose>
                          <c:when test="${getReview ne null}">
-							${getReview }	
+							<div id="reviewInfo">
+						<div class="reviewNickname">
+							${getReview.cid}
+						</div>
+						<div class="reviewGrlike">
+							<c:choose>
+								<c:when test="${getReview.grlike == 1}"><i class="fas fa-thumbs-up fa-2x"></i> 추천</c:when>
+								<c:when test="${getReview.grlike == 0}"><i class="fas fa-thumbs-down fa-2x"></i> 비추천</c:when>
+							</c:choose>
+						</div>
+						<div class="reviewGrdate">
+							게시 일시 : ${getReview.grdate}
+						</div>
+						<div class="reviewGrcontent">
+							${getReview.grcontent}
+						</div>
+						<div class="reviewGrrecommend">
+							좋아요 : ${getReview.grrecommend}
+						</div>
+					</div>	
                          </c:when>
                          <c:when test="${getReview eq null}">
 							<form action="/review/reviewWrite" method="post">
@@ -347,17 +437,26 @@ input[type="radio"] {
 	
 	<a  href="/review/reviewList/${gvo.gnum }">
 			<input  type="button" value="리뷰전체보기" style="float: right;"></a>
+			
 	<table class="table table-hover">
 		<tr>
-			<th>리뷰번호</th>
+			<th>추천</th>
 			<th>글쓴이</th>
+			<th>리뷰내용</th>
 			<th>등록일</th>
 		</tr>
 		<c:forEach var="reviewList" items="${reviewList }" end="4">
+		
 		<tr>
-			<td>${reviewList.grnum }</td>
+			<th><c:choose>
+				<c:when test="${reviewList.grlike == 1}"><i class="fas fa-thumbs-up fa-2x"></i> 추천</c:when>
+				<c:when test="${reviewList.grlike == 0}"><i class="fas fa-thumbs-down fa-2x"></i> 비추천</c:when>
+			</c:choose>
+			</th>
 			<th>${reviewList.cid }</th>
+			<th>${reviewList.grcontent }</th>
 			<th>${reviewList.grdate }</th>
+			
 		</tr>
 		</c:forEach>
 	</table>				
@@ -426,8 +525,8 @@ input[type="radio"] {
             <div>CREATORS&nbsp;&nbsp;김영훈, 김지우, 조훈현, 최재인</div>
             <div>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;</div>
             <div>
-              CONTACT&nbsp;&nbsp;<a href="https://github.com/GITJIWOO"
-                >https://github.com/GITJIWOO</a
+              CONTACT&nbsp;&nbsp;<a href="https://github.com/GITJIWOO/Game-Project"
+                >https://github.com/GITJIWOO/Game-Project</a
               >
             </div>
           </div>

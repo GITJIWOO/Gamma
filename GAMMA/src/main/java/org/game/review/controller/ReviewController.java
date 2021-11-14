@@ -116,130 +116,114 @@ public class ReviewController {
 	}
 	
 	// 평가 작성
+	@PreAuthorize("hasAnyRole('ROLE_MEMBER')")
 	@PostMapping("/reviewWrite")
-	public String writeReview(ReviewVO review, Principal principal, RedirectAttributes rttr) {
+	public String writeReview(ReviewVO review, Principal principal, Model model) {
 		
 		long gnum = review.getGnum();
-		if(principal != null) {
-		} else {
-			return "rredirect:/user/userLogin";
-		}
 		
 		reviewService.writeReview(review);
 		
-		rttr.addFlashAttribute("reviewNumber", review.getGrnum());
+		model.addAttribute("reviewNumber", review.getGrnum());
 		
 		return "redirect:/review/reviewList/" + gnum;
 	}
 	
 	// 평가 수정
+	@PreAuthorize("hasAnyRole('ROLE_MEMBER')")
 	@PostMapping("/reviewModify")
-	public String modifyReview(ReviewVO review, Principal principal, RedirectAttributes rttr) {
+	public String modifyReview(ReviewVO review, Principal principal, Model model) {
 		
 		long grnum = review.getGrnum();
-		if(principal != null) {
-			String cid = principal.getName();
-		} else {
-			return "rredirect:/user/userLogin";
-		}
+		
+		String cid = principal.getName();
 		
 		reviewService.modifyReview(review);
 		
-		rttr.addFlashAttribute("reviewNumber", review.getGrnum());
+		model.addAttribute("cid", cid);
+		model.addAttribute("reviewNumber", review.getGrnum());
 		
 		return "redirect:/review/reviewDetail/" + grnum;
 	}
 	
 	// 평가 삭제
+	@PreAuthorize("hasAnyRole('ROLE_MEMBER')")
 	@PostMapping("/reviewRemove")
-	public String removeReview(long grnum, Principal principal, RedirectAttributes rttr) {
+	public String removeReview(long grnum, Principal principal, Model model) {
 		
 		ReviewVO grvo = reviewService.getReviewDetail(grnum);
 		
 		long gnum = grvo.getGnum();
-		if(principal != null) {
-			String cid = principal.getName();
-			if(cid == null) {
-				return "redirect:/review/reviewDetail/" + grnum;
-			}
-		}
+		String cid = principal.getName();
 		
 		commentService.removeAllReviewComment(grnum);
 		reviewService.removeReview(grnum);
 
-		rttr.addFlashAttribute("reviewNumber", grnum);
+		model.addAttribute("cid", cid);
+		model.addAttribute("reviewNumber", grnum);
 		
 		return "redirect:/review/reviewList/" + gnum;
 	}
 	
 	// 평가 좋아요
-	@PreAuthorize("permitAll")
+	@PreAuthorize("hasAnyRole('ROLE_MEMBER')")
 	@PostMapping("/reviewLike")
-	public String likeReview(ReviewLikeVO vo, Principal principal, RedirectAttributes rttr) {
+	public String likeReview(ReviewLikeVO vo, Principal principal, Model model) {
 		
 		long grnum = vo.getGrnum();
-		if(principal != null) {
-			String cid = principal.getName();
-			if(cid == null) {
-				return "redirect:/review/reviewDetail/" + grnum;
-			}
-			rttr.addFlashAttribute("cid", cid);
-		}
+		String cid = principal.getName();
 		
 		reviewLikeService.reviewLike(vo);
 		reviewService.likeReview(vo.getGrnum());
 
-		rttr.addFlashAttribute("grnum", vo.getGrnum());
+		model.addAttribute("cid", cid);
+		model.addAttribute("grnum", vo.getGrnum());
 		
 		return "redirect:/review/reviewDetail/" + grnum;
 	}
 	
 	// 평가 좋아요 취소
+	@PreAuthorize("hasAnyRole('ROLE_MEMBER')")
 	@PostMapping("/reviewLikeCancel")
-	public String likeCancelReview(long grnum, Principal principal, RedirectAttributes rttr) {
+	public String likeCancelReview(long grnum, Principal principal, Model model) {
 
-		if(principal != null) {
-			String cid = principal.getName();
-			reviewLikeService.reviewLikeCancel(grnum, cid);
-			rttr.addFlashAttribute("cid", cid);
-		}
+		String cid = principal.getName();
+		
+		reviewLikeService.reviewLikeCancel(grnum, cid);
 		reviewService.likeReviewCancel(grnum);
 		
-		rttr.addFlashAttribute("grnum", grnum);
+		model.addAttribute("cid", cid);
+		model.addAttribute("grnum", grnum);
 		
 		return "redirect:/review/reviewDetail/" + grnum;
 	}
 	
 	// 평가 댓글 작성
+	@PreAuthorize("hasAnyRole('ROLE_MEMBER')")
 	@PostMapping("/reviewCommentWrite")
-	public String writeReviewComment(ReviewCommentVO rc, Principal principal) {
+	public String writeReviewComment(ReviewCommentVO rc, Principal principal, Model model) {
 		
 		long grnum = rc.getGrnum();
-		if(principal != null) {
-			String cid = principal.getName();
-			if(cid == null) {
-				return "redirect:/review/reviewDetail/" + grnum;
-			}
-		}
+		String cid = principal.getName();
 		
 		commentService.writeReviewComment(rc);
+		
+		model.addAttribute("cid", cid);
 		
 		return "redirect:/review/reviewDetail/" + grnum;
 	}
 	
 	// 평가 댓글 삭제
+	@PreAuthorize("hasAnyRole('ROLE_MEMBER')")
 	@PostMapping("/reviewCommentRemove")
-	public String removeReviewComment(ReviewCommentVO rc, Principal principal) {
+	public String removeReviewComment(ReviewCommentVO rc, Principal principal, Model model) {
 		
 		long grnum = rc.getGrnum();
-		if(principal != null) {
-			String cid = principal.getName();
-			if(cid == null) {
-				return "redirect:/review/reviewDetail/" + grnum;
-			}
-		}
+		String cid = principal.getName();
 		
 		commentService.removeReviewComment(rc);
+
+		model.addAttribute("cid", cid);
 		
 		return "redirect:/review/reviewDetail/" + grnum;
 	}

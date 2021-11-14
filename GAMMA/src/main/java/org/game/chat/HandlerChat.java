@@ -19,6 +19,7 @@ public class HandlerChat extends TextWebSocketHandler {
 
 	// {"rood_id" : 방ID, "session" : 세션}을 연달아 저장
 	private List<Map<String, Object>> sessionList = new ArrayList<Map<String, Object>>();
+	
 
 	// 메세지를 맞는 방에만 전달하는 메서드
 	@Override
