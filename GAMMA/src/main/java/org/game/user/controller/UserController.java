@@ -377,13 +377,18 @@ public class UserController {
 	public String registerUpdate(ConsumerVO vo, HttpSession session) throws Exception {
 		String beforeCrPw = vo.getPassword();
 		vo.setPassword(pwdEncoder.encode(beforeCrPw));
-
 		vo.setAuthList(new ArrayList<AuthVO>());
 		vo.getAuthList().add(new AuthVO());
 		vo.getAuthList().get(0).setCid(vo.getCid());
+		System.out.println("vo : "+vo);
 		service.userModify(vo);
 		session.invalidate();
-		return "redirect:/user/userLogin";
+		SecurityContextHolder.getContext().setAuthentication(null);
+		return "redirect:/user/modifyOk";
+	}
+	@GetMapping("/user/modifyOk")
+	public String modifyOk() {
+		return "/user/modifyOk";
 	}
 
 	// 회원 탈퇴 get
@@ -410,7 +415,7 @@ public class UserController {
 	}
 	
 	
-	@GetMapping
+	@GetMapping("/user/mailCheck")
 	public String userMailSend() {
 		return "/user/mailCheck";
 	}
@@ -424,7 +429,7 @@ public class UserController {
 		// 인증 메일 보내기 메서드
 				mailsender.mailSendWithUserKey(userVO.getEmail(), userVO.getCid(), request);
 
-				return "redirect:/user/mailCheckOk";
+				return "/user/mailCheckOk";
 	}
 	// e-mail 인증 컨트롤러
 		@ResponseBody
@@ -433,16 +438,25 @@ public class UserController {
 
 				mailsender.alter_userKey_service(cid, key);
 
-				return "/user/userRegSuccess";
+				return "/user/userMailSuccess";
 			}
-		// 비밀번호 찾기
-		@RequestMapping(value = "/user/findpw", method = RequestMethod.GET)
-		@ResponseBody
-		public String passwordSearch(@RequestParam("cid")String cid,
-				@RequestParam("email")String email) {
-			mailsender.mailSendWithPassword(cid, email);
-			
+		@GetMapping("/user/userMailSuccess")
+		public String userMailSuccess() {
+			return "/user/userMailSuccess";
+		}
+		@GetMapping("/user/findpw")
+		public String findPW() {
 			return "/user/findpw";
+		}
+	
+		// 비밀번호 찾기
+		@RequestMapping(value = "/user/findpw", method = RequestMethod.POST)
+		@ResponseBody
+		public String passwordSearch(@RequestParam("cid") String cid,
+				@RequestParam("email") String email,HttpServletRequest request) throws Exception {
+			mailsender.mailSendWithPassword(cid, email,request);
+			
+			return "/user/mailCheckOk";
 		}
 
 }

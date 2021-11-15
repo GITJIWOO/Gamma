@@ -1,18 +1,23 @@
 package org.game.user.service;
 
+import java.util.ArrayList;
 import java.util.Random;
 
+import javax.inject.Inject;
 import javax.mail.MessagingException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMessage.RecipientType;
 import javax.servlet.http.HttpServletRequest;
 
+import org.game.user.domain.AuthVO;
 import org.game.user.domain.ConsumerVO;
 import org.game.user.mapper.UserDaoMapper;
+import org.game.user.mapper.UserMapper;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -26,7 +31,10 @@ public class UserMailSendService {
 	// 난수를 이용한 키 생성
 	private boolean lowerCheck;
 	private int size;
-	
+	@Inject
+	BCryptPasswordEncoder pwdEncoder;
+	@Inject
+	private UserMapper mapper;
 	// 이메일 난수 만드는 메서드
 	private String init() {
 		Random ran = new Random();
@@ -64,7 +72,7 @@ public class UserMailSendService {
 		MimeMessage mail = mailSender.createMimeMessage();
 		String htmlStr = "<h2>안녕하세요 <주>Gamma입니다!</h2><br><br>" 
 				+ "<h3>" + cid + "님</h3>" + "<p>인증하기 버튼을 누르시면 로그인을 하실 수 있습니다 : " 
-				+ "<a href='http://localhost:8181" + request.getContextPath() + "/user/key_alter?cid="+ cid +"&user_key="+key+"'>인증하기</a></p>"
+				+ "<a href='http://localhost:8181/user/userMailSuccess'>인증하기</a></p>"
 				+ "(혹시 잘못 전달된 메일이라면 이 이메일을 무시하셔도 됩니다)";
 		try {
 			mail.setSubject("[본인인증] 회원님의 인증메일입니다", "utf-8");
@@ -75,22 +83,19 @@ public class UserMailSendService {
 			e.printStackTrace();
 		}
 		
-		// 아마존 주소 : http://54.180.117.142/MS/user/key_alter?user_id=
 		
 	}
 	
 	// 패스워드 찾기 이메일 발송
-	public void mailSendWithPassword(String cid, String email) {
-		// 비밀번호는 6자리로 보내고 데이터베이스 비밀번호를 바꿔준다
-		String key = getKey(false, 6);
+	public void mailSendWithPassword(String cid, String email, HttpServletRequest request) throws Exception {
+		// 비밀번호는 5자리로 보내고 데이터베이스 비밀번호를 바꿔준다
+		String key = getKey(false, 5);
 		userDao = sqlSession.getMapper(UserDaoMapper.class);
 		// 비밀번호 바꿔주는 메서드
 		userDao.searchPassword(cid, email, key); 
 		// 회원 이름 꺼내는 코드
 		ConsumerVO vo = userDao.userInfo(cid);
 		String name = vo.getCid();
-		
-		System.out.println("비밀번호 찾기 : Service");
 		
 		MimeMessage mail = mailSender.createMimeMessage();
 		String htmlStr = "<h2>안녕하세요 '"+ name +"' 님</h2><br><br>" 
@@ -101,7 +106,13 @@ public class UserMailSendService {
 			mail.setSubject("[(주)Gamma] 임시 비밀번호가 발급되었습니다", "utf-8");
 			mail.setText(htmlStr, "utf-8", "html");
 			mail.addRecipient(RecipientType.TO, new InternetAddress(email));
+			vo.setPassword(pwdEncoder.encode(key));
+			vo.setAuthList(new ArrayList<AuthVO>());
+			vo.getAuthList().add(new AuthVO());
+			vo.getAuthList().get(0).setCid(vo.getCid());
+			mapper.userModify(vo);
 			mailSender.send(mail);
+		
 		} catch (MessagingException e) {
 			e.printStackTrace();
 		}

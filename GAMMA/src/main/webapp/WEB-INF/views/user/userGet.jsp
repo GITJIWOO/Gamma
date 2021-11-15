@@ -400,6 +400,7 @@ button {
 									<div class="row">&nbsp;</div>
 									<div class="Mbtn">
 										<button id="emailAcc">이메일인증</button></a>
+										<button id="findPw">비밀번호 찾기</button></a>
 										<button id="uModify">유저수정</button>
 										<button id="uRemove">탈퇴</button>
 										<a href="/gamepayment/consumerBreakdown"><button>결제
@@ -475,6 +476,15 @@ button {
 		})
 		function theEmail() {
 			window.open("/user/mailCheck", "EmailAcc",
+							"width=450px,height=450px",
+							"left=400px,top=100px,scrollbars=yes, toolbar=no,location=no,fullscreen=no");
+		}
+		window.addEventListener('load', function() {
+			var myfitn = document.getElementById("findPw");
+			myfitn.onclick = theFind;
+		})
+		function theFind() {
+			window.open("/user/findpw", "findPw",
 							"width=450px,height=450px",
 							"left=400px,top=100px,scrollbars=yes, toolbar=no,location=no,fullscreen=no");
 		}
