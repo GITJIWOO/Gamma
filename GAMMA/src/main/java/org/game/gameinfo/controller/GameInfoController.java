@@ -68,6 +68,7 @@ public class GameInfoController {
 	private UserMapper userMapper;
 
 	// 게임 목록
+	@PreAuthorize("permitAll")
 	@GetMapping("/gamelist")
 	public String gameList(GameSearchCriteria cri, Model model, Principal principal) {
 
@@ -114,6 +115,7 @@ public class GameInfoController {
 	}
 
 	// 게임 등록 폼
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN')")
 	@PostMapping("/gameregister")
 	public String register(Model model, GameInfoVO gvo, RedirectAttributes rttr, Principal principal) {
 		// 세션 아이디, 어드민
@@ -165,6 +167,7 @@ public class GameInfoController {
 	}
 
 	// 게임정보 조회
+	@PreAuthorize("permitAll")
 	@GetMapping("/get")
 	public String get(@RequestParam("gnum") Long gnum, Model model, GameSearchCriteria cri, Principal principal) {
 		if (gnum == null) {
@@ -214,6 +217,7 @@ public class GameInfoController {
 
 	// 게임삭제
 //	@Transactional
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN')")
 	@PostMapping("/gameremove")
 	public String remove(Model model, Long gnum, String gname, RedirectAttributes rttr, Principal principal) {
 
@@ -245,6 +249,7 @@ public class GameInfoController {
 	}
 
 	// 게임수정 로직
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN')")
 	@PostMapping("/modify")
 	public String modify(Model model, GameInfoVO gvo, RedirectAttributes rttr, GameSearchCriteria cri, Principal principal) {
 //		log.info("게임수정 로직: " + vo);
@@ -274,6 +279,7 @@ public class GameInfoController {
 	}
 
 	// 수정폼
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN')")
 	@PostMapping("/modifyform")
 	public String modifyForm(@RequestParam("gnum") Long gnum, Model model, Principal principal) {
 
