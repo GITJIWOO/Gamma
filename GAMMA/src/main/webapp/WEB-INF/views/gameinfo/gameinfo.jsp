@@ -35,6 +35,8 @@ input[type="radio"] {
 	margin-top: 20px;
 	width: 900px;
 	height: 40px;
+	font-size: large;
+	font-style: italic;
 }
 
 .mid {
@@ -331,9 +333,9 @@ input[type="radio"] {
 			  <div style="width: 900px; height: 100px; " >
 			    <div id="carousel-example-generic" class="carousel slide" >
 			      <ol class="carousel-indicators">
-			        <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
-			        <li data-target="#carousel-example-generic" data-slide-to="1"></li>
+			        <li data-target="#carousel-example-generic" data-slide-to="1" class="active"></li>
 			        <li data-target="#carousel-example-generic" data-slide-to="2"></li>
+			        <li data-target="#carousel-example-generic" data-slide-to="3"></li>
 			      </ol>
 			      <div class="carousel-inner" role="listbox">
 			        <div class="item active">
@@ -388,6 +390,7 @@ input[type="radio"] {
 			</div>
 			
 			<div class="bottom3">
+			<h2>내가 쓴 리뷰</h2><br>
 				<c:if test="${cid ne null && lvo ne null}">
                      <c:choose>
                          <c:when test="${getReview ne null}">
