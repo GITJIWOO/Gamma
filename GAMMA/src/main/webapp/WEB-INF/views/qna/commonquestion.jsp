@@ -7,6 +7,7 @@
 <head>
 <meta charset="UTF-8">
 <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
 <script src="<c:url value="/resources/js/main.js"/>"></script>
 <link rel="stylesheet" href="/resources/css/styles.css" />
 <link rel="icon" type="image/png" href="http://example.com/myicon.png">
@@ -217,7 +218,7 @@
               </h4>
               <p class="topic-detail">
                 <!-- url 수정 -->
-                <a href="">여기</a>로 이동해 계정을 만들고 게임을
+                <a href="/user/userJoin">여기</a>로 이동해 계정을 만들고 게임을
                 플레이해보세요.
               </p>
               <h4
@@ -232,7 +233,7 @@
               <p class="topic-detail">
                 구입한 게임이 조금이라도 마음에 들지 않는다면
                 <!-- url 수정 -->
-                <a href="#">여기</a>로 이동해 직접 문의해주세요. 게임 보증
+                <a href="/qna/questionform">여기</a>로 이동해 직접 문의해주세요. 게임 보증
                 정책에 참여하는 게임에 한해서는 전액 환불받을 수 있습니다.
               </p>
               <h4
@@ -258,7 +259,7 @@
                 <i class="fas fa-check"></i>
                 &nbsp;
                 <!-- QnA url작성 -->
-                <a href="#">여기</a>를 눌러 주제를 선택하고 언제든지 지원팀에게
+                <a href="/qna/questionform">여기</a>를 눌러 주제를 선택하고 언제든지 지원팀에게
                 직접 도움을 요청할 수 있습니다.
               </p>
             </div>
