@@ -109,7 +109,7 @@ h1{
 		// 취소
 		$(".cencle").on("click", function() {
 
-			location.href = "/user/userGet";
+			window.close();
 
 		});
 
@@ -118,6 +118,9 @@ h1{
 				alert("비밀번호를 입력해주세요.");
 				$("#password").focus();
 				return false;
+			}else{
+				opener.location.href='http://localhost8181/main/main';
+				window.close();
 			}
 	});
 		});

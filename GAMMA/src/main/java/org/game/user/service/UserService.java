@@ -33,7 +33,8 @@ public interface UserService {
 
 	// 회원탈퇴
 	public void userDelete(ConsumerVO userVO) throws Exception;
-
+	
+	public ConsumerVO read(String cid);
 	
 	// 유저 상세창에 같이 딸려오는거
 		public List<UserAttachVO> getAttachList(Long cnum);

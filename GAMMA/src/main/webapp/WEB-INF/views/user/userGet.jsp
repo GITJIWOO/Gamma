@@ -2,18 +2,29 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
+<%@ taglib uri="http://www.springframework.org/security/tags"
+	prefix="sec"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
 <!DOCTYPE html>
 <html>
 <head>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous"><!-- Bootstrap cdn 설정 -->
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>	
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">	
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap-theme.min.css">	
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<link
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css"
+	rel="stylesheet"
+	integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU"
+	crossorigin="anonymous">
+<!-- Bootstrap cdn 설정 -->
+<script
+	src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap-theme.min.css">
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 <script src="<c:url value="/resources/js/main.js"/>"></script>
 <link rel="stylesheet" href="/resources/css/styles.css" />
 <link rel="icon" type="image/png" href="http://example.com/myicon.png">
@@ -187,8 +198,7 @@
 	
 }
 .logout{
-	font-size:10px; 
-	background-color:black;
+	font-size:13px; 
 }
 .consumer__info {
 	background-color: white;
@@ -202,26 +212,14 @@
 	border-radius: 10%;
 	text-align:left;
  }
-.detail{
+.detail {
 	display: flex;
 	flex-flow: row;
 }
-.modAub{
-	position:relative;
-	left:50px;
-}
 
-.table1{position:relative;
-	left:50px;}
-.rowB{
-text-align: center;
-position:relative;
-top:50px;
-}
-
-.nick {
-	display: flex;
-	flex-flow: row;
+.table1 {
+	position: relative;
+	left: 50px;
 }
 
 h2 {
@@ -235,43 +233,10 @@ h2 {
 	padding: 10px;
 }
 
-.cidPro {
-	color: orange;
-}
-
 .table {
 	font-weight: bold;
 }
 
-
-strong {
-	color: blue;
-}
-
-#modDiv {
-	border-radius: 2px;
-	width: 310px;
-	height: 140px;
-	background-color: black;
-	position: absolute;
-	padding: 10px;
-	top: 40%;
-	left: 30%;
-	z-index: 1000;
-	width: 310px;
-}
-
-modBtn {
-	display: flex;
-	flex-flow: row;
-	background-color: white;
-	color: gray;
-}
-
-#replytext {
-	position: relative;
-	right: 7px;
-}
 
 button {
 	width: 100px;
@@ -286,16 +251,6 @@ button {
 	transition: all 0.5s ease-in-out 0s;
 }
 
-.proImg {
-position:relative;
-	bottom:200px;
-	text-align: center;
-}
-
-.imgPro {
-	width: 150px;
-	height: 150px;
-}
 
 .imgProA {
 	width: 250px;
@@ -304,16 +259,7 @@ position:relative;
 	margin: 0;
 }
 
-.uid {
-	position: relative;
-	top: 10px;
-	font-weight: bold;
-	color: white;
-}
-.gameImg {
-	height: 100px;
-	width: 100px;
-}
+
 </style>
 <meta charset="UTF-8">
 
@@ -321,237 +267,217 @@ position:relative;
 
 </head>
 <body>
-    <div class="display">
-      <!-- side-bar -->
-      <div class="side-bar">
-        <!-- logo -->
-        <div class="side-bar__row">
-          <!-- 클릭하면 main화면으로 돌아오도록 a 태그 수정 -->
-          <span
-            ><a href="/main/main"><img src="/resources/css/image/logo.png" /></a
-          ></span>
-        </div>
-        <!-- search -->
-        <div class="side-bar__row">
-          <form action="/gameInfo/gamelist" method="get">
-          <select name="searchType" style="display:none">
+<div class="display">
+		<!-- side-bar -->
+		<div class="side-bar">
+			<!-- logo -->
+			<div class="side-bar__row">
+				<!-- 클릭하면 main화면으로 돌아오도록 a 태그 수정 -->
+				<span><a href="/main/main">
+				<img src="/resources/css/image/logo.png" /></a></span>
+			</div>
+			<!-- search -->
+			<div class="side-bar__row">
+				<form action="/gameInfo/gamelist" method="get">
+				<select name="searchType" style="display:none">
           	<option  value="n"
 				<c:out value="${btnMaker.cri.searchType eq 'n' ? 'selected' : '' }"/>>
 				</option>
             </select>
-            <input type="text" placeholder="Search Game" name="keyword" value="${btnMaker.cri.keyword }"/>
-            <!-- origin처럼 버튼 숨겼음, enter 치면 검색됨 -->
-            <input type="submit" value="" />
-          </form>
-        </div>
-        <!-- category -->
-        <div class="side-bar__row">
-          <span><a href="/gameInfo/gamelist">게임 스토어</a></span>
-         <sec:authorize access="isAuthenticated()">
-          	<sec:authentication property="principal" var="principal" />
-          <c:if test="${principal.consumer.cid ne null}">
-          	<span><a href="/library/conLibrary?cid=${cid}">라이브러리</a></span>
-          </c:if>
-          </sec:authorize>
-        </div>
-        <!-- qna -->
-        <div class="side-bar__row">
-          <span><a href="/qna/questionlist">Q&A</a></span>
-          &nbsp;&nbsp;|&nbsp;&nbsp;
-          <span><a href="/qna/commonquestion">자주하는 질문</a></span>
-        </div>
-        <!-- about user -->
-        <div class="side-bar__row">
-		            <sec:authorize access="isAuthenticated()">
-          	<sec:authentication property="principal" var="secuInfo" />
-	          <div class="consumer">
-	          	  <div class="consumer__imgPro">
-			        <img class="conimg" src="/resources/css/image/chaIcon.png"/>
-	          	  </div>
-		          <div class="consumer__nickname">
-		          	<p>${secuInfo.consumer.nickname}</p>
-		          	<form action="/user/userLogout" method="post">
-						<input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }"/>
-						<input class="logout" type="submit" value="LOGOUT" />
-					</form>
-		          </div>
-		          <div class="consumer__info">
-	   				<a href="/user/userGet">* 유저정보창</a><br/>
-	   				<a href="/user/userLogout">* 로그아웃</a><br/>
-	   				<a href="/friends/followerlist">* 팔로워리스트</a><br/>
-	   				<a href="/friends/followinglist">* 팔로윙리스트</a><br/>
-	   				<a href="/friends/searchfriends">* 친구 검색</a><br/>
-		   		  </div>
-	          </div>
-          </sec:authorize>
-        </div>
-      </div>
-      <div class="main">
-        <div class="contents">
-          <div class="detail">
-            <!-- 여기에 각자 content 붙여넣기 -->
+					<input type="text" placeholder="   Search Game" />
+					<!-- origin처럼 버튼 숨겼음, enter 치면 검색됨 -->
+					<input type="submit" value="" />
+				</form>
+			</div>
+			<!-- category -->
+			<div class="side-bar__row">
+				<span><a href="/gameInfo/gamelist">게임 스토어</a></span> 
+				<sec:authorize access="isAuthenticated()">
+					<sec:authentication property="principal" var="secuInfo" />
+          	<span><a href="/library/conLibrary?cid=${secuInfo.consumer.cid}">라이브러리</a></span>
+          	</sec:authorize>
+			</div>
+			<!-- qna -->
+			<div class="side-bar__row">
+				<span><a href="/qna/questionlist">Q&A</a></span> &nbsp;&nbsp;|&nbsp;&nbsp; <span><a
+					href="/qna/commonquestion">자주하는 질문</a></span>
+			</div>
 			<!-- about user -->
-			<div class="main">
-				<div class="container">
-					<div class="detail">
-					<div class="rowA">
-						<form name="form1" method="post">
-							<div class="img">
-								<div class="row">&nbsp;</div>
-								<img class="imgProA" src="/resources/css/image/chaIcon.png" />
-									<div>
-									<br> <br> <br>
-									<h2>[[프로필이미지]]</h2>
-										<div class="uploadDiv">
-											<input type="file" name="uploadFile" multiple>
-										</div>
+			<div class="side-bar__row">
+				<sec:authorize access="isAuthenticated()">
+					<sec:authentication property="principal" var="secuInfo" />
+					<div class="consumer">
+						<div class="consumer__imgPro">
+							<img class="conimg" src="/resources/css/image/chaIcon.png" />
+						</div>
+						<div class="consumer__nickname">
+							<p>${secuInfo.consumer.nickname}</p>
+							<form action="/user/userLogout" method="post">
+								<input type="hidden" name="${_csrf.parameterName }"
+									value="${_csrf.token }" /> <input class="logout" type="submit"
+									value="LOGOUT" />
+							</form>
+						</div>
+						<div class="consumer__info">
+							<a href="/user/userGet">* 유저정보창</a><br /> <a
+								href="/user/userLogout">* 로그아웃</a><br /> <a
+								href="/friends/followerlist">* 팔로워리스트</a><br /> <a
+								href="/friends/followinglist">* 팔로윙리스트</a><br /> <a
+								href="/friends/searchfriends">* 친구 검색</a><br />
+						</div>
+					</div>
+				</sec:authorize>
+			</div>
+		</div>
+		<div class="main">
+			<div class="contents">
+				<div class="detail">
+					<!-- 여기에 각자 content 붙여넣기 -->
+					<!-- about user -->
+					<div class="main">
+						<div class="container">
+							<div class="detail">
+								<div class="rowA">
+									<form name="form1" method="post">
+										<div class="img">
+											<div class="row">&nbsp;</div>
+											<img class="imgProA" src="/resources/css/image/chaIcon.png" />
+											<div>
+												<br> <br> <br>
+												<h2>[[프로필이미지]]</h2>
+												<div class="uploadDiv">
+													<input type="file" name="uploadFile" multiple>
+												</div>
 
-										<div class="uploadResult">
-											<ul>
-												<!-- 업로드된 파일이 들어갈 자리 -->
-											</ul>
-										</div>
-										<button id="uploadBtn">upload</button>
+												<div class="uploadResult">
+													<ul>
+														<!-- 업로드된 파일이 들어갈 자리 -->
+													</ul>
+												</div>
+												<button id="uploadBtn">upload</button>
 
+											</div>
+										</div>
+										<sec:authorize access="isAuthenticated()">
+											<sec:authentication property="principal" var="principal" />
+											<table class="table table1" width="400px">
+
+												<c:if test="${principal.consumer.cid eq 'kjw011231' }">
+													<tr>
+														<td>유저고유번호</td>
+														<td><input id="cnum" name="cnum"
+															value="${principal.consumer.cnum}" readonly="readonly"></td>
+													</tr>
+												</c:if>
+												<tr>
+													<td>아이디</td>
+													<td id="cid" name="cid"><a
+														href="/user/userPro?cid=${principal.consumer.cid }">${principal.consumer.cid}</a></td>
+												</tr>
+												<tr>
+													<td>닉네임</td>
+													<td id="nickname" name="nickname">${principal.consumer.nickname}</td>
+												</tr>
+												<tr>
+													<td>이메일</td>
+													<td id="email" name="email">${principal.consumer.email}</td>
+												</tr>
+												<tr>
+													<td>회원가입일자</td>
+													<td><fmt:formatDate
+															value="${principal.consumer.userregdate}"
+															pattern="yyy-MM-dd" /></td>
+												</tr>
+												<tr>
+													<td>회원정보 수정일자</td>
+													<td><fmt:formatDate
+															value="${principal.consumer.userupdatedate}"
+															pattern="yyy-MM-dd" /></td>
+												</tr>
+											</table>
+										</sec:authorize>
+									</form>
+									<div class="row">&nbsp;</div>
+									<div class="Mbtn">
+										<button id="emailAcc">이메일인증</button></a>
+										<button id="uModify">유저수정</button>
+										<button id="uRemove">탈퇴</button>
+										<a href="/gamepayment/consumerBreakdown"><button>결제
+												목록</button></a> <input type="hidden" name="${_csrf.parameterName }"
+											value="${_csrf.token }" />
 									</div>
+								</div>
+
 							</div>
-							<sec:authorize access="isAuthenticated()">
-          	<sec:authentication property="principal" var="principal" />
-							<table class="table table1" width="400px">
 
-								<c:if test="${principal.consumer.cid eq 'kjw011231' }">
-									<tr>
-										<td>유저고유번호</td>
-										<td><input id="cnum" name="cnum" value="${principal.consumer.cnum}"
-
-											readonly="readonly"></td>
-									</tr>
-								</c:if>
-								<tr>
-									<td>아이디</td>
-									<td id="cid" name="cid"><a href="/user/userPro?cid=${principal.consumer.cid }">${principal.consumer.cid}</a></td>
-								</tr>
-								<tr>
-									<td>닉네임</td>
-									<td id="nickname" name="nickname">${principal.consumer.nickname}</td>
-								</tr>
-								<tr>
-									<td>이메일</td>
-									<td id="email" name="email">${principal.consumer.email}</td>
-								</tr>
-								<tr>
-									<td>회원가입일자</td>
-									<td><fmt:formatDate value="${principal.consumer.userregdate}"
-											pattern="yyy-MM-dd" /></td>
-								</tr>
-								<tr>
-									<td>회원정보 수정일자</td>
-									<td><fmt:formatDate value="${principal.consumer.userupdatedate}"
-											pattern="yyy-MM-dd" /></td>
-								</tr>
-							</table>
-							</sec:authorize>
-						</form>
-						<div class="row">&nbsp;</div>
-						<div class="Mbtn">
-								<a href="#"><button>이메일인증</button></a>
-								<button id="uModify">유저수정</button>
-								<button id="uRemove">탈퇴</button>
-								<a href="/gamepayment/consumerBreakdown"><button>결제 목록</button></a>
 						</div>
-						</div>
-				
 					</div>
-				
-				</div>
-			</div>
-			<!--  row main-->
+					<!--  row main-->
 
-			<div class="footer">
-				<div class="footer-info">
-					<div>CREATORS&nbsp;&nbsp;김영훈, 김지우, 조훈현, 최재인</div>
-					<div>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;</div>
-					<div>
-						CONTACT&nbsp;&nbsp;<a href="https://github.com/GITJIWOO">https://github.com/GITJIWOO</a>
+					<div class="footer">
+						<div class="footer-info">
+							<div>CREATORS&nbsp;&nbsp;김영훈, 김지우, 조훈현, 최재인</div>
+							<div>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;</div>
+							<div>
+								CONTACT&nbsp;&nbsp;<a href="https://github.com/GITJIWOO">https://github.com/GITJIWOO</a>
+							</div>
+						</div>
+						<div class="footer-copyright">
+							<div>Copyright © GAMMA All right reserved.</div>
+						</div>
 					</div>
 				</div>
-				<div class="footer-copyright">
-					<div>Copyright © GAMMA All right reserved.</div>
-				</div>
-			</div>
-	</div>
-	<!-- 모달 요소는 안 보이기 때문에 어디 넣어도 되지만 보통 html요소들 끼리 놨을때
-	제일 아래쪽에 작성하는 경우가 많습니다. -->
-	<div id="modDiv" style="display: none;">
-		<div class="modal-title" style="color: white"></div>
-		<div>
-			<textarea style="resize: none;" name="reply" id="replytext" rows="2"
-				cols="41"></textarea>
-		</div>
-		<div class="modBtn">
-			<button type="button" id="replyModBtn">수정</button>
-			<button type="button" id="replyDelBtn">삭제</button>
-			<button type="button" id="closeBtn">닫기</button>
-		</div>
-	</div>
 
-        <div class="footer">
-          <div class="footer-info">
-            <div>CREATORS&nbsp;&nbsp;김영훈, 김지우, 조훈현, 최재인</div>
-            <div>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;</div>
-            <div>
-              CONTACT&nbsp;&nbsp;<a href="https://github.com/GITJIWOO/Game-Project"
-                >https://github.com/GITJIWOO/Game-Project</a
-              >
-            </div>
-          </div>
-          <div class="footer-copyright">
-            <div>Copyright © GAMMA All right reserved.</div>
-          </div>
-        </div>
-      </div>
-    </div>
-    </div>
+			</div>
+		</div>
+	</div>
 	<script>
-	$(document).ready(function() {
-		
-		$(".loginA").on("click", function() {
-			location.href = "/user/customLogin";
-		});
-		$(".joinA").on("click", function() {
-			location.href = "/user/join";
-		});
-		$(".consumer").mouseover(function(){
+		$(document).ready(function() {
+
+			$(".loginA").on("click", function() {
+				location.href = "/user/customLogin";
+			});
+			$(".joinA").on("click", function() {
+				location.href = "/user/join";
+			});
+			$(".consumer").mouseover(function() {
 				$(".consumer__info").show();
 			});
 
-			$(".consumer").mouseout(function(){
+			$(".consumer").mouseout(function() {
 				$(".consumer__info").hide();
 			});
-			
-						
-	
-	function theRemove(){
-		window.open("../user/userModify.jsp","naver","width=400px,height=400px",
-		"left=200px,top=20px,scrollbars=yes, toolbar=no,location=no");
-}
 
- window.onload=function(){
-    var myBtn=document.getElementById("uRemove");
-    myBtn.onclick = theRemove; 
-}
-	function theModify(){
-		window.open("../user/userDelete.jsp","naver","width=400px,height=400px",
-		"left=200px,top=20px,scrollbars=yes, toolbar=no,location=no");
-}
+		});
 
-window.onload=function(){
-    var myTtn=document.getElementById("uModify");
-    myTtn.onclick = theModify; 
-}
-	});
+		window.onload = function() {
+			var myBtn = document.getElementById("uRemove");
+			myBtn.onclick = theRemove;
+		}
+		function theRemove() {
+			window.open("/user/userDelete", "userDelete",
+							"width=400px,height=430px",
+							"left=200px,top=20px,scrollbars=yes, toolbar=no,location=no");
+		}
 
-	
+		window.addEventListener('load', function() {
+			var myTtn = document.getElementById("uModify");
+			myTtn.onclick = theModify;
+		})
+		function theModify() {
+			window.open("/user/userModify", "userModify",
+							"width=450px,height=500px",
+							"left=400px,top=100px,scrollbars=yes, toolbar=no,location=no, fullscreen=no");
+		}
+		window.addEventListener('load', function() {
+			var myEtn = document.getElementById("emailAcc");
+			myEtn.onclick = theEmail;
+		})
+		function theEmail() {
+			window.open("/user/mailCheck", "EmailAcc",
+							"width=450px,height=450px",
+							"left=400px,top=100px,scrollbars=yes, toolbar=no,location=no,fullscreen=no");
+		}
 	</script>
 </body>
 </html>
