@@ -223,8 +223,8 @@ input[type="radio"] {
 				</div>
 			</div>
 		</div>
-		<c:set var = "cid" value = "${cid }"/>
-		<c:if test="${fn:contains(cid, 'admin') }">
+		<!-- 관리자 권한 수정, 삭제 -->
+		<sec:authorize access="hasRole('ROLE_ADMIN')">
 		<form action="/gameInfo/modifyform" method="post">
 		<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 			<input type="hidden" name="gnum" value="${gvo.gnum }"> <input
@@ -233,19 +233,16 @@ input[type="radio"] {
 			<input type="hidden" name="keyword" value="${param.keyword }">
 			<input type="submit" value="수정하기">
 		</form>
-		
-		<!--  
-		<a
-			href="/gameInfo/gamelist?pageNum=${param.pageNum }&searchType=${param.searchType}&keyword=${param.keyword}">
-			<input type="button" value="목록으로">
-		</a>
-		-->
+
 		<form action="/gameInfo/gameremove" method="post" id="deleteForm">
 			<input type="hidden" name="gnum" value="${gvo.gnum }"> <input
 				type="button" value="삭제하기" onclick="confirm_delete();">
 				<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 		</form>
-		</c:if>
+		</sec:authorize>
+		<!--  end 관리자 권한  -->
+		
+		
 		<c:if test="${cid ne null }">
 			<c:if test="${lvo eq null && basket eq null }">
 				<form action="/gamepayment/basketAdd" method="post">
@@ -310,58 +307,46 @@ input[type="radio"] {
           </form>
 			</div>
 				<hr>
-				<%-- <table class="table table-hover">
-					<tr>
-						<th>게임이름</th>
-						<th>가격</th>
-						<th>태그</th>
-					</tr>
-					<c:forEach var="listByTag" items="${listByTag }">
-					<c:if test="${listByTag.gname != gvo.gname }">
-						<tr>
-							<td><a
-								href="/gameInfo/get?gnum=${listByTag.gnum }&keyword=${btnMaker.cri.keyword}">
-									${listByTag.gname }</a></td>
-							<th>${listByTag.gprice }</th>
-							<th>${listByTag.tagname }</th>
-						</tr>
-						</c:if>
-					</c:forEach>
-				</table> --%>
 				
 				<!-- carousel를 구성할 영역 설정 -->
-			  <div style="width: 900px; height: 100px; " >
+			  <div style="width: 900px; height: 250px; " >
 			    <div id="carousel-example-generic" class="carousel slide" >
 			      <ol class="carousel-indicators">
-			        <li data-target="#carousel-example-generic" data-slide-to="1" class="active"></li>
+			        <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
+			        <li data-target="#carousel-example-generic" data-slide-to="1"></li>
 			        <li data-target="#carousel-example-generic" data-slide-to="2"></li>
 			        <li data-target="#carousel-example-generic" data-slide-to="3"></li>
+			        <li data-target="#carousel-example-generic" data-slide-to="4"></li>
 			      </ol>
-			      <div class="carousel-inner" role="listbox">
-			        <div class="item active">
-			        <a href="/gameInfo/get?gnum=${listByTag[0].gnum }">
-			          <img src="${listByTag[1].gpicture }" style="width:100%; height: 400px;">
-			          </a>
-			          <div class="carousel-caption" style="color:red;">
-			           ${listByTag[1].gname }
-			          </div>
-			        </div>
-			        <div class="item">
-			        <a href="/gameInfo/get?gnum=${listByTag[1].gnum }">
-			          <img src="${listByTag[2].gpicture }" style="width:100%; height: 400px;">
-			          </a>
-			          <div class="carousel-caption" style="color:red;">
-			          ${listByTag[2].gname }
-			          </div>
-			        </div>
-			        <div class="item">
-			        <a href="/gameInfo/get?gnum=${listByTag[2].gnum }">
-			          <img src="${listByTag[3].gpicture }" style="width:100%; height: 400px;">
-			          </a>
-			          <div class="carousel-caption" style="color:red;">
-			          ${listByTag[3].gname }
-			          </div>
-			        </div>
+			      <div class="carousel-inner" role="listbox">	
+			      	<c:forEach var="listByTag" items="${listByTag }" varStatus="status">
+				    	<c:if test="${listByTag.gname != gvo.gname }"> 
+				      		<c:if test="${status.count eq 1 }">
+				      			<div class="item active">
+				        			<a href="/gameInfo/get?gnum=${listByTag.gnum }">
+				          				<img src="${listByTag.gpicture }" style="width:100%; height: 250px;">
+				          			</a>
+				        	  	<div class="carousel-caption" style="color:white;">
+			          				${listByTag.gname }
+			          			</div>
+				        		</div>
+				      		</c:if>
+				      	</c:if>
+				      	
+				        <c:if test="${listByTag.gname != gvo.gname }">
+				        	<c:if test="${status.count ne 1 }">
+				        		<div class="item">
+				        			<a href="/gameInfo/get?gnum=${listByTag.gnum }">
+				          				<img src="${listByTag.gpicture }" style="width:100%; height: 250px;">
+				          			</a>
+				          		<div class="carousel-caption" style="color:white;">
+			          			${listByTag.gname }
+			          			</div>
+				        		</div>
+				        	</c:if>
+				         </c:if> 
+				      </c:forEach>				        
+			       
 			      </div>
 			      <!-- 왼쪽 화살표 버튼 -->
 			      <a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">
@@ -390,11 +375,11 @@ input[type="radio"] {
 			</div>
 			
 			<div class="bottom3">
-			<h2>내가 쓴 리뷰</h2><br>
 				<c:if test="${cid ne null && lvo ne null}">
                      <c:choose>
                          <c:when test="${getReview ne null}">
 							<div id="reviewInfo">
+							<h2>내가 쓴 리뷰</h2><br>
 						<div class="reviewNickname">
 							${getReview.cid}
 						</div>

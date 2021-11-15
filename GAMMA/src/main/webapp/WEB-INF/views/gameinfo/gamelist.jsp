@@ -118,13 +118,12 @@
 	</h1>
 	
 	<div class="content_list">
-		<c:set var = "cid" value = "${cid }"/>
-		<c:if test="${fn:contains(cid, 'admin') }">
+		<sec:authorize access="hasRole('ROLE_ADMIN')">
 		<div class="row">
 	 		<a href="/gameInfo/gameregister">
 			<input type="button" value="게임등록" style="float: right;"></a>
 		</div>
-		</c:if>
+		</sec:authorize>
 		<br>
 	
 		 <div class="container">
@@ -150,7 +149,8 @@
     	
     	
     	
-	<c:if test="${cid ne null}">	
+		<c:set var = "cid" value = "${cid }"/>
+		<c:if test="${fn:contains(cid, 'admin') }">	
     	<div class="search_list">
     	<nav aria-label="Page navigation example">
 		<ul class="pagination justify-content-center">
