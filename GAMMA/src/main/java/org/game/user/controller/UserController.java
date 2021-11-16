@@ -81,7 +81,13 @@ public class UserController {
 			String myCid = principal.getName();
 			model.addAttribute("myCid", myCid);
 		}
-		
+		if(cid == null) {
+			if(principal != null) {
+				cid = principal.getName();
+			} else {
+				return "redirect:/user/userLogin";
+			}
+		}
 
 		ConsumerVO userVO = service.userGet(cid);
  
