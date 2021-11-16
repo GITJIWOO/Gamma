@@ -37,8 +37,6 @@ button {
 	transition: all 0.5s ease-in-out 0s;
 }
 	.border {
-	padding:0;
-	margin: 0;
 	width: 370px;
 	height: 450px;
 	border: 1px solid #000;
@@ -68,6 +66,11 @@ display:flex;
 .row1{
 	position:relative;
 	
+}
+.container{
+display: flex;
+  justify-content: center;
+  align-items: center;
 }
 	
 </style>
