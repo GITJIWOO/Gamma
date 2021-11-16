@@ -157,7 +157,7 @@ input[type="radio"] {
 		          </div>
 		          <div class="consumer__info">
 	   				<a href="/user/userGet">* 내정보</a><br/>
-	   				<a href="/user/userPro">* 프로필</a>
+	   				<a href="/user/userPro">* 프로필</a><br/>
 	   				<a href="/friends/followerlist">* 팔로워리스트</a><br/>
 	   				<a href="/friends/followinglist">* 팔로잉리스트</a><br/>
 	   				<a href="/friends/searchfriends">* 친구 검색</a><br/>
