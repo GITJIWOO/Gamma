@@ -93,6 +93,7 @@ public class UserController {
  
 		model.addAttribute("cid", userVO.getCid());
 		model.addAttribute("nickname", userVO.getNickname());
+		model.addAttribute("cnum", userVO.getCnum());
 
 		List<ResultLibraryVO> libraryList = libraryService.getAllConsumerLibrary(userVO.getCid());
 

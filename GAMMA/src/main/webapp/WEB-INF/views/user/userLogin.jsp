@@ -166,7 +166,7 @@ button {
 		})
 		function theFind() {
 			window.open("/user/findpw", "findPw",
-							"width=450px,height=450px",
+							"width=450px,height=500px",
 							"left=400px,top=100px,scrollbars=yes, toolbar=no,location=no,fullscreen=no");
 		}
 	</script>
