@@ -96,7 +96,7 @@ h1{
 			<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 			</div>
 			<div class="row">
-				<button class="btn" type="submit"onclick="fn_mody();" id="submit">회원정보수정</button>
+				<button class="btn" type="submit" id="submit">회원정보수정</button>
 				<button class="cencle btn" type="button">취소</button>
 			</div>
 			</div>
@@ -109,17 +109,11 @@ h1{
 		// 취소
 		$(".cencle").on("click", function() {
 
-			location.href = "/user/userGet";
+			window.close();
 
 		});
 
-		$("#submit").on("click", function() {
-			if ($("#password").val() == "") {
-				alert("비밀번호를 입력해주세요.");
-				$("#password").focus();
-				return false;
-			}
-	});
+		
 		});
 		
 </script>

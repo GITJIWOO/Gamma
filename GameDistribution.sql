@@ -130,10 +130,9 @@ INSERT INTO consumer(cnum, cid, email, password, nickname, cadmin)
 SELECT * FROM consumer; 
 SELECT * FROM consumer_auth;
 
+    VALUES(consumer_num.nextval,'kjw011231', 'kjw0111231@gmail.com', 'rlawldn', '김지우', 1);
 INSERT INTO consumer(cnum, cid, email, password, nickname, cadmin) 
     VALUES(consumer_num.nextval,'cho', 'chocc', 'aaa', 'cho', 0);
-    INSERT INTO consumer(cnum, cid, email, password, nickname, cadmin) 
-    VALUES(consumer_num.nextval,'admin1', 'admin1', 'admin1@admin1', '어드민', 1);
  
 SELECT * FROM consumer_auth; 
 
@@ -148,7 +147,8 @@ CREATE TABLE consumer_auth(
     auth varchar2(50) not null,
     constraint fk_consumer_auth foreign key(cid) references consumer(cid)
 );
-insert into consumer_auth values ('admin1', 'ROLE_ADMIN');
+
+
 /* 자동 로그인 */
 
 CREATE TABLE persistent_logins(
@@ -163,13 +163,11 @@ create unique index ix_auth_cid on authorities (cid, auth);
 */
 insert into consumer (cnum,cid,password,email,nickname,cadmin) values (consumer_num.nextval,'user00','pw00','ssos@sos','scho',0);
 insert into consumer (cnum,cid,password,email,nickname,cadmin) values (consumer_num.nextval,'member00','pw00','m@sos','mcho',0);
-insert into consumer (cnum,cid,password,email,nickname,cadmin) values (consumer_num.nextval,'kjw123','kjw011231','assos@sos','가나다라',0);
+insert into consumer (cnum,cid,password,email,nickname,cadmin) values (consumer_num.nextval,'admin00','pw00','assos@sos','ascho',0);
 insert into authorities (cnum,cid,authority) values(502,'user00','ROLE_USER');
 insert into authorities (cnum,cid,authority) values(503,'member00','ROLE_MANAGER');
 insert into authorities (cnum,cid,authority) values(504,'admin00','ROLE_MANAGER');
-insert into authorities (cnum,cid,auth) values(121,'kjw123','ROLE_ADMIN');
-select * from consumer;
-select * from authorities;
+insert into authorities (cnum,cid,authority) values(504,'admin00','ROLE_ADMIN');
 commit;
 
 /* 유저방명록 (각 개인 상태창에 보임)*/
