@@ -92,7 +92,7 @@ h1{
 					 type="text" id="nickname" name="nickname"
 					value="${principal.consumer.nickname}" readonly /><br/>
 					<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
-				<button class="btn" type="submit" id="submit">회원탈퇴</button>
+				<button class="btn" type="submit" id="submit" onclick="opener.location.href='http://localhost:8181/main/main';window.close();">회원탈퇴</button>
 				<button class="cencle btn" type="button">취소</button>
 			</div>
 			</sec:authorize>
@@ -110,36 +110,9 @@ h1{
 			// 취소
 			$(".cencle").on("click", function() {
 
-				location.href = "/user/userLogin?cid=${principal.consumer.cid}";
+				window.close();
 
 			})
-
-			/* $("#submit").on("click", function() {
-				if ($("#password").val() == "") {
-					alert("비밀번호를 입력해주세요.");
-					$("#password").focus();
-					return false;
-				}
-				$.ajax({
-					url : "/user/passChk",
-					type : "POST",
-					dataType : "json",
-					data : $("#delForm").serializeArray(),
-					success : function(data) {
-
-						if (data == true) {
-							if (confirm("회원탈퇴하시겠습니까?")) {
-								$("#delForm").submit();
-							} else {
-								alert("패스워드가 틀렸습니다.");
-								return;
-							}
-
-						}
-					}
-				})
-
-			}); */
 
 		});
 	</script>

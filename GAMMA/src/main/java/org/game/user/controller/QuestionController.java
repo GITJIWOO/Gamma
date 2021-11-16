@@ -31,7 +31,7 @@ public class QuestionController {
 
 	// 질문글 작성하는 폼 
 	@PreAuthorize("hasAnyRole('ROLE_MEMBER')")
-	@PostMapping("/questionform")
+	@GetMapping("/questionform")
 	public String addQuestion() {
 		return "/qna/registerquestion";
 	}
