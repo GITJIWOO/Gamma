@@ -36,8 +36,6 @@ public class UserRestController {
 	@Inject
 	UserService service;
 	
-	@Autowired
-	UserMailSendService mailsender;
 
 	// @Inject
 	// BCryptPasswordEncoder pwdEncoder;
@@ -54,17 +52,8 @@ public class UserRestController {
 		System.out.println("strResult : " + strResult);
 		return new ResponseEntity<String>(strResult, HttpStatus.OK);
 	}
-	@RequestMapping(value = "/reg", method = RequestMethod.POST)
-	public String userRegPass(ConsumerVO userVO, Model model, HttpServletRequest request, HttpSession session) {
-		// 인증 메일 보내기 메서드
-				mailsender.mailSendWithUserKey(userVO.getEmail(), userVO.getCid(), request);
-
-				return "redirect:/";
-			}
 	// 이메일 중복확인 체크
-
 	@ResponseBody
-
 	@PostMapping(value = "/emailChk", consumes = "application/json", produces = { MediaType.TEXT_PLAIN_VALUE })
 	public ResponseEntity<String> emailChk(@RequestBody String email) throws Exception {
 
@@ -73,15 +62,6 @@ public class UserRestController {
 		String eResult = result + ""; // 문자열로 바꿔줌
 		return new ResponseEntity<String>(eResult, HttpStatus.OK);
 	}
-	// e-mail 인증 컨트롤러
-	@ResponseBody
-		@RequestMapping(value = "/key_alter", method = RequestMethod.GET)
-		public String key_alterConfirm(@RequestParam("cid") String cid, @RequestParam("user_key") String key) {
-
-			mailsender.alter_userKey_service(cid, key);
-
-			return "user/userRegSuccess";
-		}
 
 	
 

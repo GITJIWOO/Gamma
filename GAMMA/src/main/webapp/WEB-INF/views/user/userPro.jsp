@@ -6,15 +6,27 @@
 <%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
 <!DOCTYPE html>
 <html>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous"><!-- Bootstrap cdn 설정 -->
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>	
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">	
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap-theme.min.css">	
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<head>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<link
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css"
+	rel="stylesheet"
+	integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU"
+	crossorigin="anonymous">
+<!-- Bootstrap cdn 설정 -->
+<script
+	src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap-theme.min.css">
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 <script src="<c:url value="/resources/js/main.js"/>"></script>
 <link rel="stylesheet" href="/resources/css/styles.css" />
 <link rel="icon" type="image/png" href="http://example.com/myicon.png">
+
 <style>
 .display {
   display: flex;
@@ -184,8 +196,7 @@
 	
 }
 .logout{
-	font-size:10px; 
-	background-color:black;
+	font-size:13px; 
 }
 .consumer__info {
 	background-color: white;
@@ -325,12 +336,17 @@ position:relative;
 			<!-- logo -->
 			<div class="side-bar__row">
 				<!-- 클릭하면 main화면으로 돌아오도록 a 태그 수정 -->
-				<span><a href="#">
+				<span><a href="/main/main">
 				<img src="/resources/css/image/logo.png" /></a></span>
 			</div>
 			<!-- search -->
 			<div class="side-bar__row">
-				<form action="#" method="get">
+				<form action="/gameInfo/gamelist" method="get">
+				<select name="searchType" style="display:none">
+          	<option  value="n"
+				<c:out value="${btnMaker.cri.searchType eq 'n' ? 'selected' : '' }"/>>
+				</option>
+            </select>
 					<input type="text" placeholder="   Search Game" />
 					<!-- origin처럼 버튼 숨겼음, enter 치면 검색됨 -->
 					<input type="submit" value="" />
@@ -338,20 +354,31 @@ position:relative;
 			</div>
 			<!-- category -->
 			<div class="side-bar__row">
-				<span><a href="#">게임 스토어</a></span> <span><a href="#">라이브러리</a></span>
+				<span><a href="/gameInfo/gamelist">게임 스토어</a></span> 
+          	<span><a href="/library/conLibrary?cid=${myCid}">라이브러리</a></span>
 			</div>
 			<!-- qna -->
 			<div class="side-bar__row">
-				<span><a href="#">Q&A</a></span> &nbsp;&nbsp;|&nbsp;&nbsp; <span><a
-					href="#">자주하는 질문</a></span>
+				<span><a href="/qna/questionlist">Q&A</a></span> &nbsp;&nbsp;|&nbsp;&nbsp; <span><a
+					href="/qna/commonquestion">자주하는 질문</a></span>
 			</div>
+			<!-- about user -->
 				<div class="side-bar__row">
+				<c:if test="${myCid eq null }">
+	          <div class="loginBtn">
+	        	<span><a href="/user/userLogin" class="loginA">로그인</a></span>
+	          </div>
+	          <div class="joinBtn">
+	        	<span><a href="/user/agreeJoin" class="joinA">가입하기</a></span>
+	          </div>
+       	  </c:if>
+          <c:if test="${myCid ne null}">
 	          <div class="consumer">
 	          	  <div class="consumer__imgPro">
 			        <img class="conimg" src="/resources/css/image/chaIcon.png"/>
 	          	  </div>
 		          <div class="consumer__nickname">
-		          	<p>${nickname}</p>
+		          	<p>${myCid}</p>
 		          	<form action="/user/userLogout" method="post">
 						<input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }"/>
 						<input class="logout" type="submit" value="LOGOUT" />
@@ -365,6 +392,7 @@ position:relative;
 	   				<a href="/friends/searchfriends">* 친구 검색</a><br/>
 		   		  </div>
 	          </div>
+	          </c:if>
         </div>
       </div>
 			<!-- about user -->
@@ -378,7 +406,7 @@ position:relative;
 								<img class="imgProA" src="/resources/css/image/chaIcon.png" />
 							</div>
 							<table class="table table1" width="400px">
-								<c:if test="${cid eq 'kjw011231' }">
+								<c:if test="${myCid eq 'kjw011231' }">
 									<tr>
 										<td>유저고유번호</td>
 										<td><input id="cnum" name="cnum" value="${cnum}"
