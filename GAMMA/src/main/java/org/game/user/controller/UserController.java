@@ -81,13 +81,17 @@ public class UserController {
 			String myCid = principal.getName();
 			model.addAttribute("myCid", myCid);
 		}
-		System.out.println("cid값 : " + cid);
+		if(cid == null) {
+			if(principal != null) {
+				cid = principal.getName();
+			} else {
+				return "redirect:/user/userLogin";
+			}
+		}
 
 		ConsumerVO userVO = service.userGet(cid);
  
-		System.out.println("userVO들어왓나 : " + userVO);
 		model.addAttribute("cid", userVO.getCid());
-		model.addAttribute("cadmin", userVO.getCadmin());
 		model.addAttribute("nickname", userVO.getNickname());
 
 		List<ResultLibraryVO> libraryList = libraryService.getAllConsumerLibrary(userVO.getCid());
