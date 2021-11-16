@@ -6,7 +6,7 @@ import org.game.user.domain.UserReplyVO;
 
 public interface UserReplyMapper {
 
-	public List<UserReplyVO> getList(Long cnum);
+	public List<UserReplyVO> getList(String cid);
 
 	public void create(UserReplyVO vo);
 
