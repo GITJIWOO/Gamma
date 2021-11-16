@@ -49,7 +49,7 @@ button {
 				<p>이메일을 발송 했습니다. 확인해주세요.
 				
 			</div>
-			<a href="/main/main"><button onclick="opener.location.href='http://localhost:8181/main/main';window.close();">
+			<a href="/main/main"><button onclick="window.opener.location.reload(); opener.location.href='http://localhost:8181/main/main'; window.close();">
 					홈페이지로
 				</button></a>
 			</div>

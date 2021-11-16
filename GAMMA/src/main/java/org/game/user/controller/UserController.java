@@ -96,7 +96,7 @@ public class UserController {
 
 		return "/user/userPro";
 	}
-
+	@PreAuthorize("hasAnyRole('ROLE_MEMBER')")
 	@GetMapping("/userGet")
 	public String userGet(HttpSession session, Model model) { // 세션 아이디, 어드민
 		String cid = (String) session.getAttribute("session_cid");
@@ -305,7 +305,7 @@ public class UserController {
 	 * 
 	 * }
 	 */
-	
+	@PreAuthorize("permitAll")
 	@GetMapping("/naverLogin")
 	public String login(HttpSession session) {
 		String naverAuthUrl=naverLoginBO.getAuthorizationUrl(session);
@@ -314,7 +314,7 @@ public class UserController {
 		
 		return "redirect:/user/userLogin";
 	}
-	
+	@PreAuthorize("permitAll")
 	@RequestMapping(value="/naver/login",method= {RequestMethod.GET,RequestMethod.POST})
 	public String callback(Model model,@RequestParam String code,@RequestParam String state,
 			HttpSession session)
@@ -367,12 +367,14 @@ public class UserController {
 	
 
 	// 겟으로 접근하는 수정창 -- ajax쓰기려고 넘김
+	@PreAuthorize("hasAnyRole('ROLE_MEMBER')")
 	@GetMapping("/userModify")
 	public String userModify() throws Exception {
 		return "user/userModify";
 	}
 
 	// post 회원정보 수정
+	@PreAuthorize("hasAnyRole('ROLE_MEMBER')")
 	@PostMapping("/userModify")
 	public String registerUpdate(ConsumerVO vo, HttpSession session) throws Exception {
 		String beforeCrPw = vo.getPassword();
@@ -386,13 +388,14 @@ public class UserController {
 		SecurityContextHolder.getContext().setAuthentication(null);
 		return "redirect:/user/modifyOk";
 	}
+	@PreAuthorize("permitAll")
 	@GetMapping("/user/modifyOk")
 	public String modifyOk() {
 		return "/user/modifyOk";
 	}
 
 	// 회원 탈퇴 get
-	@PreAuthorize("hasAnyRole('ROLE_MEMBER')")
+	@PreAuthorize("permitAll")
 	@GetMapping("/userDelete")
 	public String userDelete(HttpSession session) throws Exception {
 		return "/user/userDelete";
@@ -401,29 +404,30 @@ public class UserController {
 	// 회원 탈퇴 post
 	@PreAuthorize("hasAnyRole('ROLE_MEMBER')")
 	@PostMapping("/userDelete")
-	public String memberDelete(ConsumerVO vo, HttpSession session, RedirectAttributes rttr) throws Exception {
-
-		ConsumerVO login = service.userGet(vo.getCid());
-
-		 boolean pwdMatch = pwdEncoder.matches(vo.getPassword(),  login.getPassword()); 
+	public String memberDelete(ConsumerVO userVO, HttpSession session, RedirectAttributes rttr) throws Exception {
+		System.out.println("탈퇴로직실행");
+		ConsumerVO login = service.userGet(userVO.getCid());
+		System.out.println("cid : "+userVO.getCid());
+		 boolean pwdMatch = pwdEncoder.matches(userVO.getPassword(),  login.getPassword()); 
 		if(pwdMatch==true) {
-		service.userDelete(vo);
+		service.userDelete(userVO);
 		session.invalidate();
 		SecurityContextHolder.getContext().setAuthentication(null);
 		}
-		return "/user/userLogin";
+		return "/user/deleteOk";
 	}
 	
-	
+	@PreAuthorize("permitAll")
 	@GetMapping("/user/mailCheck")
 	public String userMailSend() {
 		return "/user/mailCheck";
 	}
+	@PreAuthorize("permitAll")
 	@GetMapping("/mailCheckOk")
 	public String mailCheckOk() {
 		return "/user/mailCheckOk";
 	}
-	
+	@PreAuthorize("hasAnyRole('ROLE_MEMBER')")
 	@RequestMapping(value = "/user/mailCheck", method = RequestMethod.POST)
 	public String userMailSend(ConsumerVO userVO, Model model, HttpServletRequest request, HttpSession session) {
 		// 인증 메일 보내기 메서드
@@ -432,6 +436,7 @@ public class UserController {
 				return "/user/mailCheckOk";
 	}
 	// e-mail 인증 컨트롤러
+	@PreAuthorize("hasAnyRole('ROLE_MEMBER')")
 		@ResponseBody
 			@RequestMapping(value = "/key_alter", method = RequestMethod.GET)
 			public String key_alterConfirm(@RequestParam("cid") String cid, @RequestParam("user_key") String key) {
@@ -440,16 +445,19 @@ public class UserController {
 
 				return "/user/userMailSuccess";
 			}
+	@PreAuthorize("permitAll")
 		@GetMapping("/user/userMailSuccess")
 		public String userMailSuccess() {
 			return "/user/userMailSuccess";
 		}
+	@PreAuthorize("permitAll")
 		@GetMapping("/user/findpw")
 		public String findPW() {
 			return "/user/findpw";
 		}
 	
 		// 비밀번호 찾기
+	@PreAuthorize("permitAll")
 		@RequestMapping(value = "/user/findpw", method = RequestMethod.POST)
 		@ResponseBody
 		public String passwordSearch(@RequestParam("cid") String cid,
