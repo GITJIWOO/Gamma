@@ -81,13 +81,7 @@ public class UserController {
 			String myCid = principal.getName();
 			model.addAttribute("myCid", myCid);
 		}
-		if(cid == null) {
-			if(principal != null) {
-				cid = principal.getName();
-			} else {
-				return "redirect:/user/userLogin";
-			}
-		}
+		
 
 		ConsumerVO userVO = service.userGet(cid);
  
@@ -100,35 +94,16 @@ public class UserController {
 
 		return "/user/userPro";
 	}
-	@PreAuthorize("hasAnyRole('ROLE_MEMBER')")
-	@GetMapping("/userGet")
-	public String userGet(HttpSession session, Model model) { // 세션 아이디, 어드민
-		String cid = (String) session.getAttribute("session_cid");
-		String cadmin = String.valueOf(session.getAttribute("session_cadmin"));
-		model.addAttribute("cid", cid);
-		model.addAttribute("cadmin", cadmin);
-		return "/user/userGet";
-	}
-
+	
 	// 유저 상제정보창
 	@PreAuthorize("hasAnyRole('ROLE_MEMBER')")
-	@PostMapping("/userGet")
-	public String userGet(ConsumerVO userVO, Model model, Principal principal) {
-		if (principal != null) {
-			String cid = principal.getName();
-			model.addAttribute("cid", cid);
-			if (cid != null) {
-				ConsumerVO consumer = service.userGet(cid);
-				model.addAttribute("consumer", consumer);
-				System.out.println("consumer : " + consumer);
-			}
-		}
-
-		log.info("클릭한유저번호" + userVO);
-		if (userVO.getAttachList() != null) {
-			userVO.getAttachList().forEach(attach -> log.info(attach));
-		}
-
+	@GetMapping("/userGet")
+	public String userGet(String cid, Principal principal, Model model) { // 세션 아이디, 어드민
+		
+		cid = principal.getName();
+		
+		model.addAttribute("cid", cid);
+		
 		return "/user/userGet";
 	}
 
