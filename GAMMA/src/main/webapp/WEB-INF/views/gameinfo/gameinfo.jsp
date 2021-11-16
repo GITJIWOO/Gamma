@@ -156,10 +156,10 @@ input[type="radio"] {
 		          	<p style="color:white;"><sec:authentication property="principal.consumer.nickname"/></p>
 		          </div>
 		          <div class="consumer__info">
-	   				<a href="/user/userGet">* 유저정보창</a><br/>
-	   				<a href="/user/userPro">* 유저프로필창</a><br/>
+	   				<a href="/user/userGet">* 내정보</a><br/>
+	   				<a href="/user/userPro">* 프로필</a>
 	   				<a href="/friends/followerlist">* 팔로워리스트</a><br/>
-	   				<a href="/friends/followinglist">* 팔로윙리스트</a><br/>
+	   				<a href="/friends/followinglist">* 팔로잉리스트</a><br/>
 	   				<a href="/friends/searchfriends">* 친구 검색</a><br/>
 		   		  </div>
 				  <form action="/user/userLogout" method="post">

@@ -114,6 +114,9 @@
         <div class="side-bar__row">
           <form action="/gameInfo/gamelist" method="get">
           <select name="searchType" style="display:none">
+          	<option  value="n"
+				<c:out value="${btnMaker.cri.searchType eq 'n' ? 'selected' : '' }"/>>
+				</option>
             </select>
             <input type="text" placeholder="Search Game" name="keyword" value="${btnMaker.cri.keyword }"/>
             <!-- origin처럼 버튼 숨겼음, enter 치면 검색됨 -->
@@ -153,16 +156,16 @@
 		          	<p style="color:white;"><sec:authentication property="principal.consumer.nickname"/></p>
 		          </div>
 		          <div class="consumer__info">
-	   				<a href="/user/userGet">* 유저정보창</a><br/>
-	   				<a href="/user/userPro">* 유저프로필창</a><br/>
-					<form action="/user/userLogout" method="post">
-						<input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }"/>
-						<input type="submit" value="LOGOUT" />
-					</form><br/>
+	   				<a href="/user/userGet">* 내정보</a><br/>
+	   				<a href="/user/userPro">* 프로필</a>
 	   				<a href="/friends/followerlist">* 팔로워리스트</a><br/>
-	   				<a href="/friends/followinglist">* 팔로윙리스트</a><br/>
+	   				<a href="/friends/followinglist">* 팔로잉리스트</a><br/>
 	   				<a href="/friends/searchfriends">* 친구 검색</a><br/>
 		   		  </div>
+				  <form action="/user/userLogout" method="post">
+					  <input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }"/>
+					  <input class="logout" type="submit" value="로그아웃" />
+				  </form>
 	          </div>
           </c:if>
         </div>
