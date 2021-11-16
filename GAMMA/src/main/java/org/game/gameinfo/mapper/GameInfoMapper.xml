@@ -52,10 +52,12 @@
 	</update>
 	
 	<!-- 태그별 조회 5개만-->
+		<!-- SELECT gametag.tagname, game.* FROM gametag JOIN game on gametag.gnum = game.gnum	
+		WHERE tagname = #{tagname} AND ROWNUM <= 5 -->
 	<select id="listByTag" resultType="org.game.gameinfo.domain.GameInfoVO">
 		<![CDATA[
-		SELECT gametag.tagname, game.* FROM gametag JOIN game on gametag.gnum = game.gnum	
-		WHERE tagname = #{tagname} AND ROWNUM <= 5
+		select * from((SELECT gametag.tagname, game.* FROM gametag JOIN game on gametag.gnum = game.gnum	
+		WHERE tagname = #{tagname}) order by DBMS_RANDOM.RANDOM) where ROWNUM <= 6
 		]]>
 	</select>
 	
