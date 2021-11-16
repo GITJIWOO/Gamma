@@ -102,30 +102,39 @@
 			        <li data-target="#carousel-example-generic" data-slide-to="2"></li>
 			      </ol>
 			      <div class="carousel-inner" role="listbox">
-			        <div class="item active">
-			        <a href="/gameInfo/get?gnum=${latestGame[0].gnum }">
-			          <img src="${latestGame[0].gpicture }" style="width:100%; height: 400px;">
-			          </a>
-			          <div class="carousel-caption" style="color:red;">
-			           ${latestGame[0].gname }
-			          </div>
-			        </div>
-			        <div class="item">
-			        <a href="/gameInfo/get?gnum=${latestGame[1].gnum }">
-			          <img src="${latestGame[1].gpicture }" style="width:100%; height: 400px;">
-			          </a>
-			          <div class="carousel-caption" style="color:red;">
-			          ${latestGame[1].gname }
-			          </div>
-			        </div>
-			        <div class="item">
-			        <a href="/gameInfo/get?gnum=${latestGame[2].gnum }">
-			          <img src="${latestGame[2].gpicture }" style="width:100%; height: 400px;">
-			          </a>
-			          <div class="carousel-caption" style="color:red;">
-			          ${latestGame[2].gname }
-			          </div>
-			        </div>
+			      
+			        
+			        <c:forEach var="latestGame" items="${latestGame }" varStatus="status">
+				      		<c:if test="${status.count eq 1 }">
+				      			<div class="item active">
+				        			<a href="/gameInfo/get?gnum=${latestGame.gnum }">
+				          				<img src="${latestGame.gpicture }" style="width:100%; height: 400px;">
+				          			</a>
+				          			<div class="carousel-caption" style="color:red;">
+			          				${latestGame.gname }
+			          				</div>
+				        	  	<div class="carousel-caption" style="color:white;">
+			          				${latestGame.gname }
+			          			</div>
+				        		</div>
+				      		</c:if>
+				      	
+				        	<c:if test="${status.count ne 1 }">
+				        		<div class="item">
+				        			<a href="/gameInfo/get?gnum=${latestGame.gnum }">
+				          				<img src="${latestGame.gpicture }" style="width:100%; height: 400px;">
+				          			</a>
+				          			<div class="carousel-caption" style="color:red;">
+			          				${latestGame.gname }
+			          				</div>
+				          		<div class="carousel-caption" style="color:white;">
+			          			${latestGame.gname }
+			          			</div>
+				        		</div>
+				        	</c:if>
+				      </c:forEach>
+			        
+			        
 			      </div>
 			      <!-- 왼쪽 화살표 버튼 -->
 			      <a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">
@@ -168,7 +177,6 @@
 			
 			<hr>
 			  <h2>추천게임</h2>
-			  <h3>action</h3>	  
 			  <hr>
 			  <table>
 			  <tr>

@@ -1,4 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -47,7 +48,7 @@
   position: relative;
   z-index: 9;
   border-radius: 1px solid black;
-  width: 700px;
+  width: 600px;
 }
 .background {
   position: absolute;
@@ -118,90 +119,6 @@
   color: black;
 }
 </style>
-<script>
-/*
-	// infinite scroll 미룸
-	window.onload = function (){
-		const endPage = ${page.endPage};
-		function aboutScroll() {
-	        const pagination = document.querySelector(".pagination");
-	        const fullContent = document.querySelector(".infinite");
-	        // 스크린 크기
-	        const screenHeight = document.body.offsetHeight;
-	        console.log("스크린 크기는: " + screenHeight);
-	        // 바닥에 닿는걸 감지하는 변수
-	        let oneTime = false;
-	        console.log("false 면 바닥에 닿지 않음: " + oneTime);
-	        document.addEventListener('scroll', function () {
-	          // .infinite 높이
-	          const fullHeight = window.innerHeight;
-	          //log.info("infinite 높이는: " + fullHeight);
-	          // 스크롤 위치
-	          const scrollPosition = pageYOffset;
-	          //log.info("스크롤 위치는: " + scrollPostion);
-	          if (fullHeight - screenHeight / 2 <= scrollPosition && !oneTime) {
-	            // 바닥에 닿으면 true로 변경해 nextScroll() 한번만 호출
-	            oneTime = true;
-	            console.log("true 면 바닥에 닿음: " + oneTime);
-	            // 다음 페이지를 불러오는 함수
-	            makeUserList();
-	          }
-	        });
-
-	        const nextPage = pagination.querySelector(".nextPage");
-	        const nextLink = nextPage.getAttribute("href");
-	        console.log("href확인: " + nextLink);
-	        function makeUserList(){
-	        	const xhr = new XMLHttpRequest();
-	        	console.log("xhr이란?: " + xhr)
-	            xhr.onreadystatechange = function () {
-	              if (xhr.readyState === xhr.DONE) {
-	                if (xhr.status === 200 || xhr.status === 201) {
-	                	// 다음 페이지의 정보
-	                    const data = xhr.response;
-	                    // 다음 페이지에서 .list를 얻음
-	                    const addList = data.querySelector(".userList");
-	                    // .infinite에 list 추가
-	                    fullContent.appendChild(addList);
-	                    // nextScroll()을 다시 불러올수 있도록 false로 변경
-	                    oneTime = false;
-	                    /*
-	                  	*** 해결해야되는거 ***
-	                  	스크롤 무한생성은 됨 
-	                  	jstl과의 문제인것 같음.. c:forEach를 인식못하는것같기도하고...
-	                  	1. 다음 페이지를 불러와야되는데 그러려면 스크롤이 내려갔을 때, 현재페이지가 1-2-3 이렇게 변경되야함
-	                  	2. 리스트를 10개씩 불러와야하는데 하나를 여러번 불러오고 있음 
-	                    */
-/*
-	                    if(typeof(history.pushState) == 'function'){                    
-	                    	console.log("진입!");
-	                    	let currentUrl = location.href;
-		                    console.log("현재 url 확인: " + currentUrl);
-		                    let currentPage = ${page.cri.pageNum };
-		                    console.log("현재페이지 확인: " + currentPage);
-		                    const endPage = ${page.endPage };
-		                    console.log("마지막페이지 확인: " + endPage);
-		                    if(currentPage <= endPage){
-		                    	currentUrl = currentUrl.replace(/\&pageNum=([0-9]+)/ig,'');
-		                    	currentUrl += '&pageNum=' + (currentPage + 1);
-		                    	history.pushState(null, null, currentUrl);
-		                    	return;
-	                    	};
-	                    }
-	                }else {
-	                    console.error(xhr.reponse);
-	                }
-	              }
-	            };
-	            xhr.open("GET", nextPage);
-	            xhr.send();
-	            xhr.responseType = "document";
-	        }	        
-	      }
-	      aboutScroll();
-	}
-*/
-</script>
 <body>
 <!-- 
 		criteria 정보 확인: ${page }<br>
@@ -225,9 +142,6 @@
         <div class="side-bar__row">
           <form action="/gameInfo/gamelist" method="get">
           <select name="searchType" style="display:none">
-          	<option  value="n"
-				<c:out value="${btnMaker.cri.searchType eq 'n' ? 'selected' : '' }"/>>
-				</option>
             </select>
             <input type="text" placeholder="Search Game" name="keyword" value="${btnMaker.cri.keyword }"/>
             <!-- origin처럼 버튼 숨겼음, enter 치면 검색됨 -->
@@ -253,14 +167,18 @@
 			        <img class="conimg" src="/resources/css/image/chaIcon.png"/>
 	          	  </div>
 		          <div class="consumer__nickname">
-		          	<p>${param.cid}</p>
+		          	<p style="color:white;"><sec:authentication property="principal.consumer.nickname"/></p>
 		          </div>
 		          <div class="consumer__info">
 	   				<a href="/user/userGet">* 유저정보창</a><br/>
 	   				<a href="/user/userPro">* 유저프로필창</a><br/>
-	   				<a href="/user/userLogout">* 로그아웃</a><br/>
+					<form action="/user/userLogout" method="post">
+						<input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }"/>
+						<input type="submit" value="LOGOUT" />
+					</form><br/>
 	   				<a href="/friends/followerlist">* 팔로워리스트</a><br/>
 	   				<a href="/friends/followinglist">* 팔로윙리스트</a><br/>
+	   				<a href="/friends/searchfriends">* 친구 검색</a><br/>
 		   		  </div>
 	          </div>
         </div>
@@ -286,7 +204,7 @@
 			<div class="userList">
 				<div class="background notyet"></div>
 				<div class="userList__pro"><img src="/resources/css/image/friends.png" width="200"/></div>
-				<div class="userList__proBack"><img src="/resources/css/image/friends.png" width="700" height="250"/></div>
+				<div class="userList__proBack"><img src="/resources/css/image/friends.png" width="600" height="250"/></div>
 				<div class="userList__cid">${userList.cid }(${userList.nickname })</div>
 				<!-- 해당 유저 프로필로 이동하고 거기서 친구 추가 혹은 삭제 로직 진행, url 바꾸면서 아래 hidden 삭제 예정 -->
 				<form action="/user/userPro?cid=" method="get">

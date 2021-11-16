@@ -10,6 +10,7 @@ import org.game.gameinfo.service.GameInfoService;
 import org.game.user.domain.ConsumerVO;
 import org.game.user.mapper.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -29,7 +30,8 @@ public class MainController {
 	
 	@Autowired
 	private GameInfoService gameInfoService;
-	
+
+	@PreAuthorize("permitAll")
 	@GetMapping("/main")
 	public String gammaMain(Principal principal, Model model) {
 

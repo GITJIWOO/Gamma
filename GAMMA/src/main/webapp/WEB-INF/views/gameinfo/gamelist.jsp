@@ -3,21 +3,39 @@
 <%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
 <%@ page language="java" pageEncoding="UTF-8"
 	contentType="text/html; charset=UTF-8"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>Gamma</title>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous"><!-- Bootstrap cdn 설정 -->
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>	
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">	
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap-theme.min.css">	
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous"><!-- Bootstrap cdn 설정 -->	
 <script src="<c:url value="/resources/js/main.js"/>"></script>
 <link rel="stylesheet" href="/resources/css/styles.css" />
 <link rel="icon" type="image/png" href="http://example.com/myicon.png">
-</head>
+<style type="text/css">
+.content_list{
+	padding-left: 150px;
+	padding-top: 30px;
+}
+.search_list{
+	
+	padding-top: 50px;
+}
+.game_list{
+	outline: 1px solid black;
+	border: none;
+	display: inline;  
+	/*background: gray;*/
+	
+}
+.gname{
+	font-size: large;
+	font-style: italic;
+}
+
+</style>
 </head>
 <body>
     <div class="display">
@@ -73,19 +91,19 @@
 			        <img class="conimg" src="/resources/css/image/chaIcon.png"/>
 	          	  </div>
 		          <div class="consumer__nickname">
-		          	<p style="font-size:10px; color:white;">${secuInfo.consumer.nickname}</p>
+		          	<p style="color:white;"><sec:authentication property="principal.consumer.nickname"/></p>
 		          </div>
 		          <div class="consumer__info">
 	   				<a href="/user/userGet">* 유저정보창</a><br/>
 	   				<a href="/user/userPro">* 유저프로필창</a><br/>
-					<form action="/user/userLogout" method="post">
-						<input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }"/>
-						<input type="submit" value="LOGOUT" />
-					</form><br/>
 	   				<a href="/friends/followerlist">* 팔로워리스트</a><br/>
 	   				<a href="/friends/followinglist">* 팔로윙리스트</a><br/>
 	   				<a href="/friends/searchfriends">* 친구 검색</a><br/>
 		   		  </div>
+				  <form action="/user/userLogout" method="post">
+					  <input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }"/>
+					  <input class="logout" type="submit" value="로그아웃" />
+				  </form>
 	          </div>
           </c:if>
         </div>
@@ -98,46 +116,54 @@
 	<h1>
 		<a href="/gameInfo/gamelist"> 게임 목록</a>
 	</h1>
-	<!--  
-	${gameList }<br/>
-	${btnMaker }<br/>
-	-->
-	 <a href="/gameInfo/gameregister">
-	<input type="button" value="게임등록" style="float: right;"></a>
 	
+	<div class="content_list">
+		<sec:authorize access="hasRole('ROLE_ADMIN')">
+		<div class="row">
+	 		<a href="/gameInfo/gameregister">
+			<input type="button" value="게임등록" style="float: right;"></a>
+		</div>
+		</sec:authorize>
+		<br>
 	
-	<table class="table table-hover">
-		<tr>
-			<th>게임이름</th>
-			<th>출시일</th>
-			<th>가격</th>
-			<th>태그</th>
-		</tr>
-		<c:forEach var="gameList" items="${gameList }">
-			<tr>
-				<td><a
-					href="/gameInfo/get?gnum=${gameList.gnum }&pageNum=${btnMaker.cri.pageNum }&searchType=${btnMaker.cri.searchType}&keyword=${btnMaker.cri.keyword}">
-						${gameList.gname }</a></td>
-				<td>${gameList.glaunch }</td>
-				<td>${gameList.gprice }</td>
-				<td>${gameList.tagname }</td>
-			</tr>
-		</c:forEach>
-	</table>
-	
-	<nav aria-label="Page navigation example">
+		 <div class="container">
+			 <c:forEach var="gameList" items="${gameList }">
+				 <div class="game_list">
+		 			<div class="row" id="ttt" onmouseover="mouseOver()" onmouseout=""
+		 				style="cursor: pointer;" onclick="location.href='/gameInfo/get?gnum=${gameList.gnum }&pageNum=${btnMaker.cri.pageNum }&searchType=${btnMaker.cri.searchType}&keyword=${btnMaker.cri.keyword}';">
+      					<div class="col-md-4" >
+							<img src="${gameList.gpicture }"
+							 width="300px" height="100px" />
+						</div>
+						<div class="col-md-5">
+	      					<br><span class="gname">${gameList.gname }</span><br><br><br>
+	      					${gameList.glaunch }
+	      				</div>
+	      				<div class="col-md-3" >
+	      					₩&nbsp;${gameList.gprice }<br><br>
+						</div>
+      				</div>
+      			</div>
+      		</c:forEach>
+    	</div> 
+    	
+    	
+    	
+		<c:set var = "cid" value = "${cid }"/>
+		<c:if test="${fn:contains(cid, 'admin') }">	
+    	<div class="search_list">
+    	<nav aria-label="Page navigation example">
 		<ul class="pagination justify-content-center">
 
 			<!-- prev 버튼 
   	btnMaker의 prev가 true일떄만 뒤로가기 버튼 출력-->
+  	
 			<c:if test="${btnMaker.prev }">
 				<li class="page-item"><a class="page-link"
 					href="/gameInfo/gamelist?pageNum=${btnMaker.startPage -1 }&searchType=${btnMaker.cri.searchType}&keyword=${btnMaker.cri.keyword}"
 					aria-label="Previous"> <span aria-hidden="true">&laquo;</span>
 				</a></li>
 			</c:if>
-
-
 
 			<c:forEach var="pageNum" begin="${btnMaker.startPage }"
 				end="${btnMaker.endPage }">
@@ -155,55 +181,36 @@
 					aria-label="Next"> <span aria-hidden="true">&raquo;</span>
 				</a></li>
 			</c:if>
+			
 		</ul>
 	</nav>
 
-	<form action="/gameInfo/gamelist" method="get" style="text-align: center;">
-		<select name="searchType">
-			<option value="n"
-				<c:out value="${btnMaker.cri.searchType == null ? 'selected' : '' }"/>>
-				-</option>
-			<option value="n"
-				<c:out value="${btnMaker.cri.searchType eq 'n' ? 'selected' : '' }"/>>
-				이름</option>
-			<option value="t"
-				<c:out value="${btnMaker.cri.searchType eq 't' ? 'selected' : '' }"/>>
-				태그</option>
-			<option value="d"
-				<c:out value="${btnMaker.cri.searchType eq 'd' ? 'selected' : '' }"/>>
-				출시날짜</option>
-		</select> <input type="text" name="keyword" placeholder="검색어 입력해라"
-			value="${btnMaker.cri.keyword }"> <input type="submit"
-			value="검색">
-	</form>
-	
-	
-	
-	
-
-	<div class="modal" id="myModal" tabindex="-1">
-		<div class="modal-dialog">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h5 class="modal-title">게임등록 확인</h5>
-					<button type="button" class="btn-close" data-bs-dismiss="modal"
-						aria-label="Close"></button>
-				</div>
-				<div class="modal-body">
-					<p>${gname }게임이 등록되었습니다</p>
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-secondary"
-						data-bs-dismiss="modal">Close</button>
-				</div>
-			</div>
+			<form action="/gameInfo/gamelist" method="get" style="text-align: center;">
+				<select name="searchType">
+					<option value="n"
+						<c:out value="${btnMaker.cri.searchType == null ? 'selected' : '' }"/>>
+						-</option>
+					<option value="n"
+						<c:out value="${btnMaker.cri.searchType eq 'n' ? 'selected' : '' }"/>>
+						이름</option>
+					<option value="t"
+						<c:out value="${btnMaker.cri.searchType eq 't' ? 'selected' : '' }"/>>
+						태그</option>
+					<option value="d"
+						<c:out value="${btnMaker.cri.searchType eq 'd' ? 'selected' : '' }"/>>
+						출시날짜</option>
+				</select> <input type="text" name="keyword" placeholder="검색어 입력해라"
+					value="${btnMaker.cri.keyword }"> <input type="submit"
+					value="검색">
+			</form>
 		</div>
-	</div>
+		</c:if>
+    	
+    	
+    </div>
+    
 	  
-	<script
-		src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js"
-		integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ"
-		crossorigin="anonymous"></script>
+	
 		
 	<script type="text/javascript">
 		var result = "${success}";
@@ -213,17 +220,17 @@
 		console.log(result);
 		console.log(gname);
 		if (result === "success") {
-			alert("'" + gname + "'" + "게임이 삭제되었습니다");
+			alert("게임이 삭제되었습니다");
 		} else if (result === "register") {
 			myModal.show();
 		}
-		// 		var keyword = "${keyword}";
-		// 		if (keyword === "") {
-		// 			alert("검색어를 입력해주세요");
-		// 		}else{
-		// 			alert("찾으시는 내용이 없습니다");
-		// 			location.href = "/gameInfo/list";
-		// 		}
+		
+		function mouseOver() {
+			var address = "${gvo.gaddress }";
+    		ttt = document.getElemenById("ttt");
+			ttt.write("<iframe width='600' height='500' src='" + address + "' title='YouTube video player' frameborder='0' allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture' allowfullscreen></iframe>");
+		}
+	
 	</script>
 	
 	
