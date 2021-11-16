@@ -336,6 +336,8 @@ button {
 					<!-- about user -->
 					<div class="main">
 						<div class="container">
+						<sec:authorize access="isAuthenticated()">
+											<sec:authentication property="principal" var="principal" />
 							<div class="detail">
 								<div class="rowA">
 									<form name="form1" method="post">
@@ -358,8 +360,7 @@ button {
 
 											</div>
 										</div>
-										<sec:authorize access="isAuthenticated()">
-											<sec:authentication property="principal" var="principal" />
+										
 											<table class="table table1" width="400px">
 
 												<c:if test="${principal.consumer.cid eq 'kjw011231' }">
@@ -395,7 +396,6 @@ button {
 															pattern="yyy-MM-dd" /></td>
 												</tr>
 											</table>
-										</sec:authorize>
 									</form>
 									<div class="row">&nbsp;</div>
 									<div class="Mbtn">
@@ -410,6 +410,7 @@ button {
 								</div>
 
 							</div>
+										</sec:authorize>
 
 						</div>
 					</div>

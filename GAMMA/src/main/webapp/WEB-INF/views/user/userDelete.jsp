@@ -92,7 +92,7 @@ h1{
 					 type="text" id="nickname" name="nickname"
 					value="${principal.consumer.nickname}" readonly /><br/>
 					<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
-				<button class="btn" type="submit" id="submit" onclick="opener.location.href='http://localhost:8181/main/main';window.close();">회원탈퇴</button>
+				<button class="btn" type="submit" id="submit" >회원탈퇴</button>
 				<button class="cencle btn" type="button">취소</button>
 			</div>
 			</sec:authorize>
