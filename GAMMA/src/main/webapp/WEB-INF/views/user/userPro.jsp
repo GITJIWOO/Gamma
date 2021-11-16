@@ -457,7 +457,6 @@ position:relative;
 					<table class="table table-hover">
 						<c:forEach var="library" items="${libraryList}">
 							<tr>
-								<td>이미지</td>
 								<td><img alt="" src="${library.gpicture}" class="gameImg"></td>
 								<td>${library.gname}</td>
 							</tr>

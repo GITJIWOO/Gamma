@@ -88,11 +88,9 @@ public class UserController {
 				return "redirect:/user/userLogin";
 			}
 		}
-		System.out.println("cid값 : " + cid);
 
 		ConsumerVO userVO = service.userGet(cid);
  
-		System.out.println("userVO들어왓나 : " + userVO);
 		model.addAttribute("cid", userVO.getCid());
 		model.addAttribute("nickname", userVO.getNickname());
 
