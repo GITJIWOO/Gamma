@@ -69,7 +69,8 @@ button {
  	$(document).ready(function() {
 		// 취소
 		$(".cencle").on("click", function() {
-
+			window.opener.location.reload();
+			opener.location.href="http://localhost:8181/main/main";
 			window.close();
 		});
 		});
