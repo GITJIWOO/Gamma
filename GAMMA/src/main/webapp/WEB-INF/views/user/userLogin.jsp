@@ -64,11 +64,9 @@ img {
 	display: flex;
 	flex-flow: row;
 }
-
-input {
-	
-}
-#lo{
+.loginDeniedAlert{
+padding :0;
+margin : 0;
 	
 }
 
@@ -100,15 +98,7 @@ button {
 </style>
 </head>
 <body>
-	<div class="loginDeniedAlert">
-		<h2>
-			<c:out value="${error }" />
-		</h2>
-		<h2>
-			<c:out value="${logout }" />
-		</h2>
-	</div>
-	<form action="/login" method="post">
+		<form action="/login" method="post">
 		<div class="border">
 			<img src="/resources/css/image/mainIcon.png" />
 			<div class="main">
@@ -126,9 +116,9 @@ button {
 				<!-- 체크하면 7일간 로그인 유지됨 -->
 				<label class="lo"><input type="checkbox"  name="remember-me">로그인 상태 유지 </label><br/>
 				<button type="submit" value="LOGIN">로그인</button>
-				<button id="findPw">비밀번호 찾기</button>
 					<input type="hidden"
 					name="${_csrf.parameterName }" value="${_csrf.token }" />
+				<button id="findPw">비밀번호 찾기</button>
 					<c:if test="${url ne null }">
 		<div id="naver_id_login">
 			<a href="${url }"><img width="223" src="https://developers.naver.com/doc/review_201802/CK_bEFnWMeEBjXpQ5o8N_20180202_7aot50.png"/></a>
@@ -137,6 +127,16 @@ button {
 			</div>
 		</div>
 	</form>
+	<div class="loginDeniedAlert">
+		<c:choose>
+			<c:when test="${error ne null }">
+				<h3><c:out value="${error }" /></h3>
+			</c:when>
+			<c:when test="${logout ne null }">
+				<h3><c:out value="${logout }" /></h3>
+			</c:when>
+		</c:choose>
+	</div>
 
 	<script type="text/javascript">
 		$(document).ready(function() {

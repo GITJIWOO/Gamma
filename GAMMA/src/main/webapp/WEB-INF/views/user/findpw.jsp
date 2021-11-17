@@ -60,19 +60,10 @@ button {
 					<input type="hidden"
 					name="${_csrf.parameterName }" value="${_csrf.token }" />
 				<button type="submit" id="findBtn"> 비밀번호 찾기</button>
-				<button class="cencle">취소</button>
+				<button class="cencle" onclick="window.close();">취소</button>
 			</div>
 		</div>
 	</form>
 	</div>
-<script type="text/javascript">
- 	$(document).ready(function() {
-		// 취소
-		$(".cencle").on("click", function() {
-			window.close();
-		});
-		});
-		
-</script>
 </body>
 </html>
