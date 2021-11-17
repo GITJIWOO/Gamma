@@ -130,7 +130,7 @@ button {
 			})
 
 		})
-		window.addEventListener('load', function() {
+		window.onload('load', function() {
 			var myfitn = document.getElementById("findPw");
 			myfitn.onclick = theFind;
 		})
