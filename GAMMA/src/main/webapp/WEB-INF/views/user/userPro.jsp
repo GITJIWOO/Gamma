@@ -366,7 +366,7 @@ position:relative;
 	          </div>
        	  </c:if>
           <c:if test="${myCid ne null}">
-	          <div class="consumer">
+	         <div class="consumer">
 	          	  <div class="consumer__imgPro">
 			        <img class="conimg" src="/resources/css/image/chaIcon.png"/>
 	          	  </div>
@@ -375,10 +375,15 @@ position:relative;
 		          </div>
 		          <div class="consumer__info">
 	   				<a href="/user/userGet">* 내정보</a><br/>
+	   				<a href="/user/userPro?cid=${cid }">* 프로필</a><br/>
 	   				<a href="/friends/followerlist">* 팔로워리스트</a><br/>
 	   				<a href="/friends/followinglist">* 팔로잉리스트</a><br/>
 	   				<a href="/friends/searchfriends">* 친구 검색</a><br/>
 		   		  </div>
+				  <form action="/user/userLogout" method="post">
+					  <input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }"/>
+					  <input class="logout" type="submit" value="로그아웃" />
+				  </form>
 	          </div>
           </c:if>
         </div>
