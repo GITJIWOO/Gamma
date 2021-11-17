@@ -2,7 +2,8 @@
 	contentType="text/html; charset=UTF-8"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
+<%@ taglib uri="http://www.springframework.org/security/tags"
+	prefix="sec"%>
 
 <html>
 <head>
@@ -27,10 +28,6 @@
 form {
 	text-align: center;
 	margin: 0 auto;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	min-height: 80vh;
 }
 
 .main {
@@ -38,53 +35,32 @@ form {
 	bottom: 25px;
 	font-weight: bold;
 }
-
+#body{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
 .border {
-	margin: 0 auto;
+	padding : 0;
+	margin: 0;
 	width: 380px;
-	height: 440px;
+	height: 500px;
 	border: 1px solid #000;
 	border-radius: 10%;
+	
 }
 
-.border2 {
-	margin: 0 auto;
-	width: 230px;
-	height: 350px;
-	border: 1px solid #000;
-	border-radius: 10%;
-}
-
-img {
+.img {
 	width: 150px;
 	height: 150px;
 }
 
-#checkB {
-	display: flex;
-	flex-flow: row;
+.loginDeniedAlert {
+	padding: 0;
+	margin: 0;
 }
 
-input {
-	
-}
-#lo{
-	
-}
-
-#IPvalue {
-	font-family: 'Cafe24Ssurround';
-	src:
-		url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2105_2@1.0/Cafe24Ssurround.woff')
-		format('woff');
-	font-weight: normal;
-	font-style: normal;
-}
-.container{
-display: flex;
-  justify-content: center;
-  align-items: center;
-}
 button {
 	width: 150px;
 	height: 40px;
@@ -100,18 +76,11 @@ button {
 </style>
 </head>
 <body>
-	<div class="loginDeniedAlert">
-		<h2>
-			<c:out value="${error }" />
-		</h2>
-		<h2>
-			<c:out value="${logout }" />
-		</h2>
-	</div>
-	<form action="/login" method="post">
-		<div class="border">
-			<img src="/resources/css/image/mainIcon.png" />
+<div id="body">
+	<div class="border">
+			<img class="img"src="/resources/css/image/mainIcon.png" />
 			<div class="main">
+		<form action="/login" method="post">
 				<h1 class="IPvalue">로그인</h1>
 				<div>
 					<label class="IPvalue" for="cid">아이디</label><br /> <input
@@ -124,39 +93,45 @@ button {
 				</div>
 				<br />
 				<!-- 체크하면 7일간 로그인 유지됨 -->
-				<label class="lo"><input type="checkbox"  name="remember-me">로그인 상태 유지 </label><br/>
+				<label class="lo"><input type="checkbox" name="remember-me">로그인
+					상태 유지 </label><br />
 				<button type="submit" value="LOGIN">로그인</button>
-				<button id="findPw">비밀번호 찾기</button>
-					<input type="hidden"
-					name="${_csrf.parameterName }" value="${_csrf.token }" />
-					<c:if test="${url ne null }">
-		<div id="naver_id_login">
-			<a href="${url }"><img width="223" src="https://developers.naver.com/doc/review_201802/CK_bEFnWMeEBjXpQ5o8N_20180202_7aot50.png"/></a>
-		</div>
-	</c:if>
+				<input type="hidden" name="${_csrf.parameterName }"
+					value="${_csrf.token }" />
+		</form>
+		<button id="findPw">비밀번호 찾기</button>
+		<c:if test="${url ne null }">
+			<div id="naver_id_login">
+				<a href="${url }"><img width="223"
+					src="https://developers.naver.com/doc/review_201802/CK_bEFnWMeEBjXpQ5o8N_20180202_7aot50.png" /></a>
 			</div>
-		</div>
-	</form>
+		</c:if>
+			</div>
+	</div>
+	<br/>
+	<div class="loginDeniedAlert">
+		<c:choose>
+			<c:when test="${error ne null }">
+				<h3>
+					<c:out value="${error }" />
+				</h3>
+			</c:when>
+			<c:when test="${logout ne null }">
+				<h3>
+					<c:out value="${logout }" />
+				</h3>
+			</c:when>
+
+		</c:choose>
+	</div>
+	</div>
 
 	<script type="text/javascript">
 		$(document).ready(function() {
-			$("#logoutBtn").on("click", function() {
-				location.href = "user/userLogout";
-			})
 
-			$("#registerBtn").on("click", function() {
-				location.href = "user/userJoin";
-			})
-			$("#findpwBtn").on("click", function() {
-				location.href = "user/findpw";
-			})
-
-			$("#userUpdateBtn").on("click", function() {
-				location.href = "user/userModify";
-			})
-
-			$("#usererDeleteBtn").on("click", function() {
-				location.href = "user/userDelete";
+			
+			$("#findPw").on("click", function() {
+				location.href="/user/userLogin";
 			})
 
 		})
@@ -165,8 +140,7 @@ button {
 			myfitn.onclick = theFind;
 		})
 		function theFind() {
-			window.open("/user/findpw", "findPw",
-							"width=450px,height=450px",
+			window.open("/user/findpw", "findPw", "width=450px,height=500px",
 							"left=400px,top=100px,scrollbars=yes, toolbar=no,location=no,fullscreen=no");
 		}
 	</script>

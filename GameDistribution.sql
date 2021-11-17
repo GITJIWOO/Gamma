@@ -119,11 +119,6 @@ CREATE TABLE consumer (
    
 commit;
 ALTER TABLE consumer ADD(user_key VARCHAR(100)DEFAULT 'N');
-ALTER TABLE userreply_tbl ADD cid VARCHAR(20);
-ALTER TABLE userreply_tbl ADD FOREIGN KEY(cid) references consumer(cid)ON DELETE CASCADE;
-     
-    
-    
 
 commit;   
 
