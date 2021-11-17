@@ -6,6 +6,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+<meta charset="UTF-8">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous"><!-- Bootstrap cdn 설정 -->
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>	
@@ -317,7 +318,6 @@ position:relative;
 
 </head>
 <body>
-<p>${cid }</p>
 	<div class="display">
       <!-- side-bar -->
       <div class="side-bar">
@@ -366,7 +366,7 @@ position:relative;
 	          </div>
        	  </c:if>
           <c:if test="${myCid ne null}">
-	          <div class="consumer">
+	         <div class="consumer">
 	          	  <div class="consumer__imgPro">
 			        <img class="conimg" src="/resources/css/image/chaIcon.png"/>
 	          	  </div>
@@ -380,6 +380,10 @@ position:relative;
 	   				<a href="/friends/followinglist">* 팔로잉리스트</a><br/>
 	   				<a href="/friends/searchfriends">* 친구 검색</a><br/>
 		   		  </div>
+				  <form action="/user/userLogout" method="post">
+					  <input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }"/>
+					  <input class="logout" type="submit" value="로그아웃" />
+				  </form>
 	          </div>
           </c:if>
         </div>
@@ -423,10 +427,10 @@ position:relative;
 										rows="2" cols="30"></textarea>
 									<input type="hidden" name="nickname"
 										value="${principal.consumer.nickname }" id="newReplyWriter" readonly>
-										<input type="hidden" id="cnum" name="cnum" value="${principal.consumer.cnum }"/>
-										<input type="hidden" id="cid" name="cid" value="${principal.consumer.cid }"/>
 								</div>
 								<div class="col-md-3">
+										<input type="hidden" id="cnum" name="cnum" value="${cnum }"/>
+										<input type="hidden" id="cid" name="cid" value="${cid }"/>
 									<button id="replyAddBtn">방명록 남기기</button>
 								<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 									<br />
@@ -485,9 +489,9 @@ position:relative;
 	<script>
 	var csrfHeaderName = "${_csrf.headerName}"
 		var csrfTokenValue="${_csrf.token}"
-		var cid = ${cid};
+		var cnum = "${cnum }"
 		function getAllList() {
-			$.getJSON("/userrp/all/" + cid,function(data) {
+			$.getJSON("/userrp/all/" + cnum,function(data) {
 								//data 변수가 바로 얻어온 json데이터의 집합
 								console.log(data);
 
@@ -558,7 +562,6 @@ position:relative;
 				dataType : 'text',
 				data : JSON.stringify({
 					cnum : cnum,
-					cid : cid,
 					nickname : nickname,
 					reply : reply
 				}),

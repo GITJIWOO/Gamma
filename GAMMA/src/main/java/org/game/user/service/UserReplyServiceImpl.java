@@ -19,8 +19,8 @@ public class UserReplyServiceImpl implements UserReplyService {
 	}
 
 	@Override
-	public List<UserReplyVO> listUserReply(String cid) {
-		return mapper.getList(cid);
+	public List<UserReplyVO> listUserReply(Long cnum) {
+		return mapper.getList(cnum);
 	}
 
 	@Override
