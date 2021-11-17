@@ -111,6 +111,7 @@ button {
 					</form>
 			</div>
 			<div class="loginDeniedAlert">
+			<br/><br/>
 				<h3>
 					<c:out value="${error }" />
 				</h3>
