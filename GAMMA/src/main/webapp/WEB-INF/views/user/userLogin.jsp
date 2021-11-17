@@ -29,7 +29,10 @@ form {
 	text-align: center;
 	margin: 0 auto;
 }
-
+#naver_id_login{
+padding :5px;
+margin : 5px;
+}
 .main {
 	position: relative;
 	bottom: 25px;
@@ -77,7 +80,6 @@ button {
 </style>
 </head>
 <body>
-<h2>"${url }"</h2>
 	<div id="body">
 			<div class="border">
 				<img class="img" src="/resources/css/image/mainIcon.png" />
@@ -98,16 +100,15 @@ button {
 						<label class="lo"><input type="checkbox"
 							name="remember-me">로그인 상태 유지 </label><br />
 						<button type="submit" value="LOGIN">로그인</button>
+					<button id="findPw">비밀번호 찾기</button>
 					<c:if test="${url ne null }">
 						<div id="naver_id_login">
-							<a href="${url }"><img width="150px" height="40px"
-								src="https://developers.naver.com/doc/review_201802/CK_bEFnWMeEBjXpQ5o8N_20180202_7aot50.png" /></a>
-						</div>
+			<a href="${url }"><img width="223px" heigth="40px"src="https://developers.naver.com/doc/review_201802/CK_bEFnWMeEBjXpQ5o8N_20180202_7aot50.png"/></a>
+		</div>
 					</c:if>
 						<input type="hidden" name="${_csrf.parameterName }"
 							value="${_csrf.token }" />
 					</form>
-					<button id="findPw">비밀번호 찾기</button>
 			</div>
 			<div class="loginDeniedAlert">
 				<h3>

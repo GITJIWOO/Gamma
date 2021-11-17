@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.UUID;
 
 import javax.inject.Inject;
@@ -327,6 +328,7 @@ public class UserController {
 		List<AuthVO> authList=new ArrayList<AuthVO>();
 		AuthVO auth =new AuthVO();
 		UUID uuid=UUID.randomUUID();
+		
 		auth.setCid("NAVER"+id);
 		auth.setAuth("ROLE_MEMBER");
 		authList.add(auth);
