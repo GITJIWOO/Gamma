@@ -8,7 +8,7 @@ public interface UserReplyService {
 	
 	public void addUserReply(UserReplyVO vo);
 
-	public List<UserReplyVO> listUserReply(Long cnum);
+	public List<UserReplyVO> listUserReply(String cid);
 
 	public void modifyUserReply(UserReplyVO vo);
 

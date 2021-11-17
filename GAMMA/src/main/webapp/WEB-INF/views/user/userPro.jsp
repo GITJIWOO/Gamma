@@ -1,32 +1,20 @@
-<%@page import="org.springframework.web.util.UrlPathHelper"%>
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
+<%@ page language="java" pageEncoding="UTF-8"
+	contentType="text/html; charset=UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-<link
-	href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css"
-	rel="stylesheet"
-	integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU"
-	crossorigin="anonymous">
-<!-- Bootstrap cdn 설정 -->
-<script
-	src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-<link rel="stylesheet"
-	href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-<link rel="stylesheet"
-	href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap-theme.min.css">
-<link rel="stylesheet"
-	href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous"><!-- Bootstrap cdn 설정 -->
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>	
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">	
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap-theme.min.css">	
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 <script src="<c:url value="/resources/js/main.js"/>"></script>
 <link rel="stylesheet" href="/resources/css/styles.css" />
 <link rel="icon" type="image/png" href="http://example.com/myicon.png">
-
 <style>
 .display {
   display: flex;
@@ -325,11 +313,11 @@ position:relative;
 </style>
 <meta charset="UTF-8">
 
-<title>회원정보 상세 페이지</title>
+<title>프로필</title>
 
 </head>
 <body>
-
+<p>${cid }</p>
 	<div class="display">
       <!-- side-bar -->
       <div class="side-bar">
@@ -386,16 +374,12 @@ position:relative;
 		          	<p style="color:white;"><sec:authentication property="principal.consumer.nickname"/></p>
 		          </div>
 		          <div class="consumer__info">
-	   				<a href="/user/userGet">* 유저정보창</a><br/>
-	   				<a href="/user/userPro">* 유저프로필창</a><br/>
+	   				<a href="/user/userGet">* 내정보</a><br/>
+	   				<a href="/user/userPro">* 프로필</a><br/>
 	   				<a href="/friends/followerlist">* 팔로워리스트</a><br/>
-	   				<a href="/friends/followinglist">* 팔로윙리스트</a><br/>
+	   				<a href="/friends/followinglist">* 팔로잉리스트</a><br/>
 	   				<a href="/friends/searchfriends">* 친구 검색</a><br/>
 		   		  </div>
-				  <form action="/user/userLogout" method="post">
-					  <input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }"/>
-					  <input class="logout" type="submit" value="로그아웃" />
-				  </form>
 	          </div>
           </c:if>
         </div>
@@ -439,10 +423,12 @@ position:relative;
 										rows="2" cols="30"></textarea>
 									<input type="hidden" name="nickname"
 										value="${principal.consumer.nickname }" id="newReplyWriter" readonly>
+										<input type="hidden" id="cnum" name="cnum" value="${principal.consumer.cnum }"/>
+										<input type="hidden" id="cid" name="cid" value="${principal.consumer.cid }"/>
 								</div>
 								<div class="col-md-3">
-								<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 									<button id="replyAddBtn">방명록 남기기</button>
+								<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 									<br />
 								</div>
 							</div>
@@ -471,7 +457,7 @@ position:relative;
 	<!-- 모달 요소는 안 보이기 때문에 어디 넣어도 되지만 보통 html요소들 끼리 놨을때
 	제일 아래쪽에 작성하는 경우가 많습니다. -->
 	<div id="modDiv" style="display: none;">
-		<div class="modal-title" style="color: white"></div>
+		<div class="modal-title" style="color: white;"></div>
 		<div>
 			<textarea style="resize: none;" name="reply" id="replytext" rows="2"
 				cols="41"></textarea>
@@ -482,7 +468,6 @@ position:relative;
 			<button type="button" id="closeBtn">닫기</button>
 		</div>
 	</div>
-
 			<div class="footer">
 				<div class="footer-info">
 					<div>CREATORS&nbsp;&nbsp;김영훈, 김지우, 조훈현, 최재인</div>
@@ -500,9 +485,9 @@ position:relative;
 	<script>
 	var csrfHeaderName = "${_csrf.headerName}"
 		var csrfTokenValue="${_csrf.token}"
-		var cnum = ${principal.consumer.cnum};
+		var cid = ${cid};
 		function getAllList() {
-			$.getJSON("/userrp/all/" + cnum,function(data) {
+			$.getJSON("/userrp/all/" + cid,function(data) {
 								//data 변수가 바로 얻어온 json데이터의 집합
 								console.log(data);
 
@@ -533,7 +518,7 @@ position:relative;
 															+ date.getSeconds() // 초 추출	
 
 													// this.updateDate를 표출하면 시간이 unix시간으로 표시됨  요소분석으로 a태그 찾아서 본거고 http://로 시작해야 앞에 짜잘한거 안붙어요.
-													str += "<div class='replyLi' data-rno='" + this.rno + "'><br/><a href='http://localhost:8181/user/userPro?cid=${member.cid}'><strong>@"
+													str += "<div class='replyLi' data-rno='" + this.rno + "'><br/><strong>@"
 															+ this.nickname
 															+ "</strong></a> - "
 															+ formattedTime
@@ -573,6 +558,7 @@ position:relative;
 				dataType : 'text',
 				data : JSON.stringify({
 					cnum : cnum,
+					cid : cid,
 					nickname : nickname,
 					reply : reply
 				}),

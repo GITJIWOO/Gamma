@@ -8,6 +8,7 @@ import lombok.Data;
 public class UserReplyVO {
 	private Long rno;
 	private Long cnum;
+	private String cid;
 	private String reply;
 	private String nickname;
 	private Date ureplydate;

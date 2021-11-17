@@ -80,7 +80,11 @@ input {
 	font-weight: normal;
 	font-style: normal;
 }
-
+.container{
+display: flex;
+  justify-content: center;
+  align-items: center;
+}
 button {
 	width: 150px;
 	height: 40px;
@@ -96,7 +100,6 @@ button {
 </style>
 </head>
 <body>
-<h1>url 값??${url }</h1>
 	<div class="loginDeniedAlert">
 		<h2>
 			<c:out value="${error }" />
@@ -123,6 +126,7 @@ button {
 				<!-- 체크하면 7일간 로그인 유지됨 -->
 				<label class="lo"><input type="checkbox"  name="remember-me">로그인 상태 유지 </label><br/>
 				<button type="submit" value="LOGIN">로그인</button>
+				<button id="findPw">비밀번호 찾기</button>
 					<input type="hidden"
 					name="${_csrf.parameterName }" value="${_csrf.token }" />
 					<c:if test="${url ne null }">
@@ -156,6 +160,15 @@ button {
 			})
 
 		})
+		window.addEventListener('load', function() {
+			var myfitn = document.getElementById("findPw");
+			myfitn.onclick = theFind;
+		})
+		function theFind() {
+			window.open("/user/findpw", "findPw",
+							"width=450px,height=450px",
+							"left=400px,top=100px,scrollbars=yes, toolbar=no,location=no,fullscreen=no");
+		}
 	</script>
 </body>
 </html>

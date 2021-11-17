@@ -7,7 +7,7 @@
 
 	<select id="getList" resultType="org.game.user.domain.UserReplyVO">
 		SELECT * FROM userreply_tbl
-			WHERE cnum = #{cnum}
+			WHERE cid = #{cid}
 		ORDER BY rno DESC
 	</select>
 	
