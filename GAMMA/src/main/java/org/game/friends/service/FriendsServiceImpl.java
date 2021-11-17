@@ -29,6 +29,8 @@ public class FriendsServiceImpl implements FriendsService{
 	@Override
 	public Integer fOrNot(String follower, String following) {
 		log.info("해당 유저가 팔로워인지 조회");
+		log.info("follower 체크: " + follower);	// null
+		log.info("following 체크: " + following);
 		return mapper.getFOrNot(follower, following);
 	}
 	

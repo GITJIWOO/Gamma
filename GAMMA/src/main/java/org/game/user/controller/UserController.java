@@ -10,6 +10,7 @@ import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.game.friends.domain.FriendsSearchCriteria;
 import org.game.friends.service.FriendsService;
 import org.game.gamelibrary.domain.ResultLibraryVO;
 import org.game.gamelibrary.service.GameLibraryService;
@@ -23,6 +24,7 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.lang.Nullable;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -75,17 +77,32 @@ public class UserController {
 	// 유저프로필
 	@PreAuthorize("permitAll")
 	@GetMapping("/userPro")
-	public String userPro(String cid, Principal principal, Model model) {
-
+	public String userPro(String cid, Principal principal, FriendsSearchCriteria criteria, Model model) {
+		log.info("cid 확인: " + cid);
 		if(principal != null) {
 			String myCid = principal.getName();
 			model.addAttribute("myCid", myCid);
+			// 친구 기능 추가
+			int fOrNot;
+			if(fservice.fOrNot(cid, myCid) == null) {
+				fOrNot = 0;
+			}else {
+				fOrNot = fservice.fOrNot(cid, myCid);
+			}
+			model.addAttribute("fOrNot", fOrNot);
 		}
-		
+		if(criteria.getKeyword() == null) {
+			criteria.setKeyword("");			
+		}
+		// 친구 기능 추가
+		int countFollower = fservice.countFollower(criteria, cid);
+		int countFollowing = fservice.countFollowing(criteria, cid);
+		model.addAttribute("countFollower", countFollower);
+		model.addAttribute("countFollowing", countFollowing);
 
 		ConsumerVO userVO = service.userGet(cid);
  
-		model.addAttribute("cid", userVO.getCid());
+		model.addAttribute("cid", cid);
 		model.addAttribute("nickname", userVO.getNickname());
 
 		List<ResultLibraryVO> libraryList = libraryService.getAllConsumerLibrary(userVO.getCid());
