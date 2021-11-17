@@ -16,23 +16,41 @@
 <link rel="icon" type="image/png" href="http://example.com/myicon.png">
 <style type="text/css">
 .content_list{
-	padding-left: 150px;
+	padding-left: 250px;
 	padding-top: 30px;
 }
 .search_list{
-	
 	padding-top: 50px;
+	padding-left: 100px;
 }
 .game_list{
+	width: 900px;
 	outline: 1px solid black;
 	border: none;
 	display: inline;  
+	visibility: visible;
 	/*background: gray;*/
-	
 }
 .gname{
 	font-size: large;
 	font-style: italic;
+}
+
+#ttt{
+	padding-left: 60px;
+	opacity: 1.0;
+}
+#ttt:hover {
+	opacity: 0.7;
+}
+#hover_video{
+	transition: all 0.3s ease-in-out;   /* 부드러운 모션을 위해 추가*/
+	opacity: 0;
+  	position: absolute; 
+	right: -130px;
+}
+#ttt:hover #hover_video {
+	opacity: 1.0;
 }
 
 </style>
@@ -116,7 +134,7 @@
 	<h1>
 		<a href="/gameInfo/gamelist"> 게임 목록</a>
 	</h1>
-	
+	<div class="container">
 	<div class="content_list">
 		<sec:authorize access="hasRole('ROLE_ADMIN')">
 		<div class="row">
@@ -131,33 +149,37 @@
 				 <div class="game_list">
 		 			<div class="row" id="ttt" onmouseover="mouseOver()" onmouseout=""
 		 				style="cursor: pointer;" onclick="location.href='/gameInfo/get?gnum=${gameList.gnum }&pageNum=${btnMaker.cri.pageNum }&searchType=${btnMaker.cri.searchType}&keyword=${btnMaker.cri.keyword}';">
-      					<div class="col-md-4" >
+      					
+      					<div class="col-md-3" id="game_detail" >
 							<img src="${gameList.gpicture }"
-							 width="300px" height="100px" />
+							 width="200px" height="100px" />
 						</div>
-						<div class="col-md-5">
+						<div class="col-md-4" id="game_detail" style="padding-left:40px">
 	      					<br><span class="gname">${gameList.gname }</span><br><br><br>
 	      					${gameList.glaunch }
 	      				</div>
-	      				<div class="col-md-3" >
-	      					₩&nbsp;${gameList.gprice }<br><br>
+	      				<div class="col-md-2" id="game_detail">
+	      					<br>₩&nbsp;${gameList.gprice }
 						</div>
+						<div class="col-md-3" id="hover_video">
+							<script>
+								var address = "${gameList.gaddress }";
+								document.write("<iframe width='300' height='300' src='" + address + "' title='YouTube video player' frameborder='0' allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture' allowfullscreen></iframe>");
+							</script>
+						</div>						 
       				</div>
       			</div>
       		</c:forEach>
     	</div> 
+	</div>    	
     	
     	
-    	
-		<c:set var = "cid" value = "${cid }"/>
-		<c:if test="${fn:contains(cid, 'admin') }">	
+		
     	<div class="search_list">
     	<nav aria-label="Page navigation example">
 		<ul class="pagination justify-content-center">
 
-			<!-- prev 버튼 
-  	btnMaker의 prev가 true일떄만 뒤로가기 버튼 출력-->
-  	
+			<!-- prev 버튼 btnMaker의 prev가 true일떄만 뒤로가기 버튼 출력-->
 			<c:if test="${btnMaker.prev }">
 				<li class="page-item"><a class="page-link"
 					href="/gameInfo/gamelist?pageNum=${btnMaker.startPage -1 }&searchType=${btnMaker.cri.searchType}&keyword=${btnMaker.cri.keyword}"
@@ -184,7 +206,7 @@
 			
 		</ul>
 	</nav>
-
+		<sec:authorize access="hasRole('ROLE_ADMIN')">
 			<form action="/gameInfo/gamelist" method="get" style="text-align: center;">
 				<select name="searchType">
 					<option value="n"
@@ -203,14 +225,10 @@
 					value="${btnMaker.cri.keyword }"> <input type="submit"
 					value="검색">
 			</form>
+			</sec:authorize>
 		</div>
-		</c:if>
-    	
-    	
-    </div>
     
-	  
-	
+    </div>
 		
 	<script type="text/javascript">
 		var result = "${success}";

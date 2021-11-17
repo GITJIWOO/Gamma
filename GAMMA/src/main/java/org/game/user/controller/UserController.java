@@ -100,10 +100,12 @@ public class UserController {
 		model.addAttribute("countFollower", countFollower);
 		model.addAttribute("countFollowing", countFollowing);
 
+
 		ConsumerVO userVO = service.userGet(cid);
  
 		model.addAttribute("cid", cid);
 		model.addAttribute("nickname", userVO.getNickname());
+		model.addAttribute("cnum", userVO.getCnum());
 
 		List<ResultLibraryVO> libraryList = libraryService.getAllConsumerLibrary(userVO.getCid());
 

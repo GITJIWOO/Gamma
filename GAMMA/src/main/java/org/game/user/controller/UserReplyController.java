@@ -57,7 +57,7 @@ public class UserReplyController {
 		return entity;
 	}
 	
-	@GetMapping(value="/all/{cid}",
+	@GetMapping(value="/all/{cnum}",
 				// 단일 숫자데이터 bno만 넣기도 하고
 				// PathVariable 어노테이션으로 이미 입력데이터가
 				// 명시되었으므로 consumes는 따로 주지 않아도 됩니다.
@@ -67,13 +67,13 @@ public class UserReplyController {
 				produces= {MediaType.APPLICATION_XML_VALUE,
 							MediaType.APPLICATION_JSON_UTF8_VALUE})
 	public ResponseEntity<List<UserReplyVO>> list (
-				@PathVariable("cid") String cid) {
+				@PathVariable("cnum") Long cnum) {
 		
 		ResponseEntity<List<UserReplyVO>> entity = null;
 		
 		try {
 			entity = new ResponseEntity<>(
-					service.listUserReply(cid), HttpStatus.OK);
+					service.listUserReply(cnum), HttpStatus.OK);
 		} catch (Exception e) {
 			e.printStackTrace();
 			entity = new ResponseEntity<>(HttpStatus.BAD_REQUEST);

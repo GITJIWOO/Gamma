@@ -184,9 +184,8 @@ input[type="radio"] {
 
 		<!--middle-->
 		<div class="mid">
-
 			<div class="midLeft">
-			<script>
+				<script>
 					var address = "${gvo.gaddress }";
 					document.write("<iframe width='600' height='500' src='" + address + "' title='YouTube video player' frameborder='0' allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture' allowfullscreen></iframe>");
 				</script>
@@ -311,13 +310,13 @@ input[type="radio"] {
 				<!-- carousel를 구성할 영역 설정 -->
 			  <div style="width: 900px; height: 250px; " >
 			    <div id="carousel-example-generic" class="carousel slide" >
-			      <ol class="carousel-indicators">
+			      <!-- <ol class="carousel-indicators">
 			        <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
 			        <li data-target="#carousel-example-generic" data-slide-to="1"></li>
 			        <li data-target="#carousel-example-generic" data-slide-to="2"></li>
 			        <li data-target="#carousel-example-generic" data-slide-to="3"></li>
 			        <li data-target="#carousel-example-generic" data-slide-to="4"></li>
-			      </ol>
+			      </ol> -->
 			      <div class="carousel-inner" role="listbox">	
 			      	<c:forEach var="listByTag" items="${listByTag }" varStatus="status">
 				    	<c:if test="${listByTag.gname != gvo.gname }"> 
