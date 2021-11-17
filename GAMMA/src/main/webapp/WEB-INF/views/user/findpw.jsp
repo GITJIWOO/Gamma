@@ -46,7 +46,6 @@ button {
 			<img src="/resources/css/image/mainIcon.png" />
 			<div class="main">
 				<h1 class="IPvalue">비밀번호 찾기</h1>
-				<p>인증된 이메일에서만 정보를 찾을 수 있습니다.</p>
 				<div>
 					<label class="IPvalue" for="cid">아이디</label><br /> <input
 						type="text" id="cid" name="cid" />
