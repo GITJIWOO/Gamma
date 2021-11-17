@@ -78,9 +78,10 @@ display:flex;
 	background-color: white;
 }
 .container{
-display: flex;
-  justify-content: center;
-  align-items: center;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	min-height: 100vh;
 }
 
 .correct {
