@@ -241,7 +241,7 @@ input[type="radio"] {
 		</sec:authorize>
 		<!--  end 관리자 권한  -->
 		
-		
+		<sec:authorize access="hasRole('ROLE_MEMBER')">
 		<c:if test="${cid ne null }">
 			<c:if test="${lvo eq null && basket eq null }">
 				<form action="/gamepayment/basketAdd" method="post">
@@ -256,6 +256,7 @@ input[type="radio"] {
 				</form>
 			</c:if>
 		</c:if>
+		</sec:authorize>
 		<!--bottom-->
 		<div class="bottom">
 			<div class="bottom1">
