@@ -94,7 +94,7 @@ button {
 			<div class="main">
 				<h1 class="IPvalue">이메일 인증</h1>
 				<label for="email">이메일</label>
-				<input type="text" class="form-control" name="email" id="email" placeholder="${principal.consumer.email}" value="${principal.consumer.email}" readonly>
+				<input type="text" class="form-control" name="email" id="email" placeholder="${principal.consumer.email}" value="${principal.consumer.email}" required>
 				<input type="hidden" name="cid" value="${principal.consumer.cid }"/>
 			</div>
 			<input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }" />

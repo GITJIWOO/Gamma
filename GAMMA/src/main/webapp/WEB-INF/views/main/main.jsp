@@ -118,6 +118,7 @@
 			          			</div>
 				        		</div>
 				      		</c:if>
+				      	
 				        	<c:if test="${status.count ne 1 }">
 				        		<div class="item">
 				        			<a href="/gameInfo/get?gnum=${latestGame.gnum }">
@@ -132,6 +133,8 @@
 				        		</div>
 				        	</c:if>
 				      </c:forEach>
+			        
+			        
 			      </div>
 			      <!-- 왼쪽 화살표 버튼 -->
 			      <a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">

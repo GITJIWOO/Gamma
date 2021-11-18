@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 import java.util.UUID;
 
 import javax.inject.Inject;
@@ -299,7 +298,7 @@ public class UserController {
 		System.out.println("발급된 일회용 접근 URL 확인 : "+naverAuthUrl);
 		session.setAttribute("url", naverAuthUrl);
 		
-		return "redirect:user/userLogin";
+		return "redirect:/user/userLogin";
 	}
 	@PreAuthorize("permitAll")
 	@RequestMapping(value="/naver/login",method= {RequestMethod.GET,RequestMethod.POST})
@@ -320,23 +319,22 @@ public class UserController {
 		JSONObject response_obj=(JSONObject) jsonObj.get("response");
 		System.out.println("파싱해온 API : "+response_obj);
 		
-		String id=(String) response_obj.get("id");
+		String cid=(String) response_obj.get("cid");
 		String email=(String) response_obj.get("email");
-		String userName=(String) response_obj.get("nickname");
+		String nickname=(String) response_obj.get("nickname");
 		
 		ConsumerVO user=new ConsumerVO();
 		List<AuthVO> authList=new ArrayList<AuthVO>();
 		AuthVO auth =new AuthVO();
 		UUID uuid=UUID.randomUUID();
-		
-		auth.setCid("NAVER"+id);
+		auth.setCid("NAVER"+cid);
 		auth.setAuth("ROLE_MEMBER");
 		authList.add(auth);
-		user.setEmail(email);
-		user.setCid("NAVER"+id);
+		
+		user.setCid("NAVER"+cid);
 		user.setAuthList(authList);
 		user.setPassword(uuid.toString());
-		user.setNickname(userName);
+		user.setNickname(nickname);
 		System.out.println("INSERT하기전 마지막 체크 : "+user);
 		
 		if(service.read(user.getCid())==null) {
