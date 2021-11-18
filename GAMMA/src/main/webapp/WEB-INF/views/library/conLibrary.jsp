@@ -117,7 +117,7 @@
           <div class="detail">
             <!-- 여기에 각자 content 붙여넣기 -->
             <div class="title"> 
-	            <p>${cid}의 라이브러리</p>
+	            <p>내 라이브러리</p>
 	            <hr/>
             </div>
             <div class="library">

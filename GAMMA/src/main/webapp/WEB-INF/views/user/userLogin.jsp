@@ -111,6 +111,7 @@ button {
 					</form>
 			</div>
 			<div class="loginDeniedAlert">
+			<br/><br/>
 				<h3>
 					<c:out value="${error }" />
 				</h3>
@@ -129,7 +130,7 @@ button {
 			})
 
 		})
-		window.addEventListener('load', function() {
+		window.onload('load', function() {
 			var myfitn = document.getElementById("findPw");
 			myfitn.onclick = theFind;
 		})
