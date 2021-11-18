@@ -94,6 +94,31 @@ input[type="radio"] {
 .bottom3{
 	height: 200px;
 }
+
+#reviewContent {
+	margin-top: 10px;
+}
+.reviewNickname {
+	margin-bottom: 15px;
+	font-size: 170%;
+	font-weight: bold;
+}
+.reviewGrlike {
+	margin-bottom: 5px;
+	font-size: 150%;
+	font-weight: bold;
+}
+.reviewGrdate {
+	margin-bottom: 15px;
+	opacity: 0.7;
+}
+.reviewGrcontent {
+	margin-bottom: 20px;
+	font-size: 150%;
+}
+.reviewGrrecommend {
+	font-size: 110%;
+}
 </style>
 <meta charset="UTF-8">
 <title>Gamma</title>

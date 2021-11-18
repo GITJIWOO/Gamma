@@ -16,6 +16,30 @@
 <style>
 	.detail {
 		padding: 30px;
+		width: 100%;
+	}
+	.title {
+		font-size: 200%;
+		font-weight: bold;
+		margin-bottom: 30px;
+	}
+	.basket {
+		display: flex;
+		align-items: center;
+		width: 100%;
+		height: 130px;
+	}
+	.basket img {
+		width: 170px;
+		height: 79.5px;
+	}
+	.gname {
+		margin-bottom: 10px;
+		font-size: 125%;
+		font-weight: bold;
+	}
+	.gprice {
+		font-size: 110%;
 	}
 </style>
 </head>
@@ -94,23 +118,30 @@
         <div class="contents">
           <div class="detail">
             <!-- 여기에 각자 content 붙여넣기 -->
+            <p class="title">장바구니</p>
 			<c:forEach items="${basket}" var="basket">
-				${basket.gname}
-				${basket.gprice}
-				<form action="/gamepayment/basketRemove" method="post">
-					<input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }"/>
-					<input type="hidden" name="gnum" value="${basket.gnum}">
-					<input type="submit" value="삭제">
-				</form>
-				<div class="paymentScreenBtn">
-					<form action="/gamepayment/paymentscreen" method="get" class="payment">
-						<input type="hidden" name="gnum" value="${basket.gnum}">
-						<input type="hidden" name="gname" value="${basket.gname}">
-						<input type="hidden" name="gprice" value="${basket.gprice}">
-						<input type="hidden" name="merchant_uid" value="" id="merchant_uid">
-						<input type="submit" value="결제하기" id="paymentSubmit"/>
-					</form>
+				<div class="basket">
+					<img src="${basket.gpicture}" width="170px">
+					<div class="basketContent">
+						<p class="gname">${basket.gname}</p>
+						<p class="gprice">${basket.gprice}원</p>
+						<form action="/gamepayment/basketRemove" method="post">
+							<input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }"/>
+							<input type="hidden" name="gnum" value="${basket.gnum}">
+							<input type="submit" value="삭제">
+						</form>
+						<div class="paymentScreenBtn">
+							<form action="/gamepayment/paymentscreen" method="get" class="payment">
+								<input type="hidden" name="gnum" value="${basket.gnum}">
+								<input type="hidden" name="gname" value="${basket.gname}">
+								<input type="hidden" name="gprice" value="${basket.gprice}">
+								<input type="hidden" name="merchant_uid" value="" id="merchant_uid">
+								<input type="submit" value="결제하기" id="paymentSubmit"/>
+							</form>
+						</div>
+					</div>
 				</div>
+				<hr/>
 			</c:forEach>
           </div>
         </div>
