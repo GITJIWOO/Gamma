@@ -54,22 +54,5 @@ $(document).ready(function() {
 		}
 	});
 	
-	function removeReview() {
-		if(confirm("리뷰를 삭제하시겠습니까?")) {
-			let choice = document.getElementById("removeReview");
-			choice.submit();
-		} else {
-			location.href="/review/reviewDetail/${review.grnum}";
-		}
-	}
-	
-	function removeReviewComment() {
-		if(confirm("댓글을 삭제하시겠습니까?")) {
-			let choice = document.getElementById("removeReviewComment");
-			choice.submit();
-		} else {
-			location.href="/review/reviewDetail/${review.grnum}";
-		}
-	}
 
 });

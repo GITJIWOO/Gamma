@@ -18,11 +18,16 @@
 		padding: 30px;
 		width: 100%;
 	}
+	.title {
+		font-size: 200%;
+		font-weight: bold;
+		margin-bottom: 30px;
+	}
 	.basket {
 		display: flex;
 		align-items: center;
 		width: 100%;
-		height: 150px;
+		height: 130px;
 	}
 	.basket img {
 		width: 170px;
@@ -113,6 +118,7 @@
         <div class="contents">
           <div class="detail">
             <!-- 여기에 각자 content 붙여넣기 -->
+            <p class="title">장바구니</p>
 			<c:forEach items="${basket}" var="basket">
 				<div class="basket">
 					<img src="${basket.gpicture}" width="170px">
