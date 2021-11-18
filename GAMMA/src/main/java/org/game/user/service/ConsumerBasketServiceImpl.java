@@ -21,7 +21,6 @@ public class ConsumerBasketServiceImpl implements ConsumerBasketService {
 	}
 	
 	// 장바구니 게임 하나 조회
-
 	public ConsumerBasketVO getOneConsumerBasket(String cid, long gnum) {
 		ConsumerBasketVO basket = mapper.consumerGameBasketSelect(cid, gnum);
 		return basket;
