@@ -18,6 +18,12 @@
 	padding: 0;
 	text-align: center;
 	}
+	#body {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	min-height: 100vh;
+}
 h1{
  position: relative;
  top:30px;
@@ -68,9 +74,10 @@ display:flex;
 	
 }
 .container{
-display: flex;
-  justify-content: center;
-  align-items: center;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	min-height: 100vh;
 }
 	
 </style>
