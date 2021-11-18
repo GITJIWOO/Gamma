@@ -113,6 +113,7 @@ public class FriendsController {
 		FriendsPageDTO page = new FriendsPageDTO(criteria, service.countUser(criteria, cid), 10);
 		model.addAttribute("userList", userList);
 		model.addAttribute("page", page);
+		model.addAttribute("cid", cid);
 		return "/friends/searchfriends";
 	}
 	
