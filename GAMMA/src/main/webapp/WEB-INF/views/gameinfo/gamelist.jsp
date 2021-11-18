@@ -44,7 +44,7 @@
 	opacity: 0.7;
 }
 #hover_video{
-	transition: all 0.3s ease-in-out;   /* 부드러운 모션을 위해 추가*/
+	transition: all 0.5s ease-in-out;   /* 부드러운 모션을 위해 추가*/
 	opacity: 0;
   	position: absolute; 
 	right: -130px;
@@ -131,9 +131,6 @@
           <div class="detail">
             <!-- 여기에 각자 content 붙여넣기 -->
 	
-	<h1>
-		<a href="/gameInfo/gamelist"> 게임 목록</a>
-	</h1>
 	<div class="container">
 	<div class="content_list">
 		<sec:authorize access="hasRole('ROLE_ADMIN')">
@@ -231,7 +228,20 @@
     </div>
 		
 	<script type="text/javascript">
-		var result = "${success}";
+		function confirm_register() {
+			var modifyForm = document.getElementById('registerForm');
+			if (confirm("수정하시겠습니까?")) {
+				alert("수정 확인")
+				modifyForm.submit();
+			} else {
+				return;
+				alert("수정 취소")
+				
+			}
+		}
+	
+	
+/* 		var result = "${success}";
 		var gname = "${gname}";
 
 		var myModal = new bootstrap.Modal(document.getElementById('myModal'), focus)
@@ -241,7 +251,7 @@
 			alert("게임이 삭제되었습니다");
 		} else if (result === "register") {
 			myModal.show();
-		}
+		} */
 		
 		function mouseOver() {
 			var address = "${gvo.gaddress }";

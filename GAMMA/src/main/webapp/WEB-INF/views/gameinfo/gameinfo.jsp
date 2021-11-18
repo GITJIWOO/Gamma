@@ -213,7 +213,7 @@ input[type="radio"] {
 							<div class="col-md-2">가격</div>
 							<div class="col-md-2">₩&nbsp;${gvo.gprice }</div>
 						</div>
-						<br>
+						<br><br><br><br>
 						<div class="row" >
 							<div class="col-md">이 제품의 태그</div>
 						</div>
@@ -226,22 +226,22 @@ input[type="radio"] {
 		<sec:authorize access="hasRole('ROLE_ADMIN')">
 		<form action="/gameInfo/modifyform" method="post">
 		<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
-			<input type="hidden" name="gnum" value="${gvo.gnum }"> <input
-				type="hidden" name="pageNum" value="${param.pageNum }"> <input
-				type="hidden" name="searchType" value="${param.searchType }">
+			<input type="hidden" name="gnum" value="${gvo.gnum }"> 
+			<input type="hidden" name="pageNum" value="${param.pageNum }"> 
+			<input type="hidden" name="searchType" value="${param.searchType }">
 			<input type="hidden" name="keyword" value="${param.keyword }">
 			<input type="submit" value="수정하기">
 		</form>
 
 		<form action="/gameInfo/gameremove" method="post" id="deleteForm">
-			<input type="hidden" name="gnum" value="${gvo.gnum }"> <input
-				type="button" value="삭제하기" onclick="confirm_delete();">
+			<input type="hidden" name="gnum" value="${gvo.gnum }"> 
+			<input type="button" value="삭제하기" onclick="confirm_delete();">
 				<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 		</form>
 		</sec:authorize>
 		<!--  end 관리자 권한  -->
 		
-		
+		<sec:authorize access="hasRole('ROLE_MEMBER')">
 		<c:if test="${cid ne null }">
 			<c:if test="${lvo eq null && basket eq null }">
 				<form action="/gamepayment/basketAdd" method="post">
@@ -256,6 +256,7 @@ input[type="radio"] {
 				</form>
 			</c:if>
 		</c:if>
+		</sec:authorize>
 		<!--bottom-->
 		<div class="bottom">
 			<div class="bottom1">
@@ -295,15 +296,14 @@ input[type="radio"] {
 			<input type="button" value="전체보기"></a> --%>
 			
 			<form action="/gameInfo/gamelist?searchType=t&keyword=${tvo.tagname }" method="get">
-          <select name="searchType" style="display:none">
-          	<option  value="t"
-				<c:out value="${btnMaker.cri.searchType eq 't' ? 'selected' : '' }"/>>
-				</option>
-            </select>
-            <input type="hidden" name="keyword" value="${tvo.tagname }"/>
-            <!-- origin처럼 버튼 숨겼음, enter 치면 검색됨 -->
-            <input type="submit" value="더보기" />
-          </form>
+	          <select name="searchType" style="display:none">
+	          	<option  value="t"
+					<c:out value="${btnMaker.cri.searchType eq 't' ? 'selected' : '' }"/>>
+					</option>
+	          </select>
+              <input type="hidden" name="keyword" value="${tvo.tagname }"/>
+              <input type="submit" value="더보기" />
+           </form>
 			</div>
 				<hr>
 				
@@ -463,6 +463,7 @@ input[type="radio"] {
 				alert("삭제 취소")
 			}
 		}
+		
 	</script>
 	
 	<script>
