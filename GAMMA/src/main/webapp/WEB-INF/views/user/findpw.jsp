@@ -71,8 +71,7 @@ button {
 				location.href = "/user/mailCheckOk";
 			})
 
-		})
-	
+		});
 	</script>
 </body>
 </html>

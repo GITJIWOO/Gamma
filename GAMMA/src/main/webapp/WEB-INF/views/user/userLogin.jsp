@@ -112,6 +112,7 @@ button {
 							'left=400px,top=100px,scrollbars=yes, toolbar=no,location=no,fullscreen=no');return false;" >비밀번호 찾기</a>
 			</div>
 			<div class="loginDeniedAlert">
+			<br/><br/>
 				<h3>
 					<c:out value="${error }" />
 				</h3>
