@@ -125,12 +125,11 @@ commit;
 ALTER TABLE consumer MODIFY password VARCHAR2(100);
 ALTER TABLE consumer ADD(userregdate DATE Default sysdate NOT NULL,userupdatedate DATE Default sysdate NOT NULL);
 ALTER TABLE consumer ADD UNIQUE(userphone);
-INSERT INTO consumer(cnum, cid, email, password, nickname, cadmin) 
+ 
 
 SELECT * FROM consumer; 
 SELECT * FROM consumer_auth;
 
-    VALUES(consumer_num.nextval,'kjw011231', 'kjw0111231@gmail.com', 'rlawldn', '김지우', 1);
 INSERT INTO consumer(cnum, cid, email, password, nickname, cadmin) 
     VALUES(consumer_num.nextval,'cho', 'chocc', 'aaa', 'cho', 0);
  
@@ -188,6 +187,7 @@ CREATE table userreply_tbl(
     
     alter table userreply_tbl add constraint fk_ureply 
     foreign key (cnum) references consumer(cnum) ON DELETE CASCADE;
+   
  alter table userreply_tbl add constraint fk_ureply1 
     foreign key (nickname) references consumer(nickname) ON DELETE CASCADE;
     ALTER TABLE userreply_tbl RENAME COLUMN replyDate to ureplydate;

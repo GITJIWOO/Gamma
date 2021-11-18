@@ -77,6 +77,11 @@ display:flex;
 #mail_check_input_box_true {
 	background-color: white;
 }
+.container{
+display: flex;
+  justify-content: center;
+  align-items: center;
+}
 
 .correct {
 	color: green;

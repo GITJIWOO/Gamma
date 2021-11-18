@@ -196,7 +196,7 @@
         <!-- category -->
         <div class="side-bar__row">
           <span><a href="/gameInfo/gamelist">게임 스토어</a></span>
-          	<span><a href="/library/conLibrary?cid=${vo.qwriter }">라이브러리</a></span>
+          <span><a href="/library/conLibrary?cid=${vo.qwriter }">라이브러리</a></span>
         </div>
         <!-- qna -->
         <div class="side-bar__row">
@@ -207,25 +207,25 @@
         <!-- about user -->
         <div class="side-bar__row">
           <!-- c:if로 로그인 전에는 회원가입+로그인 / 로그인 후에는 프로필 -->
-	          <div class="consumer">
-	          	  <div class="consumer__imgPro">
-			        <img class="conimg" src="/resources/css/image/chaIcon.png"/>
-	          	  </div>
-		          <div class="consumer__nickname">
-		          	<p style="color:white;"><sec:authentication property="principal.consumer.nickname"/></p>
-		          </div>
-		          <div class="consumer__info">
-	   				<a href="/user/userGet">* 유저정보창</a><br/>
-	   				<a href="/user/userPro">* 유저프로필창</a><br/>
-					<form action="/user/userLogout" method="post">
-						<input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }"/>
-						<input type="submit" value="LOGOUT" />
-					</form><br/>
-	   				<a href="/friends/followerlist">* 팔로워리스트</a><br/>
-	   				<a href="/friends/followinglist">* 팔로윙리스트</a><br/>
-	   				<a href="/friends/searchfriends">* 친구 검색</a><br/>
-		   		  </div>
+          <div class="consumer">
+          	  <div class="consumer__imgPro">
+		        <img class="conimg" src="/resources/css/image/chaIcon.png"/>
+          	  </div>
+	          <div class="consumer__nickname">
+	          	<p style="color:white;"><sec:authentication property="principal.consumer.nickname"/></p>
 	          </div>
+	          <div class="consumer__info">
+   				<a href="/user/userGet">* 내정보</a><br/>
+   				<a href="/user/userPro">* 프로필</a><br/>
+   				<a href="/friends/followerlist">* 팔로워리스트</a><br/>
+   				<a href="/friends/followinglist">* 팔로잉리스트</a><br/>
+   				<a href="/friends/searchfriends">* 친구 검색</a><br/>
+	   		  </div>
+			  <form action="/user/userLogout" method="post">
+				  <input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }"/>
+				  <input class="logout" type="submit" value="로그아웃" />
+			  </form>
+          </div>
         </div>
       </div>
       <div class="main">

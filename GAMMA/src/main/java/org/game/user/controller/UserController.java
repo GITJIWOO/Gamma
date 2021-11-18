@@ -10,6 +10,7 @@ import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.game.friends.domain.FriendsSearchCriteria;
 import org.game.friends.service.FriendsService;
 import org.game.gamelibrary.domain.ResultLibraryVO;
 import org.game.gamelibrary.service.GameLibraryService;
@@ -23,6 +24,7 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.lang.Nullable;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -75,60 +77,75 @@ public class UserController {
 	// 유저프로필
 	@PreAuthorize("permitAll")
 	@GetMapping("/userPro")
-	public String userPro(String cid, Principal principal, Model model) {
-
+	public String userPro(String cid, Principal principal, FriendsSearchCriteria criteria, Model model) throws InterruptedException {
+		log.info("cid 확인0: " + cid);
+		Thread.sleep(700);
+		log.info("cid 확인1: " + cid);
+		
 		if(principal != null) {
-			String myCid = principal.getName();
+//			String myCid = principal.getName();
+			String myCid = "123123";
+			log.info("cid 확인2: " + cid);
 			model.addAttribute("myCid", myCid);
-		}
-		if(cid == null) {
-			if(principal != null) {
-				cid = principal.getName();
-			} else {
-				return "redirect:/user/userLogin";
+			log.info("cid 확인3: " + cid);
+			// 친구 기능 추가
+			int fOrNot;
+			
+			if(fservice.fOrNot(cid, myCid) == null) {
+				log.info("cid 확인4: " + cid);
+				fOrNot = 0;
+			}else {
+				log.info("cid 확인5: " + cid);
+				fOrNot = fservice.fOrNot(cid, myCid);
 			}
+			log.info("cid 확인6: " + cid);
+			model.addAttribute("fOrNot", fOrNot);
+			log.info("cid 확인7: " + cid);
 		}
+		
+		log.info("cid 확인8: " + cid);
+		if(criteria.getKeyword() == null) {
+			criteria.setKeyword("");			
+		}
+		// 친구 기능 추가
+		log.info("cid 확인9: " + cid);
+		int countFollower = fservice.countFollower(criteria, cid);
+		log.info("cid 확인10: " + cid);
+		int countFollowing = fservice.countFollowing(criteria, cid);
+		log.info("cid 확인11: " + cid);
+		model.addAttribute("countFollower", countFollower);
+		log.info("cid 확인12: " + cid);
+		model.addAttribute("countFollowing", countFollowing);
+		log.info("cid 확인13: " + cid);
+
 
 		ConsumerVO userVO = service.userGet(cid);
+		log.info("cid 확인14: " + cid);
  
-		model.addAttribute("cid", userVO.getCid());
+		model.addAttribute("cid", cid);
+		log.info("cid 확인15: " + cid);
 		model.addAttribute("nickname", userVO.getNickname());
+		log.info("cid 확인16: " + cid);
+		model.addAttribute("cnum", userVO.getCnum());
+		log.info("cid 확인17: " + cid);
 
 		List<ResultLibraryVO> libraryList = libraryService.getAllConsumerLibrary(userVO.getCid());
+		log.info("cid 확인18: " + cid);
 
 		model.addAttribute("libraryList", libraryList);
 
 		return "/user/userPro";
 	}
-
-	@GetMapping("/userGet")
-	public String userGet(HttpSession session, Model model) { // 세션 아이디, 어드민
-		String cid = (String) session.getAttribute("session_cid");
-		String cadmin = String.valueOf(session.getAttribute("session_cadmin"));
-		model.addAttribute("cid", cid);
-		model.addAttribute("cadmin", cadmin);
-		return "/user/userGet";
-	}
-
+	
 	// 유저 상제정보창
 	@PreAuthorize("hasAnyRole('ROLE_MEMBER')")
-	@PostMapping("/userGet")
-	public String userGet(ConsumerVO userVO, Model model, Principal principal) {
-		if (principal != null) {
-			String cid = principal.getName();
-			model.addAttribute("cid", cid);
-			if (cid != null) {
-				ConsumerVO consumer = service.userGet(cid);
-				model.addAttribute("consumer", consumer);
-				System.out.println("consumer : " + consumer);
-			}
-		}
-
-		log.info("클릭한유저번호" + userVO);
-		if (userVO.getAttachList() != null) {
-			userVO.getAttachList().forEach(attach -> log.info(attach));
-		}
-
+	@GetMapping("/userGet")
+	public String userGet(String cid, Principal principal, Model model) { // 세션 아이디, 어드민
+		
+		cid = principal.getName();
+		
+		model.addAttribute("cid", cid);
+		
 		return "/user/userGet";
 	}
 
@@ -309,7 +326,7 @@ public class UserController {
 	 * 
 	 * }
 	 */
-	
+	@PreAuthorize("permitAll")
 	@GetMapping("/naverLogin")
 	public String login(HttpSession session) {
 		String naverAuthUrl=naverLoginBO.getAuthorizationUrl(session);
@@ -318,7 +335,7 @@ public class UserController {
 		
 		return "redirect:/user/userLogin";
 	}
-	
+	@PreAuthorize("permitAll")
 	@RequestMapping(value="/naver/login",method= {RequestMethod.GET,RequestMethod.POST})
 	public String callback(Model model,@RequestParam String code,@RequestParam String state,
 			HttpSession session)
@@ -371,12 +388,14 @@ public class UserController {
 	
 
 	// 겟으로 접근하는 수정창 -- ajax쓰기려고 넘김
+	@PreAuthorize("hasAnyRole('ROLE_MEMBER')")
 	@GetMapping("/userModify")
 	public String userModify() throws Exception {
 		return "user/userModify";
 	}
 
 	// post 회원정보 수정
+	@PreAuthorize("hasAnyRole('ROLE_MEMBER')")
 	@PostMapping("/userModify")
 	public String registerUpdate(ConsumerVO vo, HttpSession session) throws Exception {
 		String beforeCrPw = vo.getPassword();
@@ -390,13 +409,14 @@ public class UserController {
 		SecurityContextHolder.getContext().setAuthentication(null);
 		return "redirect:/user/modifyOk";
 	}
+	@PreAuthorize("permitAll")
 	@GetMapping("/user/modifyOk")
 	public String modifyOk() {
 		return "/user/modifyOk";
 	}
 
 	// 회원 탈퇴 get
-	@PreAuthorize("hasAnyRole('ROLE_MEMBER')")
+	@PreAuthorize("permitAll")
 	@GetMapping("/userDelete")
 	public String userDelete(HttpSession session) throws Exception {
 		return "/user/userDelete";
@@ -405,29 +425,30 @@ public class UserController {
 	// 회원 탈퇴 post
 	@PreAuthorize("hasAnyRole('ROLE_MEMBER')")
 	@PostMapping("/userDelete")
-	public String memberDelete(ConsumerVO vo, HttpSession session, RedirectAttributes rttr) throws Exception {
-
-		ConsumerVO login = service.userGet(vo.getCid());
-
-		 boolean pwdMatch = pwdEncoder.matches(vo.getPassword(),  login.getPassword()); 
+	public String memberDelete(ConsumerVO userVO, HttpSession session, RedirectAttributes rttr) throws Exception {
+		System.out.println("탈퇴로직실행");
+		ConsumerVO login = service.userGet(userVO.getCid());
+		System.out.println("cid : "+userVO.getCid());
+		 boolean pwdMatch = pwdEncoder.matches(userVO.getPassword(),  login.getPassword()); 
 		if(pwdMatch==true) {
-		service.userDelete(vo);
+		service.userDelete(userVO);
 		session.invalidate();
 		SecurityContextHolder.getContext().setAuthentication(null);
 		}
-		return "/user/userLogin";
+		return "/user/deleteOk";
 	}
 	
-	
+	@PreAuthorize("permitAll")
 	@GetMapping("/user/mailCheck")
 	public String userMailSend() {
 		return "/user/mailCheck";
 	}
+	@PreAuthorize("permitAll")
 	@GetMapping("/mailCheckOk")
 	public String mailCheckOk() {
 		return "/user/mailCheckOk";
 	}
-	
+	@PreAuthorize("hasAnyRole('ROLE_MEMBER')")
 	@RequestMapping(value = "/user/mailCheck", method = RequestMethod.POST)
 	public String userMailSend(ConsumerVO userVO, Model model, HttpServletRequest request, HttpSession session) {
 		// 인증 메일 보내기 메서드
@@ -436,6 +457,7 @@ public class UserController {
 				return "/user/mailCheckOk";
 	}
 	// e-mail 인증 컨트롤러
+	@PreAuthorize("hasAnyRole('ROLE_MEMBER')")
 		@ResponseBody
 			@RequestMapping(value = "/key_alter", method = RequestMethod.GET)
 			public String key_alterConfirm(@RequestParam("cid") String cid, @RequestParam("user_key") String key) {
@@ -444,16 +466,19 @@ public class UserController {
 
 				return "/user/userMailSuccess";
 			}
+	@PreAuthorize("permitAll")
 		@GetMapping("/user/userMailSuccess")
 		public String userMailSuccess() {
 			return "/user/userMailSuccess";
 		}
+	@PreAuthorize("permitAll")
 		@GetMapping("/user/findpw")
 		public String findPW() {
 			return "/user/findpw";
 		}
 	
 		// 비밀번호 찾기
+	@PreAuthorize("permitAll")
 		@RequestMapping(value = "/user/findpw", method = RequestMethod.POST)
 		@ResponseBody
 		public String passwordSearch(@RequestParam("cid") String cid,

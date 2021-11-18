@@ -84,7 +84,7 @@ h1{
 					value="${principal.consumer.cid}" readonly="readonly" />
 					<div class="row">&nbsp;</div>
 				<label class="control-label" for="password">패스워드</label> <br/><input
-					 type="password" id="password" name="password" />
+					 type="password" id="password" name="password" required/>
 					 <div class="row">&nbsp;</div>
 				<label class="control-label" for="nickname">닉네임</label><br/> <input
 					 type="text" id="nickname" name="nickname"
