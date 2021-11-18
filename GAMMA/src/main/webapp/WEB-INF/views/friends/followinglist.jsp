@@ -183,13 +183,14 @@
 		      <span>(${followingList.nickname })</span>
 		    </div>
 		    <div class="followlistBtn">
+		    <!-- 
 			    <form action="/main" method="post">
-	          	  <input type="hidden" name="follower" value="${cid }"/><!-- 로그인 계정 -->
-		          <input type="hidden" name="following" value="${followingList.cid }"/><!-- 로그인 계정이 팔로우 하는 계정 -->
+	          	  <input type="hidden" name="follower" value="${cid }"/>
+		          <input type="hidden" name="following" value="${followingList.cid }"/>
 	          	  <input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }"/>
 	          	  <input class="chatBtn" type="submit" value="채팅" />
 			    </form>
-
+			 -->
 	          <!-- 현재 팔로잉된 상태이기 때문에 '삭제(default_white)'버튼만 있고 삭제되면 친구목록에서 삭제 -->
 
 			    <form action="/friends/followingremove" method="post">

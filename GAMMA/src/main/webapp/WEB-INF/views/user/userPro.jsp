@@ -311,6 +311,44 @@ position:relative;
 	height: 100px;
 	width: 100px;
 }
+.addfriends{
+	display: flex;
+	align-items: center;
+}
+.follow{
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	margin: 0 10px;
+}
+.addFriendsBtn{
+  border: none;
+  font-size: 17px;
+  padding: 10px 20px;
+  border-radius: 5px;
+  background-color: var(--mainColor);
+  color: white;
+  top: 100px;
+  left: 230px;
+  z-index: 12;
+  margin: 0 10px;
+  cursor: pointer;
+}
+.addFriendsBtn:hover{
+  background-color: rgba(245, 109, 46, 0.9);
+}
+.friendsActive{
+  border: none;
+  color: black;
+  font-size: 17px;
+  padding: 10px 20px;
+  border-radius: 5px;
+  background-color: rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+}
+.friendsActive:hover{
+  background-color: rgba(0, 0, 0, 0.2);
+}
 </style>
 <meta charset="UTF-8">
 
@@ -413,7 +451,34 @@ position:relative;
 								
 							</table>
 						</form>
-					
+						<div class="addfriends">
+							<c:if test="${fOrNot eq 1 }">
+								<form action="/friends/removefriends" method="post">
+							        <input type="hidden" name="follower" value="${cid }"/><!-- 로그인 계정이 팔로우 하는 계정 -->
+							        <input type="hidden" name="following" value="${myCid }"/><!-- 로그인 계정 -->
+							        <input type="hidden" name="cid" value="${cid }"/><!-- 로그인 계정이 팔로우 하는 계정 -->
+									<input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }"/>
+									<input class="addFriendsBtn friendsActive" type="submit" value="친구취소" />
+								</form>
+							</c:if>
+							<c:if test="${fOrNot ne 1 }">
+								<form action="/friends/addfriends" method="post">
+							        <input type="hidden" name="follower" value="${cid }"/><!-- 로그인 계정이 팔로우 하는 계정 -->
+							        <input type="hidden" name="cid" value="${cid }"/><!-- 로그인 계정이 팔로우 하는 계정 -->
+							        <input type="hidden" name="following" value="${myCid }"/><!-- 로그인 계정 -->
+									<input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }"/>
+									<input class="addFriendsBtn" type="submit" value="친구추가" />
+								</form>
+							</c:if>
+							<div class="follow">
+								<span>${countFollower }</span>
+								<span>팔로워</span>
+							</div>
+							<div class="follow">
+								<span>${countFollowing }</span>
+								<span>팔로잉</span>
+							</div>
+						</div>
 						<br> <br /> <br />
 				<sec:authorize access="isAuthenticated()">
           	<sec:authentication property="principal" var="principal" />

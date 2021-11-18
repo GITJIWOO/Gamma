@@ -22,7 +22,7 @@
 		<selectKey keyProperty="fnum" resultType="Long" order="BEFORE">
 			SELECT friends_num.nextval FROM DUAL
 		</selectKey>
-		INSERT INTO friends VALUES (#{fnum}, #{follower}, #{following})
+		INSERT INTO friends VALUES (#{fnum}, #{follower, jdbcType=VARCHAR}, #{following, jdbcType=VARCHAR}, 1)
 	</insert>
 
 	<!-- 검색 기능 구현시, 이메일과 닉네임 전부 검색이 가능하도록 작성
@@ -70,7 +70,7 @@
 	</select>
 	
 	<delete id="deleteFriend">
-		DELETE FROM friends WHERE follower = #{follower} AND following = #{following}
+		DELETE FROM friends WHERE follower = #{follower, jdbcType=VARCHAR} AND following = #{following, jdbcType=VARCHAR}
 	</delete>
 	
 	<!-- 
