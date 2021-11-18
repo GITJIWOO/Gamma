@@ -44,8 +44,6 @@
 	#reviewContent {
 		margin-top: 10px;
 	}
-	.reviewBtns {
-	}
 	.reviewNickname {
 		margin-bottom: 15px;
 		font-size: 170%;
@@ -216,7 +214,7 @@
 											<input type="hidden" name="cid" value="${cid}">
 											<input type="hidden" name="gnum" value="${review.gnum}">
 											<input type="hidden" name="grnum" value="${review.grnum}">
-											<input type="submit" value="좋아요">
+											<input type="submit" value="좋아요" class="btn btn-success">
 										</form>
 									</c:if>
 								</c:when>
@@ -227,7 +225,7 @@
 											<input type="hidden" name="cid" value="${cid}">
 											<input type="hidden" name="gnum" value="${review.gnum}">
 											<input type="hidden" name="grnum" value="${review.grnum}">
-											<input type="submit" value="좋아요 취소">
+											<input type="submit" value="좋아요 취소" class="btn btn-danger">
 										</form>
 									</c:if>
 								</c:when>
@@ -335,6 +333,25 @@
       </div>
     </div>
 	<!-- font-awesome code kit -->
-	<script src="https://kit.fontawesome.com/6478f529f2.js" crossorigin="anonymous"></script>       
+	<script src="https://kit.fontawesome.com/6478f529f2.js" crossorigin="anonymous"></script>
+	<script>
+		function removeReview() {
+			if(confirm("리뷰를 삭제하시겠습니까?")) {
+				let choice = document.getElementById("removeReview");
+				choice.submit();
+			} else {
+				location.href="/review/reviewDetail/${review.grnum}";
+			}
+		}
+		
+		function removeReviewComment() {
+			if(confirm("댓글을 삭제하시겠습니까?")) {
+				let choice = document.getElementById("removeReviewComment");
+				choice.submit();
+			} else {
+				location.href="/review/reviewDetail/${review.grnum}";
+			}
+		}	
+	</script>       
 </body>
 </html>
