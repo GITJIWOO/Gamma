@@ -122,7 +122,7 @@ ALTER TABLE consumer ADD(user_key VARCHAR(100)DEFAULT 'N');
 
 commit;   
 
-ALTER TABLE consumer MODIFY password VARCHAR2(70);
+ALTER TABLE consumer MODIFY password VARCHAR2(100);
 ALTER TABLE consumer ADD(userregdate DATE Default sysdate NOT NULL,userupdatedate DATE Default sysdate NOT NULL);
 ALTER TABLE consumer ADD UNIQUE(userphone);
  

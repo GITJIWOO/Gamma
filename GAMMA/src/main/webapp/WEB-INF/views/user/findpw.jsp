@@ -64,13 +64,14 @@ button {
 		</div>
 	</form>
 	</div>
-	<script>
-	$(document).ready(function() {
+	<script type="text/javascript">
+		$(document).ready(function() {
 
-		$("#findBtn").on("click", function() {
-			location.href = "/user/mailCheckOk";
+			$("#findBtn").on("click", function() {
+				location.href = "/user/mailCheckOk";
+			})
+
 		});
-	});
 	</script>
 </body>
 </html>

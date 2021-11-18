@@ -36,7 +36,7 @@ img {
 		<p>이메일 인증이 정상적으로 이루어 졌습니다.</p>
 		<br>
 		<p>로그인 하시면 홈페이지 내의 모든 서비스를 이용하실 수 있습니다.</p>
-		<br> <a href="http://localhost:8181/main/main;"> 홈페이지로 이동하기</a>
+		<br> <a href="http://localhost:8181/main/main"> 홈페이지로 이동하기</a>
 		</div>
 	</div>
 
