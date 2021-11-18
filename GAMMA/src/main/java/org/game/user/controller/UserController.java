@@ -77,37 +77,60 @@ public class UserController {
 	// 유저프로필
 	@PreAuthorize("permitAll")
 	@GetMapping("/userPro")
-	public String userPro(String cid, Principal principal, FriendsSearchCriteria criteria, Model model) {
-		log.info("cid 확인: " + cid);
+	public String userPro(String cid, Principal principal, FriendsSearchCriteria criteria, Model model) throws InterruptedException {
+		log.info("cid 확인0: " + cid);
+		Thread.sleep(700);
+		log.info("cid 확인1: " + cid);
+		
 		if(principal != null) {
-			String myCid = principal.getName();
+//			String myCid = principal.getName();
+			String myCid = "123123";
+			log.info("cid 확인2: " + cid);
 			model.addAttribute("myCid", myCid);
+			log.info("cid 확인3: " + cid);
 			// 친구 기능 추가
 			int fOrNot;
+			
 			if(fservice.fOrNot(cid, myCid) == null) {
+				log.info("cid 확인4: " + cid);
 				fOrNot = 0;
 			}else {
+				log.info("cid 확인5: " + cid);
 				fOrNot = fservice.fOrNot(cid, myCid);
 			}
+			log.info("cid 확인6: " + cid);
 			model.addAttribute("fOrNot", fOrNot);
+			log.info("cid 확인7: " + cid);
 		}
+		
+		log.info("cid 확인8: " + cid);
 		if(criteria.getKeyword() == null) {
 			criteria.setKeyword("");			
 		}
 		// 친구 기능 추가
+		log.info("cid 확인9: " + cid);
 		int countFollower = fservice.countFollower(criteria, cid);
+		log.info("cid 확인10: " + cid);
 		int countFollowing = fservice.countFollowing(criteria, cid);
+		log.info("cid 확인11: " + cid);
 		model.addAttribute("countFollower", countFollower);
+		log.info("cid 확인12: " + cid);
 		model.addAttribute("countFollowing", countFollowing);
+		log.info("cid 확인13: " + cid);
 
 
 		ConsumerVO userVO = service.userGet(cid);
+		log.info("cid 확인14: " + cid);
  
 		model.addAttribute("cid", cid);
+		log.info("cid 확인15: " + cid);
 		model.addAttribute("nickname", userVO.getNickname());
+		log.info("cid 확인16: " + cid);
 		model.addAttribute("cnum", userVO.getCnum());
+		log.info("cid 확인17: " + cid);
 
 		List<ResultLibraryVO> libraryList = libraryService.getAllConsumerLibrary(userVO.getCid());
+		log.info("cid 확인18: " + cid);
 
 		model.addAttribute("libraryList", libraryList);
 

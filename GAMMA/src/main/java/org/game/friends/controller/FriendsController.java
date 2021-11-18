@@ -120,8 +120,12 @@ public class FriendsController {
 	@PreAuthorize("hasAnyRole('ROLE_MEMBER')")
 	@PostMapping("/addfriends")
 	public String addFriends(FriendsVO vo, RedirectAttributes rttr) {
+		log.info("파라미터로 들어온 정보 확인: cid, " + vo.getFollower());
+		log.info("파라미터로 들어온 정보 확인: myCid, " + vo.getFollowing());
 		log.info("vo 들어오는지 확인: " + vo);
 		service.addFriend(vo);
+		//rttr.addFlashAttribute("cid", vo.getFollower());
+		rttr.addAttribute("cid", vo.getFollower());
 		/*
 		 * friends 말고 user 로 리다이렉트
 		rttr.addAttribute("pageNum", criteria.getPageNum());
@@ -137,6 +141,8 @@ public class FriendsController {
 		log.info("follower, 로그인계정이 언팔로우할 상대: " + follower);
 		log.info("following, 로그인계정: " + following);
 		service.removeFriend(follower, following);
+		//rttr.addFlashAttribute("cid", follower);
+		rttr.addAttribute("cid", follower);
 		return "redirect:/user/userPro";
 	}
 	

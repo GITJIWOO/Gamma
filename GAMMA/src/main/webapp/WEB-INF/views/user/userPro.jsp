@@ -456,6 +456,7 @@ position:relative;
 								<form action="/friends/removefriends" method="post">
 							        <input type="hidden" name="follower" value="${cid }"/><!-- 로그인 계정이 팔로우 하는 계정 -->
 							        <input type="hidden" name="following" value="${myCid }"/><!-- 로그인 계정 -->
+							        <input type="hidden" name="cid" value="${cid }"/><!-- 로그인 계정이 팔로우 하는 계정 -->
 									<input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }"/>
 									<input class="addFriendsBtn friendsActive" type="submit" value="친구취소" />
 								</form>
@@ -463,6 +464,7 @@ position:relative;
 							<c:if test="${fOrNot ne 1 }">
 								<form action="/friends/addfriends" method="post">
 							        <input type="hidden" name="follower" value="${cid }"/><!-- 로그인 계정이 팔로우 하는 계정 -->
+							        <input type="hidden" name="cid" value="${cid }"/><!-- 로그인 계정이 팔로우 하는 계정 -->
 							        <input type="hidden" name="following" value="${myCid }"/><!-- 로그인 계정 -->
 									<input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }"/>
 									<input class="addFriendsBtn" type="submit" value="친구추가" />
