@@ -73,7 +73,7 @@ button {
 	border-radius: 4px;
 	background: #212529;
 	color: #fff;
-	margin-top: 20px;
+	margin-top: 5px;
 	border: solid 2px #212529;
 	transition: all 0.5s ease-in-out 0s;
 }
@@ -100,15 +100,16 @@ button {
 						<label class="lo"><input type="checkbox"
 							name="remember-me">로그인 상태 유지 </label><br />
 						<button type="submit" value="LOGIN">로그인</button>
-					<button id="findPw">비밀번호 찾기</button>
-					<c:if test="${url ne null }">
-						<div id="naver_id_login">
-			<a href="${url }"><img width="223px" heigth="40px"src="https://developers.naver.com/doc/review_201802/CK_bEFnWMeEBjXpQ5o8N_20180202_7aot50.png"/></a>
-		</div>
-					</c:if>
 						<input type="hidden" name="${_csrf.parameterName }"
 							value="${_csrf.token }" />
 					</form>
+					<c:if test="${url ne null }">
+						<div id="naver_id_login">
+			<a href="${url }"><button>네이버로 로그인</button></a>
+		</div>
+					</c:if>
+					<a href ="/user/userLogin" onclick="window.open('/user/findpw', '_blank', 'width=450px,height=500px',
+							'left=400px,top=100px,scrollbars=yes, toolbar=no,location=no,fullscreen=no');return false;" >비밀번호 찾기</a>
 			</div>
 			<div class="loginDeniedAlert">
 				<h3>
@@ -120,24 +121,5 @@ button {
 			</div>
 			</div>
 	</div>
-
-	<script type="text/javascript">
-		$(document).ready(function() {
-
-			$("#findPw").on("click", function() {
-				location.href = "/user/userLogin";
-			})
-
-		})
-		window.addEventListener('load', function() {
-			var myfitn = document.getElementById("findPw");
-			myfitn.onclick = theFind;
-		})
-		function theFind() {
-			window
-					.open("/user/findpw", "findPw", "width=450px,height=500px",
-							"left=400px,top=100px,scrollbars=yes, toolbar=no,location=no,fullscreen=no");
-		}
-	</script>
 </body>
 </html>

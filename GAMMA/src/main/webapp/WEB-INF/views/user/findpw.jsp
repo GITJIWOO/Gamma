@@ -64,5 +64,15 @@ button {
 		</div>
 	</form>
 	</div>
+	<script type="text/javascript">
+		$(document).ready(function() {
+
+			$("#findBtn").on("click", function() {
+				location.href = "/user/mailCheckOk";
+			})
+
+		})
+	
+	</script>
 </body>
 </html>

@@ -69,6 +69,7 @@ public class UserMailSendService {
 		String key = getKey(false, 20);
 		userDao = sqlSession.getMapper(UserDaoMapper.class);
 		userDao.GetKey(cid, key); 
+		
 		MimeMessage mail = mailSender.createMimeMessage();
 		String htmlStr = "<h2>안녕하세요 <주>Gamma입니다!</h2><br><br>" 
 				+ "<h3>" + cid + "님</h3>" + "<p>인증하기 버튼을 누르시면 로그인을 하실 수 있습니다 : " 
@@ -78,6 +79,7 @@ public class UserMailSendService {
 			mail.setSubject("[본인인증] 회원님의 인증메일입니다", "utf-8");
 			mail.setText(htmlStr, "utf-8", "html");
 			mail.addRecipient(RecipientType.TO, new InternetAddress(email));
+			userDao.alter_userKey(cid, key);
 			mailSender.send(mail);
 		} catch (MessagingException e) {
 			e.printStackTrace();
@@ -96,7 +98,6 @@ public class UserMailSendService {
 		// 회원 이름 꺼내는 코드
 		ConsumerVO vo = userDao.userInfo(cid);
 		String name = vo.getCid();
-		
 		MimeMessage mail = mailSender.createMimeMessage();
 		String htmlStr = "<h2>안녕하세요 '"+ name +"' 님</h2><br><br>" 
 				+ "<p>비밀번호 찾기를 신청해주셔서 임시 비밀번호를 발급해드렸습니다.</p>"

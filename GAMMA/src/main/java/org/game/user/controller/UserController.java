@@ -447,7 +447,6 @@ public class UserController {
 		// 비밀번호 찾기
 	@PreAuthorize("permitAll")
 		@RequestMapping(value = "/user/findpw", method = RequestMethod.POST)
-		@ResponseBody
 		public String passwordSearch(@RequestParam("cid") String cid,
 				@RequestParam("email") String email,HttpServletRequest request) throws Exception {
 			mailsender.mailSendWithPassword(cid, email,request);

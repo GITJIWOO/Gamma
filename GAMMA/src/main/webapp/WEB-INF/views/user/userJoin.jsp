@@ -102,6 +102,9 @@ var code = "";
 	function fn_idChk() {
 
 		var cid = $("#cid").val();
+		if (cid == "") {
+			alert("아이디를 작성해주세요");
+		}
 		console.log(cid);
 		console.log("cid값을 클릭시 얻어오는지 확인");
 		$.ajax({
@@ -129,6 +132,9 @@ var code = "";
 	function fn_emailChk() {
 
 		var email = $("#email").val();
+		if (email == "") {
+			alert("이메일을 작성해주세요");
+		}
 		console.log(email);
 		console.log("email값을 클릭시 얻어오는지 확인");
 		$.ajax({
@@ -149,7 +155,7 @@ var code = "";
 					alert("가입된적이 없는 email입니다.")
 					console.log("사용가능한 이멜");
 					$("#emailChk").attr("value", "Y");
-				} else if (result == 1) {
+				} else {
 					alert("이미 등록된 email입니다.");
 					console("사용불가능한 이멜");
 				}
