@@ -133,11 +133,11 @@
           <div class="detail">
             <!-- 여기에 각자 content 붙여넣기 -->
 	
-	<form action="/gameInfo/modify" method="post">
+	<form action="/gameInfo/modify" method="post" id="modifyForm">
 	<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
-		<input type="hidden" name="gnum" value="${gvo.gnum }"> <input
-			type="hidden" name="pageNum" value="${param.pageNum }"> <input
-			type="hidden" name="searchType" value="${param.searchType }">
+		<input type="hidden" name="gnum" value="${gvo.gnum }"> 
+		<input type="hidden" name="pageNum" value="${param.pageNum }"> 
+		<input type="hidden" name="searchType" value="${param.searchType }">
 		<input type="hidden" name="keyword" value="${param.keyword }">
 		<table border="1">
 			<tr>
@@ -231,8 +231,8 @@
 			</tr>
 
 		</table>
-		<input type="submit" value="수정완료"> <input type="reset"
-			value="초기화">
+		<input type="button" value="수정완료" onclick="confirm_modify();"> 
+		<input type="reset" value="초기화">
 	</form>
 	<a
 		href="/gameInfo/gamelist?pageNum=${param.pageNum }&searchType=${param.searchType}&keyword=${param.keyword}"><input
@@ -258,6 +258,18 @@
     </div>
     
     <script>
+	    function confirm_modify() {
+			var modifyForm = document.getElementById('modifyForm');
+			if (confirm("수정하시겠습니까?")) {
+				alert("수정 확인")
+				modifyForm.submit();
+			} else {
+				alert("수정 취소")
+			}
+		}
+    
+    
+    
 		$(document).ready(function() {
 			// 취소
 			$(".loginBtn").on("click", function() {

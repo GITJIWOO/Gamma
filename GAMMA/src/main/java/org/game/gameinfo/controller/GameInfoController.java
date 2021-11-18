@@ -224,14 +224,11 @@ public class GameInfoController {
 		// 세션 아이디, 어드민
 		if(principal != null) {
 			String cid = principal.getName();
-			String admin = principal.getName();
+//			String admin = principal.getName();
 			model.addAttribute("cid", cid);
 			if(cid != null) {
 				ConsumerVO consumer = userMapper.userGet(cid);
 				model.addAttribute("consumer", consumer);
-			}else if (admin != null) {
-				ConsumerVO cadmin = userMapper.userGet(admin);
-				model.addAttribute("admin", admin);
 			}
 		}
 

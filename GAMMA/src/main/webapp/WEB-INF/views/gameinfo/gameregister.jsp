@@ -142,7 +142,7 @@
             <!-- 여기에 각자 content 붙여넣기 -->
 	
 	<h1>게임 등록</h1>
-	<form action="/gameInfo/gameregister" method="post">
+	<form action="/gameInfo/gameregister" method="post" id="registerForm">
 	<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 		<table border="1">
 			<tr>
@@ -219,10 +219,9 @@
 			</tr>
 
 			<tr>
-				<td><input type="submit" value="게임등록"></td>
+				<td><input type="button" value="게임등록" onclick="confirm_register();"></td>
 				<td><input type="reset" value="리셋"></td>
-				<td><a href="/gameInfo/gamelist"><input type="button"
-						value="목록으로"></a></td>
+				<td><a href="/gameInfo/gamelist"><input type="button" value="목록으로"></a></td>
 			</tr>
 
 		</table>
@@ -247,6 +246,18 @@
         </div>
       </div>
     </div>
+    
+    <script type="text/javascript">
+	    function confirm_register() {
+			var registerForm = document.getElementById('registerForm');
+			if (confirm("게임을 등록하시겠습니까?")) {
+				alert("등록 확인")
+				registerForm.submit();
+			} else {
+				alert("등록 취소")
+			}
+		}
+    </script>
 
 
 </body>
