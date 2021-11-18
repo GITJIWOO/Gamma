@@ -111,6 +111,14 @@
         <div class="side-bar__row">
           <form action="/gameInfo/gamelist" method="get">
           <select name="searchType" style="display:none">
+<<<<<<< HEAD
+=======
+
+          	<option  value="n"
+				<c:out value="${btnMaker.cri eq 'n' ? 'selected' : '' }"/>>
+				</option>
+
+>>>>>>> 35e083e332ace1945aa97acbdf476955fb1a90b5
             </select>
             <input type="text" placeholder="Search Game" name="keyword" value="${btnMaker.cri.keyword }"/>
             <!-- origin처럼 버튼 숨겼음, enter 치면 검색됨 -->
