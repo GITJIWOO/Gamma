@@ -222,7 +222,7 @@
 				<div class="userList__proBack"><img src="/resources/css/image/friends.png" width="600" height="250"/></div>
 				<div class="userList__cid">${userList.cid }(${userList.nickname })</div>
 				<!-- 해당 유저 프로필로 이동하고 거기서 친구 추가 혹은 삭제 로직 진행, url 바꾸면서 아래 hidden 삭제 예정 -->
-				<form action="/user/userPro?cid=" method="get">
+				<form action="/user/userPro" method="get">
 					<input type="hidden" name="cid" value="${userList.cid }" />
 				<!-- 
 					<input type="hidden" name="following" value="${param.cid }" />

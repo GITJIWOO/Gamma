@@ -113,9 +113,6 @@
         <div class="side-bar__row">
           <form action="/gameInfo/gamelist" method="get">
           <select name="searchType" style="display:none">
-          	<option  value="n"
-				<c:out value="${btnMaker.cri.searchType eq 'n' ? 'selected' : '' }"/>>
-				</option>
             </select>
             <input type="text" placeholder="Search Game" name="keyword" value="${btnMaker.cri.keyword }"/>
             <!-- origin처럼 버튼 숨겼음, enter 치면 검색됨 -->
@@ -125,9 +122,7 @@
         <!-- category -->
         <div class="side-bar__row">
           <span><a href="/gameInfo/gamelist">게임 스토어</a></span>
-          <c:if test="${cid ne null}">
-          	<span><a href="/library/conLibrary?cid=${cid}">라이브러리</a></span>
-          </c:if>
+          <span><a href="/library/conLibrary?cid=${param.qwriter}">라이브러리</a></span>
         </div>
         <!-- qna -->
         <div class="side-bar__row">
@@ -138,35 +133,25 @@
         <!-- about user -->
         <div class="side-bar__row">
           <!-- c:if로 로그인 전에는 회원가입+로그인 / 로그인 후에는 프로필 -->
-          <c:if test="${cid eq null }">
-	          <div class="loginBtn">
-	        	<span><a href="/user/userLogin" class="loginA">로그인</a></span>
+          <div class="consumer">
+          	  <div class="consumer__imgPro">
+		        <img class="conimg" src="/resources/css/image/chaIcon.png"/>
+          	  </div>
+	          <div class="consumer__nickname">
+	          	<p style="color:white;"><sec:authentication property="principal.consumer.nickname"/></p>
 	          </div>
-	          <div class="joinBtn">
-	        	<span><a href="/user/agreeJoin" class="joinA">가입하기</a></span>
-	          </div>
-       	  </c:if>
-          <c:if test="${cid ne null}">
-	          <div class="consumer">
-	          	  <div class="consumer__imgPro">
-			        <img class="conimg" src="/resources/css/image/chaIcon.png"/>
-	          	  </div>
-		          <div class="consumer__nickname">
-		          	<p style="color:white;"><sec:authentication property="principal.consumer.nickname"/></p>
-		          </div>
-		          <div class="consumer__info">
-	   				<a href="/user/userGet">* 내정보</a><br/>
-	   				<a href="/user/userPro">* 프로필</a><br/>
-	   				<a href="/friends/followerlist">* 팔로워리스트</a><br/>
-	   				<a href="/friends/followinglist">* 팔로잉리스트</a><br/>
-	   				<a href="/friends/searchfriends">* 친구 검색</a><br/>
-		   		  </div>
-				  <form action="/user/userLogout" method="post">
-					  <input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }"/>
-					  <input class="logout" type="submit" value="로그아웃" />
-				  </form>
-	          </div>
-          </c:if>
+	          <div class="consumer__info">
+   				<a href="/user/userGet">* 내정보</a><br/>
+   				<a href="/user/userPro">* 프로필</a><br/>
+   				<a href="/friends/followerlist">* 팔로워리스트</a><br/>
+   				<a href="/friends/followinglist">* 팔로잉리스트</a><br/>
+   				<a href="/friends/searchfriends">* 친구 검색</a><br/>
+	   		  </div>
+			  <form action="/user/userLogout" method="post">
+				  <input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }"/>
+				  <input class="logout" type="submit" value="로그아웃" />
+			  </form>
+          </div>
         </div>
       </div>
       <div class="main">
