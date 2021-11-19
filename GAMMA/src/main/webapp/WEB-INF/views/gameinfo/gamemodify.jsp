@@ -99,7 +99,7 @@
           <!-- c:if로 로그인 전에는 회원가입+로그인 / 로그인 후에는 프로필 -->
           <c:if test="${cid eq null }">
 	          <div class="loginBtn">
-	        	<span><a href="/user/naverLogin" class="loginA">로그인</a></span>
+	        	<span><a href="/user/userLogin" class="loginA">로그인</a></span>
 	          </div>
 	          <div class="joinBtn">
 	        	<span><a href="/user/agreeJoin" class="joinA">가입하기</a></span>

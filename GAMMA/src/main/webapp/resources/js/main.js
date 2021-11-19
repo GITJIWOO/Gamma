@@ -1,7 +1,7 @@
 $(document).ready(function() {
 	// 취소
 	$(".loginBtn").on("click", function() {
-		location.href = "/user/naverLogin";
+		location.href = "/user/userLogin";
 	})
 	$(".joinBtn").on("click", function() {
 		location.href = "/user/agreeJoin";

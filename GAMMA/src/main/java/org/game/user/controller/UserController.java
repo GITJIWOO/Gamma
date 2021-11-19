@@ -334,7 +334,7 @@ public class UserController {
 		System.out.println("발급된 일회용 접근 URL 확인 : "+naverAuthUrl);
 		session.setAttribute("url", naverAuthUrl);
 		
-		return "redirect:/user/userLogin";
+		return "redirect:user/userLogin";
 	}
 	@PreAuthorize("permitAll")
 	@RequestMapping(value="/naver/login",method= {RequestMethod.GET,RequestMethod.POST})
