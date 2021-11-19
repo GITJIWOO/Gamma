@@ -79,29 +79,25 @@ public class UserController {
 	@PreAuthorize("permitAll")
 	@GetMapping("/userPro")
 	public String userPro(String cid, Principal principal, FriendsSearchCriteria criteria, Model model) throws InterruptedException {
-		log.info("cid 확인0: " + cid);
-		Thread.sleep(700);
-		log.info("cid 확인1: " + cid);
 		
 		if(principal != null) {
-//			String myCid = principal.getName();
-			String myCid = "123123";
-			log.info("cid 확인2: " + cid);
+			String myCid = principal.getName();
 			model.addAttribute("myCid", myCid);
-			log.info("cid 확인3: " + cid);
 			// 친구 기능 추가
 			int fOrNot;
-			
-			if(fservice.fOrNot(cid, myCid) == null) {
-				log.info("cid 확인4: " + cid);
-				fOrNot = 0;
-			}else {
-				log.info("cid 확인5: " + cid);
-				fOrNot = fservice.fOrNot(cid, myCid);
+			if(cid == null) {
+				cid = myCid;
+				if(fservice.fOrNot(cid, myCid) == null) {
+					log.info("cid 확인4: " + cid);
+					fOrNot = 0;
+				}else {
+					log.info("cid 확인5: " + cid);
+					fOrNot = fservice.fOrNot(cid, myCid);
+				}
+				log.info("cid 확인6: " + cid);
+				model.addAttribute("fOrNot", fOrNot);
+				log.info("cid 확인7: " + cid);
 			}
-			log.info("cid 확인6: " + cid);
-			model.addAttribute("fOrNot", fOrNot);
-			log.info("cid 확인7: " + cid);
 		}
 		
 		log.info("cid 확인8: " + cid);
