@@ -44,10 +44,10 @@
 ---
 
 ## 개발 환경
-* Java 11
+* Java 8
 * Spring 5.0.7
 * JQuery
-* Oracle 11g (Oracle Cloud / CentOS)
+* Oracle 18C
 * bootstrap 5.0.2
 * Ajax
 * mybatis
